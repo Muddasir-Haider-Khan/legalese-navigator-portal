@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, CheckCircle2 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 
 const Signup = () => {
@@ -52,39 +52,33 @@ const Signup = () => {
       return;
     }
 
-    // In a real scenario, this is where we'd register with Supabase
-    // const { data, error } = await supabase.auth.signUp({
-    //   email: formData.email,
-    //   password: formData.password,
-    //   options: {
-    //     data: {
-    //       full_name: formData.fullName,
-    //     },
-    //   },
-    // });
-
     // Simulate registration
     setTimeout(() => {
       setIsSubmitting(false);
-      toast.success("Account created successfully! You can now log in.");
+      toast.success("Account created successfully! You can now log in.", {
+        icon: <CheckCircle2 className="h-4 w-4 text-green-500" />
+      });
       window.location.href = "/login";
     }, 1500);
   };
 
   return (
     <Layout>
-      <div className="container-custom py-12 md:py-16">
-        <div className="max-w-md mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="heading-md mb-2">Create Your Account</h1>
+      <div className="container-custom py-16 md:py-20 min-h-[80vh] flex items-center relative overflow-hidden">
+        <div className="hidden md:block absolute -bottom-40 left-20 w-80 h-80 bg-rocket-blue-50 rounded-full opacity-30 blur-3xl"></div>
+        <div className="hidden md:block absolute -top-40 right-20 w-80 h-80 bg-rocket-blue-50 rounded-full opacity-20 blur-3xl"></div>
+        
+        <div className="w-full max-w-md mx-auto relative z-10">
+          <div className="text-center mb-8 animate-fade-in">
+            <h1 className="heading-md mb-2 text-gradient">Create Your Account</h1>
             <p className="text-rocket-gray-500">
               Sign up to access legal documents, advice, and more.
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg border border-rocket-gray-100 p-6 md:p-8">
+          <div className="glass-card rounded-xl shadow-xl border border-rocket-blue-50/50 p-8 animate-scale-in">
             <form onSubmit={handleSignup} className="space-y-5">
-              <div>
+              <div className="animate-slide-in" style={{ animationDelay: "0.1s" }}>
                 <Label htmlFor="fullName">Full Name</Label>
                 <Input
                   id="fullName"
@@ -92,12 +86,12 @@ const Signup = () => {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="Enter your full name"
-                  className="mt-1"
+                  className="mt-1 futuristic-input"
                   required
                 />
               </div>
 
-              <div>
+              <div className="animate-slide-in" style={{ animationDelay: "0.2s" }}>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -106,12 +100,12 @@ const Signup = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Enter your email"
-                  className="mt-1"
+                  className="mt-1 futuristic-input"
                   required
                 />
               </div>
 
-              <div>
+              <div className="animate-slide-in" style={{ animationDelay: "0.3s" }}>
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
                   <Input
@@ -121,13 +115,13 @@ const Signup = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Create a password"
-                    className="mt-1 pr-10"
+                    className="mt-1 pr-10 futuristic-input"
                     required
                     minLength={8}
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-rocket-gray-500"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-rocket-gray-500 hover:text-rocket-blue-500 transition-colors"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -138,7 +132,7 @@ const Signup = () => {
                 </p>
               </div>
 
-              <div>
+              <div className="animate-slide-in" style={{ animationDelay: "0.4s" }}>
                 <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <div className="relative">
                   <Input
@@ -148,12 +142,12 @@ const Signup = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="Confirm your password"
-                    className="mt-1 pr-10"
+                    className="mt-1 pr-10 futuristic-input"
                     required
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-rocket-gray-500"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-rocket-gray-500 hover:text-rocket-blue-500 transition-colors"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -161,11 +155,12 @@ const Signup = () => {
                 </div>
               </div>
 
-              <div className="flex items-start space-x-3 pt-2">
+              <div className="flex items-start space-x-3 pt-2 animate-slide-in" style={{ animationDelay: "0.5s" }}>
                 <Checkbox
                   id="terms"
                   checked={agreedToTerms}
                   onCheckedChange={(checked) => setAgreedToTerms(!!checked)}
+                  className="mt-1"
                 />
                 <Label htmlFor="terms" className="text-sm cursor-pointer">
                   I agree to the{" "}
@@ -181,17 +176,28 @@ const Signup = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-rocket-blue hover:bg-rocket-blue-600 mt-4"
+                className="w-full bg-rocket-blue hover:bg-rocket-blue-600 mt-6 transition-all duration-300 animate-slide-in"
+                style={{ animationDelay: "0.6s" }}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Creating Account..." : "Create Account"}
+                {isSubmitting ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Creating Account...
+                  </span>
+                ) : (
+                  "Create Account"
+                )}
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
+            <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: "0.7s" }}>
               <p className="text-rocket-gray-500">
                 Already have an account?{" "}
-                <Link to="/login" className="text-rocket-blue-500 hover:underline">
+                <Link to="/login" className="text-rocket-blue-500 hover:underline hover:text-rocket-blue-600 transition-colors">
                   Sign in
                 </Link>
               </p>

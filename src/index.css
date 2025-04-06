@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -43,18 +43,32 @@
   }
 
   html {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Space Grotesk', 'Poppins', sans-serif;
     scroll-behavior: smooth;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
+    background-image: 
+      radial-gradient(circle at 30% 10%, rgba(15, 52, 96, 0.03) 0%, transparent 20%),
+      radial-gradient(circle at 80% 30%, rgba(15, 52, 96, 0.03) 0%, transparent 20%),
+      radial-gradient(circle at 20% 80%, rgba(15, 52, 96, 0.03) 0%, transparent 20%);
+    background-attachment: fixed;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-rocket-blue text-white py-2 px-6 rounded-md font-medium shadow-sm hover:bg-rocket-blue-600 transition-colors;
+    @apply bg-rocket-blue text-white py-2 px-6 rounded-md font-medium shadow-sm hover:bg-rocket-blue-600 transition-colors relative overflow-hidden;
+  }
+  
+  .btn-primary::after {
+    @apply content-[''] absolute inset-0 bg-white opacity-0 transition-opacity;
+    mix-blend-mode: overlay;
+  }
+  
+  .btn-primary:hover::after {
+    @apply opacity-20;
   }
   
   .btn-secondary {
@@ -83,5 +97,43 @@
 
   .text-gradient {
     @apply bg-gradient-to-r from-rocket-blue to-rocket-blue-400 bg-clip-text text-transparent;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-md bg-white/80 border border-white/20 shadow-lg;
+  }
+  
+  .futuristic-border {
+    @apply border border-rocket-blue-200/30 shadow-[0_0_15px_rgba(15,52,96,0.1)] rounded-lg;
+  }
+  
+  .futuristic-glow {
+    @apply shadow-[0_0_15px_rgba(15,52,96,0.2)] hover:shadow-[0_0_25px_rgba(15,52,96,0.3)] transition-shadow duration-300;
+  }
+  
+  .futuristic-input {
+    @apply bg-white/80 backdrop-blur-sm border border-rocket-blue-100/50 focus:border-rocket-blue-300 focus:ring-1 focus:ring-rocket-blue-300 transition-all;
+  }
+  
+  .animate-hover-float {
+    @apply transition-transform hover:translate-y-[-5px] duration-300;
+  }
+  
+  .animated-gradient-border {
+    @apply relative rounded-lg before:absolute before:inset-0 before:p-[1px] before:rounded-lg overflow-hidden;
+  }
+  
+  .animated-gradient-border::before {
+    content: '';
+    background: linear-gradient(90deg, #0F3460, #507AB3, #0F3460);
+    background-size: 200% 200%;
+    animation: border-flow 2s linear infinite;
+    z-index: -1;
+  }
+  
+  @keyframes border-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 }
