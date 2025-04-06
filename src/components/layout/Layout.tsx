@@ -9,9 +9,9 @@ interface LayoutProps {
 
 const Layout = memo(({ children }: LayoutProps) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-full overflow-hidden bg-white dark:bg-rocket-gray-900">
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow w-full">
         {children}
       </main>
       <Footer />
