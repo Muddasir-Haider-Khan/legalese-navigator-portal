@@ -1,66 +1,115 @@
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggleMinimal } from "@/components/theme/ThemeToggle";
+import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-rocket-gray-100 shadow-sm dark:bg-rocket-gray-900 dark:border-rocket-gray-800 transition-colors duration-300">
+    <header 
+      className={cn(
+        "sticky top-0 z-50 w-full transition-all duration-300",
+        scrolled 
+          ? "bg-white/90 backdrop-blur-md border-b border-rocket-gray-100 shadow-sm dark:bg-rocket-gray-900/90 dark:border-rocket-gray-800" 
+          : "bg-transparent dark:bg-transparent"
+      )}
+    >
       <div className="container-custom py-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-md bg-rocket-blue-500 flex items-center justify-center text-white font-bold">
+            <div className="w-8 h-8 rounded-md bg-rocket-blue-500 flex items-center justify-center text-white font-bold shadow-md">
               RL
             </div>
-            <span className="text-xl font-bold text-rocket-blue dark:text-white">Rocket Lawyer</span>
+            <span className={cn(
+              "text-xl font-bold transition-colors",
+              scrolled || location.pathname !== "/" 
+                ? "text-rocket-blue dark:text-white" 
+                : "text-white"
+            )}>
+              Rocket Lawyer
+            </span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-rocket-blue-500 font-medium hover:text-rocket-blue-600 transition-colors dark:text-rocket-blue-300 dark:hover:text-rocket-blue-200">
+          <NavLink to="/" isActive={isActive("/")} scrolled={scrolled}>
             Home
-          </Link>
-          <Link to="/documents" className="text-rocket-gray-500 font-medium hover:text-rocket-blue-500 transition-colors dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300">
+          </NavLink>
+          <NavLink to="/documents" isActive={isActive("/documents")} scrolled={scrolled}>
             Make Documents
-          </Link>
-          <Link to="/advice" className="text-rocket-gray-500 font-medium hover:text-rocket-blue-500 transition-colors dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300">
+          </NavLink>
+          <NavLink to="/advice" isActive={isActive("/advice")} scrolled={scrolled}>
             Legal Advice
-          </Link>
-          <Link to="/articles" className="text-rocket-gray-500 font-medium hover:text-rocket-blue-500 transition-colors dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300">
+          </NavLink>
+          <NavLink to="/articles" isActive={isActive("/articles")} scrolled={scrolled}>
             Articles
-          </Link>
-          <Link to="/contact" className="text-rocket-gray-500 font-medium hover:text-rocket-blue-500 transition-colors dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300">
+          </NavLink>
+          <NavLink to="/contact" isActive={isActive("/contact")} scrolled={scrolled}>
             Contact Us
-          </Link>
+          </NavLink>
         </nav>
 
         {/* Auth Buttons & Theme Toggle */}
         <div className="hidden md:flex items-center space-x-4">
           <ThemeToggleMinimal />
           <Link to="/login">
-            <Button variant="outline" className="bg-transparent border-rocket-blue text-rocket-blue hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:text-rocket-blue-300 dark:hover:bg-rocket-gray-800">
+            <Button variant="outline" 
+              className={cn(
+                "bg-transparent border-rocket-blue hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:hover:bg-rocket-gray-800 transition-all",
+                !scrolled && location.pathname === "/" ? "border-white text-white hover:bg-white/10" : "text-rocket-blue dark:text-rocket-blue-300"
+              )}
+            >
               Login
             </Button>
           </Link>
           <Link to="/signup">
-            <Button className="bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600">Sign Up</Button>
+            <Button className="bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600 transition-all">
+              Sign Up
+            </Button>
           </Link>
         </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-4">
           <ThemeToggleMinimal />
-          <button className="text-rocket-blue-500 dark:text-rocket-blue-300" onClick={toggleMenu}>
+          <button 
+            className={cn(
+              "transition-colors",
+              scrolled || location.pathname !== "/" ? "text-rocket-blue-500 dark:text-rocket-blue-300" : "text-white"
+            )} 
+            onClick={toggleMenu}
+          >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -68,37 +117,102 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-b border-rocket-gray-100 shadow-md animate-fade-in dark:bg-rocket-gray-900 dark:border-rocket-gray-800">
+        <div className="md:hidden bg-white/95 backdrop-blur-md border-b border-rocket-gray-100 shadow-md animate-fade-in dark:bg-rocket-gray-900/95 dark:border-rocket-gray-800">
           <nav className="container-custom py-4 flex flex-col space-y-4">
-            <Link to="/" className="text-rocket-blue-500 font-medium hover:text-rocket-blue-600 transition-colors dark:text-rocket-blue-300 dark:hover:text-rocket-blue-200" onClick={toggleMenu}>
+            <MobileNavLink to="/" isActive={isActive("/")} onClick={toggleMenu}>
               Home
-            </Link>
-            <Link to="/documents" className="text-rocket-gray-500 font-medium hover:text-rocket-blue-500 transition-colors dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" onClick={toggleMenu}>
+            </MobileNavLink>
+            <MobileNavLink to="/documents" isActive={isActive("/documents")} onClick={toggleMenu}>
               Make Documents
-            </Link>
-            <Link to="/advice" className="text-rocket-gray-500 font-medium hover:text-rocket-blue-500 transition-colors dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" onClick={toggleMenu}>
+            </MobileNavLink>
+            <MobileNavLink to="/advice" isActive={isActive("/advice")} onClick={toggleMenu}>
               Legal Advice
-            </Link>
-            <Link to="/articles" className="text-rocket-gray-500 font-medium hover:text-rocket-blue-500 transition-colors dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" onClick={toggleMenu}>
+            </MobileNavLink>
+            <MobileNavLink to="/articles" isActive={isActive("/articles")} onClick={toggleMenu}>
               Articles
-            </Link>
-            <Link to="/contact" className="text-rocket-gray-500 font-medium hover:text-rocket-blue-500 transition-colors dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" onClick={toggleMenu}>
+            </MobileNavLink>
+            <MobileNavLink to="/contact" isActive={isActive("/contact")} onClick={toggleMenu}>
               Contact Us
-            </Link>
-            <div className="flex flex-col space-y-2 pt-2 border-t border-rocket-gray-100 dark:border-rocket-gray-800">
+            </MobileNavLink>
+            <div className="flex flex-col space-y-2 pt-4 border-t border-rocket-gray-100 dark:border-rocket-gray-800">
               <Link to="/login" onClick={toggleMenu}>
                 <Button variant="outline" className="w-full bg-transparent border-rocket-blue text-rocket-blue hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:text-rocket-blue-300 dark:hover:bg-rocket-gray-800">
                   Login
                 </Button>
               </Link>
               <Link to="/signup" onClick={toggleMenu}>
-                <Button className="w-full bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600">Sign Up</Button>
+                <Button className="w-full bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600">
+                  Sign Up
+                </Button>
               </Link>
             </div>
           </nav>
         </div>
       )}
     </header>
+  );
+};
+
+// NavLink component for desktop
+const NavLink = ({ 
+  to, 
+  children, 
+  isActive, 
+  scrolled 
+}: { 
+  to: string; 
+  children: React.ReactNode; 
+  isActive: boolean;
+  scrolled: boolean;
+}) => {
+  return (
+    <Link 
+      to={to} 
+      className={cn(
+        "font-medium transition-colors relative group",
+        isActive 
+          ? "text-rocket-blue-500 dark:text-rocket-blue-300" 
+          : scrolled || to !== "/" 
+            ? "text-rocket-gray-500 hover:text-rocket-blue-500 dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" 
+            : "text-white/90 hover:text-white"
+      )}
+    >
+      {children}
+      <span className={cn(
+        "absolute bottom-[-4px] left-0 w-full h-0.5 transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
+        isActive 
+          ? "bg-rocket-blue-500 dark:bg-rocket-blue-300 scale-x-100" 
+          : "bg-rocket-blue-500 dark:bg-rocket-blue-300"
+      )}></span>
+    </Link>
+  );
+};
+
+// NavLink component for mobile
+const MobileNavLink = ({ 
+  to, 
+  children, 
+  isActive, 
+  onClick 
+}: { 
+  to: string; 
+  children: React.ReactNode; 
+  isActive: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <Link 
+      to={to} 
+      className={cn(
+        "font-medium transition-colors",
+        isActive 
+          ? "text-rocket-blue-500 font-semibold dark:text-rocket-blue-300" 
+          : "text-rocket-gray-500 hover:text-rocket-blue-500 dark:text-rocket-gray-400 dark:hover:text-rocket-blue-300"
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
   );
 };
 

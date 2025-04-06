@@ -155,9 +155,72 @@ export default {
 				'float': 'float 4s infinite ease-in-out',
 				'glow': 'glow 2s infinite ease-in-out',
 				'enter': 'fade-in 0.3s ease-out, scale-in 0.2s ease-out',
-				'exit': 'fade-out 0.3s ease-out, scale-out 0.2s ease-out'
+				'exit': 'fade-out 0.3s ease-out, scale-out 0.2s ease-out',
+				'hover-float': 'float 2s infinite ease-in-out'
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		function({ addBase }: { addBase: Function }) {
+			addBase({
+				'html': {
+					scrollBehavior: 'smooth',
+				},
+				':root': {
+					'--font-sans': '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+				},
+				'.text-gradient': {
+					backgroundClip: 'text',
+					'-webkit-background-clip': 'text',
+					'-webkit-text-fill-color': 'transparent',
+					backgroundImage: 'linear-gradient(90deg, #ffffff, #e5e7eb)',
+				},
+				'.shadow-glow': {
+					boxShadow: '0 0 15px rgba(15, 52, 96, 0.5)',
+				},
+				'.container-custom': {
+					width: '100%',
+					maxWidth: '1200px',
+					marginLeft: 'auto',
+					marginRight: 'auto',
+					paddingLeft: '1rem',
+					paddingRight: '1rem',
+				},
+				'.section-padding': {
+					paddingTop: '4rem',
+					paddingBottom: '4rem',
+				},
+				'.heading-lg': {
+					fontSize: '2.5rem',
+					lineHeight: '1.2',
+					fontWeight: '700',
+					'@media (min-width: 768px)': {
+						fontSize: '3.5rem',
+					},
+					'@media (min-width: 1024px)': {
+						fontSize: '4rem',
+					},
+				},
+				'.heading-md': {
+					fontSize: '2rem',
+					lineHeight: '1.2',
+					fontWeight: '700',
+					'@media (min-width: 768px)': {
+						fontSize: '2.5rem',
+					},
+					'@media (min-width: 1024px)': {
+						fontSize: '3rem',
+					},
+				},
+				'.glass-card': {
+					backdropFilter: 'blur(10px)',
+					backgroundColor: 'rgba(255, 255, 255, 0.1)',
+					borderRadius: '0.5rem',
+					border: '1px solid rgba(255, 255, 255, 0.2)',
+					boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+				},
+			});
+		},
+	],
 } satisfies Config;
