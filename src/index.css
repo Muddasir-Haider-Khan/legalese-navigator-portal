@@ -38,6 +38,36 @@
     --radius: 0.5rem;
   }
 
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 76% 22%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 76% 22% / 0.2;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 224.3 76.3% 48%;
+  }
+
   * {
     @apply border-border;
   }
@@ -48,12 +78,19 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
     background-image: 
       radial-gradient(circle at 30% 10%, rgba(15, 52, 96, 0.03) 0%, transparent 20%),
       radial-gradient(circle at 80% 30%, rgba(15, 52, 96, 0.03) 0%, transparent 20%),
       radial-gradient(circle at 20% 80%, rgba(15, 52, 96, 0.03) 0%, transparent 20%);
     background-attachment: fixed;
+  }
+  
+  .dark body {
+    background-image: 
+      radial-gradient(circle at 30% 10%, rgba(80, 122, 179, 0.05) 0%, transparent 25%),
+      radial-gradient(circle at 80% 30%, rgba(80, 122, 179, 0.05) 0%, transparent 25%),
+      radial-gradient(circle at 20% 80%, rgba(80, 122, 179, 0.05) 0%, transparent 25%);
   }
 }
 
@@ -72,7 +109,7 @@
   }
   
   .btn-secondary {
-    @apply bg-white text-rocket-blue py-2 px-6 rounded-md font-medium shadow-sm border border-rocket-blue hover:bg-rocket-blue-50 transition-colors;
+    @apply bg-white text-rocket-blue py-2 px-6 rounded-md font-medium shadow-sm border border-rocket-blue hover:bg-rocket-blue-50 transition-colors dark:bg-transparent dark:border-rocket-blue-300 dark:text-rocket-blue-200 dark:hover:bg-rocket-blue-900/30;
   }
   
   .container-custom {
@@ -99,20 +136,24 @@
     @apply bg-gradient-to-r from-rocket-blue to-rocket-blue-400 bg-clip-text text-transparent;
   }
   
+  .dark .text-gradient {
+    @apply bg-gradient-to-r from-rocket-blue-300 to-rocket-blue-100 bg-clip-text text-transparent;
+  }
+  
   .glass-card {
-    @apply backdrop-blur-md bg-white/80 border border-white/20 shadow-lg;
+    @apply backdrop-blur-md bg-white/80 border border-white/20 shadow-lg dark:bg-rocket-gray-900/50 dark:border-rocket-gray-800/50;
   }
   
   .futuristic-border {
-    @apply border border-rocket-blue-200/30 shadow-[0_0_15px_rgba(15,52,96,0.1)] rounded-lg;
+    @apply border border-rocket-blue-200/30 shadow-[0_0_15px_rgba(15,52,96,0.1)] rounded-lg dark:border-rocket-blue-300/20 dark:shadow-[0_0_15px_rgba(80,122,179,0.1)];
   }
   
   .futuristic-glow {
-    @apply shadow-[0_0_15px_rgba(15,52,96,0.2)] hover:shadow-[0_0_25px_rgba(15,52,96,0.3)] transition-shadow duration-300;
+    @apply shadow-[0_0_15px_rgba(15,52,96,0.2)] hover:shadow-[0_0_25px_rgba(15,52,96,0.3)] transition-shadow duration-300 dark:shadow-[0_0_15px_rgba(80,122,179,0.2)] dark:hover:shadow-[0_0_25px_rgba(80,122,179,0.3)];
   }
   
   .futuristic-input {
-    @apply bg-white/80 backdrop-blur-sm border border-rocket-blue-100/50 focus:border-rocket-blue-300 focus:ring-1 focus:ring-rocket-blue-300 transition-all;
+    @apply bg-white/80 backdrop-blur-sm border border-rocket-blue-100/50 focus:border-rocket-blue-300 focus:ring-1 focus:ring-rocket-blue-300 transition-all dark:bg-rocket-gray-800/50 dark:border-rocket-gray-700/50 dark:focus:border-rocket-blue-400 dark:focus:ring-rocket-blue-400;
   }
   
   .animate-hover-float {
@@ -129,6 +170,10 @@
     background-size: 200% 200%;
     animation: border-flow 2s linear infinite;
     z-index: -1;
+  }
+
+  .dark .animated-gradient-border::before {
+    background: linear-gradient(90deg, #507AB3, #89A5CA, #507AB3);
   }
   
   @keyframes border-flow {

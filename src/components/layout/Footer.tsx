@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-rocket-blue-500 text-white">
+    <footer className="bg-rocket-blue-500 text-white dark:bg-rocket-blue-900 transition-colors duration-300">
       <div className="container-custom section-padding">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Description */}
@@ -91,7 +91,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-rocket-blue-400 text-center text-rocket-gray-200">
+        <div className="mt-8 pt-6 border-t border-rocket-blue-400 dark:border-rocket-blue-800 text-center text-rocket-gray-200">
           <p>&copy; {new Date().getFullYear()} Rocket Lawyer. All rights reserved.</p>
         </div>
       </div>
