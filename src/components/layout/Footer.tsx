@@ -1,8 +1,36 @@
 
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { memo } from "react";
+
+// Memoized footer link component
+const FooterLink = memo(({ to, children }: { to: string; children: React.ReactNode }) => (
+  <Link to={to} className="text-rocket-gray-200 hover:text-white transition-colors">
+    {children}
+  </Link>
+));
+
+FooterLink.displayName = 'FooterLink';
+
+// Memoized contact item component
+const ContactItem = memo(({ 
+  icon: Icon, 
+  children 
+}: { 
+  icon: React.ElementType; 
+  children: React.ReactNode;
+}) => (
+  <li className="flex items-center gap-2">
+    <Icon size={18} />
+    {children}
+  </li>
+));
+
+ContactItem.displayName = 'ContactItem';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+  
   return (
     <footer className="bg-rocket-blue-500 text-white dark:bg-rocket-blue-900 transition-colors duration-300">
       <div className="container-custom section-padding">
@@ -25,24 +53,24 @@ const Footer = () => {
             <h5 className="font-semibold text-lg mb-4">Quick Links</h5>
             <ul className="space-y-2">
               <li>
-                <Link to="/documents" className="text-rocket-gray-200 hover:text-white transition-colors">
+                <FooterLink to="/documents">
                   Create Documents
-                </Link>
+                </FooterLink>
               </li>
               <li>
-                <Link to="/advice" className="text-rocket-gray-200 hover:text-white transition-colors">
+                <FooterLink to="/advice">
                   Get Legal Advice
-                </Link>
+                </FooterLink>
               </li>
               <li>
-                <Link to="/articles" className="text-rocket-gray-200 hover:text-white transition-colors">
+                <FooterLink to="/articles">
                   Legal Articles
-                </Link>
+                </FooterLink>
               </li>
               <li>
-                <Link to="/contact" className="text-rocket-gray-200 hover:text-white transition-colors">
+                <FooterLink to="/contact">
                   Contact Us
-                </Link>
+                </FooterLink>
               </li>
             </ul>
           </div>
@@ -52,19 +80,19 @@ const Footer = () => {
             <h5 className="font-semibold text-lg mb-4">Legal</h5>
             <ul className="space-y-2">
               <li>
-                <Link to="/terms" className="text-rocket-gray-200 hover:text-white transition-colors">
+                <FooterLink to="/terms">
                   Terms of Service
-                </Link>
+                </FooterLink>
               </li>
               <li>
-                <Link to="/privacy" className="text-rocket-gray-200 hover:text-white transition-colors">
+                <FooterLink to="/privacy">
                   Privacy Policy
-                </Link>
+                </FooterLink>
               </li>
               <li>
-                <Link to="/disclaimer" className="text-rocket-gray-200 hover:text-white transition-colors">
+                <FooterLink to="/disclaimer">
                   Legal Disclaimer
-                </Link>
+                </FooterLink>
               </li>
             </ul>
           </div>
@@ -73,30 +101,27 @@ const Footer = () => {
           <div>
             <h5 className="font-semibold text-lg mb-4">Contact</h5>
             <ul className="space-y-2">
-              <li className="flex items-center gap-2">
-                <MapPin size={18} />
+              <ContactItem icon={MapPin}>
                 <span className="text-rocket-gray-200">123 Legal Ave, Suite 400</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone size={18} />
+              </ContactItem>
+              <ContactItem icon={Phone}>
                 <span className="text-rocket-gray-200">+1 (555) 123-4567</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail size={18} />
+              </ContactItem>
+              <ContactItem icon={Mail}>
                 <a href="mailto:info@rocketlawyer.com" className="text-rocket-gray-200 hover:text-white transition-colors">
                   info@rocketlawyer.com
                 </a>
-              </li>
+              </ContactItem>
             </ul>
           </div>
         </div>
 
         <div className="mt-8 pt-6 border-t border-rocket-blue-400 dark:border-rocket-blue-800 text-center text-rocket-gray-200">
-          <p>&copy; {new Date().getFullYear()} Rocket Lawyer. All rights reserved.</p>
+          <p>&copy; {currentYear} Rocket Lawyer. All rights reserved.</p>
         </div>
       </div>
     </footer>
   );
 };
 
-export default Footer;
+export default memo(Footer);

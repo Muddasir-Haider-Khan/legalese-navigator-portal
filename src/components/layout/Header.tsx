@@ -1,38 +1,106 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggleMinimal } from "@/components/theme/ThemeToggle";
 import { cn } from "@/lib/utils";
 
+// Memoize NavLink components to prevent unnecessary re-renders
+const NavLink = memo(({ 
+  to, 
+  children, 
+  isActive, 
+  scrolled 
+}: { 
+  to: string; 
+  children: React.ReactNode; 
+  isActive: boolean;
+  scrolled: boolean;
+}) => {
+  return (
+    <Link 
+      to={to} 
+      className={cn(
+        "font-medium transition-colors relative group",
+        isActive 
+          ? "text-rocket-blue-500 dark:text-rocket-blue-300" 
+          : scrolled || to !== "/" 
+            ? "text-rocket-gray-500 hover:text-rocket-blue-500 dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" 
+            : "text-white/90 hover:text-white"
+      )}
+    >
+      {children}
+      <span className={cn(
+        "absolute bottom-[-4px] left-0 w-full h-0.5 transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
+        isActive 
+          ? "bg-rocket-blue-500 dark:bg-rocket-blue-300 scale-x-100" 
+          : "bg-rocket-blue-500 dark:bg-rocket-blue-300"
+      )}></span>
+    </Link>
+  );
+});
+
+NavLink.displayName = 'NavLink';
+
+// Memoize MobileNavLink for mobile menu
+const MobileNavLink = memo(({ 
+  to, 
+  children, 
+  isActive, 
+  onClick 
+}: { 
+  to: string; 
+  children: React.ReactNode; 
+  isActive: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <Link 
+      to={to} 
+      className={cn(
+        "font-medium transition-colors",
+        isActive 
+          ? "text-rocket-blue-500 font-semibold dark:text-rocket-blue-300" 
+          : "text-rocket-gray-500 hover:text-rocket-blue-500 dark:text-rocket-gray-400 dark:hover:text-rocket-blue-300"
+      )}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  );
+});
+
+MobileNavLink.displayName = 'MobileNavLink';
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+  // Memoize scroll handler to prevent unnecessary re-renders
+  const handleScroll = useCallback(() => {
+    if (window.scrollY > 20) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+  }, [handleScroll]);
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen(prev => !prev);
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const isActive = (path: string) => {
+  const isActive = useCallback((path: string) => {
     return location.pathname === path;
-  };
+  }, [location.pathname]);
 
   return (
     <header 
@@ -109,6 +177,7 @@ const Header = () => {
               scrolled || location.pathname !== "/" ? "text-rocket-blue-500 dark:text-rocket-blue-300" : "text-white"
             )} 
             onClick={toggleMenu}
+            aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -153,67 +222,4 @@ const Header = () => {
   );
 };
 
-// NavLink component for desktop
-const NavLink = ({ 
-  to, 
-  children, 
-  isActive, 
-  scrolled 
-}: { 
-  to: string; 
-  children: React.ReactNode; 
-  isActive: boolean;
-  scrolled: boolean;
-}) => {
-  return (
-    <Link 
-      to={to} 
-      className={cn(
-        "font-medium transition-colors relative group",
-        isActive 
-          ? "text-rocket-blue-500 dark:text-rocket-blue-300" 
-          : scrolled || to !== "/" 
-            ? "text-rocket-gray-500 hover:text-rocket-blue-500 dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" 
-            : "text-white/90 hover:text-white"
-      )}
-    >
-      {children}
-      <span className={cn(
-        "absolute bottom-[-4px] left-0 w-full h-0.5 transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
-        isActive 
-          ? "bg-rocket-blue-500 dark:bg-rocket-blue-300 scale-x-100" 
-          : "bg-rocket-blue-500 dark:bg-rocket-blue-300"
-      )}></span>
-    </Link>
-  );
-};
-
-// NavLink component for mobile
-const MobileNavLink = ({ 
-  to, 
-  children, 
-  isActive, 
-  onClick 
-}: { 
-  to: string; 
-  children: React.ReactNode; 
-  isActive: boolean;
-  onClick: () => void;
-}) => {
-  return (
-    <Link 
-      to={to} 
-      className={cn(
-        "font-medium transition-colors",
-        isActive 
-          ? "text-rocket-blue-500 font-semibold dark:text-rocket-blue-300" 
-          : "text-rocket-gray-500 hover:text-rocket-blue-500 dark:text-rocket-gray-400 dark:hover:text-rocket-blue-300"
-      )}
-      onClick={onClick}
-    >
-      {children}
-    </Link>
-  );
-};
-
-export default Header;
+export default memo(Header);
