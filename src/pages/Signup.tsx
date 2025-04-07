@@ -1,15 +1,21 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Eye, EyeOff, CheckCircle2, X } from "lucide-react";
+import { Eye, EyeOff, CheckCircle2 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { useSignUp, useAuth } from "@clerk/clerk-react";
+import { OAuthStrategy } from "@clerk/types";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const { isLoaded, signUp } = useSignUp();
+  const { isSignedIn } = useAuth();
+  
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -20,33 +26,12 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showGoogleModal, setShowGoogleModal] = useState(false);
-  
-  // Simulated Google accounts that might be present in the browser
-  const [browserGoogleAccounts] = useState(() => {
-    // In a real app, we wouldn't be able to access this information directly
-    // This is just for simulation purposes
-    return [
-      { 
-        email: "johndoe@gmail.com", 
-        name: "John Doe", 
-        avatar: "J", 
-        color: "bg-blue-500" 
-      },
-      { 
-        email: "jane.smith@gmail.com", 
-        name: "Jane Smith", 
-        avatar: "J", 
-        color: "bg-purple-500" 
-      },
-      { 
-        email: "alex.taylor@gmail.com", 
-        name: "Alex Taylor", 
-        avatar: "A", 
-        color: "bg-green-500" 
-      }
-    ];
-  });
+
+  // If user is already signed in, redirect to dashboard
+  if (isSignedIn) {
+    navigate("/dashboard");
+    return null;
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -58,6 +43,8 @@ const Signup = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!isLoaded) return;
     setIsSubmitting(true);
 
     // Basic validation
@@ -79,40 +66,50 @@ const Signup = () => {
       return;
     }
 
-    // Simulate registration
-    setTimeout(() => {
-      setIsSubmitting(false);
-      toast.success("Account created successfully! You can now log in.", {
-        icon: <CheckCircle2 className="h-4 w-4 text-green-500" />
+    try {
+      const [firstName, ...lastNameArr] = formData.fullName.split(" ");
+      const lastName = lastNameArr.join(" ");
+      
+      await signUp.create({
+        firstName,
+        lastName,
+        emailAddress: formData.email,
+        password: formData.password,
       });
-      window.location.href = "/login";
-    }, 1500);
+
+      await signUp.prepareEmailAddressVerification({
+        strategy: "email_code",
+      });
+      
+      toast.success("Verification email sent. Please check your inbox.");
+      navigate("/verify-email");
+    } catch (error) {
+      console.error("Error during signup:", error);
+      toast.error("Failed to create account. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const handleGoogleSignup = () => {
-    // Show Google account selection modal
-    setShowGoogleModal(true);
-  };
-
-  const handleGoogleAccountSelection = (email: string) => {
-    setIsSubmitting(true);
+  const handleOAuthSignUp = async (strategy: OAuthStrategy) => {
+    if (!isLoaded) return;
     
-    // Simulate Google sign-in process after selecting an account
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setShowGoogleModal(false);
-      toast.success(`Signed in with ${email}`, {
-        icon: <CheckCircle2 className="h-4 w-4 text-green-500" />
+    try {
+      await signUp.authenticateWithRedirect({
+        strategy,
+        redirectUrl: "/sso-callback",
+        redirectUrlComplete: "/dashboard",
       });
-      sessionStorage.setItem("userEmail", email);
-      window.location.href = "/dashboard";
-    }, 1000);
+    } catch (error) {
+      console.error("OAuth error:", error);
+      toast.error("Authentication failed. Please try again.");
+    }
   };
 
   return (
     <Layout>
       <div className="container-custom py-16 md:py-20 min-h-[80vh] flex items-center relative overflow-hidden">
-        {/* Expanded light effects */}
+        {/* Background effects */}
         <div className="fixed inset-0 bg-rocket-blue-950 z-0"></div>
         <div className="absolute -top-40 -left-40 w-[100vh] h-[100vh] bg-rocket-blue-200/10 rounded-full opacity-20 blur-3xl"></div>
         <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full opacity-30 blur-3xl"></div>
@@ -133,8 +130,8 @@ const Signup = () => {
                 type="button"
                 variant="outline"
                 className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 flex items-center justify-center gap-2"
-                onClick={handleGoogleSignup}
-                disabled={isSubmitting}
+                onClick={() => handleOAuthSignUp("oauth_google")}
+                disabled={isSubmitting || !isLoaded}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M21.8055 10.0415H21V10H12V14H17.6515C16.827 16.3285 14.6115 18 12 18C8.6865 18 6 15.3135 6 12C6 8.6865 8.6865 6 12 6C13.5295 6 14.921 6.577 15.9805 7.5195L18.809 4.691C17.023 3.0265 14.634 2 12 2C6.4775 2 2 6.4775 2 12C2 17.5225 6.4775 22 12 22C17.5225 22 22 17.5225 22 12C22 11.3295 21.931 10.675 21.8055 10.0415Z" fill="#FFC107"/>
@@ -254,7 +251,7 @@ const Signup = () => {
                 type="submit"
                 className="w-full bg-rocket-blue hover:bg-rocket-blue-600 mt-6 transition-all duration-300 animate-slide-in"
                 style={{ animationDelay: "0.6s" }}
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isLoaded}
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
@@ -281,91 +278,6 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      
-      {/* Google Account Selection Modal */}
-      {showGoogleModal && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 animate-fade-in">
-          <div className="bg-[#202124] text-white w-full max-w-sm mx-4 rounded-lg shadow-2xl overflow-hidden">
-            {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-gray-700 flex items-center">
-              <div className="mr-3">
-                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-                  <path d="M1 1h22v22H1z" fill="none" />
-                </svg>
-              </div>
-              <div>
-                <h2 className="text-lg font-medium">Sign in with Google</h2>
-              </div>
-              <button 
-                className="ml-auto text-gray-400 hover:text-white"
-                onClick={() => setShowGoogleModal(false)}
-              >
-                <X size={20} />
-              </button>
-            </div>
-            
-            {/* Main Content */}
-            <div className="px-6 py-8">
-              <h1 className="text-2xl font-light mb-2">Choose an account</h1>
-              <p className="text-sm text-gray-400 mb-8">to continue to yourlegalapp.com</p>
-              
-              {/* Browser Google Accounts */}
-              <div className="space-y-4">
-                {/* Map through simulated browser accounts */}
-                {browserGoogleAccounts.map((account, index) => (
-                  <button 
-                    key={index}
-                    className="flex items-center w-full py-2 px-1 hover:bg-white/5 rounded-lg transition-colors"
-                    onClick={() => handleGoogleAccountSelection(account.email)}
-                  >
-                    <div className={`w-10 h-10 rounded-full ${account.color} flex items-center justify-center mr-4 text-white font-medium`}>
-                      {account.avatar}
-                    </div>
-                    <div className="text-left">
-                      <div className="font-medium">{account.name}</div>
-                      <div className="text-sm text-gray-400">{account.email}</div>
-                    </div>
-                  </button>
-                ))}
-                
-                {/* Use another account */}
-                <button 
-                  className="flex items-center w-full py-2 px-1 hover:bg-white/5 rounded-lg transition-colors"
-                  onClick={() => {
-                    // In a real app, this would open Google's sign-in screen
-                    toast.info("This would open Google's sign-in page in a real implementation");
-                  }}
-                >
-                  <div className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center mr-4 text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <line x1="12" y1="8" x2="12" y2="16" />
-                      <line x1="8" y1="12" x2="16" y2="12" />
-                    </svg>
-                  </div>
-                  <div className="text-left">
-                    <div className="font-medium">Use another account</div>
-                  </div>
-                </button>
-              </div>
-            </div>
-            
-            {/* Footer */}
-            <div className="border-t border-gray-700 px-6 py-4">
-              <p className="text-xs text-gray-400">
-                Before using this app, you can review your Legal App's{' '}
-                <a href="/privacy" className="text-blue-400 hover:text-blue-300">privacy policy</a>{' '}
-                and{' '}
-                <a href="/terms" className="text-blue-400 hover:text-blue-300">terms of service</a>.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </Layout>
   );
 };

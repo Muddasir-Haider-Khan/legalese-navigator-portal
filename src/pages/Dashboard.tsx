@@ -1,24 +1,36 @@
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useUser, useAuth } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const Dashboard = () => {
-  const [userName, setUserName] = useState("");
+  const { isSignedIn, signOut } = useAuth();
+  const { user } = useUser();
+  const navigate = useNavigate();
   
   useEffect(() => {
-    // Simulate getting user data
-    // In a real app, this would be from auth context/state
-    const simulatedUserEmail = sessionStorage.getItem("userEmail") || "user@example.com";
-    const name = simulatedUserEmail.split("@")[0].split('.').map(
-      part => part.charAt(0).toUpperCase() + part.slice(1)
-    ).join(' ');
-    setUserName(name);
-    
-    // Store for simulation purposes
-    sessionStorage.setItem("userEmail", simulatedUserEmail);
-  }, []);
+    // Redirect to login if not signed in
+    if (isSignedIn === false) {
+      navigate("/login");
+    }
+  }, [isSignedIn, navigate]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("Logged out successfully");
+    navigate("/");
+  };
+
+  if (!isSignedIn || !user) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <div className="h-16 w-16 animate-spin rounded-full border-4 border-rocket-blue-300 border-t-rocket-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <Layout>
@@ -27,7 +39,7 @@ const Dashboard = () => {
           <div className="text-center mb-8">
             <h1 className="heading-lg mb-2">Welcome to Your Dashboard</h1>
             <p className="text-lg text-rocket-gray-500">
-              Hello, {userName}! You're successfully logged in.
+              Hello, {user.firstName}! You're successfully logged in.
             </p>
           </div>
           
@@ -53,11 +65,7 @@ const Dashboard = () => {
           <div className="mt-8 text-center">
             <Button 
               variant="outline" 
-              onClick={() => {
-                sessionStorage.removeItem("userEmail");
-                toast.success("Logged out successfully");
-                window.location.href = "/";
-              }}
+              onClick={handleSignOut}
             >
               Sign Out
             </Button>
