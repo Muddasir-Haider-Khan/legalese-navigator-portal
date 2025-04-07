@@ -1,36 +1,48 @@
 
-import { useState } from "react";
-import { useSignUp } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Layout from "@/components/layout/Layout";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const VerifyEmail = () => {
-  const { isLoaded, signUp, setActive } = useSignUp();
   const navigate = useNavigate();
+  const location = useLocation();
   const [verificationCode, setVerificationCode] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [email, setEmail] = useState<string>("");
+
+  // Extract email from URL params if available
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const emailParam = params.get("email");
+    if (emailParam) {
+      setEmail(emailParam);
+    }
+  }, [location]);
 
   const handleVerification = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!isLoaded || !verificationCode) return;
+    if (!verificationCode) return;
     setIsSubmitting(true);
 
     try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code: verificationCode,
+      // Use Supabase to verify the email with OTP
+      const { error } = await supabase.auth.verifyOtp({
+        email,
+        token: verificationCode,
+        type: 'email'
       });
       
-      if (completeSignUp.status !== "complete") {
-        console.error("Verification not complete", completeSignUp);
+      if (error) {
+        console.error("Verification error:", error);
         toast.error("Verification failed. Please try again.");
         return;
       }
 
-      await setActive({ session: completeSignUp.createdSessionId });
       toast.success("Email verified successfully!");
       navigate("/dashboard");
     } catch (error) {
@@ -42,12 +54,19 @@ const VerifyEmail = () => {
   };
 
   const handleResendCode = async () => {
-    if (!isLoaded) return;
+    if (!email) {
+      toast.error("Please enter your email");
+      return;
+    }
     
     try {
-      await signUp.prepareEmailAddressVerification({
-        strategy: "email_code",
+      // Resend verification email using Supabase
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
       });
+
+      if (error) throw error;
       toast.success("Verification code resent successfully");
     } catch (error) {
       console.error("Error resending code:", error);
@@ -65,6 +84,17 @@ const VerifyEmail = () => {
               We've sent a verification code to your email. Please enter it below to complete your registration.
             </p>
 
+            {!email && (
+              <div className="mb-4">
+                <Input
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mb-2"
+                />
+              </div>
+            )}
+
             <form onSubmit={handleVerification} className="space-y-6">
               <div>
                 <Input
@@ -78,7 +108,7 @@ const VerifyEmail = () => {
               <Button
                 type="submit"
                 className="w-full bg-rocket-blue hover:bg-rocket-blue-600"
-                disabled={isSubmitting || !verificationCode || !isLoaded}
+                disabled={isSubmitting || !verificationCode}
               >
                 {isSubmitting ? "Verifying..." : "Verify Email"}
               </Button>

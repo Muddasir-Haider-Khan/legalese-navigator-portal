@@ -1,27 +1,31 @@
 
-import { useSignUp } from "@clerk/clerk-react";
-import { OAuthStrategy } from "@clerk/types";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const GoogleAuthButton = ({ isSubmitting }: { isSubmitting: boolean }) => {
-  const { isLoaded, signUp } = useSignUp();
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   
-  const handleOAuthSignUp = async (strategy: OAuthStrategy) => {
-    if (!isLoaded) return;
-    
+  const handleOAuthSignUp = async () => {
     try {
       setIsAuthenticating(true);
-      await signUp.authenticateWithRedirect({
-        strategy,
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/dashboard",
+      
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/sso-callback`
+        }
       });
+
+      if (error) {
+        console.error("OAuth error:", error);
+        toast.error("Authentication failed. Please try again.");
+      }
     } catch (error) {
       console.error("OAuth error:", error);
-      toast.error("Authentication failed. This may be due to Clerk development mode limitations or OAuth provider configuration.");
+      toast.error("Authentication failed. Please try again.");
+    } finally {
       setIsAuthenticating(false);
     }
   };
@@ -31,8 +35,8 @@ const GoogleAuthButton = ({ isSubmitting }: { isSubmitting: boolean }) => {
       type="button"
       variant="outline"
       className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 flex items-center justify-center gap-2"
-      onClick={() => handleOAuthSignUp("oauth_google")}
-      disabled={isSubmitting || !isLoaded || isAuthenticating}
+      onClick={handleOAuthSignUp}
+      disabled={isSubmitting || isAuthenticating}
     >
       {isAuthenticating ? (
         <>

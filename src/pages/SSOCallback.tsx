@@ -1,17 +1,28 @@
 
 import { useEffect } from "react";
-import { useAuth } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const SSOCallback = () => {
-  const { isSignedIn, isLoaded } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      navigate("/dashboard");
-    }
-  }, [isLoaded, isSignedIn, navigate]);
+    // Handle the OAuth callback with Supabase
+    const handleOAuthCallback = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      
+      if (data.session) {
+        // Successfully authenticated
+        navigate("/dashboard");
+      } else {
+        // Error or not authenticated
+        console.error("OAuth error:", error);
+        navigate("/login");
+      }
+    };
+
+    handleOAuthCallback();
+  }, [navigate]);
 
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-rocket-blue-950">
