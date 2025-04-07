@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +40,51 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Page transition animations */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 500ms, transform 500ms;
+}
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 500ms, transform 500ms;
+}
+
+/* Custom animations for light/dark modes */
+.dark .animate-glow {
+  animation: glow-dark 2s infinite alternate;
+}
+
+.light .animate-glow {
+  animation: glow-light 2s infinite alternate;
+}
+
+@keyframes glow-dark {
+  0% {
+    box-shadow: 0 0 5px rgba(79, 122, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(79, 122, 255, 0.8);
+  }
+}
+
+@keyframes glow-light {
+  0% {
+    box-shadow: 0 0 5px rgba(15, 52, 96, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(15, 52, 96, 0.6);
+  }
 }

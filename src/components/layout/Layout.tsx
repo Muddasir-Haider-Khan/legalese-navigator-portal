@@ -1,5 +1,5 @@
 
-import { ReactNode, memo } from "react";
+import { ReactNode, memo, useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -8,15 +8,30 @@ interface LayoutProps {
 }
 
 const Layout = memo(({ children }: LayoutProps) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    
+    // Add smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    return () => {
+      document.documentElement.style.scrollBehavior = '';
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col min-h-screen w-full overflow-hidden bg-white dark:bg-rocket-gray-900">
-      <div className="w-full bg-gradient-to-b from-white to-transparent dark:from-rocket-gray-900 dark:to-transparent">
+    <div className={`flex flex-col min-h-screen w-full overflow-hidden bg-white dark:bg-rocket-gray-900 transition-colors duration-500 ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
+      <div className="w-full bg-gradient-to-b from-white to-transparent dark:from-rocket-gray-900 dark:to-transparent transition-all duration-500">
         <Header />
       </div>
-      <main className="flex-grow w-full">
+      <main className="flex-grow w-full transition-all duration-300">
         {children}
       </main>
-      <Footer />
+      <div className="animate-fade-in" style={{ animationDelay: '1.2s' }}>
+        <Footer />
+      </div>
     </div>
   );
 });
