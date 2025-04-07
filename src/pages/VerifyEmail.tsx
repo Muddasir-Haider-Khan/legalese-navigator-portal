@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import Layout from "@/components/layout/Layout";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import SignupLayout from "@/components/auth/SignupLayout";
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -76,59 +77,62 @@ const VerifyEmail = () => {
 
   return (
     <Layout>
-      <div className="container-custom py-16 md:py-20">
-        <div className="max-w-md mx-auto">
-          <div className="bg-white rounded-lg shadow-lg border border-rocket-gray-100 p-6 md:p-8">
-            <h1 className="heading-md mb-4 text-center">Verify Your Email</h1>
-            <p className="text-center mb-6 text-rocket-gray-500">
-              We've sent a verification code to your email. Please enter it below to complete your registration.
-            </p>
-
-            {!email && (
-              <div className="mb-4">
-                <Input
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="mb-2"
-                />
-              </div>
-            )}
-
-            <form onSubmit={handleVerification} className="space-y-6">
-              <div>
-                <Input
-                  placeholder="Enter verification code"
-                  value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  className="text-center text-lg tracking-wider"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full bg-rocket-blue hover:bg-rocket-blue-600"
-                disabled={isSubmitting || !verificationCode}
-              >
-                {isSubmitting ? "Verifying..." : "Verify Email"}
-              </Button>
-            </form>
-
-            <div className="mt-6 text-center">
-              <p className="text-rocket-gray-500 text-sm">
-                Didn't receive a code?{" "}
-                <button
-                  type="button"
-                  className="text-rocket-blue-500 hover:underline"
-                  onClick={handleResendCode}
-                >
-                  Resend code
-                </button>
-              </p>
-            </div>
-          </div>
+      <SignupLayout>
+        <div className="text-center mb-6">
+          <h2 className="text-xl font-medium text-white mb-3">Verify Your Email</h2>
+          <p className="text-rocket-gray-400 text-sm">
+            We've sent a verification code to your email. Please enter it below to complete your registration.
+          </p>
         </div>
-      </div>
+
+        {!email && (
+          <div className="mb-4">
+            <Input
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-white/10 border-white/20 text-white"
+            />
+          </div>
+        )}
+
+        <form onSubmit={handleVerification} className="space-y-6">
+          <div>
+            <Input
+              placeholder="Enter verification code"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value)}
+              className="text-center text-lg tracking-wider bg-white/10 border-white/20 text-white"
+            />
+          </div>
+
+          <Button
+            type="submit"
+            className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600"
+            disabled={isSubmitting || !verificationCode}
+          >
+            {isSubmitting ? (
+              <span className="flex items-center gap-2">
+                <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Verifying...
+              </span>
+            ) : "Verify Email"}
+          </Button>
+        </form>
+
+        <div className="mt-4 text-center">
+          <button
+            type="button"
+            className="text-rocket-blue-300 hover:text-rocket-blue-200 text-sm hover:underline transition-colors"
+            onClick={handleResendCode}
+          >
+            Didn't receive a code? Resend code
+          </button>
+        </div>
+      </SignupLayout>
     </Layout>
   );
 };
