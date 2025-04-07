@@ -1,8 +1,9 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Clock, User, ChevronRight } from "lucide-react";
+import { Search, Clock, User, ChevronRight, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
