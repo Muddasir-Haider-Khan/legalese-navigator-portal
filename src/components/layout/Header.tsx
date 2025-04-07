@@ -3,7 +3,6 @@ import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggleMinimal } from "@/components/theme/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 // Memoize NavLink components to prevent unnecessary re-renders
@@ -154,9 +153,8 @@ const Header = () => {
           </NavLink>
         </nav>
 
-        {/* Auth Buttons & Theme Toggle */}
+        {/* Auth Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <ThemeToggleMinimal />
           <Link to="/login">
             <Button variant="outline" 
               className={cn(
@@ -177,8 +175,7 @@ const Header = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
-          <ThemeToggleMinimal />
+        <div className="md:hidden flex items-center">
           <button 
             className={cn(
               "transition-colors",
