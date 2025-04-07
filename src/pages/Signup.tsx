@@ -21,6 +21,32 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showGoogleModal, setShowGoogleModal] = useState(false);
+  
+  // Simulated Google accounts that might be present in the browser
+  const [browserGoogleAccounts] = useState(() => {
+    // In a real app, we wouldn't be able to access this information directly
+    // This is just for simulation purposes
+    return [
+      { 
+        email: "johndoe@gmail.com", 
+        name: "John Doe", 
+        avatar: "J", 
+        color: "bg-blue-500" 
+      },
+      { 
+        email: "jane.smith@gmail.com", 
+        name: "Jane Smith", 
+        avatar: "J", 
+        color: "bg-purple-500" 
+      },
+      { 
+        email: "alex.taylor@gmail.com", 
+        name: "Alex Taylor", 
+        avatar: "A", 
+        color: "bg-green-500" 
+      }
+    ];
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -64,7 +90,7 @@ const Signup = () => {
   };
 
   const handleGoogleSignup = () => {
-    // Show Google account selection modal instead of direct simulation
+    // Show Google account selection modal
     setShowGoogleModal(true);
   };
 
@@ -78,6 +104,7 @@ const Signup = () => {
       toast.success(`Signed in with ${email}`, {
         icon: <CheckCircle2 className="h-4 w-4 text-green-500" />
       });
+      sessionStorage.setItem("userEmail", email);
       window.location.href = "/dashboard";
     }, 1000);
   };
@@ -286,38 +313,31 @@ const Signup = () => {
               <h1 className="text-2xl font-light mb-2">Choose an account</h1>
               <p className="text-sm text-gray-400 mb-8">to continue to yourlegalapp.com</p>
               
-              {/* Account List */}
+              {/* Browser Google Accounts */}
               <div className="space-y-4">
-                {/* Account 1 */}
-                <button 
-                  className="flex items-center w-full py-2 px-1 hover:bg-white/5 rounded-lg transition-colors"
-                  onClick={() => handleGoogleAccountSelection("johndoe@gmail.com")}
-                >
-                  <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center mr-4 text-white font-medium">J</div>
-                  <div className="text-left">
-                    <div className="font-medium">John Doe</div>
-                    <div className="text-sm text-gray-400">johndoe@gmail.com</div>
-                  </div>
-                </button>
-                
-                {/* Account 2 */}
-                <button 
-                  className="flex items-center w-full py-2 px-1 hover:bg-white/5 rounded-lg transition-colors"
-                  onClick={() => handleGoogleAccountSelection("john.work@gmail.com")}
-                >
-                  <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center mr-4 text-white font-medium">J</div>
-                  <div className="text-left">
-                    <div className="font-medium">John Doe</div>
-                    <div className="text-sm text-gray-400">john.work@gmail.com</div>
-                  </div>
-                </button>
+                {/* Map through simulated browser accounts */}
+                {browserGoogleAccounts.map((account, index) => (
+                  <button 
+                    key={index}
+                    className="flex items-center w-full py-2 px-1 hover:bg-white/5 rounded-lg transition-colors"
+                    onClick={() => handleGoogleAccountSelection(account.email)}
+                  >
+                    <div className={`w-10 h-10 rounded-full ${account.color} flex items-center justify-center mr-4 text-white font-medium`}>
+                      {account.avatar}
+                    </div>
+                    <div className="text-left">
+                      <div className="font-medium">{account.name}</div>
+                      <div className="text-sm text-gray-400">{account.email}</div>
+                    </div>
+                  </button>
+                ))}
                 
                 {/* Use another account */}
                 <button 
                   className="flex items-center w-full py-2 px-1 hover:bg-white/5 rounded-lg transition-colors"
                   onClick={() => {
-                    // In a real app, this would open a sign-in screen
-                    toast.info("Opening sign-in screen for a new account");
+                    // In a real app, this would open Google's sign-in screen
+                    toast.info("This would open Google's sign-in page in a real implementation");
                   }}
                 >
                   <div className="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center mr-4 text-gray-400">
