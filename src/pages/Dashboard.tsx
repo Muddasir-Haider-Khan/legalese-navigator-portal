@@ -10,7 +10,8 @@ import {
   SidebarMenu, 
   SidebarMenuItem, 
   SidebarMenuButton,
-  SidebarInset
+  SidebarInset,
+  SidebarTrigger
 } from "@/components/ui/sidebar";
 import { Calendar, Home, Book, CreditCard, MessageCircle, User } from "lucide-react";
 import ScheduleMeeting from "@/components/dashboard/ScheduleMeeting";
@@ -54,38 +55,47 @@ const Dashboard = () => {
       case "dashboard":
         return (
           <div className="space-y-6">
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="heading-sm mb-4">Welcome, {mockUser.firstName}!</h2>
-              <p className="text-rocket-gray-600">
-                Your current legal plan: <span className="font-semibold">{mockUser.plan}</span>
-              </p>
-              <div className="grid md:grid-cols-2 gap-4 mt-6">
-                <div className="bg-rocket-blue-50 p-4 rounded-lg">
-                  <h3 className="font-medium">Need legal advice?</h3>
-                  <p className="text-sm mt-1 mb-3">Speak with a qualified lawyer today</p>
-                  <button 
-                    className="text-sm text-rocket-blue-600 font-medium" 
-                    onClick={() => setActiveTab("advice")}
-                  >
-                    Get advice →
-                  </button>
-                </div>
-                <div className="bg-rocket-blue-50 p-4 rounded-lg">
-                  <h3 className="font-medium">Schedule a consultation</h3>
-                  <p className="text-sm mt-1 mb-3">Book time with one of our lawyers</p>
-                  <button 
-                    className="text-sm text-rocket-blue-600 font-medium" 
-                    onClick={() => setActiveTab("schedule")}
-                  >
-                    Schedule now →
-                  </button>
-                </div>
+            <div className="flex items-center justify-between">
+              <h1 className="text-2xl font-bold tracking-tight">Welcome, {mockUser.firstName}!</h1>
+              <div className="px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                {mockUser.plan} Plan
               </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="heading-sm mb-4">Recent Activity</h2>
-              <p className="text-rocket-gray-500">No recent activity yet. As you use our services, your actions will appear here.</p>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100 shadow-sm">
+                <h3 className="text-lg font-semibold text-blue-800">Need legal advice?</h3>
+                <p className="text-blue-600 mt-1 mb-4">Speak with a qualified lawyer today</p>
+                <button 
+                  className="text-sm font-medium flex items-center text-blue-700 hover:text-blue-800 transition-colors"
+                  onClick={() => setActiveTab("advice")}
+                >
+                  Get advice
+                  <svg className="ml-1 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-100 shadow-sm">
+                <h3 className="text-lg font-semibold text-purple-800">Schedule a consultation</h3>
+                <p className="text-purple-600 mt-1 mb-4">Book time with one of our lawyers</p>
+                <button 
+                  className="text-sm font-medium flex items-center text-purple-700 hover:text-purple-800 transition-colors"
+                  onClick={() => setActiveTab("schedule")}
+                >
+                  Schedule now
+                  <svg className="ml-1 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-xl border shadow-sm p-6">
+              <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+              <div className="flex items-center justify-center h-32 bg-muted/40 rounded-lg border border-dashed">
+                <p className="text-muted-foreground">No recent activity yet. As you use our services, your actions will appear here.</p>
+              </div>
             </div>
           </div>
         );
@@ -105,7 +115,7 @@ const Dashboard = () => {
   if (!isAuthenticated) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
-        <div className="h-16 w-16 animate-spin rounded-full border-4 border-rocket-blue-300 border-t-rocket-blue-600"></div>
+        <div className="h-16 w-16 animate-spin rounded-full border-4 border-primary/30 border-t-primary"></div>
       </div>
     );
   }
@@ -116,63 +126,74 @@ const Dashboard = () => {
         <div className="flex h-full min-h-screen w-full">
           <Sidebar>
             <SidebarContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    isActive={activeTab === "dashboard"}
-                    onClick={() => setActiveTab("dashboard")}
-                    tooltip="Dashboard"
-                  >
-                    <Home />
-                    <span>Dashboard</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    isActive={activeTab === "schedule"}
-                    onClick={() => setActiveTab("schedule")}
-                    tooltip="Schedule Meeting"
-                  >
-                    <Calendar />
-                    <span>Schedule Meeting</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    isActive={activeTab === "advice"}
-                    onClick={() => setActiveTab("advice")}
-                    tooltip="Legal Advice"
-                  >
-                    <MessageCircle />
-                    <span>Legal Advice</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    isActive={activeTab === "upgrade"}
-                    onClick={() => setActiveTab("upgrade")}
-                    tooltip="Plan Upgrade"
-                  >
-                    <CreditCard />
-                    <span>Plan Upgrade</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
-                    isActive={activeTab === "account"}
-                    onClick={() => setActiveTab("account")}
-                    tooltip="Account"
-                  >
-                    <User />
-                    <span>Account</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
+              <div className="px-3 py-4">
+                <div className="mb-6 px-2 flex items-center justify-between">
+                  <h2 className="text-lg font-semibold">Legal Dashboard</h2>
+                  <SidebarTrigger />
+                </div>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      isActive={activeTab === "dashboard"}
+                      onClick={() => setActiveTab("dashboard")}
+                      tooltip="Dashboard"
+                      className="w-full"
+                    >
+                      <Home className="h-4 w-4" />
+                      <span>Dashboard</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      isActive={activeTab === "schedule"}
+                      onClick={() => setActiveTab("schedule")}
+                      tooltip="Schedule Meeting"
+                      className="w-full"
+                    >
+                      <Calendar className="h-4 w-4" />
+                      <span>Schedule Meeting</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      isActive={activeTab === "advice"}
+                      onClick={() => setActiveTab("advice")}
+                      tooltip="Legal Advice"
+                      className="w-full"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      <span>Legal Advice</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      isActive={activeTab === "upgrade"}
+                      onClick={() => setActiveTab("upgrade")}
+                      tooltip="Plan Upgrade"
+                      className="w-full"
+                    >
+                      <CreditCard className="h-4 w-4" />
+                      <span>Plan Upgrade</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      isActive={activeTab === "account"}
+                      onClick={() => setActiveTab("account")}
+                      tooltip="Account"
+                      className="w-full"
+                    >
+                      <User className="h-4 w-4" />
+                      <span>Account</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </div>
             </SidebarContent>
           </Sidebar>
           
           <SidebarInset>
-            <div className="container-custom py-8 md:py-12">
+            <div className="container mx-auto max-w-6xl py-6 px-4 md:px-8 md:py-8">
               {renderTabContent()}
             </div>
           </SidebarInset>

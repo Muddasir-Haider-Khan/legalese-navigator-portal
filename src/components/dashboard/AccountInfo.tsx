@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { User, Pencil, Save, KeyRound, LogOut } from "lucide-react";
 
 interface User {
   firstName: string;
@@ -32,19 +33,30 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
 
   return (
     <div className="space-y-6">
-      <h1 className="heading-lg mb-2">Account Information</h1>
-      <p className="text-rocket-gray-500 mb-6">
-        View and update your personal information.
-      </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Account Information</h1>
+          <p className="text-muted-foreground">
+            View and update your personal information.
+          </p>
+        </div>
+        <Button variant="destructive" onClick={onSignOut} className="flex items-center gap-2">
+          <LogOut className="h-4 w-4" />
+          Sign Out
+        </Button>
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Personal Information</CardTitle>
+      <Card className="border border-border/40 shadow-sm">
+        <CardHeader className="bg-muted/50">
+          <div className="flex items-center gap-2">
+            <User className="h-5 w-5 text-primary" />
+            <CardTitle>Personal Information</CardTitle>
+          </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">First Name</label>
+        <CardContent className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">First Name</label>
               <Input
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -52,8 +64,8 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
                 className="w-full"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Last Name</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Last Name</label>
               <Input
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -61,8 +73,8 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
                 className="w-full"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Email</label>
               <Input
                 type="email"
                 value={email}
@@ -71,8 +83,8 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
                 className="w-full"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Phone Number</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Phone Number</label>
               <Input
                 type="tel"
                 value={phone}
@@ -83,36 +95,37 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
             </div>
           </div>
           
-          <div className="flex justify-between mt-6">
+          <div className="flex justify-end mt-6">
             {isEditing ? (
               <>
-                <Button variant="outline" onClick={() => setIsEditing(false)}>
+                <Button variant="outline" onClick={() => setIsEditing(false)} className="mr-2">
                   Cancel
                 </Button>
-                <Button onClick={handleSave}>
+                <Button onClick={handleSave} className="flex items-center gap-2">
+                  <Save className="h-4 w-4" />
                   Save Changes
                 </Button>
               </>
             ) : (
-              <>
-                <Button variant="outline" onClick={() => setIsEditing(true)}>
-                  Edit Profile
-                </Button>
-                <Button variant="destructive" onClick={onSignOut}>
-                  Sign Out
-                </Button>
-              </>
+              <Button variant="outline" onClick={() => setIsEditing(true)} className="flex items-center gap-2">
+                <Pencil className="h-4 w-4" />
+                Edit Profile
+              </Button>
             )}
           </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Security</CardTitle>
+      <Card className="border border-border/40 shadow-sm">
+        <CardHeader className="bg-muted/50">
+          <div className="flex items-center gap-2">
+            <KeyRound className="h-5 w-5 text-primary" />
+            <CardTitle>Security</CardTitle>
+          </div>
         </CardHeader>
-        <CardContent>
-          <Button variant="outline">
+        <CardContent className="p-6">
+          <p className="text-muted-foreground mb-4">Change your password or update your security settings.</p>
+          <Button variant="outline" className="flex items-center gap-2">
             Change Password
           </Button>
         </CardContent>
