@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { Eye, EyeOff, InfoIcon } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
-import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Login = () => {
@@ -154,17 +153,6 @@ const Login = () => {
                   "Sign In"
                 )}
               </Button>
-              
-              <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-white/10"></div>
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="px-2 text-rocket-gray-400 bg-transparent">Or continue with</span>
-                </div>
-              </div>
-              
-              <GoogleAuthButton isSubmitting={isSubmitting} />
             </form>
 
             <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: "0.7s" }}>
