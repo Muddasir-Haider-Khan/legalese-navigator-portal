@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle, Video, FileQuestion } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function AskLawyerHero() {
   return (
@@ -18,10 +19,12 @@ export default function AskLawyerHero() {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button className="group" size="lg">
-                Start Chat Now
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <Link to="/pricing">
+                <Button className="group" size="lg">
+                  Start Chat Now
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
               <Button variant="outline" size="lg">
                 Schedule Video Call
               </Button>
