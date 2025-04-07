@@ -76,6 +76,7 @@ export default {
 					700: '#092449', 
 					800: '#071C3D', 
 					900: '#041431',
+					950: '#020B18', // Added darker blue for background
 				},
 				'rocket-gray': {
 					DEFAULT: '#6B7280',
