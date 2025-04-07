@@ -71,31 +71,31 @@ const Documents = () => {
       <div className="container-custom section-padding">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="heading-md mb-4">Create Legal Documents</h1>
-            <p className="text-lg text-rocket-gray-500">
+            <h1 className="heading-md mb-4 text-rocket-gray-900 dark:text-white">Create Legal Documents</h1>
+            <p className="text-lg text-rocket-gray-700 dark:text-rocket-gray-300">
               Generate professional legal documents tailored to your specific needs in minutes.
             </p>
           </div>
 
           {!generated ? (
-            <div className="bg-white rounded-lg shadow-lg border border-rocket-gray-100 p-6 md:p-8">
+            <div className="bg-white dark:bg-rocket-gray-800 rounded-lg shadow-lg border border-rocket-gray-100 dark:border-rocket-gray-700 p-6 md:p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <Label htmlFor="fullName">Full Name</Label>
+                  <Label htmlFor="fullName" className="text-rocket-gray-800 dark:text-white">Full Name</Label>
                   <Input
                     id="fullName"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Enter your full legal name"
-                    className="mt-1"
+                    className="mt-1 text-rocket-gray-900 dark:text-white bg-white dark:bg-rocket-gray-700"
                     required
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="country">Country of Residence</Label>
+                  <Label htmlFor="country" className="text-rocket-gray-800 dark:text-white">Country of Residence</Label>
                   <Select value={country} onValueChange={setCountry}>
-                    <SelectTrigger className="mt-1">
+                    <SelectTrigger className="mt-1 text-rocket-gray-900 dark:text-white bg-white dark:bg-rocket-gray-700">
                       <SelectValue placeholder="Select a country" />
                     </SelectTrigger>
                     <SelectContent>
@@ -109,9 +109,9 @@ const Documents = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="documentType">Type of Document</Label>
+                  <Label htmlFor="documentType" className="text-rocket-gray-800 dark:text-white">Type of Document</Label>
                   <Select value={documentType} onValueChange={setDocumentType}>
-                    <SelectTrigger className="mt-1">
+                    <SelectTrigger className="mt-1 text-rocket-gray-900 dark:text-white bg-white dark:bg-rocket-gray-700">
                       <SelectValue placeholder="Select a document type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -125,13 +125,13 @@ const Documents = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="description">Brief Description</Label>
+                  <Label htmlFor="description" className="text-rocket-gray-800 dark:text-white">Brief Description</Label>
                   <Textarea
                     id="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Please describe your specific needs for this document"
-                    className="mt-1 min-h-[120px]"
+                    className="mt-1 min-h-[120px] text-rocket-gray-900 dark:text-white bg-white dark:bg-rocket-gray-700 placeholder:text-rocket-gray-500 dark:placeholder:text-rocket-gray-400"
                     required
                   />
                 </div>
@@ -142,14 +142,14 @@ const Documents = () => {
                     checked={expertReview}
                     onCheckedChange={(checked) => setExpertReview(!!checked)}
                   />
-                  <Label htmlFor="expertReview" className="text-sm cursor-pointer">
+                  <Label htmlFor="expertReview" className="text-sm cursor-pointer text-rocket-gray-800 dark:text-white">
                     Request Expert Review (additional fees apply)
                   </Label>
                 </div>
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-rocket-blue hover:bg-rocket-blue-600 gap-2"
+                  className="w-full bg-rocket-blue hover:bg-rocket-blue-600 gap-2 text-white"
                   disabled={isSubmitting}
                 >
                   <FileText className="h-5 w-5" />
@@ -158,29 +158,29 @@ const Documents = () => {
               </form>
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-lg border border-rocket-gray-100 p-6 md:p-8">
+            <div className="bg-white dark:bg-rocket-gray-800 rounded-lg shadow-lg border border-rocket-gray-100 dark:border-rocket-gray-700 p-6 md:p-8">
               <div className="text-center mb-8">
-                <div className="mx-auto w-16 h-16 bg-rocket-blue-50 rounded-full flex items-center justify-center mb-4">
-                  <CheckCircle className="h-8 w-8 text-rocket-blue-500" />
+                <div className="mx-auto w-16 h-16 bg-rocket-blue-50 dark:bg-rocket-blue-900/30 rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle className="h-8 w-8 text-rocket-blue-500 dark:text-rocket-blue-300" />
                 </div>
-                <h2 className="text-2xl font-bold text-rocket-blue-500">Document Ready!</h2>
-                <p className="text-rocket-gray-500 mt-2">
+                <h2 className="text-2xl font-bold text-rocket-blue-500 dark:text-rocket-blue-300">Document Ready!</h2>
+                <p className="text-rocket-gray-700 dark:text-rocket-gray-300 mt-2">
                   Your {documentTypes.find(d => d.id === documentType)?.name} has been generated successfully.
                 </p>
               </div>
 
-              <div className="border border-rocket-gray-200 rounded-lg p-4 mb-6">
+              <div className="border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 mb-6">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-3">
-                    <FileText className="h-6 w-6 text-rocket-blue-500" />
+                    <FileText className="h-6 w-6 text-rocket-blue-500 dark:text-rocket-blue-300" />
                     <div>
-                      <p className="font-medium">{documentTypes.find(d => d.id === documentType)?.name}</p>
-                      <p className="text-sm text-rocket-gray-500">Generated on {new Date().toLocaleDateString()}</p>
+                      <p className="font-medium text-rocket-gray-800 dark:text-white">{documentTypes.find(d => d.id === documentType)?.name}</p>
+                      <p className="text-sm text-rocket-gray-500 dark:text-rocket-gray-400">Generated on {new Date().toLocaleDateString()}</p>
                     </div>
                   </div>
                   <Button 
                     onClick={handleDownload} 
-                    className="bg-rocket-blue hover:bg-rocket-blue-600 gap-2"
+                    className="bg-rocket-blue hover:bg-rocket-blue-600 gap-2 text-white"
                   >
                     <Download className="h-5 w-5" />
                     Download
@@ -189,8 +189,8 @@ const Documents = () => {
               </div>
 
               {expertReview && (
-                <div className="bg-rocket-blue-50 border border-rocket-blue-100 rounded-lg p-4 mb-6">
-                  <p className="text-rocket-blue-600 flex items-center gap-2">
+                <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 border border-rocket-blue-100 dark:border-rocket-blue-800/30 rounded-lg p-4 mb-6">
+                  <p className="text-rocket-blue-600 dark:text-rocket-blue-300 flex items-center gap-2">
                     <CheckCircle className="h-5 w-5" />
                     <span>Expert review requested. A legal professional will review your document within 48 hours.</span>
                   </p>
@@ -201,13 +201,13 @@ const Documents = () => {
                 <Button 
                   onClick={() => setGenerated(false)} 
                   variant="outline" 
-                  className="flex-1 border-rocket-blue text-rocket-blue hover:bg-rocket-blue-50"
+                  className="flex-1 border-rocket-blue text-rocket-blue dark:text-rocket-blue-300 dark:border-rocket-blue-700 hover:bg-rocket-blue-50 dark:hover:bg-rocket-blue-900/20"
                 >
                   Create Another Document
                 </Button>
                 <Button 
                   onClick={() => window.location.href = "/"}
-                  className="flex-1 bg-rocket-blue hover:bg-rocket-blue-600"
+                  className="flex-1 bg-rocket-blue hover:bg-rocket-blue-600 text-white"
                 >
                   Return to Home
                 </Button>

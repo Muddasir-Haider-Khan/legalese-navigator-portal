@@ -89,6 +89,33 @@
   }
 }
 
+/* Form elements specifics for dark mode */
+@layer base {
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    @apply text-rocket-gray-400;
+  }
+
+  .dark input,
+  .dark textarea,
+  .dark select {
+    @apply text-white bg-rocket-gray-700 border-rocket-gray-600;
+  }
+
+  .dark label {
+    @apply text-white;
+  }
+
+  /* For dropdowns and select boxes in dark mode */
+  .dark [data-radix-select-content] {
+    @apply bg-rocket-gray-800 border-rocket-gray-700;
+  }
+
+  .dark [data-radix-select-item] {
+    @apply text-white hover:bg-rocket-gray-700;
+  }
+}
+
 /* Custom Animations */
 @layer utilities {
   .text-gradient-blue {
