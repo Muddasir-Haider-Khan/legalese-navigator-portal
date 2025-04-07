@@ -137,6 +137,9 @@ const Header = () => {
           <NavLink to="/documents" isActive={isActive("/documents")} scrolled={scrolled}>
             Make Documents
           </NavLink>
+          <NavLink to="/ask-a-lawyer" isActive={isActive("/ask-a-lawyer")} scrolled={scrolled}>
+            Ask a Lawyer
+          </NavLink>
           <NavLink to="/advice" isActive={isActive("/advice")} scrolled={scrolled}>
             Legal Advice
           </NavLink>
@@ -197,6 +200,9 @@ const Header = () => {
             </MobileNavLink>
             <MobileNavLink to="/documents" isActive={isActive("/documents")} onClick={toggleMenu}>
               Make Documents
+            </MobileNavLink>
+            <MobileNavLink to="/ask-a-lawyer" isActive={isActive("/ask-a-lawyer")} onClick={toggleMenu}>
+              Ask a Lawyer
             </MobileNavLink>
             <MobileNavLink to="/advice" isActive={isActive("/advice")} onClick={toggleMenu}>
               Legal Advice
