@@ -1,10 +1,10 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Clock, User, FileText, ChevronRight } from "lucide-react";
+import { Search, Clock, User, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 // Sample article data (in a real app, this would come from Supabase)
 const sampleArticles = [
@@ -94,9 +94,14 @@ const Articles = () => {
 
   return (
     <Layout>
-      <div className="bg-rocket-blue-500 py-12">
-        <div className="container-custom">
-          <h1 className="heading-md text-white mb-6">Legal Articles & Resources</h1>
+      <Helmet>
+        <title>Legal Articles & Resources | Rocket Lawyer</title>
+        <meta name="description" content="Browse our collection of legal articles and resources covering various aspects of law including business, family, real estate, and more." />
+      </Helmet>
+      
+      <div className="bg-rocket-blue-800 dark:bg-rocket-blue-900 py-12">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">Legal Articles & Resources</h1>
           <div className="max-w-lg">
             <div className="relative">
               <Input
@@ -112,78 +117,80 @@ const Articles = () => {
         </div>
       </div>
 
-      <div className="container-custom py-8">
-        <div className="flex flex-wrap gap-2 mb-8">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              className={selectedCategory === category 
-                ? "bg-rocket-blue text-white" 
-                : "border-rocket-gray-200 text-rocket-gray-700 hover:bg-rocket-gray-50"}
-              onClick={() => setSelectedCategory(category)}
-            >
-              {category}
-            </Button>
-          ))}
-        </div>
-
-        {filteredArticles.length === 0 ? (
-          <div className="text-center py-12">
-            <FileText className="h-16 w-16 text-rocket-gray-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-rocket-gray-700 mb-2">No Articles Found</h3>
-            <p className="text-rocket-gray-500">
-              Try adjusting your search or filters to find what you're looking for.
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredArticles.map((article) => (
-              <div 
-                key={article.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden border border-rocket-gray-100 hover:shadow-lg transition-shadow"
+      <div className="bg-rocket-gray-900 dark:bg-rocket-gray-950 py-8">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex flex-wrap gap-2 mb-8">
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                className={selectedCategory === category 
+                  ? "bg-rocket-blue text-white" 
+                  : "border-rocket-gray-700 text-rocket-gray-300 hover:bg-rocket-gray-800"}
+                onClick={() => setSelectedCategory(category)}
               >
-                <div className="h-48 overflow-hidden">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                
-                <div className="p-5">
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-xs font-medium px-3 py-1 bg-rocket-blue-50 text-rocket-blue-500 rounded-full">
-                      {article.category}
-                    </span>
-                    <div className="flex items-center text-rocket-gray-400 text-sm">
-                      <Clock className="h-3 w-3 mr-1" />
-                      {formatDate(article.date)}
-                    </div>
-                  </div>
-                  
-                  <h3 className="font-bold text-lg mb-2">{article.title}</h3>
-                  <p className="text-rocket-gray-500 text-sm mb-4 line-clamp-3">
-                    {article.excerpt}
-                  </p>
-                  
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center text-rocket-gray-500 text-sm">
-                      <User className="h-3 w-3 mr-1" />
-                      {article.author}
-                    </div>
-                    <Link 
-                      to={`/articles/${article.id}`}
-                      className="text-rocket-blue-500 hover:text-rocket-blue-600 font-medium text-sm flex items-center gap-1"
-                    >
-                      Read More <ChevronRight className="h-3 w-3" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
+                {category}
+              </Button>
             ))}
           </div>
-        )}
+
+          {filteredArticles.length === 0 ? (
+            <div className="text-center py-12">
+              <FileText className="h-16 w-16 text-rocket-gray-300 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-rocket-gray-700 mb-2">No Articles Found</h3>
+              <p className="text-rocket-gray-500">
+                Try adjusting your search or filters to find what you're looking for.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredArticles.map((article) => (
+                <div 
+                  key={article.id}
+                  className="bg-rocket-gray-800 dark:bg-rocket-gray-800 rounded-lg overflow-hidden border border-rocket-gray-700 hover:shadow-lg transition-shadow"
+                >
+                  <div className="h-48 overflow-hidden">
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  
+                  <div className="p-5">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-xs font-medium px-3 py-1 bg-rocket-blue-500/20 text-rocket-blue-300 rounded-full">
+                        {article.category}
+                      </span>
+                      <div className="flex items-center text-rocket-gray-400 text-sm">
+                        <Clock className="h-3 w-3 mr-1" />
+                        {formatDate(article.date)}
+                      </div>
+                    </div>
+                    
+                    <h3 className="font-bold text-lg mb-2 text-white">{article.title}</h3>
+                    <p className="text-rocket-gray-300 text-sm mb-4 line-clamp-3">
+                      {article.excerpt}
+                    </p>
+                    
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center text-rocket-gray-400 text-sm">
+                        <User className="h-3 w-3 mr-1" />
+                        {article.author}
+                      </div>
+                      <Link 
+                        to={`/articles/${article.id}`}
+                        className="text-rocket-blue-300 hover:text-rocket-blue-200 font-medium text-sm flex items-center gap-1"
+                      >
+                        Read More <ChevronRight className="h-3 w-3" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </Layout>
   );

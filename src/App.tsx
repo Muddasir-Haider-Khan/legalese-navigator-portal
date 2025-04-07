@@ -18,6 +18,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Signup = lazy(() => import("./pages/Signup"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AskALawyer = lazy(() => import("./pages/AskALawyer"));
+const Pricing = lazy(() => import("./pages/Pricing"));
 
 // Loading component for suspense fallback
 const PageLoader = () => (
@@ -67,6 +68,7 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/ask-a-lawyer" element={<AskALawyer />} />
+              <Route path="/pricing" element={<Pricing />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
