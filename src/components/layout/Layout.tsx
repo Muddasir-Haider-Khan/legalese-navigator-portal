@@ -10,7 +10,9 @@ interface LayoutProps {
 const Layout = memo(({ children }: LayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen w-full overflow-hidden bg-white dark:bg-rocket-gray-900">
-      <Header />
+      <div className="w-full bg-gradient-to-b from-white to-transparent dark:from-rocket-gray-900 dark:to-transparent">
+        <Header />
+      </div>
       <main className="flex-grow w-full">
         {children}
       </main>

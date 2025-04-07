@@ -26,8 +26,8 @@ const NavLink = memo(({
         isActive 
           ? "text-rocket-blue-500 dark:text-rocket-blue-300" 
           : scrolled || to !== "/" 
-            ? "text-rocket-gray-500 hover:text-rocket-blue-500 dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" 
-            : "text-white/90 hover:text-white"
+            ? "text-rocket-gray-600 hover:text-rocket-blue-500 dark:text-rocket-gray-300 dark:hover:text-rocket-blue-300" 
+            : "text-rocket-blue-700 hover:text-rocket-blue-500 dark:text-white/90 dark:hover:text-white"
       )}
     >
       {children}
@@ -62,7 +62,7 @@ const MobileNavLink = memo(({
         "font-medium transition-colors",
         isActive 
           ? "text-rocket-blue-500 font-semibold dark:text-rocket-blue-300" 
-          : "text-rocket-gray-500 hover:text-rocket-blue-500 dark:text-rocket-gray-400 dark:hover:text-rocket-blue-300"
+          : "text-rocket-gray-600 hover:text-rocket-blue-500 dark:text-rocket-gray-400 dark:hover:text-rocket-blue-300"
       )}
       onClick={onClick}
     >
@@ -105,24 +105,24 @@ const Header = () => {
   return (
     <header 
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "sticky top-0 z-50 w-full transition-all duration-500",
         scrolled 
-          ? "bg-white/90 backdrop-blur-md border-b border-rocket-gray-100 shadow-sm dark:bg-rocket-gray-900/90 dark:border-rocket-gray-800" 
-          : "bg-transparent dark:bg-transparent"
+          ? "bg-white/95 backdrop-blur-md border-b border-rocket-gray-100 shadow-sm dark:bg-rocket-gray-900/90 dark:border-rocket-gray-800" 
+          : "bg-white/80 backdrop-blur-sm dark:bg-transparent"
       )}
     >
       <div className="container-custom py-4 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-md bg-rocket-blue-500 flex items-center justify-center text-white font-bold shadow-md">
+            <div className="w-8 h-8 rounded-md bg-rocket-blue-500 flex items-center justify-center text-white font-bold shadow-md transition-transform hover:scale-105 duration-300">
               RL
             </div>
             <span className={cn(
               "text-xl font-bold transition-colors",
-              scrolled || location.pathname !== "/" 
-                ? "text-rocket-blue dark:text-white" 
-                : "text-white"
+              scrolled
+                ? "text-rocket-blue-500 dark:text-white" 
+                : "text-rocket-blue-700 dark:text-white"
             )}>
               Rocket Lawyer
             </span>
@@ -155,7 +155,9 @@ const Header = () => {
             <Button variant="outline" 
               className={cn(
                 "bg-transparent border-rocket-blue hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:hover:bg-rocket-gray-800 transition-all",
-                !scrolled && location.pathname === "/" ? "border-white text-white hover:bg-white/10" : "text-rocket-blue dark:text-rocket-blue-300"
+                !scrolled && location.pathname === "/" 
+                  ? "border-rocket-blue-500 text-rocket-blue-700 hover:bg-rocket-blue-50/50 dark:border-white dark:text-white dark:hover:bg-white/10" 
+                  : "text-rocket-blue-600 border-rocket-blue-500 dark:text-rocket-blue-300"
               )}
             >
               Login
@@ -174,7 +176,9 @@ const Header = () => {
           <button 
             className={cn(
               "transition-colors",
-              scrolled || location.pathname !== "/" ? "text-rocket-blue-500 dark:text-rocket-blue-300" : "text-white"
+              scrolled || location.pathname !== "/" 
+                ? "text-rocket-blue-500 dark:text-rocket-blue-300" 
+                : "text-rocket-blue-700 dark:text-white"
             )} 
             onClick={toggleMenu}
             aria-label="Toggle menu"
@@ -205,7 +209,7 @@ const Header = () => {
             </MobileNavLink>
             <div className="flex flex-col space-y-2 pt-4 border-t border-rocket-gray-100 dark:border-rocket-gray-800">
               <Link to="/login" onClick={toggleMenu}>
-                <Button variant="outline" className="w-full bg-transparent border-rocket-blue text-rocket-blue hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:text-rocket-blue-300 dark:hover:bg-rocket-gray-800">
+                <Button variant="outline" className="w-full bg-transparent border-rocket-blue-500 text-rocket-blue-600 hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:text-rocket-blue-300 dark:hover:bg-rocket-gray-800">
                   Login
                 </Button>
               </Link>

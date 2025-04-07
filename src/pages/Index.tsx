@@ -9,7 +9,9 @@ const Index = () => {
   return (
     <Layout>
       <div className="w-full">
-        <Hero />
+        <div className="relative">
+          <Hero />
+        </div>
         <Features />
         <Testimonials />
         <CTASection />
