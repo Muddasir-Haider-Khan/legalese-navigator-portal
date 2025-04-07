@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -256,27 +255,22 @@ const Advice = () => {
                 Back
               </Button>
 
-              {currentQuestion === questions.length - 1 ? (
-                <Button
-                  type="button"
-                  onClick={() => {
-                    handleNext();
-                    setTimeout(() => navigate("/signup"), 1500);
-                  }}
-                  disabled={isSubmitting}
-                  className="bg-rocket-blue hover:bg-rocket-blue-600 gap-2"
-                >
-                  {isSubmitting ? "Submitting..." : "Submit"}
-                </Button>
-              ) : (
+              <Link to="/signup">
                 <Button
                   type="button"
                   onClick={handleNext}
+                  disabled={isSubmitting}
                   className="bg-rocket-blue hover:bg-rocket-blue-600 gap-2"
                 >
-                  Next <ChevronRight className="h-4 w-4" />
+                  {currentQuestion === questions.length - 1 ? (
+                    isSubmitting ? "Submitting..." : "Submit"
+                  ) : (
+                    <>
+                      Next <ChevronRight className="h-4 w-4" />
+                    </>
+                  )}
                 </Button>
-              )}
+              </Link>
             </div>
           </div>
         </div>
