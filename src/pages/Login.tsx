@@ -3,12 +3,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
+import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -59,16 +59,15 @@ const Login = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg border border-rocket-gray-100 p-6 md:p-8">
+          <div className="bg-white rounded-lg shadow-lg border border-rocket-gray-100 p-6 md:p-8 dark:bg-rocket-blue-800 dark:border-rocket-blue-700">
             <form onSubmit={handleLogin} className="space-y-6">
               {errorMessage && (
-                <div className="p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-md">
+                <div className="p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-md dark:bg-red-900/30 dark:border-red-800 dark:text-red-300">
                   {errorMessage}
                 </div>
               )}
 
               <div>
-                <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -81,7 +80,6 @@ const Login = () => {
               </div>
 
               <div>
-                <Label htmlFor="password">Password</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -109,9 +107,9 @@ const Login = () => {
                     checked={rememberMe}
                     onCheckedChange={(checked) => setRememberMe(!!checked)}
                   />
-                  <Label htmlFor="remember-me" className="text-sm cursor-pointer">
+                  <label htmlFor="remember-me" className="text-sm cursor-pointer">
                     Remember me
-                  </Label>
+                  </label>
                 </div>
                 <Link
                   to="/forgot-password"
@@ -123,7 +121,7 @@ const Login = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-rocket-blue hover:bg-rocket-blue-600"
+                className="w-full bg-rocket-blue-600 hover:bg-rocket-blue-700 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -138,10 +136,21 @@ const Login = () => {
                   "Sign In"
                 )}
               </Button>
+              
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-rocket-gray-200 dark:border-rocket-gray-700"></div>
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-white px-2 text-rocket-gray-500 dark:bg-rocket-blue-800 dark:text-rocket-gray-400">Or continue with</span>
+                </div>
+              </div>
+              
+              <GoogleAuthButton isSubmitting={isSubmitting} />
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-rocket-gray-500">
+              <p className="text-rocket-gray-500 dark:text-rocket-gray-400">
                 Don't have an account?{" "}
                 <Link to="/signup" className="text-rocket-blue-500 hover:underline">
                   Sign up
