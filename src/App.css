@@ -71,6 +71,18 @@
   animation: glow-light 2s infinite alternate;
 }
 
+/* Form styling for dark mode */
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: rgba(156, 163, 175, 0.8);
+}
+
+.dark input,
+.dark textarea {
+  color: #fff;
+  background-color: rgba(31, 41, 55, 0.8);
+}
+
 @keyframes glow-dark {
   0% {
     box-shadow: 0 0 5px rgba(79, 122, 255, 0.5);

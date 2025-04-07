@@ -26,7 +26,7 @@ const Layout = memo(({ children }: LayoutProps) => {
       <div className="w-full bg-gradient-to-b from-white to-transparent dark:from-rocket-gray-900 dark:to-transparent transition-all duration-500">
         <Header />
       </div>
-      <main className="flex-grow w-full transition-all duration-300">
+      <main className="flex-grow w-full transition-all duration-300 text-rocket-gray-900 dark:text-white">
         {children}
       </main>
       <div className="animate-fade-in" style={{ animationDelay: '1.2s' }}>
