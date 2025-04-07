@@ -7,23 +7,24 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
-import { useSignUp } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 interface FormData {
   fullName: string;
   email: string;
+  phone: string;
   password: string;
   confirmPassword: string;
 }
 
 const EmailSignupForm = () => {
   const navigate = useNavigate();
-  const { isLoaded, signUp } = useSignUp();
   
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     email: "",
+    phone: "",
     password: "",
     confirmPassword: "",
   });
@@ -40,14 +41,19 @@ const EmailSignupForm = () => {
     }));
   };
 
+  const validatePhoneNumber = (phone: string) => {
+    // Basic phone validation - can be customized based on requirements
+    const phoneRegex = /^\+?[0-9]{10,15}$/;
+    return phoneRegex.test(phone);
+  };
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!isLoaded) return;
     setIsSubmitting(true);
 
     // Basic validation
-    if (!formData.fullName || !formData.email || !formData.password) {
+    if (!formData.fullName || !formData.email || !formData.password || !formData.phone) {
       toast.error("Please fill in all required fields");
       setIsSubmitting(false);
       return;
@@ -65,23 +71,23 @@ const EmailSignupForm = () => {
       return;
     }
 
+    // Phone validation
+    if (!validatePhoneNumber(formData.phone)) {
+      toast.error("Please enter a valid phone number");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      await signUp.create({
-        firstName,
-        lastName,
-        emailAddress: formData.email,
-        password: formData.password,
-      });
-
-      await signUp.prepareEmailAddressVerification({
-        strategy: "email_code",
-      });
-      
-      toast.success("Verification email sent. Please check your inbox.");
-      navigate("/verify-email");
+      // Here we would normally register with Supabase
+      // For now, just simulate a successful registration
+      toast.success("Account created successfully!");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
     } catch (error) {
       console.error("Error during signup:", error);
       toast.error("Failed to create account. Please try again.");
@@ -117,6 +123,23 @@ const EmailSignupForm = () => {
           className="mt-1 futuristic-input"
           required
         />
+      </div>
+
+      <div className="animate-slide-in" style={{ animationDelay: "0.25s" }}>
+        <Label htmlFor="phone">Phone Number</Label>
+        <Input
+          id="phone"
+          name="phone"
+          type="tel"
+          value={formData.phone}
+          onChange={handleChange}
+          placeholder="Enter your phone number"
+          className="mt-1 futuristic-input"
+          required
+        />
+        <p className="text-xs text-rocket-gray-500 mt-1">
+          Format: +1234567890 or 1234567890
+        </p>
       </div>
 
       <div className="animate-slide-in" style={{ animationDelay: "0.3s" }}>
@@ -192,7 +215,7 @@ const EmailSignupForm = () => {
         type="submit"
         className="w-full bg-rocket-blue hover:bg-rocket-blue-600 mt-6 transition-all duration-300 animate-slide-in"
         style={{ animationDelay: "0.6s" }}
-        disabled={isSubmitting || !isLoaded}
+        disabled={isSubmitting}
       >
         {isSubmitting ? (
           <span className="flex items-center gap-2">

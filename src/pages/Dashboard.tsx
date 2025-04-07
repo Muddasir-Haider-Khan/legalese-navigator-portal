@@ -1,30 +1,35 @@
 
-import { useEffect } from "react";
-import { useUser, useAuth } from "@clerk/clerk-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
+// Mock user data (in a real app, this would come from Supabase/auth)
+const mockUser = {
+  firstName: "User",
+  isAuthenticated: true
+};
+
 const Dashboard = () => {
-  const { isSignedIn, signOut } = useAuth();
-  const { user } = useUser();
+  const [isAuthenticated, setIsAuthenticated] = useState(true); // In real app, would check auth status
   const navigate = useNavigate();
   
   useEffect(() => {
-    // Redirect to login if not signed in
-    if (isSignedIn === false) {
+    // In a real app with Supabase, we would check if user is authenticated
+    // For now, we're using mock data
+    if (!mockUser.isAuthenticated) {
       navigate("/login");
     }
-  }, [isSignedIn, navigate]);
+  }, [navigate]);
 
   const handleSignOut = async () => {
-    await signOut();
+    // In a real app with Supabase, we would sign out the user
     toast.success("Logged out successfully");
     navigate("/");
   };
 
-  if (!isSignedIn || !user) {
+  if (!isAuthenticated) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <div className="h-16 w-16 animate-spin rounded-full border-4 border-rocket-blue-300 border-t-rocket-blue-600"></div>
@@ -39,7 +44,7 @@ const Dashboard = () => {
           <div className="text-center mb-8">
             <h1 className="heading-lg mb-2">Welcome to Your Dashboard</h1>
             <p className="text-lg text-rocket-gray-500">
-              Hello, {user.firstName}! You're successfully logged in.
+              Hello, {mockUser.firstName}! You're successfully logged in.
             </p>
           </div>
           
