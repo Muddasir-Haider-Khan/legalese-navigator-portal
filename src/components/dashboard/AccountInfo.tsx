@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Pencil, Save, KeyRound, LogOut } from "lucide-react";
+import { User, Pencil, Save, KeyRound, LogOut, CheckCircle } from "lucide-react";
 
 interface User {
   firstName: string;
@@ -27,7 +27,9 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
 
   const handleSave = () => {
     // In a real app, we would send this data to the backend
-    toast.success("Profile information updated!");
+    toast.success("Profile information updated successfully", {
+      icon: <CheckCircle className="h-4 w-4 text-green-500" />
+    });
     setIsEditing(false);
   };
 
@@ -46,8 +48,8 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
         </Button>
       </div>
 
-      <Card className="border border-border/40 shadow-sm">
-        <CardHeader className="bg-muted/50">
+      <Card className="border border-border/40 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="bg-muted/50 dark:bg-rocket-gray-800/50">
           <div className="flex items-center gap-2">
             <User className="h-5 w-5 text-primary" />
             <CardTitle>Personal Information</CardTitle>
@@ -61,7 +63,7 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 disabled={!isEditing}
-                className="w-full"
+                className={`w-full ${isEditing ? "border-primary/50 focus:border-primary" : ""}`}
               />
             </div>
             <div className="space-y-2">
@@ -70,7 +72,7 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 disabled={!isEditing}
-                className="w-full"
+                className={`w-full ${isEditing ? "border-primary/50 focus:border-primary" : ""}`}
               />
             </div>
             <div className="space-y-2">
@@ -80,7 +82,7 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={!isEditing}
-                className="w-full"
+                className={`w-full ${isEditing ? "border-primary/50 focus:border-primary" : ""}`}
               />
             </div>
             <div className="space-y-2">
@@ -90,7 +92,7 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 disabled={!isEditing}
-                className="w-full"
+                className={`w-full ${isEditing ? "border-primary/50 focus:border-primary" : ""}`}
               />
             </div>
           </div>
@@ -101,13 +103,17 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
                 <Button variant="outline" onClick={() => setIsEditing(false)} className="mr-2">
                   Cancel
                 </Button>
-                <Button onClick={handleSave} className="flex items-center gap-2">
+                <Button onClick={handleSave} className="flex items-center gap-2 bg-primary hover:bg-primary/90 transition-colors">
                   <Save className="h-4 w-4" />
                   Save Changes
                 </Button>
               </>
             ) : (
-              <Button variant="outline" onClick={() => setIsEditing(true)} className="flex items-center gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsEditing(true)} 
+                className="flex items-center gap-2 hover:bg-primary/10 hover:text-primary transition-colors"
+              >
                 <Pencil className="h-4 w-4" />
                 Edit Profile
               </Button>
@@ -116,8 +122,8 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
         </CardContent>
       </Card>
 
-      <Card className="border border-border/40 shadow-sm">
-        <CardHeader className="bg-muted/50">
+      <Card className="border border-border/40 shadow-sm hover:shadow-md transition-all duration-300">
+        <CardHeader className="bg-muted/50 dark:bg-rocket-gray-800/50">
           <div className="flex items-center gap-2">
             <KeyRound className="h-5 w-5 text-primary" />
             <CardTitle>Security</CardTitle>
@@ -125,7 +131,10 @@ const AccountInfo = ({ user, onSignOut }: AccountInfoProps) => {
         </CardHeader>
         <CardContent className="p-6">
           <p className="text-muted-foreground mb-4">Change your password or update your security settings.</p>
-          <Button variant="outline" className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2 hover:bg-primary/10 hover:text-primary transition-colors"
+          >
             Change Password
           </Button>
         </CardContent>

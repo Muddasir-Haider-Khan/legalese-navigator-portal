@@ -56,18 +56,21 @@ const Dashboard = () => {
         return (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold tracking-tight">Welcome, {mockUser.firstName}!</h1>
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight">Welcome, {mockUser.firstName}!</h1>
+                <p className="text-muted-foreground">What would you like to do today?</p>
+              </div>
               <div className="px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium">
                 {mockUser.plan} Plan
               </div>
             </div>
             
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100 shadow-sm">
-                <h3 className="text-lg font-semibold text-blue-800">Need legal advice?</h3>
-                <p className="text-blue-600 mt-1 mb-4">Speak with a qualified lawyer today</p>
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/30 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-300">Need legal advice?</h3>
+                <p className="text-blue-600 dark:text-blue-400 mt-1 mb-4">Speak with a qualified lawyer today</p>
                 <button 
-                  className="text-sm font-medium flex items-center text-blue-700 hover:text-blue-800 transition-colors"
+                  className="text-sm font-medium flex items-center text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 transition-colors"
                   onClick={() => setActiveTab("advice")}
                 >
                   Get advice
@@ -76,11 +79,11 @@ const Dashboard = () => {
                   </svg>
                 </button>
               </div>
-              <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-100 shadow-sm">
-                <h3 className="text-lg font-semibold text-purple-800">Schedule a consultation</h3>
-                <p className="text-purple-600 mt-1 mb-4">Book time with one of our lawyers</p>
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-100 dark:border-purple-800/30 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-lg font-semibold text-purple-800 dark:text-purple-300">Schedule a consultation</h3>
+                <p className="text-purple-600 dark:text-purple-400 mt-1 mb-4">Book time with one of our lawyers</p>
                 <button 
-                  className="text-sm font-medium flex items-center text-purple-700 hover:text-purple-800 transition-colors"
+                  className="text-sm font-medium flex items-center text-purple-700 dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-200 transition-colors"
                   onClick={() => setActiveTab("schedule")}
                 >
                   Schedule now
@@ -91,9 +94,9 @@ const Dashboard = () => {
               </div>
             </div>
             
-            <div className="bg-white rounded-xl border shadow-sm p-6">
+            <div className="bg-white dark:bg-rocket-gray-800 rounded-xl border border-border/40 dark:border-rocket-gray-700 shadow-sm p-6">
               <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
-              <div className="flex items-center justify-center h-32 bg-muted/40 rounded-lg border border-dashed">
+              <div className="flex items-center justify-center h-32 bg-muted/40 dark:bg-rocket-gray-700/40 rounded-lg border border-dashed">
                 <p className="text-muted-foreground">No recent activity yet. As you use our services, your actions will appear here.</p>
               </div>
             </div>
@@ -128,8 +131,8 @@ const Dashboard = () => {
             <SidebarContent>
               <div className="px-3 py-4">
                 <div className="mb-6 px-2 flex items-center justify-between">
-                  <h2 className="text-lg font-semibold">Legal Dashboard</h2>
-                  <SidebarTrigger />
+                  <h2 className="text-lg font-semibold text-primary">Legal Dashboard</h2>
+                  <SidebarTrigger className="text-muted-foreground hover:text-foreground transition-colors" />
                 </div>
                 <SidebarMenu>
                   <SidebarMenuItem>
@@ -137,9 +140,9 @@ const Dashboard = () => {
                       isActive={activeTab === "dashboard"}
                       onClick={() => setActiveTab("dashboard")}
                       tooltip="Dashboard"
-                      className="w-full"
+                      className="w-full group transition-colors duration-200"
                     >
-                      <Home className="h-4 w-4" />
+                      <Home className={`h-4 w-4 ${activeTab === "dashboard" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
                       <span>Dashboard</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -148,9 +151,9 @@ const Dashboard = () => {
                       isActive={activeTab === "schedule"}
                       onClick={() => setActiveTab("schedule")}
                       tooltip="Schedule Meeting"
-                      className="w-full"
+                      className="w-full group transition-colors duration-200"
                     >
-                      <Calendar className="h-4 w-4" />
+                      <Calendar className={`h-4 w-4 ${activeTab === "schedule" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
                       <span>Schedule Meeting</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -159,9 +162,9 @@ const Dashboard = () => {
                       isActive={activeTab === "advice"}
                       onClick={() => setActiveTab("advice")}
                       tooltip="Legal Advice"
-                      className="w-full"
+                      className="w-full group transition-colors duration-200"
                     >
-                      <MessageCircle className="h-4 w-4" />
+                      <MessageCircle className={`h-4 w-4 ${activeTab === "advice" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
                       <span>Legal Advice</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -170,9 +173,9 @@ const Dashboard = () => {
                       isActive={activeTab === "upgrade"}
                       onClick={() => setActiveTab("upgrade")}
                       tooltip="Plan Upgrade"
-                      className="w-full"
+                      className="w-full group transition-colors duration-200"
                     >
-                      <CreditCard className="h-4 w-4" />
+                      <CreditCard className={`h-4 w-4 ${activeTab === "upgrade" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
                       <span>Plan Upgrade</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -181,9 +184,9 @@ const Dashboard = () => {
                       isActive={activeTab === "account"}
                       onClick={() => setActiveTab("account")}
                       tooltip="Account"
-                      className="w-full"
+                      className="w-full group transition-colors duration-200"
                     >
-                      <User className="h-4 w-4" />
+                      <User className={`h-4 w-4 ${activeTab === "account" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
                       <span>Account</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
