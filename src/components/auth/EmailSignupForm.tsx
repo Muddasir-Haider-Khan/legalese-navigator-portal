@@ -32,6 +32,7 @@ const EmailSignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -51,21 +52,25 @@ const EmailSignupForm = () => {
     e.preventDefault();
     
     setIsSubmitting(true);
+    setErrorMessage("");
 
     // Basic validation
     if (!formData.fullName || !formData.email || !formData.password || !formData.phone) {
+      setErrorMessage("Please fill in all required fields");
       toast.error("Please fill in all required fields");
       setIsSubmitting(false);
       return;
     }
 
     if (formData.password !== formData.confirmPassword) {
+      setErrorMessage("Passwords do not match");
       toast.error("Passwords do not match");
       setIsSubmitting(false);
       return;
     }
 
     if (!agreedToTerms) {
+      setErrorMessage("Please agree to the Terms and Conditions");
       toast.error("Please agree to the Terms and Conditions");
       setIsSubmitting(false);
       return;
@@ -73,6 +78,7 @@ const EmailSignupForm = () => {
 
     // Phone validation
     if (!validatePhoneNumber(formData.phone)) {
+      setErrorMessage("Please enter a valid phone number");
       toast.error("Please enter a valid phone number");
       setIsSubmitting(false);
       return;
@@ -82,15 +88,40 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Here we would normally register with Supabase
-      // For now, just simulate a successful registration
-      toast.success("Account created successfully!");
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1500);
+      // Register with Supabase
+      const { data, error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            phone: formData.phone,
+            full_name: formData.fullName
+          }
+        }
+      });
+
+      if (error) {
+        console.error("Error during signup:", error);
+        setErrorMessage(error.message);
+        toast.error(error.message || "Failed to create account. Please try again.");
+      } else {
+        toast.success("Account created successfully!");
+        console.log("Signup successful:", data);
+        
+        // Check if email confirmation is required
+        if (data.session) {
+          // Auto-login successful
+          navigate("/dashboard");
+        } else {
+          // Email confirmation required
+          navigate("/verify-email");
+        }
+      }
     } catch (error) {
-      console.error("Error during signup:", error);
-      toast.error("Failed to create account. Please try again.");
+      console.error("Exception during signup:", error);
+      toast.error("An unexpected error occurred");
     } finally {
       setIsSubmitting(false);
     }
@@ -98,6 +129,12 @@ const EmailSignupForm = () => {
 
   return (
     <form onSubmit={handleSignup} className="space-y-5">
+      {errorMessage && (
+        <div className="p-3 bg-red-50/30 border border-red-200/30 text-red-400 text-sm rounded-md animate-slide-in">
+          {errorMessage}
+        </div>
+      )}
+
       <div className="animate-slide-in" style={{ animationDelay: "0.1s" }}>
         <Label htmlFor="fullName">Full Name</Label>
         <Input
