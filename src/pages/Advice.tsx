@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { MessageSquare, ChevronRight, Send } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const questions = [
   {
@@ -95,16 +94,10 @@ const Advice = () => {
   const handleSubmit = () => {
     setIsSubmitting(true);
     
-    // Include the final response
     const finalResponses = {
       ...responses,
       [questions[currentQuestion].id]: currentResponse
     };
-    
-    // In a real scenario, this is where we'd send the data to Supabase
-    // const { data, error } = await supabase
-    //   .from("legal_advice_responses")
-    //   .insert([finalResponses]);
     
     setTimeout(() => {
       setIsSubmitting(false);
@@ -127,6 +120,16 @@ const Advice = () => {
             <p className="text-lg text-rocket-gray-500">
               Answer a few questions to get personalized legal guidance for your situation.
             </p>
+            
+            <div className="mt-6">
+              <Link to="/signup">
+                <Button 
+                  className="bg-rocket-blue hover:bg-rocket-blue-600"
+                >
+                  Sign Up for Immediate Assistance
+                </Button>
+              </Link>
+            </div>
           </div>
 
           <div className="bg-white rounded-lg shadow-lg border border-rocket-gray-100 p-6 md:p-8">
@@ -252,20 +255,22 @@ const Advice = () => {
                 Back
               </Button>
 
-              <Button
-                type="button"
-                onClick={handleNext}
-                disabled={isSubmitting}
-                className="bg-rocket-blue hover:bg-rocket-blue-600 gap-2"
-              >
-                {currentQuestion === questions.length - 1 ? (
-                  isSubmitting ? "Submitting..." : "Submit"
-                ) : (
-                  <>
-                    Next <ChevronRight className="h-4 w-4" />
-                  </>
-                )}
-              </Button>
+              <Link to="/signup">
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={isSubmitting}
+                  className="bg-rocket-blue hover:bg-rocket-blue-600 gap-2"
+                >
+                  {currentQuestion === questions.length - 1 ? (
+                    isSubmitting ? "Submitting..." : "Submit"
+                  ) : (
+                    <>
+                      Next <ChevronRight className="h-4 w-4" />
+                    </>
+                  )}
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
