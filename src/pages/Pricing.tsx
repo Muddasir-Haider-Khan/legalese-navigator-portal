@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "@/components/layout/Layout";
@@ -210,16 +211,18 @@ const Pricing = () => {
                       </div>
                     </div>
                     
-                    <Button 
-                      className={`w-full ${
-                        plan.popular
-                          ? "bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white"
-                          : ""
-                      } mb-8`}
-                      variant={plan.popular ? "default" : "outline"}
-                    >
-                      {plan.callToAction}
-                    </Button>
+                    <Link to="/signup">
+                      <Button 
+                        className={`w-full ${
+                          plan.popular
+                            ? "bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white"
+                            : ""
+                        } mb-8`}
+                        variant={plan.popular ? "default" : "outline"}
+                      >
+                        {plan.callToAction}
+                      </Button>
+                    </Link>
                     
                     <div className="space-y-3">
                       {plan.features.map((feature, index) => (
@@ -324,7 +327,7 @@ const Pricing = () => {
               </p>
             </div>
             
-            <Link to="/contact">
+            <Link to="/signup">
               <Button size="lg" className="bg-white text-rocket-blue-800 hover:bg-rocket-gray-100">
                 Get Free Consultation
               </Button>

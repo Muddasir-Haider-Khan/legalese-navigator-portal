@@ -19,15 +19,17 @@ export default function AskLawyerHero() {
             </p>
             
             <div className="flex flex-wrap gap-4 pt-4">
-              <Link to="/pricing">
+              <Link to="/signup">
                 <Button className="group" size="lg">
                   Start Chat Now
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg">
-                Schedule Video Call
-              </Button>
+              <Link to="/signup">
+                <Button variant="outline" size="lg">
+                  Schedule Video Call
+                </Button>
+              </Link>
             </div>
             
             <div className="flex items-center gap-2 text-rocket-blue-500 dark:text-rocket-blue-300 font-medium">
