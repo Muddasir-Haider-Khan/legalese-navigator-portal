@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, InfoIcon } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -50,36 +51,51 @@ const Login = () => {
 
   return (
     <Layout>
-      <div className="container-custom py-12 md:py-16">
-        <div className="max-w-md mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="heading-md mb-2">Welcome Back</h1>
+      <div className="container-custom py-16 md:py-20 min-h-[80vh] flex items-center relative overflow-hidden">
+        {/* Background effects */}
+        <div className="fixed inset-0 bg-rocket-blue-950 z-0"></div>
+        <div className="absolute -top-40 -left-40 w-[100vh] h-[100vh] bg-rocket-blue-200/10 rounded-full opacity-20 blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full opacity-30 blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/3 w-[70vh] h-[70vh] bg-rocket-blue-400/10 rounded-full opacity-20 blur-3xl"></div>
+        
+        <div className="w-full max-w-md mx-auto relative z-10">
+          <div className="text-center mb-8 animate-fade-in">
+            <h1 className="heading-md mb-2 text-gradient">Welcome Back</h1>
             <p className="text-rocket-gray-500">
               Sign in to access your legal documents and advice history.
             </p>
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg border border-rocket-gray-100 p-6 md:p-8 dark:bg-rocket-blue-800 dark:border-rocket-blue-700">
+          <div className="glass-card rounded-xl shadow-xl border border-rocket-blue-50/20 p-8 animate-scale-in backdrop-blur-lg bg-white/5">
+            <Alert className="mb-6 bg-amber-50/10 border-amber-300/20 animate-slide-in" style={{ animationDelay: "0.025s" }}>
+              <InfoIcon className="h-4 w-4 text-amber-400" />
+              <AlertDescription className="text-xs text-amber-200">
+                Sign in to access your account. Your information is securely stored in Supabase.
+              </AlertDescription>
+            </Alert>
+
             <form onSubmit={handleLogin} className="space-y-6">
               {errorMessage && (
-                <div className="p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-md dark:bg-red-900/30 dark:border-red-800 dark:text-red-300">
+                <div className="p-3 bg-red-900/30 border border-red-800 text-red-300 text-sm rounded-md">
                   {errorMessage}
                 </div>
               )}
 
               <div>
+                <label htmlFor="email" className="block text-sm font-medium text-white mb-1">Email</label>
                 <Input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="mt-1"
+                  className="mt-1 bg-white/10 border-white/20 text-white"
                   required
                 />
               </div>
 
               <div>
+                <label htmlFor="password" className="block text-sm font-medium text-white mb-1">Password</label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -87,12 +103,12 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="mt-1 pr-10"
+                    className="mt-1 pr-10 bg-white/10 border-white/20 text-white"
                     required
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-rocket-gray-500"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-rocket-gray-300 hover:text-white"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -106,14 +122,15 @@ const Login = () => {
                     id="remember-me"
                     checked={rememberMe}
                     onCheckedChange={(checked) => setRememberMe(!!checked)}
+                    className="border-white/30 data-[state=checked]:bg-rocket-blue-500"
                   />
-                  <label htmlFor="remember-me" className="text-sm cursor-pointer">
+                  <label htmlFor="remember-me" className="text-sm cursor-pointer text-white">
                     Remember me
                   </label>
                 </div>
                 <Link
                   to="/forgot-password"
-                  className="text-rocket-blue-500 text-sm hover:underline"
+                  className="text-rocket-blue-300 text-sm hover:underline hover:text-rocket-blue-200"
                 >
                   Forgot password?
                 </Link>
@@ -121,7 +138,8 @@ const Login = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-rocket-blue-600 hover:bg-rocket-blue-700 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600"
+                className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white animate-fade-in"
+                style={{ animationDelay: "0.5s" }}
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -139,20 +157,20 @@ const Login = () => {
               
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-rocket-gray-200 dark:border-rocket-gray-700"></div>
+                  <div className="w-full border-t border-white/10"></div>
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white px-2 text-rocket-gray-500 dark:bg-rocket-blue-800 dark:text-rocket-gray-400">Or continue with</span>
+                  <span className="px-2 text-rocket-gray-400 bg-transparent">Or continue with</span>
                 </div>
               </div>
               
               <GoogleAuthButton isSubmitting={isSubmitting} />
             </form>
 
-            <div className="mt-6 text-center">
-              <p className="text-rocket-gray-500 dark:text-rocket-gray-400">
+            <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: "0.7s" }}>
+              <p className="text-rocket-gray-400">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-rocket-blue-500 hover:underline">
+                <Link to="/signup" className="text-rocket-blue-300 hover:underline hover:text-rocket-blue-200 transition-colors">
                   Sign up
                 </Link>
               </p>
