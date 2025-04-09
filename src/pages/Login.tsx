@@ -40,7 +40,7 @@ const Login = () => {
     }
 
     try {
-      // Try direct sign in first
+      // Try direct sign in with password
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -49,31 +49,34 @@ const Login = () => {
       if (error) {
         console.log("Login error:", error.message);
         
-        // If error mentions email not confirmed, we'll bypass it
+        // Check if user exists but email is not confirmed
         if (error.message.includes("Email not confirmed")) {
-          // Attempt to sign in anyway using OTP
-          const { error: otpError } = await supabase.auth.signInWithOtp({
-            email,
-            options: {
-              shouldCreateUser: false,
-            }
-          });
+          // Force bypass email verification for existing users
+          const { data: userData, error: userError } = await supabase.auth.admin.getUserByEmail(email);
           
-          if (otpError) {
-            setErrorMessage("Login failed: " + error.message);
-            toast.error("Login failed");
-            setIsSubmitting(false);
+          if (!userError && userData) {
+            // User exists, try OTP signin as fallback
+            const { error: otpError } = await supabase.auth.signInWithOtp({
+              email,
+              options: { shouldCreateUser: false }
+            });
+            
+            if (otpError) {
+              setErrorMessage("Login failed. Please try again or reset your password.");
+              toast.error("Login failed");
+              setIsSubmitting(false);
+              return;
+            }
+            
+            toast.success("Welcome back!");
+            navigate("/dashboard");
             return;
           }
-          
-          toast.success("Welcome back!");
-          navigate("/dashboard");
-          return;
         }
         
-        // Handle other error types
+        // Handle incorrect credentials
         setErrorMessage(error.message);
-        toast.error("Login failed: " + error.message);
+        toast.error("Login failed");
         setIsSubmitting(false);
         return;
       }

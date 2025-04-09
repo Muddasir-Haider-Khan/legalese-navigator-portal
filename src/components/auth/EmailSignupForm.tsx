@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -98,8 +97,22 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Create the account with Supabase
-      const { error: signUpError } = await supabase.auth.signUp({
+      // First try: Direct sign-in with password (works if user already exists)
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+      
+      if (!signInError && signInData.session) {
+        // User already exists and credentials are correct
+        localStorage.setItem("lastLoginEmail", formData.email);
+        toast.success("Welcome back! You've been automatically signed in.");
+        navigate("/dashboard");
+        return;
+      }
+      
+      // If sign-in fails, create a new account
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -108,7 +121,8 @@ const EmailSignupForm = () => {
             last_name: lastName,
             phone: formData.phone,
             full_name: formData.fullName
-          }
+          },
+          emailRedirectTo: window.location.origin + '/dashboard'
         }
       });
 
@@ -119,41 +133,44 @@ const EmailSignupForm = () => {
         setIsSubmitting(false);
         return;
       }
-
-      // Immediately sign in the user after signup
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      if (signInError) {
-        console.error("Sign in error:", signInError.message);
-        
-        // If can't sign in directly, try creating a session with OTP
-        const { error: otpError } = await supabase.auth.signInWithOtp({
+      
+      // If signup was successful but we don't have a session yet, try to sign in
+      if (!signUpData.session) {
+        // Try explicit sign in with password
+        const { data: manualSignInData, error: manualSignInError } = await supabase.auth.signInWithPassword({
           email: formData.email,
-          options: {
-            shouldCreateUser: false
-          }
+          password: formData.password,
         });
         
-        if (otpError) {
-          setErrorMessage("Error signing in after account creation. Please try logging in manually.");
-          toast.error("Authentication error", {
-            description: "Your account was created but there was an issue logging you in automatically."
+        if (manualSignInError) {
+          console.error("Manual sign in error:", manualSignInError);
+          // Final fallback - try OTP method
+          const { error: otpError } = await supabase.auth.signInWithOtp({
+            email: formData.email,
+            options: { shouldCreateUser: false }
           });
-          setIsSubmitting(false);
-          setTimeout(() => navigate("/login"), 2000);
+          
+          if (otpError) {
+            setErrorMessage("Account created but couldn't log you in automatically. Please log in manually.");
+            toast.success("Account created!", {
+              description: "Please log in with your credentials."
+            });
+            setIsSubmitting(false);
+            return;
+          }
+        } else if (manualSignInData.session) {
+          localStorage.setItem("lastLoginEmail", formData.email);
+          toast.success("Welcome aboard! 🎉");
+          navigate("/dashboard");
           return;
         }
+      } else {
+        // Session available directly after signup
+        localStorage.setItem("lastLoginEmail", formData.email);
+        toast.success("Welcome aboard! 🎉");
+        navigate("/dashboard");
+        return;
       }
-
-      // Successfully signed up and signed in
-      localStorage.setItem("lastLoginEmail", formData.email);
-      toast.success("Welcome aboard! 🎉", {
-        description: "Your account has been created successfully."
-      });
-      navigate("/dashboard");
       
     } catch (error) {
       console.error("Exception during signup:", error);

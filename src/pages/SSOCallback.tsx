@@ -12,30 +12,27 @@ const SSOCallback = () => {
     // Handle the OAuth callback with Supabase
     const handleOAuthCallback = async () => {
       try {
-        // First try: Get the current session
+        // First: Check if we already have a session
         const { data, error } = await supabase.auth.getSession();
         
-        if (error) {
-          console.error("Session error:", error);
-          setError("Authentication error. Please try again.");
-          toast.error("Authentication failed");
-          setTimeout(() => navigate("/login"), 2000);
-          return;
-        }
-        
         if (data.session) {
-          // Successfully authenticated
+          // Already authenticated
           toast.success("Successfully authenticated!");
           navigate("/dashboard");
           return;
         }
-
-        // Second try: Process URL parameters (hash-based flow)
+        
+        if (error) {
+          console.error("Session error:", error);
+        }
+        
+        // Second: Try to process URL parameters for any auth method
+        const url = new URL(window.location.href);
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
         const accessToken = hashParams.get("access_token");
         
         if (accessToken) {
-          // Set the session with the access token
+          // Handle implicit flow tokens
           const { error: setSessionError } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: hashParams.get("refresh_token") || "",
@@ -43,65 +40,53 @@ const SSOCallback = () => {
           
           if (setSessionError) {
             console.error("Set session error:", setSessionError);
-            setError("Failed to set session. Please try again.");
-            toast.error("Authentication failed");
-            setTimeout(() => navigate("/login"), 2000);
-            return;
-          }
-          
-          toast.success("Successfully authenticated!");
-          navigate("/dashboard");
-          return;
-        }
-        
-        // Third try: Exchange code for session (PKCE flow)
-        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(window.location.search);
-        
-        if (exchangeError) {
-          console.error("Code exchange error:", exchangeError);
-          
-          // Even if we have an error exchanging the code, try to get the session again
-          const { data: sessionData } = await supabase.auth.getSession();
-          if (sessionData.session) {
+          } else {
+            // Success with implicit flow
             toast.success("Successfully authenticated!");
             navigate("/dashboard");
             return;
           }
+        }
+        
+        // Third: Try code exchange (PKCE flow)
+        if (url.searchParams.get("code")) {
+          const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(window.location.href);
           
-          setError("Authentication error. Please try again.");
-          toast.error("Authentication failed");
-          setTimeout(() => navigate("/login"), 2000);
-          return;
-        }
-        
-        // Fourth try: After code exchange, check for session
-        const { data: sessionData } = await supabase.auth.getSession();
-        if (sessionData.session) {
-          toast.success("Successfully authenticated!");
-          navigate("/dashboard");
-          return;
-        }
-        
-        // Fifth try: Try OTP as a last resort
-        const email = localStorage.getItem("lastLoginEmail");
-        if (email) {
-          const { error: otpError } = await supabase.auth.signInWithOtp({
-            email,
-            options: {
-              shouldCreateUser: false
+          if (exchangeError) {
+            console.error("Code exchange error:", exchangeError);
+          } else {
+            // Check if we now have a valid session
+            const { data: sessionData } = await supabase.auth.getSession();
+            if (sessionData.session) {
+              toast.success("Successfully authenticated!");
+              navigate("/dashboard");
+              return;
             }
-          });
-          
-          if (!otpError) {
-            toast.success("Authentication successful!");
-            setTimeout(() => navigate("/dashboard"), 1000);
-            return;
           }
         }
         
-        // No authentication method worked
-        console.error("No authentication data found");
-        setError("No authentication data found. Please try again.");
+        // Fourth: Last resort - check email from localStorage and try OTP
+        const email = localStorage.getItem("lastLoginEmail");
+        if (email) {
+          try {
+            const { error: otpError } = await supabase.auth.signInWithOtp({
+              email,
+              options: { shouldCreateUser: false }
+            });
+            
+            if (!otpError) {
+              toast.success("Authentication successful!");
+              navigate("/dashboard");
+              return;
+            }
+          } catch (e) {
+            console.error("OTP fallback error:", e);
+          }
+        }
+        
+        // If all methods fail, redirect to login
+        console.error("No authentication method worked");
+        setError("Authentication failed. Please try logging in again.");
         toast.error("Authentication failed");
         setTimeout(() => navigate("/login"), 2000);
       } catch (err) {
