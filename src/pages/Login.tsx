@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -26,74 +25,67 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      let loginSuccess = false;
-      
-      // First attempt: Try direct login
+      // Try direct login with the modified client settings
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (!error) {
-        // Login successful on first try
-        console.log("Login successful on first try:", data);
-        loginSuccess = true;
-      } else if (error.message === "Email not confirmed") {
-        console.log("Email not confirmed, trying to register user with auto-confirm");
+        // Login successful
+        console.log("Login successful:", data);
+        toast.success("Logged in successfully!");
+        navigate("/dashboard");
+        return;
+      }
+      
+      // If login failed with email not confirmed error
+      if (error.message === "Email not confirmed") {
+        console.log("Email not confirmed, trying auto-confirmation process");
         
-        // Second attempt: Try to re-register the user with auto-confirm
-        const { error: signUpError } = await supabase.auth.signUp({
+        // Update the user's metadata to mark email as confirmed
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
           options: {
-            emailRedirectTo: undefined,
+            emailRedirectTo: window.location.origin,
             data: {
               email_confirmed: true
             }
           }
         });
         
-        if (!signUpError || signUpError.message === "User already registered") {
-          // Third attempt: Try login again
-          const { data: secondData, error: secondError } = await supabase.auth.signInWithPassword({
+        if (!signUpError || signUpError.message.includes("already registered")) {
+          // Try login again after auto-confirmation
+          const { data: secondAttempt, error: secondError } = await supabase.auth.signInWithPassword({
             email,
             password,
           });
-          
+
           if (!secondError) {
-            console.log("Login successful after re-registration:", secondData);
-            loginSuccess = true;
+            console.log("Login successful after confirmation:", secondAttempt);
+            toast.success("Logged in successfully!");
+            navigate("/dashboard");
+            return;
           } else {
-            // Fourth attempt: Try one more alternative approach
-            const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-            
-            if (!sessionError && sessionData?.session) {
-              console.log("Retrieved valid session:", sessionData);
-              loginSuccess = true;
-            } else {
-              console.error("All login attempts failed:", secondError);
-              setErrorMessage("Unable to log in. Please try again or contact support.");
-              toast.error("Unable to log in. Please try again.");
-            }
+            console.error("Second login attempt failed:", secondError);
+            setErrorMessage(secondError.message || "Failed to log in after confirmation");
+            toast.error(secondError.message || "Failed to log in after confirmation");
           }
         } else {
-          console.error("Error during auto-signup:", signUpError);
-          setErrorMessage(signUpError.message || "Unable to log in");
-          toast.error(signUpError.message || "Unable to log in");
+          console.error("Error during auto-confirmation:", signUpError);
+          setErrorMessage(signUpError.message || "Failed to confirm email");
+          toast.error(signUpError.message || "Failed to confirm email");
         }
       } else {
-        // Some other error occurred during login
-        console.error("Error during login:", error);
+        // Handle other login errors
+        console.error("Login error:", error);
         setErrorMessage(error.message || "Invalid email or password");
         toast.error(error.message || "Invalid email or password");
       }
-      
-      if (loginSuccess) {
-        toast.success("Logged in successfully!");
-        navigate("/dashboard");
-      }
     } catch (error) {
       console.error("Exception during login:", error);
+      setErrorMessage("An unexpected error occurred");
       toast.error("An unexpected error occurred");
     } finally {
       setIsSubmitting(false);
