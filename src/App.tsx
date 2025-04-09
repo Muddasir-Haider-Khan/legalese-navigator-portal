@@ -9,19 +9,15 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { useEffect } from "react";
 
 // Lazy load pages for better performance
-const Index = lazy(() => import("./pages/Index"));
-const Documents = lazy(() => import("./pages/Documents"));
-const Advice = lazy(() => import("./pages/Advice"));
-const Articles = lazy(() => import("./pages/Articles"));
-const Contact = lazy(() => import("./pages/Contact"));
+const LandingPage = lazy(() => import("./pages/LandingPage"));
+const DocumentTemplates = lazy(() => import("./pages/DocumentTemplates"));
+const ContactLawyer = lazy(() => import("./pages/ContactLawyer"));
 const Login = lazy(() => import("./pages/Login"));
-const Signup = lazy(() => import("./pages/Signup"));
+const Register = lazy(() => import("./pages/Register"));
+const UserDashboard = lazy(() => import("./pages/UserDashboard"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const AskALawyer = lazy(() => import("./pages/AskALawyer"));
-const Pricing = lazy(() => import("./pages/Pricing"));
-const Dashboard = lazy(() => import("./pages/Dashboard"));
 const SSOCallback = lazy(() => import("./pages/SSOCallback"));
-// Removed VerifyEmail import as we no longer need it
 
 // Loading component for suspense fallback
 const PageLoader = () => (
@@ -63,18 +59,15 @@ const App = () => (
           <ScrollToTop />
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/documents" element={<Documents />} />
-              <Route path="/advice" element={<Advice />} />
-              <Route path="/articles" element={<Articles />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/documents" element={<DocumentTemplates />} />
+              <Route path="/contact-lawyer" element={<ContactLawyer />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/ask-a-lawyer" element={<AskALawyer />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/signup" element={<Register />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/user-dashboard" element={<UserDashboard />} />
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/sso-callback" element={<SSOCallback />} />
-              {/* Removed verify-email route */}
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
