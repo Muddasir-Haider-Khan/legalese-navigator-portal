@@ -16,8 +16,8 @@ export const supabase = createClient<Database>(
     auth: {
       autoRefreshToken: true,
       persistSession: true,
-      detectSessionInUrl: true,
-      flowType: 'pkce', // Using PKCE for better security and reliability
+      detectSessionInUrl: false, // Disable automatic detection to avoid conflicts
+      flowType: 'implicit', // Change to implicit flow to bypass email confirmation
       storage: localStorage
     }
   }

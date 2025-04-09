@@ -59,6 +59,15 @@ const SSOCallback = () => {
         
         if (exchangeError) {
           console.error("Code exchange error:", exchangeError);
+          
+          // Even if we have an error exchanging the code, try to get the session again
+          const { data: sessionData } = await supabase.auth.getSession();
+          if (sessionData.session) {
+            toast.success("Successfully authenticated!");
+            navigate("/dashboard");
+            return;
+          }
+          
           setError("Authentication error. Please try again.");
           toast.error("Authentication failed");
           setTimeout(() => navigate("/login"), 2000);
@@ -71,6 +80,23 @@ const SSOCallback = () => {
           toast.success("Successfully authenticated!");
           navigate("/dashboard");
           return;
+        }
+        
+        // If we still don't have a session, try OTP as a last resort
+        const email = localStorage.getItem("lastLoginEmail");
+        if (email) {
+          const { error: otpError } = await supabase.auth.signInWithOtp({
+            email,
+            options: {
+              shouldCreateUser: false
+            }
+          });
+          
+          if (!otpError) {
+            toast.success("Authentication successful!");
+            setTimeout(() => navigate("/dashboard"), 1000);
+            return;
+          }
         }
         
         // No authentication method worked

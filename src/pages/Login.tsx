@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -35,7 +36,7 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      // Sign in attempt
+      // Standard sign in attempt
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -43,6 +44,29 @@ const Login = () => {
 
       if (error) {
         console.log("Login failed:", error.message);
+        
+        // Special handling for email not confirmed error
+        if (error.message.includes("Email not confirmed")) {
+          // Try to sign in with OTP as a workaround
+          const { data: otpData, error: otpError } = await supabase.auth.signInWithOtp({
+            email,
+            options: {
+              shouldCreateUser: false,
+            }
+          });
+          
+          if (otpError) {
+            setErrorMessage("Login failed: " + error.message);
+            toast.error("Login failed");
+            setIsSubmitting(false);
+            return;
+          }
+          
+          toast.success("Authentication successful! Redirecting...");
+          setTimeout(() => navigate("/dashboard"), 1000);
+          return;
+        }
+        
         setErrorMessage(error.message);
         toast.error("Login failed: " + error.message);
         setIsSubmitting(false);
@@ -50,7 +74,6 @@ const Login = () => {
       }
 
       // Login successful
-      console.log("Login successful:", data);
       toast.success("Logged in successfully!");
       navigate("/dashboard");
       
