@@ -17,7 +17,7 @@ export const supabase = createClient<Database>(
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: false,
-      flowType: 'pkce', // Changed to pkce for better security while still allowing auto login
+      flowType: 'implicit', // Changed to implicit for simpler auth flow without email confirmation
       storageKey: 'sb-auth-token',
       storage: localStorage
     }

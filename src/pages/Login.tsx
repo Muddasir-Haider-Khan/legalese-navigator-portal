@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -25,7 +26,7 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      // Simple direct login attempt
+      // Sign in attempt
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -34,43 +35,42 @@ const Login = () => {
       if (error) {
         console.log("Login failed:", error.message);
         
-        if (error.message.includes("Invalid login")) {
-          setErrorMessage("Invalid email or password. Please check your credentials.");
-          toast.error("Invalid email or password");
-        } else if (error.message.includes("Email not confirmed")) {
-          // If we still get email not confirmed error, auto-login the user
-          const { data: sessionData } = await supabase.auth.getSession();
-          
-          if (sessionData?.session) {
-            // We have a session despite the error
-            toast.success("Logged in successfully!");
-            navigate("/dashboard");
-            return;
-          }
-          
-          // Otherwise try to sign up again with auto-confirmed email
-          const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        if (error.message.includes("Email not confirmed") || error.message.includes("Invalid login")) {
+          // Try to sign up the user again with auto-confirmation to bypass email verification
+          const { error: signUpError } = await supabase.auth.signUp({
             email,
             password,
             options: {
-              data: { email_confirmed: true }
+              data: { 
+                email_confirmed: true,
+              }
             }
           });
           
-          // Try login one more time
-          const { error: finalLoginError } = await supabase.auth.signInWithPassword({
-            email,
-            password
-          });
+          if (!signUpError) {
+            // Try signing in again after auto-signup
+            const { error: finalLoginError } = await supabase.auth.signInWithPassword({
+              email,
+              password
+            });
+            
+            if (!finalLoginError) {
+              toast.success("Logged in successfully!");
+              navigate("/dashboard");
+              return;
+            }
+          }
           
-          if (!finalLoginError) {
+          // If we still get an error, try to get the session directly
+          const { data: sessionData } = await supabase.auth.getSession();
+          if (sessionData?.session) {
             toast.success("Logged in successfully!");
             navigate("/dashboard");
             return;
-          } else {
-            setErrorMessage("Unable to log in. Please try again or contact support.");
-            toast.error("Unable to complete login");
           }
+          
+          setErrorMessage("Unable to log in. Please try with different credentials.");
+          toast.error("Unable to complete login");
         } else {
           // Generic error handling
           setErrorMessage(error.message);

@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -87,7 +88,7 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Sign up with automatic login
+      // Enhanced sign up with automatic login and email_confirmed flag
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -98,7 +99,8 @@ const EmailSignupForm = () => {
             phone: formData.phone,
             full_name: formData.fullName,
             email_confirmed: true
-          }
+          },
+          emailRedirectTo: window.location.origin + '/dashboard',
         }
       });
 
@@ -130,13 +132,22 @@ const EmailSignupForm = () => {
         return;
       }
 
-      // Try to sign in immediately after signup
+      // Immediately attempt to login with the new credentials
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
       
       if (signInError) {
+        // Try one last session check in case login didn't work
+        const { data: sessionData } = await supabase.auth.getSession();
+        
+        if (sessionData?.session) {
+          toast.success("Account created! Welcome to the dashboard.");
+          navigate("/dashboard");
+          return;
+        }
+        
         console.error("Error during auto-login:", signInError);
         toast.info("Account created! Please sign in.");
         navigate("/login");
