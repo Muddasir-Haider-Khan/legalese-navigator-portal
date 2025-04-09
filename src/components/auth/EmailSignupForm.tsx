@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,6 +32,16 @@ const EmailSignupForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        navigate("/dashboard");
+      }
+    };
+    checkSession();
+  }, [navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -88,7 +97,7 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Enhanced sign up with automatic login and email_confirmed flag
+      // Sign up with automatic email confirmation
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -107,21 +116,23 @@ const EmailSignupForm = () => {
       if (error) {
         console.error("Error during signup:", error);
         
-        // Handle case where user already exists - try to login directly
+        // Handle user already exists - try to login
         if (error.message.includes("already registered")) {
-          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          toast.info("Account already exists, attempting to log in...");
+          
+          const { error: signInError } = await supabase.auth.signInWithPassword({
             email: formData.email,
             password: formData.password,
           });
           
           if (signInError) {
             setErrorMessage("This email is already registered but the password may be incorrect.");
-            toast.error("Account already exists");
+            toast.error("Login failed");
             setIsSubmitting(false);
             return;
           }
           
-          toast.success("Logged in to existing account!");
+          toast.success("Logged in successfully!");
           navigate("/dashboard");
           return;
         }
@@ -133,13 +144,17 @@ const EmailSignupForm = () => {
       }
 
       // Immediately attempt to login with the new credentials
+      await new Promise(resolve => setTimeout(resolve, 500)); // Short delay to ensure account is ready
+      
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
       
       if (signInError) {
-        // Try one last session check in case login didn't work
+        console.error("Error during auto-login:", signInError);
+        
+        // Check if we actually have a session despite the error
         const { data: sessionData } = await supabase.auth.getSession();
         
         if (sessionData?.session) {
@@ -148,9 +163,19 @@ const EmailSignupForm = () => {
           return;
         }
         
-        console.error("Error during auto-login:", signInError);
-        toast.info("Account created! Please sign in.");
-        navigate("/login");
+        // One more login attempt
+        const { error: finalLoginError } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        });
+        
+        if (!finalLoginError) {
+          toast.success("Account created! Welcome to the dashboard.");
+          navigate("/dashboard");
+        } else {
+          toast.info("Account created! Please sign in on the login page.");
+          navigate("/login");
+        }
       } else {
         toast.success("Account created! Welcome to the dashboard.");
         navigate("/dashboard");
@@ -159,7 +184,6 @@ const EmailSignupForm = () => {
       console.error("Exception during signup:", error);
       toast.error("An unexpected error occurred");
       setErrorMessage("An unexpected error occurred");
-    } finally {
       setIsSubmitting(false);
     }
   };

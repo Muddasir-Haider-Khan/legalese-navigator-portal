@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -35,44 +34,54 @@ const Login = () => {
       if (error) {
         console.log("Login failed:", error.message);
         
+        // If error is about email confirmation or invalid login, try to sign up
         if (error.message.includes("Email not confirmed") || error.message.includes("Invalid login")) {
-          // Try to sign up the user again with auto-confirmation to bypass email verification
+          // Register user with auto-confirmation
           const { error: signUpError } = await supabase.auth.signUp({
             email,
             password,
             options: {
               data: { 
                 email_confirmed: true,
-              }
+              },
+              emailRedirectTo: window.location.origin + '/dashboard',
             }
           });
           
-          if (!signUpError) {
-            // Try signing in again after auto-signup
-            const { error: finalLoginError } = await supabase.auth.signInWithPassword({
+          if (signUpError) {
+            // If signup failed, try one more login attempt
+            const { error: retryError } = await supabase.auth.signInWithPassword({
               email,
-              password
+              password,
             });
             
-            if (!finalLoginError) {
+            if (retryError) {
+              setErrorMessage("Unable to log in. Please check your credentials.");
+              toast.error("Login failed");
+            } else {
+              // Login successful on retry
               toast.success("Logged in successfully!");
               navigate("/dashboard");
               return;
             }
+          } else {
+            // Now try to immediately login with the new account
+            const { error: loginAfterSignupError } = await supabase.auth.signInWithPassword({
+              email,
+              password,
+            });
+            
+            if (!loginAfterSignupError) {
+              toast.success("Account created and logged in!");
+              navigate("/dashboard");
+              return;
+            } else {
+              setErrorMessage("Account created but login failed. Please try signing in again.");
+              toast.error("Login after signup failed");
+            }
           }
-          
-          // If we still get an error, try to get the session directly
-          const { data: sessionData } = await supabase.auth.getSession();
-          if (sessionData?.session) {
-            toast.success("Logged in successfully!");
-            navigate("/dashboard");
-            return;
-          }
-          
-          setErrorMessage("Unable to log in. Please try with different credentials.");
-          toast.error("Unable to complete login");
         } else {
-          // Generic error handling
+          // Show specific error message from supabase
           setErrorMessage(error.message);
           toast.error(error.message);
         }
@@ -90,6 +99,17 @@ const Login = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Check if user is already logged in
+  useState(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        navigate("/dashboard");
+      }
+    };
+    checkSession();
+  });
 
   return (
     <Layout>
