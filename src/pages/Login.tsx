@@ -1,10 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Eye, EyeOff, InfoIcon } from "lucide-react";
+import { Eye, EyeOff, InfoIcon, Mail } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -18,6 +19,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showVerificationAlert, setShowVerificationAlert] = useState(false);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -27,15 +29,54 @@ const Login = () => {
       }
     };
     checkSession();
+    
+    // Pre-fill email if available from localStorage
+    const savedEmail = localStorage.getItem("lastLoginEmail");
+    if (savedEmail) {
+      setEmail(savedEmail);
+      setRememberMe(true);
+    }
   }, [navigate]);
+
+  const handleResendVerification = async () => {
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+      });
+      
+      if (error) {
+        toast.error("Failed to resend verification email");
+        console.error("Resend error:", error);
+      } else {
+        toast.success("Verification email sent! Please check your inbox", {
+          description: "Don't forget to check your spam folder"
+        });
+      }
+    } catch (error) {
+      console.error("Exception during resend:", error);
+      toast.error("An unexpected error occurred");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage("");
+    setShowVerificationAlert(false);
 
     if (rememberMe) {
       localStorage.setItem("lastLoginEmail", email);
+    } else {
+      localStorage.removeItem("lastLoginEmail");
     }
 
     try {
@@ -50,22 +91,9 @@ const Login = () => {
         
         // Check if user exists but email is not confirmed
         if (error.message.includes("Email not confirmed")) {
-          // Instead of using admin.getUserByEmail which doesn't exist,
-          // try OTP signin as fallback for unverified emails
-          const { error: otpError } = await supabase.auth.signInWithOtp({
-            email,
-            options: { shouldCreateUser: false }
-          });
-            
-          if (otpError) {
-            setErrorMessage("Login failed. Please try again or reset your password.");
-            toast.error("Login failed");
-            setIsSubmitting(false);
-            return;
-          }
-            
-          toast.success("Welcome back!");
-          navigate("/dashboard");
+          setShowVerificationAlert(true);
+          setErrorMessage("Email not verified. Please check your inbox for the verification email or click 'Resend Verification' below.");
+          setIsSubmitting(false);
           return;
         }
         
@@ -116,6 +144,24 @@ const Login = () => {
               {errorMessage && (
                 <div className="p-3 bg-red-900/30 border border-red-800 text-red-300 text-sm rounded-md">
                   {errorMessage}
+                </div>
+              )}
+
+              {showVerificationAlert && (
+                <div className="p-4 bg-blue-900/30 border border-blue-800 text-blue-300 text-sm rounded-md animate-pulse">
+                  <p className="font-medium mb-2">Your account needs verification</p>
+                  <p className="mb-3">Please check your email for a verification link. If you can't find it:</p>
+                  <Button
+                    type="button"
+                    variant="outline" 
+                    size="sm"
+                    className="w-full bg-blue-800/40 hover:bg-blue-800/60 border-blue-700 text-blue-100"
+                    onClick={handleResendVerification}
+                    disabled={isSubmitting}
+                  >
+                    <Mail className="mr-2 h-4 w-4" />
+                    Resend Verification Email
+                  </Button>
                 </div>
               )}
 
