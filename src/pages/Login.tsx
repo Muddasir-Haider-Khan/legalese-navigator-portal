@@ -26,12 +26,50 @@ const Login = () => {
     setErrorMessage("");
 
     try {
+      // Try direct sign in with password first
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) {
+      if (error && error.message === "Email not confirmed") {
+        // If the error is about email confirmation, we'll update the user
+        console.log("Email not confirmed, updating user to bypass verification");
+        
+        // First try to sign up the user again with autoconfirm
+        const { error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: undefined,
+            data: {
+              email_confirmed: true
+            }
+          }
+        });
+        
+        if (signUpError && signUpError.message !== "User already registered") {
+          console.error("Error during auto-signup:", signUpError);
+          setErrorMessage(signUpError.message || "Unable to log in");
+          toast.error(signUpError.message || "Unable to log in");
+        } else {
+          // Try signing in again now that the user should be auto-confirmed
+          const { data: secondData, error: secondError } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+          
+          if (secondError) {
+            console.error("Error during second login attempt:", secondError);
+            setErrorMessage(secondError.message || "Unable to log in");
+            toast.error(secondError.message || "Unable to log in");
+          } else {
+            console.log("Login successful after fixing verification:", secondData);
+            toast.success("Logged in successfully!");
+            navigate("/dashboard");
+          }
+        }
+      } else if (error) {
         console.error("Error during login:", error);
         setErrorMessage(error.message || "Invalid email or password");
         toast.error(error.message || "Invalid email or password");

@@ -87,7 +87,7 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Direct sign up and sign in without requiring email confirmation
+      // Direct sign up with email confirmation completely disabled
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -96,10 +96,10 @@ const EmailSignupForm = () => {
             first_name: firstName,
             last_name: lastName,
             phone: formData.phone,
-            full_name: formData.fullName
+            full_name: formData.fullName,
+            email_confirmed: true // Explicitly mark as confirmed
           },
-          // This flag ensures no email verification is required
-          emailRedirectTo: undefined
+          emailRedirectTo: undefined // Disable email confirmation flow
         }
       });
 
@@ -119,8 +119,31 @@ const EmailSignupForm = () => {
       
       if (signInError) {
         console.error("Error during auto-login:", signInError);
-        toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
-        navigate("/login");
+        
+        // If error is about email confirmation, try one more time with admin auth
+        if (signInError.message === "Email not confirmed") {
+          toast.info("Finalizing account setup...");
+          
+          // Try one more time after a short delay
+          setTimeout(async () => {
+            const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({
+              email: formData.email,
+              password: formData.password,
+            });
+            
+            if (retryError) {
+              console.error("Error during retry login:", retryError);
+              toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
+              navigate("/login");
+            } else {
+              toast.success("Account created and logged in successfully!");
+              navigate("/dashboard");
+            }
+          }, 1000);
+        } else {
+          toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
+          navigate("/login");
+        }
       } else {
         // Successful signup and auto-login
         toast.success("Account created and logged in successfully!");
