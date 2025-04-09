@@ -59,9 +59,18 @@ const VerifyEmail = () => {
             We've sent a verification link to {email ? <span className="font-medium text-rocket-blue-300">{email}</span> : "your email"}. 
             Please check your inbox and click on the link to verify your account.
           </p>
-          <p className="text-rocket-gray-400 text-sm">
+          <p className="text-rocket-gray-400 text-sm mb-4">
             The link will expire in 24 hours.
           </p>
+          <div className="mt-4 p-4 bg-amber-900/20 border border-amber-800/30 rounded-md text-amber-200 text-sm">
+            <p className="font-medium mb-1">Important Note:</p>
+            <p>If clicking the verification link shows "Invalid link" or "Site can't be reached" error, please try:</p>
+            <ul className="list-disc list-inside mt-2 ml-2 text-left">
+              <li>Copy and paste the link directly into your browser</li>
+              <li>Make sure you're using the link from the most recent email</li>
+              <li>Click the button below to request a new verification email</li>
+            </ul>
+          </div>
         </div>
 
         <div className="space-y-4">
