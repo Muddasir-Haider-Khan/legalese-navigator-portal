@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -51,27 +50,23 @@ const Login = () => {
         
         // Check if user exists but email is not confirmed
         if (error.message.includes("Email not confirmed")) {
-          // Force bypass email verification for existing users
-          const { data: userData, error: userError } = await supabase.auth.admin.getUserByEmail(email);
-          
-          if (!userError && userData) {
-            // User exists, try OTP signin as fallback
-            const { error: otpError } = await supabase.auth.signInWithOtp({
-              email,
-              options: { shouldCreateUser: false }
-            });
+          // Instead of using admin.getUserByEmail which doesn't exist,
+          // try OTP signin as fallback for unverified emails
+          const { error: otpError } = await supabase.auth.signInWithOtp({
+            email,
+            options: { shouldCreateUser: false }
+          });
             
-            if (otpError) {
-              setErrorMessage("Login failed. Please try again or reset your password.");
-              toast.error("Login failed");
-              setIsSubmitting(false);
-              return;
-            }
-            
-            toast.success("Welcome back!");
-            navigate("/dashboard");
+          if (otpError) {
+            setErrorMessage("Login failed. Please try again or reset your password.");
+            toast.error("Login failed");
+            setIsSubmitting(false);
             return;
           }
+            
+          toast.success("Welcome back!");
+          navigate("/dashboard");
+          return;
         }
         
         // Handle incorrect credentials
