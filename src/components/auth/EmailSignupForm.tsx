@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -88,7 +87,7 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Register with Supabase
+      // Register with Supabase with email confirmation disabled
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -98,7 +97,8 @@ const EmailSignupForm = () => {
             last_name: lastName,
             phone: formData.phone,
             full_name: formData.fullName
-          }
+          },
+          emailRedirectTo: window.location.origin + "/login"
         }
       });
 
@@ -110,13 +110,20 @@ const EmailSignupForm = () => {
         toast.success("Account created successfully!");
         console.log("Signup successful:", data);
         
-        // Check if email confirmation is required
-        if (data.session) {
-          // Auto-login successful
-          navigate("/dashboard");
+        // Direct login after signup
+        const { error: loginError } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        });
+        
+        if (loginError) {
+          console.error("Error during auto-login:", loginError);
+          toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
+          navigate("/login");
         } else {
-          // Email confirmation required
-          navigate("/verify-email");
+          // Successful signup and auto-login
+          toast.success("You're now logged in!");
+          navigate("/dashboard");
         }
       }
     } catch (error) {

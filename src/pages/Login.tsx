@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -33,8 +32,14 @@ const Login = () => {
 
       if (error) {
         console.error("Error during login:", error);
-        setErrorMessage(error.message || "Invalid email or password");
-        toast.error(error.message || "Invalid email or password");
+        
+        if (error.message.includes("Email not confirmed")) {
+          setErrorMessage("Please check your email to confirm your account before logging in.");
+          toast.error("Please verify your email before logging in");
+        } else {
+          setErrorMessage(error.message || "Invalid email or password");
+          toast.error(error.message || "Invalid email or password");
+        }
       } else {
         console.log("Login successful:", data);
         toast.success("Logged in successfully!");
@@ -51,7 +56,6 @@ const Login = () => {
   return (
     <Layout>
       <div className="container-custom py-16 md:py-20 min-h-[80vh] flex items-center relative overflow-hidden">
-        {/* Background effects */}
         <div className="fixed inset-0 bg-rocket-blue-950 z-0"></div>
         <div className="absolute -top-40 -left-40 w-[100vh] h-[100vh] bg-rocket-blue-200/10 rounded-full opacity-20 blur-3xl"></div>
         <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full opacity-30 blur-3xl"></div>
