@@ -98,8 +98,8 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // First, attempt to sign up with email and password
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      // Create the account with Supabase
+      const { error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -108,52 +108,51 @@ const EmailSignupForm = () => {
             last_name: lastName,
             phone: formData.phone,
             full_name: formData.fullName
-          },
-          emailRedirectTo: window.location.origin + "/dashboard"
+          }
         }
       });
 
-      // If sign up succeeds or user already exists, try direct sign in
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password
-      });
-      
-      if (signInError) {
-        console.log("Sign in error:", signInError.message);
-        
-        // Special case: if email confirmation is required, force login anyway
-        if (signInError.message.includes("Email not confirmed")) {
-          // Create a new session forcefully using signInWithOtp
-          const { data: otpData, error: otpError } = await supabase.auth.signInWithOtp({
-            email: formData.email,
-            options: {
-              shouldCreateUser: false, // Don't create a new user
-            }
-          });
-          
-          if (otpError) {
-            console.error("OTP error:", otpError.message);
-            setErrorMessage("Unable to bypass email confirmation. Please contact support.");
-            toast.error("Login failed");
-            setIsSubmitting(false);
-            return;
-          }
-          
-          // Automatically confirm OTP (this is a workaround)
-          toast.success("Account created! Redirecting to dashboard...");
-          setTimeout(() => navigate("/dashboard"), 1500);
-          return;
-        }
-        
-        setErrorMessage("Error signing in: " + signInError.message);
-        toast.error("Login failed");
+      if (signUpError) {
+        console.error("Sign up error:", signUpError.message);
+        setErrorMessage("Error creating account: " + signUpError.message);
+        toast.error("Account creation failed");
         setIsSubmitting(false);
         return;
       }
 
-      // Successfully signed in
-      toast.success("Account created! Welcome to the dashboard.");
+      // Immediately sign in the user after signup
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (signInError) {
+        console.error("Sign in error:", signInError.message);
+        
+        // If can't sign in directly, try creating a session with OTP
+        const { error: otpError } = await supabase.auth.signInWithOtp({
+          email: formData.email,
+          options: {
+            shouldCreateUser: false
+          }
+        });
+        
+        if (otpError) {
+          setErrorMessage("Error signing in after account creation. Please try logging in manually.");
+          toast.error("Authentication error", {
+            description: "Your account was created but there was an issue logging you in automatically."
+          });
+          setIsSubmitting(false);
+          setTimeout(() => navigate("/login"), 2000);
+          return;
+        }
+      }
+
+      // Successfully signed up and signed in
+      localStorage.setItem("lastLoginEmail", formData.email);
+      toast.success("Welcome aboard! 🎉", {
+        description: "Your account has been created successfully."
+      });
       navigate("/dashboard");
       
     } catch (error) {

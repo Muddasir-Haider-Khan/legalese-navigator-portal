@@ -12,7 +12,7 @@ const SSOCallback = () => {
     // Handle the OAuth callback with Supabase
     const handleOAuthCallback = async () => {
       try {
-        // Get the current session
+        // First try: Get the current session
         const { data, error } = await supabase.auth.getSession();
         
         if (error) {
@@ -30,7 +30,7 @@ const SSOCallback = () => {
           return;
         }
 
-        // No session found, try to process URL parameters
+        // Second try: Process URL parameters (hash-based flow)
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
         const accessToken = hashParams.get("access_token");
         
@@ -54,7 +54,7 @@ const SSOCallback = () => {
           return;
         }
         
-        // Try to exchange code for session (PKCE flow)
+        // Third try: Exchange code for session (PKCE flow)
         const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(window.location.search);
         
         if (exchangeError) {
@@ -74,7 +74,7 @@ const SSOCallback = () => {
           return;
         }
         
-        // Check if we have a session after code exchange
+        // Fourth try: After code exchange, check for session
         const { data: sessionData } = await supabase.auth.getSession();
         if (sessionData.session) {
           toast.success("Successfully authenticated!");
@@ -82,7 +82,7 @@ const SSOCallback = () => {
           return;
         }
         
-        // If we still don't have a session, try OTP as a last resort
+        // Fifth try: Try OTP as a last resort
         const email = localStorage.getItem("lastLoginEmail");
         if (email) {
           const { error: otpError } = await supabase.auth.signInWithOtp({

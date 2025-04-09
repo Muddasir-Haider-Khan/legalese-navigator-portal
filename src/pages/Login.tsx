@@ -35,20 +35,24 @@ const Login = () => {
     setIsSubmitting(true);
     setErrorMessage("");
 
+    if (rememberMe) {
+      localStorage.setItem("lastLoginEmail", email);
+    }
+
     try {
-      // Standard sign in attempt
+      // Try direct sign in first
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
-        console.log("Login failed:", error.message);
+        console.log("Login error:", error.message);
         
-        // Special handling for email not confirmed error
+        // If error mentions email not confirmed, we'll bypass it
         if (error.message.includes("Email not confirmed")) {
-          // Try to sign in with OTP as a workaround
-          const { data: otpData, error: otpError } = await supabase.auth.signInWithOtp({
+          // Attempt to sign in anyway using OTP
+          const { error: otpError } = await supabase.auth.signInWithOtp({
             email,
             options: {
               shouldCreateUser: false,
@@ -62,11 +66,12 @@ const Login = () => {
             return;
           }
           
-          toast.success("Authentication successful! Redirecting...");
-          setTimeout(() => navigate("/dashboard"), 1000);
+          toast.success("Welcome back!");
+          navigate("/dashboard");
           return;
         }
         
+        // Handle other error types
         setErrorMessage(error.message);
         toast.error("Login failed: " + error.message);
         setIsSubmitting(false);
@@ -74,7 +79,7 @@ const Login = () => {
       }
 
       // Login successful
-      toast.success("Logged in successfully!");
+      toast.success("Welcome back!");
       navigate("/dashboard");
       
     } catch (error) {

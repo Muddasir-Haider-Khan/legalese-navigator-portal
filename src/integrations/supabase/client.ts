@@ -17,7 +17,7 @@ export const supabase = createClient<Database>(
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: false, // Disable automatic detection to avoid conflicts
-      flowType: 'implicit', // Change to implicit flow to bypass email confirmation
+      flowType: 'implicit', // Use implicit flow to bypass email confirmation
       storage: localStorage
     }
   }
