@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -87,7 +88,7 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Direct sign up with email confirmation completely disabled
+      // First: create user with auto-confirmation
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -97,9 +98,9 @@ const EmailSignupForm = () => {
             last_name: lastName,
             phone: formData.phone,
             full_name: formData.fullName,
-            email_confirmed: true // Explicitly mark as confirmed
+            email_confirmed: true
           },
-          emailRedirectTo: undefined // Disable email confirmation flow
+          emailRedirectTo: undefined
         }
       });
 
@@ -111,43 +112,51 @@ const EmailSignupForm = () => {
         return;
       }
 
-      // Immediately sign in the user after signup
+      // Try multiple approaches to ensure login works
+      let loginSuccess = false;
+      
+      // First login attempt
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
       
-      if (signInError) {
-        console.error("Error during auto-login:", signInError);
+      if (!signInError) {
+        loginSuccess = true;
+      } else if (signInError.message === "Email not confirmed") {
+        toast.info("Finalizing account setup...");
         
-        // If error is about email confirmation, try one more time with admin auth
-        if (signInError.message === "Email not confirmed") {
-          toast.info("Finalizing account setup...");
+        // Wait briefly before trying again
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Update user metadata to mark email as confirmed
+        try {
+          // Second login attempt after waiting
+          const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({
+            email: formData.email,
+            password: formData.password,
+          });
           
-          // Try one more time after a short delay
-          setTimeout(async () => {
-            const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({
-              email: formData.email,
-              password: formData.password,
-            });
-            
-            if (retryError) {
-              console.error("Error during retry login:", retryError);
-              toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
-              navigate("/login");
-            } else {
-              toast.success("Account created and logged in successfully!");
-              navigate("/dashboard");
+          if (!retryError) {
+            loginSuccess = true;
+          } else {
+            // Third attempt: Check if we have a session anyway
+            const { data: sessionData } = await supabase.auth.getSession();
+            if (sessionData?.session) {
+              loginSuccess = true;
             }
-          }, 1000);
-        } else {
-          toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
-          navigate("/login");
+          }
+        } catch (err) {
+          console.error("Error during retry:", err);
         }
-      } else {
-        // Successful signup and auto-login
+      }
+      
+      if (loginSuccess) {
         toast.success("Account created and logged in successfully!");
         navigate("/dashboard");
+      } else {
+        toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
+        navigate("/login");
       }
     } catch (error) {
       console.error("Exception during signup:", error);

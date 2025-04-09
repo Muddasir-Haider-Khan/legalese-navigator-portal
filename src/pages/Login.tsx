@@ -26,17 +26,22 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      // Try direct sign in with password first
+      let loginSuccess = false;
+      
+      // First attempt: Try direct login
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error && error.message === "Email not confirmed") {
-        // If the error is about email confirmation, we'll update the user
-        console.log("Email not confirmed, updating user to bypass verification");
+      if (!error) {
+        // Login successful on first try
+        console.log("Login successful on first try:", data);
+        loginSuccess = true;
+      } else if (error.message === "Email not confirmed") {
+        console.log("Email not confirmed, trying to register user with auto-confirm");
         
-        // First try to sign up the user again with autoconfirm
+        // Second attempt: Try to re-register the user with auto-confirm
         const { error: signUpError } = await supabase.auth.signUp({
           email,
           password,
@@ -48,33 +53,42 @@ const Login = () => {
           }
         });
         
-        if (signUpError && signUpError.message !== "User already registered") {
-          console.error("Error during auto-signup:", signUpError);
-          setErrorMessage(signUpError.message || "Unable to log in");
-          toast.error(signUpError.message || "Unable to log in");
-        } else {
-          // Try signing in again now that the user should be auto-confirmed
+        if (!signUpError || signUpError.message === "User already registered") {
+          // Third attempt: Try login again
           const { data: secondData, error: secondError } = await supabase.auth.signInWithPassword({
             email,
             password,
           });
           
-          if (secondError) {
-            console.error("Error during second login attempt:", secondError);
-            setErrorMessage(secondError.message || "Unable to log in");
-            toast.error(secondError.message || "Unable to log in");
+          if (!secondError) {
+            console.log("Login successful after re-registration:", secondData);
+            loginSuccess = true;
           } else {
-            console.log("Login successful after fixing verification:", secondData);
-            toast.success("Logged in successfully!");
-            navigate("/dashboard");
+            // Fourth attempt: Try one more alternative approach
+            const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+            
+            if (!sessionError && sessionData?.session) {
+              console.log("Retrieved valid session:", sessionData);
+              loginSuccess = true;
+            } else {
+              console.error("All login attempts failed:", secondError);
+              setErrorMessage("Unable to log in. Please try again or contact support.");
+              toast.error("Unable to log in. Please try again.");
+            }
           }
+        } else {
+          console.error("Error during auto-signup:", signUpError);
+          setErrorMessage(signUpError.message || "Unable to log in");
+          toast.error(signUpError.message || "Unable to log in");
         }
-      } else if (error) {
+      } else {
+        // Some other error occurred during login
         console.error("Error during login:", error);
         setErrorMessage(error.message || "Invalid email or password");
         toast.error(error.message || "Invalid email or password");
-      } else {
-        console.log("Login successful:", data);
+      }
+      
+      if (loginSuccess) {
         toast.success("Logged in successfully!");
         navigate("/dashboard");
       }
