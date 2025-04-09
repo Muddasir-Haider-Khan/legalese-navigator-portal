@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -87,7 +88,7 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Register with Supabase with email confirmation disabled
+      // Register with Supabase with automatic sign-in, no email confirmation
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -98,7 +99,6 @@ const EmailSignupForm = () => {
             phone: formData.phone,
             full_name: formData.fullName
           },
-          emailRedirectTo: window.location.origin + "/login"
         }
       });
 
@@ -110,20 +110,27 @@ const EmailSignupForm = () => {
         toast.success("Account created successfully!");
         console.log("Signup successful:", data);
         
-        // Direct login after signup
-        const { error: loginError } = await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
-        });
-        
-        if (loginError) {
-          console.error("Error during auto-login:", loginError);
-          toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
-          navigate("/login");
-        } else {
-          // Successful signup and auto-login
+        // Sign in immediately after signup
+        if (data.session) {
+          // If session already exists (auto-sign in happened)
           toast.success("You're now logged in!");
           navigate("/dashboard");
+        } else {
+          // Explicitly sign in if no session was created
+          const { error: loginError } = await supabase.auth.signInWithPassword({
+            email: formData.email,
+            password: formData.password,
+          });
+          
+          if (loginError) {
+            console.error("Error during auto-login:", loginError);
+            toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
+            navigate("/login");
+          } else {
+            // Successful signup and auto-login
+            toast.success("You're now logged in!");
+            navigate("/dashboard");
+          }
         }
       }
     } catch (error) {

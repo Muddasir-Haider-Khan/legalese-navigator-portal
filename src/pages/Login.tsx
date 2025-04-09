@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -32,14 +33,8 @@ const Login = () => {
 
       if (error) {
         console.error("Error during login:", error);
-        
-        if (error.message.includes("Email not confirmed")) {
-          setErrorMessage("Please check your email to confirm your account before logging in.");
-          toast.error("Please verify your email before logging in");
-        } else {
-          setErrorMessage(error.message || "Invalid email or password");
-          toast.error(error.message || "Invalid email or password");
-        }
+        setErrorMessage(error.message || "Invalid email or password");
+        toast.error(error.message || "Invalid email or password");
       } else {
         console.log("Login successful:", data);
         toast.success("Logged in successfully!");
