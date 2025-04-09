@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -88,8 +87,8 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // First: create user with auto-confirmation
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      // Sign up with automatic login
+      const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -99,68 +98,56 @@ const EmailSignupForm = () => {
             phone: formData.phone,
             full_name: formData.fullName,
             email_confirmed: true
-          },
-          emailRedirectTo: undefined
+          }
         }
       });
 
-      if (signUpError) {
-        console.error("Error during signup:", signUpError);
-        setErrorMessage(signUpError.message);
-        toast.error(signUpError.message || "Failed to create account. Please try again.");
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Try multiple approaches to ensure login works
-      let loginSuccess = false;
-      
-      // First login attempt
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
-      
-      if (!signInError) {
-        loginSuccess = true;
-      } else if (signInError.message === "Email not confirmed") {
-        toast.info("Finalizing account setup...");
+      if (error) {
+        console.error("Error during signup:", error);
         
-        // Wait briefly before trying again
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Update user metadata to mark email as confirmed
-        try {
-          // Second login attempt after waiting
-          const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({
+        // Handle case where user already exists - try to login directly
+        if (error.message.includes("already registered")) {
+          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
             email: formData.email,
             password: formData.password,
           });
           
-          if (!retryError) {
-            loginSuccess = true;
-          } else {
-            // Third attempt: Check if we have a session anyway
-            const { data: sessionData } = await supabase.auth.getSession();
-            if (sessionData?.session) {
-              loginSuccess = true;
-            }
+          if (signInError) {
+            setErrorMessage("This email is already registered but the password may be incorrect.");
+            toast.error("Account already exists");
+            setIsSubmitting(false);
+            return;
           }
-        } catch (err) {
-          console.error("Error during retry:", err);
+          
+          toast.success("Logged in to existing account!");
+          navigate("/dashboard");
+          return;
         }
+        
+        setErrorMessage(error.message);
+        toast.error(error.message || "Failed to create account");
+        setIsSubmitting(false);
+        return;
       }
+
+      // Try to sign in immediately after signup
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
       
-      if (loginSuccess) {
-        toast.success("Account created and logged in successfully!");
-        navigate("/dashboard");
-      } else {
-        toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
+      if (signInError) {
+        console.error("Error during auto-login:", signInError);
+        toast.info("Account created! Please sign in.");
         navigate("/login");
+      } else {
+        toast.success("Account created! Welcome to the dashboard.");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Exception during signup:", error);
       toast.error("An unexpected error occurred");
+      setErrorMessage("An unexpected error occurred");
     } finally {
       setIsSubmitting(false);
     }
