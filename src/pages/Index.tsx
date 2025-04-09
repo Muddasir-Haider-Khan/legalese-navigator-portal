@@ -16,10 +16,14 @@ const Index = () => {
     
     // Check authenticated status
     const checkAuth = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        // User is logged in, redirect to dashboard
-        navigate("/dashboard");
+      try {
+        const { data } = await supabase.auth.getSession();
+        if (data.session) {
+          // User is logged in, redirect to dashboard
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        console.error("Error checking authentication:", error);
       }
     };
     

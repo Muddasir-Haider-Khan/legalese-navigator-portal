@@ -14,6 +14,7 @@ const DocumentTemplates = lazy(() => import("./pages/DocumentTemplates"));
 const ContactLawyer = lazy(() => import("./pages/ContactLawyer"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
+const Signup = lazy(() => import("./pages/Signup"));
 const UserDashboard = lazy(() => import("./pages/UserDashboard"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -63,11 +64,12 @@ const App = () => (
               <Route path="/documents" element={<DocumentTemplates />} />
               <Route path="/contact-lawyer" element={<ContactLawyer />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Register />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="/register" element={<Register />} />
               <Route path="/user-dashboard" element={<UserDashboard />} />
               <Route path="/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/sso-callback" element={<SSOCallback />} />
+              <Route path="/dashboard" element={<UserDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
