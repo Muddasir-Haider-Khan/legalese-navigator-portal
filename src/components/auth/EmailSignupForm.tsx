@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -88,8 +87,8 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Register with Supabase with automatic sign-in, no email confirmation
-      const { data, error } = await supabase.auth.signUp({
+      // Direct sign up and sign in without requiring email confirmation
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -99,39 +98,33 @@ const EmailSignupForm = () => {
             phone: formData.phone,
             full_name: formData.fullName
           },
+          // This flag ensures no email verification is required
+          emailRedirectTo: undefined
         }
       });
 
-      if (error) {
-        console.error("Error during signup:", error);
-        setErrorMessage(error.message);
-        toast.error(error.message || "Failed to create account. Please try again.");
+      if (signUpError) {
+        console.error("Error during signup:", signUpError);
+        setErrorMessage(signUpError.message);
+        toast.error(signUpError.message || "Failed to create account. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Immediately sign in the user after signup
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+      
+      if (signInError) {
+        console.error("Error during auto-login:", signInError);
+        toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
+        navigate("/login");
       } else {
-        toast.success("Account created successfully!");
-        console.log("Signup successful:", data);
-        
-        // Sign in immediately after signup
-        if (data.session) {
-          // If session already exists (auto-sign in happened)
-          toast.success("You're now logged in!");
-          navigate("/dashboard");
-        } else {
-          // Explicitly sign in if no session was created
-          const { error: loginError } = await supabase.auth.signInWithPassword({
-            email: formData.email,
-            password: formData.password,
-          });
-          
-          if (loginError) {
-            console.error("Error during auto-login:", loginError);
-            toast.error("Account created, but couldn't log you in automatically. Please log in manually.");
-            navigate("/login");
-          } else {
-            // Successful signup and auto-login
-            toast.success("You're now logged in!");
-            navigate("/dashboard");
-          }
-        }
+        // Successful signup and auto-login
+        toast.success("Account created and logged in successfully!");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Exception during signup:", error);

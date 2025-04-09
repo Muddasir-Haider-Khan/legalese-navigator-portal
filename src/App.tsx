@@ -21,7 +21,7 @@ const AskALawyer = lazy(() => import("./pages/AskALawyer"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const SSOCallback = lazy(() => import("./pages/SSOCallback"));
-const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
+// Removed VerifyEmail import as we no longer need it
 
 // Loading component for suspense fallback
 const PageLoader = () => (
@@ -74,7 +74,7 @@ const App = () => (
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/sso-callback" element={<SSOCallback />} />
-              <Route path="/verify-email" element={<VerifyEmail />} />
+              {/* Removed verify-email route */}
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
