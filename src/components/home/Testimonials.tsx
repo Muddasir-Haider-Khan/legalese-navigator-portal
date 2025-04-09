@@ -1,139 +1,199 @@
 
-import { useState, useEffect } from "react";
-import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
+import { useState, memo, useEffect } from "react";
+import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
+// Mock testimonial data
 const testimonials = [
   {
-    quote: "Rocket Lawyer helped me set up my business with all the legal documents I needed. The process was surprisingly easy and affordable.",
-    author: "Sarah Johnson",
-    title: "Small Business Owner",
-    image: "https://randomuser.me/api/portraits/women/23.jpg",
-  },
-  {
-    quote: "When I needed legal advice quickly, the chatbot guided me through my options and connected me with an attorney who resolved my issue.",
-    author: "Michael Rodriguez",
-    title: "Homeowner",
-    image: "https://randomuser.me/api/portraits/men/54.jpg",
-  },
-  {
-    quote: "Creating my will was something I kept putting off, but Rocket Lawyer made it simple. I completed it in under an hour with their guidance.",
-    author: "Emily Chen",
-    title: "Healthcare Professional",
+    text: "Rocket Lawyer made it easy to create the legal documents I needed for my business. Their customer service team was also very helpful when I had questions.",
+    author: "Jennifer M.",
+    position: "Small Business Owner",
     image: "https://randomuser.me/api/portraits/women/32.jpg",
+    rating: 5
   },
+  {
+    text: "I needed to create my will but didn't want to spend thousands on an attorney. Rocket Lawyer guided me through the process step by step. Highly recommend!",
+    author: "Marcus T.",
+    position: "Teacher",
+    image: "https://randomuser.me/api/portraits/men/45.jpg",
+    rating: 5
+  },
+  {
+    text: "The attorney advice I received through Rocket Lawyer answered all my questions and saved me from making a costly mistake with my rental property.",
+    author: "Sarah K.",
+    position: "Property Owner",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    rating: 5
+  },
+  {
+    text: "Setting up my LLC was straightforward and affordable. The detailed instructions helped me understand each step of the process.",
+    author: "David L.",
+    position: "Entrepreneur",
+    image: "https://randomuser.me/api/portraits/men/22.jpg",
+    rating: 4
+  }
 ];
 
-const Testimonials = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
-
-  const handlePrev = () => {
-    if (animating) return;
-    
-    setAnimating(true);
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
-    
-    setTimeout(() => setAnimating(false), 500);
-  };
-
-  const handleNext = () => {
-    if (animating) return;
-    
-    setAnimating(true);
-    setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-    );
-    
-    setTimeout(() => setAnimating(false), 500);
-  };
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleNext();
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, [currentIndex]);
-
+const TestimonialCard = memo(({ 
+  testimonial, 
+  isActive 
+}: { 
+  testimonial: typeof testimonials[0]; 
+  isActive: boolean;
+}) => {
   return (
-    <section className="bg-rocket-gray-50 py-20 md:py-28 relative overflow-hidden">
-      <div className="hidden md:block absolute -bottom-40 left-20 w-80 h-80 bg-rocket-blue-100 rounded-full opacity-30 blur-3xl"></div>
-      <div className="hidden md:block absolute -top-40 right-20 w-80 h-80 bg-rocket-blue-100 rounded-full opacity-20 blur-3xl"></div>
+    <div 
+      className={`bg-white dark:bg-rocket-gray-800 p-8 rounded-xl shadow-lg border border-rocket-gray-200 dark:border-rocket-gray-700 transform transition-all duration-700 ${
+        isActive ? 'scale-100 opacity-100' : 'scale-95 opacity-0 absolute'
+      }`}
+      style={{ display: isActive ? 'block' : 'none' }}
+    >
+      <Quote className="h-10 w-10 text-rocket-blue-200 dark:text-rocket-blue-900 mb-4 transform -scale-x-100" />
       
-      <div className="container-custom relative z-10">
-        <div className="text-center mb-14 animate-fade-in">
-          <h2 className="heading-md mb-4 text-gradient">What Our Clients Say</h2>
-          <p className="text-lg text-rocket-gray-500 max-w-3xl mx-auto">
-            Join thousands of satisfied clients who have simplified their legal needs with Rocket Lawyer.
-          </p>
-        </div>
-
-        <div className="max-w-4xl mx-auto">
-          <div className="glass-card rounded-2xl p-10 md:p-14 relative futuristic-border futuristic-glow">
-            <div className="absolute top-8 left-8 opacity-30">
-              <Quote className="h-16 w-16 text-rocket-blue-200" />
-            </div>
-            
-            <div className="relative z-10">
-              <div key={currentIndex} className={`${animating ? 'animate-fade-in' : ''}`}>
-                <p className="text-xl md:text-2xl text-rocket-gray-700 italic mb-10 pt-8 pl-6 leading-relaxed">
-                  "{testimonials[currentIndex].quote}"
-                </p>
-                
-                <div className="flex items-center gap-5">
-                  <img
-                    src={testimonials[currentIndex].image}
-                    alt={testimonials[currentIndex].author}
-                    className="w-16 h-16 rounded-full object-cover ring-2 ring-rocket-blue-100 p-1"
-                  />
-                  <div>
-                    <h4 className="font-semibold text-lg text-rocket-blue-500">
-                      {testimonials[currentIndex].author}
-                    </h4>
-                    <p className="text-rocket-gray-500">
-                      {testimonials[currentIndex].title}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-center mt-10 gap-4">
-            <button
-              onClick={handlePrev}
-              className="p-2 rounded-full border border-rocket-gray-200 hover:bg-rocket-blue-50 transition-colors hover:shadow-md group"
-            >
-              <ArrowLeft className="h-5 w-5 text-rocket-blue-500 group-hover:scale-110 transition-transform" />
-            </button>
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => {
-                  setAnimating(true);
-                  setCurrentIndex(index);
-                  setTimeout(() => setAnimating(false), 500);
-                }}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex 
-                    ? "bg-rocket-blue-500 w-6" 
-                    : "bg-rocket-gray-300 hover:bg-rocket-gray-400"
-                }`}
+      <p className="text-lg text-rocket-gray-700 dark:text-rocket-gray-300 italic mb-6 leading-relaxed">
+        "{testimonial.text}"
+      </p>
+      
+      <div className="flex items-center gap-4">
+        <img 
+          src={testimonial.image} 
+          alt={testimonial.author} 
+          className="h-14 w-14 rounded-full object-cover border-2 border-rocket-blue-100 dark:border-rocket-blue-900"
+        />
+        <div>
+          <h4 className="font-semibold text-rocket-gray-900 dark:text-white">{testimonial.author}</h4>
+          <p className="text-rocket-gray-500 dark:text-rocket-gray-400 text-sm">{testimonial.position}</p>
+          <div className="flex mt-1">
+            {[...Array(5)].map((_, i) => (
+              <Star 
+                key={i} 
+                fill={i < testimonial.rating ? "currentColor" : "none"} 
+                className={`h-4 w-4 ${i < testimonial.rating ? 'text-yellow-500' : 'text-rocket-gray-300'}`} 
               />
             ))}
-            <button
-              onClick={handleNext}
-              className="p-2 rounded-full border border-rocket-gray-200 hover:bg-rocket-blue-50 transition-colors hover:shadow-md group"
-            >
-              <ArrowRight className="h-5 w-5 text-rocket-blue-500 group-hover:scale-110 transition-transform" />
-            </button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+TestimonialCard.displayName = 'TestimonialCard';
+
+const Testimonials = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  const handlePrev = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+    setTimeout(() => setIsAnimating(false), 500);
+  };
+  
+  const handleNext = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    setTimeout(() => setIsAnimating(false), 500);
+  };
+
+  // Auto rotate testimonials
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!isAnimating) {
+        handleNext();
+      }
+    }, 8000);
+    
+    return () => clearInterval(timer);
+  }, [activeIndex, isAnimating]);
+
+  return (
+    <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
+      <div className="container-custom">
+        <div className="text-center mb-12">
+          <span className="text-rocket-blue-500 font-medium mb-2 block">Testimonials</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
+            Trusted by Millions
+          </h2>
+          <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
+            See what our customers have to say about their experience with Rocket Lawyer.
+          </p>
+        </div>
+        
+        <div className="max-w-3xl mx-auto relative">
+          <div className="relative min-h-[280px]">
+            {testimonials.map((testimonial, index) => (
+              <TestimonialCard 
+                key={index} 
+                testimonial={testimonial} 
+                isActive={index === activeIndex}
+              />
+            ))}
+          </div>
+          
+          <div className="flex justify-between mt-8">
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={handlePrev}
+              className="border-rocket-gray-300 dark:border-rocket-gray-600 hover:bg-rocket-gray-100 dark:hover:bg-rocket-gray-700"
+              disabled={isAnimating}
+            >
+              <ChevronLeft className="h-5 w-5" />
+              <span className="sr-only">Previous</span>
+            </Button>
+            
+            <div className="flex gap-2">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  className={`h-2 rounded-full transition-all ${
+                    index === activeIndex ? 'w-8 bg-rocket-blue-500' : 'w-2 bg-rocket-gray-300 dark:bg-rocket-gray-600'
+                  }`}
+                  onClick={() => {
+                    if (!isAnimating) {
+                      setIsAnimating(true);
+                      setActiveIndex(index);
+                      setTimeout(() => setIsAnimating(false), 500);
+                    }
+                  }}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                />
+              ))}
+            </div>
+            
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={handleNext}
+              className="border-rocket-gray-300 dark:border-rocket-gray-600 hover:bg-rocket-gray-100 dark:hover:bg-rocket-gray-700"
+              disabled={isAnimating}
+            >
+              <ChevronRight className="h-5 w-5" />
+              <span className="sr-only">Next</span>
+            </Button>
+          </div>
+        </div>
+        
+        <div className="text-center mt-12">
+          <div className="flex items-center justify-center mb-6">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star key={star} fill="currentColor" className="h-6 w-6 text-yellow-500 mx-0.5" />
+            ))}
+          </div>
+          <p className="text-xl md:text-2xl font-medium text-rocket-gray-900 dark:text-white mb-8">
+            Join over 20 million satisfied customers
+          </p>
+          <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600">
+            Get started today
+          </Button>
         </div>
       </div>
     </section>
   );
 };
 
-export default Testimonials;
+export default memo(Testimonials);

@@ -3,7 +3,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle, FileText, MessageCircle, UserCheck } from "lucide-react";
+import { ArrowRight, FileText, MessageCircle, Scale, Building, Shield, CheckCircle } from "lucide-react";
+import Hero from "@/components/home/Hero";
+import Features from "@/components/home/Features";
+import Testimonials from "@/components/home/Testimonials";
+import CTASection from "@/components/home/CTASection";
 
 const LandingPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,116 +21,139 @@ const LandingPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const features = [
-    {
-      title: "Legal Document Templates",
-      description: "Access hundreds of legally verified document templates",
-      icon: <FileText className="h-8 w-8 text-rocket-blue-500" />,
-    },
-    {
-      title: "Ask a Lawyer",
-      description: "Get immediate legal advice from qualified attorneys",
-      icon: <MessageCircle className="h-8 w-8 text-rocket-blue-500" />,
-    },
-    {
-      title: "Custom Legal Solutions",
-      description: "Tailored legal assistance for your specific needs",
-      icon: <UserCheck className="h-8 w-8 text-rocket-blue-500" />,
-    }
-  ];
-
   return (
     <Layout>
       <div className={`w-full transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
         {/* Hero Section */}
-        <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-b from-rocket-blue-50 to-white dark:from-rocket-blue-900 dark:to-rocket-gray-900">
-          <div className="container-custom">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <h1 className="heading-xl text-rocket-blue-900 dark:text-white">
-                  Legal Solutions <span className="text-rocket-blue-500">Made Simple</span>
-                </h1>
-                <p className="text-lg text-rocket-gray-700 dark:text-rocket-gray-300 max-w-lg">
-                  Access professional legal documents, connect with qualified attorneys, and get the legal help you need without the complexity.
-                </p>
-                <div className="flex flex-wrap gap-4 pt-4">
-                  <Link to="/documents">
-                    <Button size="lg" className="bg-rocket-blue-500 hover:bg-rocket-blue-600">
-                      Browse Documents <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </Link>
-                  <Link to="/contact-lawyer">
-                    <Button size="lg" variant="outline" className="border-rocket-blue-500 text-rocket-blue-500 hover:bg-rocket-blue-50 dark:hover:bg-rocket-blue-900/30">
-                      Talk to a Lawyer
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-              <div className="relative rounded-xl overflow-hidden shadow-2xl border border-rocket-gray-200 dark:border-rocket-gray-800">
-                <div className="aspect-w-16 aspect-h-9 bg-white dark:bg-rocket-gray-800">
-                  <img 
-                    src="/placeholder.svg" 
-                    alt="Legal Platform Preview" 
-                    className="object-cover"
-                    width={600}
-                    height={400}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="py-16 bg-white dark:bg-rocket-gray-900">
+        <Hero />
+        
+        {/* Services Overview Section */}
+        <Features />
+        
+        {/* How It Works Section */}
+        <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
           <div className="container-custom">
             <div className="text-center mb-12">
-              <h2 className="heading-lg text-rocket-blue-900 dark:text-white mb-4">How We Can Help</h2>
-              <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-400 max-w-2xl mx-auto">
-                Our platform provides everything you need to navigate legal matters with confidence and clarity.
+              <span className="text-rocket-blue-500 font-medium mb-2 block">How It Works</span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
+                Simple, Affordable Legal Solutions
+              </h2>
+              <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
+                We make legal matters easy to understand and manage through our streamlined process.
               </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
-                <div 
-                  key={index} 
-                  className="bg-rocket-gray-50 dark:bg-rocket-gray-800 p-8 rounded-xl shadow-sm border border-rocket-gray-100 dark:border-rocket-gray-700 transition-transform hover:-translate-y-1 duration-300"
-                >
-                  <div className="mb-4">
-                    {feature.icon}
-                  </div>
-                  <h3 className="heading-sm mb-3 text-rocket-blue-900 dark:text-white">{feature.title}</h3>
-                  <p className="text-rocket-gray-600 dark:text-rocket-gray-400">{feature.description}</p>
+            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+              <div className="text-center">
+                <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+                  <FileText className="h-8 w-8 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                  <span className="absolute -top-2 -right-2 bg-rocket-blue-500 text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+                    1
+                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-16 bg-rocket-blue-50 dark:bg-rocket-blue-900/20">
-          <div className="container-custom">
-            <div className="bg-rocket-blue-600 dark:bg-rocket-blue-800 rounded-xl p-8 md:p-12 text-white text-center">
-              <h2 className="heading-lg mb-4">Ready to Get Started?</h2>
-              <p className="text-lg text-rocket-blue-100 max-w-2xl mx-auto mb-8">
-                Join thousands of individuals and businesses who trust us with their legal needs.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link to="/signup">
-                  <Button size="lg" variant="secondary" className="bg-white text-rocket-blue-600 hover:bg-rocket-gray-100">
-                    Create Free Account
-                  </Button>
-                </Link>
-                <Link to="/documents">
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-rocket-blue-700">
-                    Browse Templates
-                  </Button>
-                </Link>
+                <h3 className="text-xl font-semibold mb-2 text-rocket-gray-900 dark:text-white">Select Your Document</h3>
+                <p className="text-rocket-gray-600 dark:text-rocket-gray-300">
+                  Choose from hundreds of legal documents designed for personal and business needs.
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+                  <CheckCircle className="h-8 w-8 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                  <span className="absolute -top-2 -right-2 bg-rocket-blue-500 text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+                    2
+                  </span>
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-rocket-gray-900 dark:text-white">Customize It</h3>
+                <p className="text-rocket-gray-600 dark:text-rocket-gray-300">
+                  Answer simple questions to create your personalized legal document.
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+                  <Shield className="h-8 w-8 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                  <span className="absolute -top-2 -right-2 bg-rocket-blue-500 text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+                    3
+                  </span>
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-rocket-gray-900 dark:text-white">Sign & Share</h3>
+                <p className="text-rocket-gray-600 dark:text-rocket-gray-300">
+                  Save, print, download, or share your legal document instantly.
+                </p>
               </div>
             </div>
+            
+            <div className="mt-12 text-center">
+              <Link to="/how-it-works">
+                <Button variant="outline" className="border-rocket-blue-500 text-rocket-blue-500 hover:bg-rocket-blue-50 dark:border-rocket-blue-400 dark:text-rocket-blue-400 dark:hover:bg-rocket-blue-900/30">
+                  Learn more about our process <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
+        
+        {/* Testimonials Section */}
+        <Testimonials />
+        
+        {/* Popular Documents Section */}
+        <section className="py-16 md:py-24 bg-white dark:bg-rocket-gray-900">
+          <div className="container-custom">
+            <div className="text-center mb-12">
+              <span className="text-rocket-blue-500 font-medium mb-2 block">Popular Documents</span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
+                Most Frequently Used Legal Documents
+              </h2>
+              <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
+                Create any of these documents in minutes with our easy-to-use platform.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+              <Link to="/documents/will" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <span className="font-medium text-rocket-gray-900 dark:text-white">Last Will and Testament</span>
+              </Link>
+              
+              <Link to="/documents/power-of-attorney" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <span className="font-medium text-rocket-gray-900 dark:text-white">Power of Attorney</span>
+              </Link>
+              
+              <Link to="/documents/nda" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <span className="font-medium text-rocket-gray-900 dark:text-white">Non-Disclosure Agreement</span>
+              </Link>
+              
+              <Link to="/documents/llc" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <span className="font-medium text-rocket-gray-900 dark:text-white">LLC Operating Agreement</span>
+              </Link>
+              
+              <Link to="/documents/lease" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <span className="font-medium text-rocket-gray-900 dark:text-white">Residential Lease</span>
+              </Link>
+              
+              <Link to="/documents/employment" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <span className="font-medium text-rocket-gray-900 dark:text-white">Employment Contract</span>
+              </Link>
+            </div>
+            
+            <div className="text-center">
+              <Link to="/documents">
+                <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600">
+                  View all documents <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+        
+        {/* CTA Section */}
+        <CTASection />
       </div>
     </Layout>
   );

@@ -39,7 +39,7 @@ const Layout = memo(({ children }: LayoutProps) => {
   return (
     <div className={`flex flex-col min-h-screen w-full bg-white dark:bg-rocket-gray-900 transition-colors duration-500 ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
       {!isDashboard && (
-        <div className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+        <div className={`sticky top-0 z-50 w-full transition-all duration-300 ${
           scrolled ? 
             'bg-white/95 dark:bg-rocket-gray-900/95 backdrop-blur-md shadow-sm border-b border-gray-100 dark:border-rocket-gray-800' 
             : 'bg-transparent'
