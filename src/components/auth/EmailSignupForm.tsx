@@ -97,8 +97,8 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // Sign up with automatic email confirmation
-      const { data, error } = await supabase.auth.signUp({
+      // First try direct sign up with password
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -106,80 +106,58 @@ const EmailSignupForm = () => {
             first_name: firstName,
             last_name: lastName,
             phone: formData.phone,
-            full_name: formData.fullName,
-            email_confirmed: true
-          },
-          emailRedirectTo: window.location.origin + '/dashboard',
+            full_name: formData.fullName
+          }
         }
       });
 
-      if (error) {
-        console.error("Error during signup:", error);
+      // If user already exists or any other error, try to sign in directly
+      if (signUpError) {
+        console.log("Sign up error, attempting direct login:", signUpError.message);
         
-        // Handle user already exists - try to login
-        if (error.message.includes("already registered")) {
-          toast.info("Account already exists, attempting to log in...");
-          
-          const { error: signInError } = await supabase.auth.signInWithPassword({
-            email: formData.email,
-            password: formData.password,
-          });
-          
-          if (signInError) {
-            setErrorMessage("This email is already registered but the password may be incorrect.");
-            toast.error("Login failed");
-            setIsSubmitting(false);
-            return;
-          }
-          
-          toast.success("Logged in successfully!");
-          navigate("/dashboard");
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password
+        });
+
+        if (signInError) {
+          console.error("Sign in error:", signInError.message);
+          setErrorMessage("Error creating account: " + signInError.message);
+          toast.error("Account creation failed");
+          setIsSubmitting(false);
           return;
         }
-        
-        setErrorMessage(error.message);
-        toast.error(error.message || "Failed to create account");
-        setIsSubmitting(false);
+
+        // Successfully signed in
+        toast.success("Logged in successfully!");
+        navigate("/dashboard");
         return;
       }
 
-      // Immediately attempt to login with the new credentials
-      await new Promise(resolve => setTimeout(resolve, 500)); // Short delay to ensure account is ready
+      // If signup was successful, check if we have a session
+      if (signUpData?.session) {
+        toast.success("Account created! Welcome to the dashboard.");
+        navigate("/dashboard");
+        return;
+      }
       
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      // If we don't have a session after signup, try to sign in
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
-        password: formData.password,
+        password: formData.password
       });
       
       if (signInError) {
-        console.error("Error during auto-login:", signInError);
-        
-        // Check if we actually have a session despite the error
-        const { data: sessionData } = await supabase.auth.getSession();
-        
-        if (sessionData?.session) {
-          toast.success("Account created! Welcome to the dashboard.");
-          navigate("/dashboard");
-          return;
-        }
-        
-        // One more login attempt
-        const { error: finalLoginError } = await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
-        });
-        
-        if (!finalLoginError) {
-          toast.success("Account created! Welcome to the dashboard.");
-          navigate("/dashboard");
-        } else {
-          toast.info("Account created! Please sign in on the login page.");
-          navigate("/login");
-        }
-      } else {
-        toast.success("Account created! Welcome to the dashboard.");
-        navigate("/dashboard");
+        console.error("Error signing in after signup:", signInError.message);
+        setErrorMessage("Account created but couldn't log in automatically. Please try logging in manually.");
+        toast.info("Account created! Please log in.");
+        navigate("/login");
+        return;
       }
+      
+      toast.success("Account created! Welcome to the dashboard.");
+      navigate("/dashboard");
+      
     } catch (error) {
       console.error("Exception during signup:", error);
       toast.error("An unexpected error occurred");

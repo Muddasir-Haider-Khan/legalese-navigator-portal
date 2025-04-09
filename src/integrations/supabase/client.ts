@@ -16,9 +16,8 @@ export const supabase = createClient<Database>(
     auth: {
       autoRefreshToken: true,
       persistSession: true,
-      detectSessionInUrl: false,
-      flowType: 'pkce', // PKCE flow for most reliable auth
-      storageKey: 'sb-auth-token',
+      detectSessionInUrl: true,
+      flowType: 'pkce', // Using PKCE for better security and reliability
       storage: localStorage
     }
   }

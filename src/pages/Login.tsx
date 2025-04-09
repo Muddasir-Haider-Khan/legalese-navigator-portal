@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,16 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        navigate("/dashboard");
+      }
+    };
+    checkSession();
+  }, [navigate]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -33,83 +43,24 @@ const Login = () => {
 
       if (error) {
         console.log("Login failed:", error.message);
-        
-        // If error is about email confirmation or invalid login, try to sign up
-        if (error.message.includes("Email not confirmed") || error.message.includes("Invalid login")) {
-          // Register user with auto-confirmation
-          const { error: signUpError } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-              data: { 
-                email_confirmed: true,
-              },
-              emailRedirectTo: window.location.origin + '/dashboard',
-            }
-          });
-          
-          if (signUpError) {
-            // If signup failed, try one more login attempt
-            const { error: retryError } = await supabase.auth.signInWithPassword({
-              email,
-              password,
-            });
-            
-            if (retryError) {
-              setErrorMessage("Unable to log in. Please check your credentials.");
-              toast.error("Login failed");
-            } else {
-              // Login successful on retry
-              toast.success("Logged in successfully!");
-              navigate("/dashboard");
-              return;
-            }
-          } else {
-            // Now try to immediately login with the new account
-            const { error: loginAfterSignupError } = await supabase.auth.signInWithPassword({
-              email,
-              password,
-            });
-            
-            if (!loginAfterSignupError) {
-              toast.success("Account created and logged in!");
-              navigate("/dashboard");
-              return;
-            } else {
-              setErrorMessage("Account created but login failed. Please try signing in again.");
-              toast.error("Login after signup failed");
-            }
-          }
-        } else {
-          // Show specific error message from supabase
-          setErrorMessage(error.message);
-          toast.error(error.message);
-        }
-      } else {
-        // Login successful
-        console.log("Login successful:", data);
-        toast.success("Logged in successfully!");
-        navigate("/dashboard");
+        setErrorMessage(error.message);
+        toast.error("Login failed: " + error.message);
+        setIsSubmitting(false);
+        return;
       }
+
+      // Login successful
+      console.log("Login successful:", data);
+      toast.success("Logged in successfully!");
+      navigate("/dashboard");
+      
     } catch (error) {
       console.error("Exception during login:", error);
       setErrorMessage("An unexpected error occurred. Please try again.");
       toast.error("An unexpected error occurred");
-    } finally {
       setIsSubmitting(false);
     }
   };
-
-  // Check if user is already logged in
-  useState(() => {
-    const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        navigate("/dashboard");
-      }
-    };
-    checkSession();
-  });
 
   return (
     <Layout>

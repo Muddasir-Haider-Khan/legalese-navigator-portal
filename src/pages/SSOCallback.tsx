@@ -27,35 +27,57 @@ const SSOCallback = () => {
           // Successfully authenticated
           toast.success("Successfully authenticated!");
           navigate("/dashboard");
-        } else {
-          // Try to extract hash parameters from URL for implicit flow
-          const hashParams = new URLSearchParams(window.location.hash.substring(1));
-          const accessToken = hashParams.get("access_token");
+          return;
+        }
+
+        // No session found, try to process URL parameters
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        const accessToken = hashParams.get("access_token");
+        
+        if (accessToken) {
+          // Set the session with the access token
+          const { error: setSessionError } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: hashParams.get("refresh_token") || "",
+          });
           
-          if (accessToken) {
-            // Set the session with the access token
-            const { error: setSessionError } = await supabase.auth.setSession({
-              access_token: accessToken,
-              refresh_token: hashParams.get("refresh_token") || "",
-            });
-            
-            if (setSessionError) {
-              console.error("Set session error:", setSessionError);
-              setError("Failed to set session. Please try again.");
-              toast.error("Authentication failed");
-              setTimeout(() => navigate("/login"), 2000);
-            } else {
-              toast.success("Successfully authenticated!");
-              navigate("/dashboard");
-            }
-          } else {
-            // No session and no access token
-            console.error("No session or access token found");
-            setError("No authentication data found. Please try again.");
+          if (setSessionError) {
+            console.error("Set session error:", setSessionError);
+            setError("Failed to set session. Please try again.");
             toast.error("Authentication failed");
             setTimeout(() => navigate("/login"), 2000);
+            return;
           }
+          
+          toast.success("Successfully authenticated!");
+          navigate("/dashboard");
+          return;
         }
+        
+        // Try to exchange code for session (PKCE flow)
+        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(window.location.search);
+        
+        if (exchangeError) {
+          console.error("Code exchange error:", exchangeError);
+          setError("Authentication error. Please try again.");
+          toast.error("Authentication failed");
+          setTimeout(() => navigate("/login"), 2000);
+          return;
+        }
+        
+        // Check if we have a session after code exchange
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (sessionData.session) {
+          toast.success("Successfully authenticated!");
+          navigate("/dashboard");
+          return;
+        }
+        
+        // No authentication method worked
+        console.error("No authentication data found");
+        setError("No authentication data found. Please try again.");
+        toast.error("Authentication failed");
+        setTimeout(() => navigate("/login"), 2000);
       } catch (err) {
         console.error("OAuth callback error:", err);
         setError("An unexpected error occurred. Please try again.");
