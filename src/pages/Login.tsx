@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Eye, EyeOff, InfoIcon, Mail } from "lucide-react";
+import { Eye, EyeOff, InfoIcon, Mail, AlertCircle } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -20,6 +20,7 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showVerificationAlert, setShowVerificationAlert] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -36,7 +37,28 @@ const Login = () => {
       setEmail(savedEmail);
       setRememberMe(true);
     }
+
+    // Check URL parameters for verification errors
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("verificationError")) {
+      setShowVerificationAlert(true);
+      const storedEmail = localStorage.getItem("lastLoginEmail");
+      if (storedEmail) {
+        setEmail(storedEmail);
+      }
+      toast.error("Email verification failed or expired", {
+        description: "Please request a new verification email"
+      });
+    }
   }, [navigate]);
+
+  // Handle cooldown timer for resend button
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      const timer = setTimeout(() => setResendCooldown(resendCooldown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendCooldown]);
 
   const handleResendVerification = async () => {
     if (!email) {
@@ -49,12 +71,16 @@ const Login = () => {
       const { error } = await supabase.auth.resend({
         type: 'signup',
         email,
+        options: {
+          emailRedirectTo: window.location.origin + '/sso-callback'
+        }
       });
       
       if (error) {
         toast.error("Failed to resend verification email");
         console.error("Resend error:", error);
       } else {
+        setResendCooldown(60); // 60 seconds cooldown
         toast.success("Verification email sent! Please check your inbox", {
           description: "Don't forget to check your spam folder"
         });
@@ -148,19 +174,24 @@ const Login = () => {
               )}
 
               {showVerificationAlert && (
-                <div className="p-4 bg-blue-900/30 border border-blue-800 text-blue-300 text-sm rounded-md animate-pulse">
+                <div className="p-4 bg-blue-900/30 border border-blue-800 text-blue-300 text-sm rounded-md">
                   <p className="font-medium mb-2">Your account needs verification</p>
-                  <p className="mb-3">Please check your email for a verification link. If you can't find it:</p>
+                  <p className="mb-3">
+                    Please check your email for a verification link.
+                    <strong className="block mt-2">📧 Check your spam/junk folder too!</strong>
+                  </p>
                   <Button
                     type="button"
                     variant="outline" 
                     size="sm"
                     className="w-full bg-blue-800/40 hover:bg-blue-800/60 border-blue-700 text-blue-100"
                     onClick={handleResendVerification}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || resendCooldown > 0}
                   >
                     <Mail className="mr-2 h-4 w-4" />
-                    Resend Verification Email
+                    {resendCooldown > 0 
+                      ? `Resend available in ${resendCooldown}s` 
+                      : "Resend Verification Email"}
                   </Button>
                 </div>
               )}

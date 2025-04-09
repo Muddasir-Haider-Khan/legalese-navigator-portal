@@ -122,7 +122,7 @@ const EmailSignupForm = () => {
             phone: formData.phone,
             full_name: formData.fullName
           },
-          emailRedirectTo: window.location.origin + '/dashboard'
+          emailRedirectTo: window.location.origin + '/sso-callback'
         }
       });
 
@@ -134,39 +134,24 @@ const EmailSignupForm = () => {
         return;
       }
       
-      // If signup was successful but we don't have a session yet, try to sign in
+      // Store the email for login page to pre-fill
+      localStorage.setItem("lastLoginEmail", formData.email);
+      
+      // For email confirmation flow, show success and redirect to login
       if (!signUpData.session) {
-        // Try explicit sign in with password
-        const { data: manualSignInData, error: manualSignInError } = await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
+        console.log("Account created, email confirmation required");
+        toast.success("Account created! Please check your email to confirm your registration.", {
+          description: "Remember to check your spam folder if you don't see it in your inbox.",
+          duration: 6000
         });
         
-        if (manualSignInError) {
-          console.error("Manual sign in error:", manualSignInError);
-          // Final fallback - try OTP method
-          const { error: otpError } = await supabase.auth.signInWithOtp({
-            email: formData.email,
-            options: { shouldCreateUser: false }
-          });
-          
-          if (otpError) {
-            setErrorMessage("Account created but couldn't log you in automatically. Please log in manually.");
-            toast.success("Account created!", {
-              description: "Please log in with your credentials."
-            });
-            setIsSubmitting(false);
-            return;
-          }
-        } else if (manualSignInData.session) {
-          localStorage.setItem("lastLoginEmail", formData.email);
-          toast.success("Welcome aboard! 🎉");
-          navigate("/dashboard");
-          return;
-        }
+        // Wait a moment then redirect to login page
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+        return;
       } else {
-        // Session available directly after signup
-        localStorage.setItem("lastLoginEmail", formData.email);
+        // Session available directly after signup (auto-confirm enabled)
         toast.success("Welcome aboard! 🎉");
         navigate("/dashboard");
         return;
