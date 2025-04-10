@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
+import { AlertCircle, CheckCircle2 } from "lucide-react";
 
 const SSOCallback = () => {
   const navigate = useNavigate();
@@ -21,27 +21,25 @@ const SSOCallback = () => {
         const isEmailVerification = url.includes('type=signup') || url.includes('type=recovery');
         
         console.log("Processing auth callback, URL:", url);
-        console.log("Is email verification:", isEmailVerification);
         
-        // For email verification links, we need to exchange the code for a session
-        if (isEmailVerification || url.includes('code=')) {
-          console.log("Processing email verification or OAuth callback");
+        // For OAuth logins or email verification links, we exchange the code for a session
+        if (url.includes('code=')) {
+          console.log("Processing OAuth callback");
           
           const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(url);
           
           if (exchangeError) {
             console.error("Code exchange error:", exchangeError);
             setError(`Authentication failed: ${exchangeError.message}`);
-            toast.error("Verification failed. Please try logging in again.");
-            // Store error in URL to show verification needed message on login page
-            setTimeout(() => navigate("/login?verificationError=true"), 2000);
+            toast.error("Authentication failed. Please try logging in again.");
+            setTimeout(() => navigate("/login"), 2000);
             return;
           }
           
           if (data?.session) {
             // Successfully authenticated
             console.log("Authentication successful, session obtained");
-            toast.success("Email verified successfully!");
+            toast.success("Authentication successful!");
             navigate("/dashboard");
             return;
           } else {
@@ -65,12 +63,12 @@ const SSOCallback = () => {
         console.error("No authentication method worked");
         setError("Authentication failed. Please try logging in again.");
         toast.error("Authentication failed");
-        setTimeout(() => navigate("/login?verificationError=true"), 2000);
+        setTimeout(() => navigate("/login"), 2000);
       } catch (err) {
         console.error("Authentication callback error:", err);
         setError("An unexpected error occurred. Please try logging in again.");
         toast.error("Authentication error");
-        setTimeout(() => navigate("/login?verificationError=true"), 2000);
+        setTimeout(() => navigate("/login"), 2000);
       } finally {
         setIsProcessing(false);
       }
@@ -85,8 +83,8 @@ const SSOCallback = () => {
         {isProcessing ? (
           <div className="text-center">
             <div className="h-16 w-16 animate-spin rounded-full border-4 border-rocket-blue-300 border-t-rocket-blue-600 mx-auto"></div>
-            <p className="mt-6 text-white text-lg font-medium">Completing verification...</p>
-            <p className="mt-2 text-rocket-gray-400 text-sm">Please wait while we verify your account</p>
+            <p className="mt-6 text-white text-lg font-medium">Processing authentication...</p>
+            <p className="mt-2 text-rocket-gray-400 text-sm">Please wait while we complete the process</p>
           </div>
         ) : error ? (
           <div className="text-center">
@@ -105,7 +103,7 @@ const SSOCallback = () => {
                 <CheckCircle2 className="h-10 w-10 text-green-500" />
               </div>
             </div>
-            <p className="text-green-400 text-lg font-medium mt-4">Verification successful!</p>
+            <p className="text-green-400 text-lg font-medium mt-4">Authentication successful!</p>
             <p className="text-rocket-gray-400 mt-2 text-sm">Redirecting to dashboard...</p>
           </div>
         )}
