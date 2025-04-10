@@ -97,22 +97,8 @@ const EmailSignupForm = () => {
       const [firstName, ...lastNameArr] = formData.fullName.split(" ");
       const lastName = lastNameArr.join(" ");
       
-      // First try: Direct sign-in with password (works if user already exists)
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
-      
-      if (!signInError && signInData.session) {
-        // User already exists and credentials are correct
-        localStorage.setItem("lastLoginEmail", formData.email);
-        toast.success("Welcome back! You've been automatically signed in.");
-        navigate("/dashboard");
-        return;
-      }
-      
-      // If sign-in fails, create a new account with email confirmation disabled
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      // Sign up the user (no email verification)
+      const { error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -121,8 +107,7 @@ const EmailSignupForm = () => {
             last_name: lastName,
             phone: formData.phone,
             full_name: formData.fullName
-          },
-          // No email redirect URL means no confirmation email
+          }
         }
       });
 
@@ -137,28 +122,9 @@ const EmailSignupForm = () => {
       // Store the email for login page to pre-fill
       localStorage.setItem("lastLoginEmail", formData.email);
       
-      // If we get a session directly, user is created and automatically signed in
-      if (signUpData.session) {
-        toast.success("Welcome aboard! 🎉");
-        navigate("/dashboard");
-        return;
-      } else {
-        // If we don't get a session, but no error either, just sign them in manually
-        const { data: manualSignInData, error: manualSignInError } = await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password
-        });
-        
-        if (manualSignInError) {
-          console.error("Manual sign in error:", manualSignInError);
-          setErrorMessage("Account created but couldn't sign in automatically. Please try logging in.");
-          toast.success("Account created! Please log in.");
-          navigate("/login");
-        } else {
-          toast.success("Welcome aboard! 🎉");
-          navigate("/dashboard");
-        }
-      }
+      // Redirect to login page after successful signup
+      toast.success("Account created successfully! Please log in.");
+      navigate("/login");
       
     } catch (error) {
       console.error("Exception during signup:", error);

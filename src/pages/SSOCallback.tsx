@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,18 +10,16 @@ const SSOCallback = () => {
   const [isProcessing, setIsProcessing] = useState(true);
 
   useEffect(() => {
-    // Handle the OAuth or email verification callback
+    // Handle the OAuth callback
     const handleAuthCallback = async () => {
       try {
         setIsProcessing(true);
         
-        // Parse the URL to check what type of callback this is
+        // Parse the URL
         const url = window.location.href;
-        const isEmailVerification = url.includes('type=signup') || url.includes('type=recovery');
-        
         console.log("Processing auth callback, URL:", url);
         
-        // For OAuth logins or email verification links, we exchange the code for a session
+        // For OAuth logins, exchange the code for a session
         if (url.includes('code=')) {
           console.log("Processing OAuth callback");
           

@@ -49,7 +49,7 @@ const Login = () => {
     }
 
     try {
-      // Try direct sign in with password
+      // Sign in with password
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,

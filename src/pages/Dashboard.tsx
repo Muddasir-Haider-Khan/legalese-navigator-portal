@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -13,41 +12,73 @@ import {
   SidebarInset,
   SidebarTrigger
 } from "@/components/ui/sidebar";
-import { Calendar, Home, Book, CreditCard, MessageCircle, User } from "lucide-react";
+import { 
+  Calendar, 
+  Home, 
+  FileText, 
+  MessageCircle, 
+  User, 
+  Mail, 
+  Phone, 
+  Book, 
+  HelpCircle
+} from "lucide-react";
 import ScheduleMeeting from "@/components/dashboard/ScheduleMeeting";
 import LegalAdvice from "@/components/dashboard/LegalAdvice";
 import PlanUpgrade from "@/components/dashboard/PlanUpgrade";
 import AccountInfo from "@/components/dashboard/AccountInfo";
+import { supabase } from "@/integrations/supabase/client";
 
-// Mock user data (in a real app, this would come from Supabase/auth)
-const mockUser = {
-  firstName: "User",
-  lastName: "Smith",
-  email: "user@example.com",
-  phone: "+1 (555) 123-4567",
-  isAuthenticated: true,
-  plan: "Basic"
-};
-
-type TabType = "dashboard" | "schedule" | "advice" | "upgrade" | "account";
+type TabType = 
+  | "dashboard" 
+  | "schedule" 
+  | "advice" 
+  | "documents" 
+  | "contact" 
+  | "book-call" 
+  | "ask-lawyer" 
+  | "account";
 
 const Dashboard = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // In real app, would check auth status
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>("dashboard");
+  const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
   
   useEffect(() => {
-    // In a real app with Supabase, we would check if user is authenticated
-    // For now, we're using mock data
-    if (!mockUser.isAuthenticated) {
-      navigate("/login");
-    }
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        setIsAuthenticated(true);
+        setUser(data.session.user);
+      } else {
+        navigate("/login");
+      }
+      setIsLoading(false);
+    };
+    
+    checkAuth();
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session) {
+          setIsAuthenticated(true);
+          setUser(session.user);
+        } else {
+          setIsAuthenticated(false);
+          navigate("/login");
+        }
+      }
+    );
+    
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
   const handleSignOut = async () => {
-    // In a real app with Supabase, we would sign out the user
+    await supabase.auth.signOut();
     toast.success("Logged out successfully");
-    navigate("/");
+    navigate("/login");
   };
 
   const renderTabContent = () => {
@@ -57,11 +88,11 @@ const Dashboard = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-bold tracking-tight">Welcome, {mockUser.firstName}!</h1>
+                <h1 className="text-2xl font-bold tracking-tight">Welcome, {user?.user_metadata?.first_name || 'User'}!</h1>
                 <p className="text-muted-foreground">What would you like to do today?</p>
               </div>
               <div className="px-4 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                {mockUser.plan} Plan
+                Basic Plan
               </div>
             </div>
             
@@ -104,23 +135,73 @@ const Dashboard = () => {
         );
       case "schedule":
         return <ScheduleMeeting />;
+      case "book-call":
+        return (
+          <div>
+            <h1 className="heading-lg mb-2">Book a Call</h1>
+            <p className="text-rocket-gray-500 mb-6">
+              Schedule a consultation call with one of our legal experts.
+            </p>
+            <div className="bg-white dark:bg-rocket-gray-800 rounded-xl border border-border/40 dark:border-rocket-gray-700 shadow-sm p-6">
+              <h2 className="text-xl font-semibold mb-4">Available Consultation Types</h2>
+            </div>
+          </div>
+        );
+      case "documents":
+        return (
+          <div>
+            <h1 className="heading-lg mb-2">Document Creation</h1>
+            <p className="text-rocket-gray-500 mb-6">
+              Create and manage your legal documents.
+            </p>
+            <div className="bg-white dark:bg-rocket-gray-800 rounded-xl border border-border/40 dark:border-rocket-gray-700 shadow-sm p-6">
+              <h2 className="text-xl font-semibold mb-4">Create a Document</h2>
+            </div>
+          </div>
+        );
       case "advice":
         return <LegalAdvice />;
-      case "upgrade":
-        return <PlanUpgrade />;
+      case "ask-lawyer":
+        return (
+          <div>
+            <h1 className="heading-lg mb-2">Ask a Lawyer</h1>
+            <p className="text-rocket-gray-500 mb-6">
+              Get quick answers to your legal questions from our experts.
+            </p>
+            <div className="bg-white dark:bg-rocket-gray-800 rounded-xl border border-border/40 dark:border-rocket-gray-700 shadow-sm p-6">
+              <h2 className="text-xl font-semibold mb-4">Submit Your Question</h2>
+            </div>
+          </div>
+        );
+      case "contact":
+        return (
+          <div>
+            <h1 className="heading-lg mb-2">Contact Us</h1>
+            <p className="text-rocket-gray-500 mb-6">
+              Get in touch with our team for any questions or support.
+            </p>
+            <div className="bg-white dark:bg-rocket-gray-800 rounded-xl border border-border/40 dark:border-rocket-gray-700 shadow-sm p-6">
+              <h2 className="text-xl font-semibold mb-4">Contact Information</h2>
+            </div>
+          </div>
+        );
       case "account":
-        return <AccountInfo user={mockUser} onSignOut={handleSignOut} />;
+        return <AccountInfo user={user} onSignOut={handleSignOut} />;
       default:
         return null;
     }
   };
 
-  if (!isAuthenticated) {
+  if (isLoading) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <div className="h-16 w-16 animate-spin rounded-full border-4 border-primary/30 border-t-primary"></div>
       </div>
     );
+  }
+
+  if (!isAuthenticated) {
+    return null; // Will redirect to login in useEffect
   }
 
   return (
@@ -148,13 +229,46 @@ const Dashboard = () => {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton 
-                      isActive={activeTab === "schedule"}
-                      onClick={() => setActiveTab("schedule")}
-                      tooltip="Schedule Meeting"
+                      isActive={activeTab === "contact"}
+                      onClick={() => setActiveTab("contact")}
+                      tooltip="Contact Us"
                       className="w-full group transition-colors duration-200"
                     >
-                      <Calendar className={`h-4 w-4 ${activeTab === "schedule" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
-                      <span>Schedule Meeting</span>
+                      <Mail className={`h-4 w-4 ${activeTab === "contact" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
+                      <span>Contact Us</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      isActive={activeTab === "book-call"}
+                      onClick={() => setActiveTab("book-call")}
+                      tooltip="Book a Call"
+                      className="w-full group transition-colors duration-200"
+                    >
+                      <Phone className={`h-4 w-4 ${activeTab === "book-call" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
+                      <span>Book a Call</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      isActive={activeTab === "documents"}
+                      onClick={() => setActiveTab("documents")}
+                      tooltip="Document Creation"
+                      className="w-full group transition-colors duration-200"
+                    >
+                      <FileText className={`h-4 w-4 ${activeTab === "documents" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
+                      <span>Document Creation</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton 
+                      isActive={activeTab === "ask-lawyer"}
+                      onClick={() => setActiveTab("ask-lawyer")}
+                      tooltip="Ask a Lawyer"
+                      className="w-full group transition-colors duration-200"
+                    >
+                      <HelpCircle className={`h-4 w-4 ${activeTab === "ask-lawyer" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
+                      <span>Ask a Lawyer</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
@@ -166,17 +280,6 @@ const Dashboard = () => {
                     >
                       <MessageCircle className={`h-4 w-4 ${activeTab === "advice" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
                       <span>Legal Advice</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton 
-                      isActive={activeTab === "upgrade"}
-                      onClick={() => setActiveTab("upgrade")}
-                      tooltip="Plan Upgrade"
-                      className="w-full group transition-colors duration-200"
-                    >
-                      <CreditCard className={`h-4 w-4 ${activeTab === "upgrade" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
-                      <span>Plan Upgrade</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>

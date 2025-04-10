@@ -44,22 +44,8 @@ const Register = () => {
     }
 
     try {
-      // First, check if user already exists and can sign in
-      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      
-      if (!signInError && signInData.session) {
-        // User already exists and credentials are correct
-        localStorage.setItem("lastLoginEmail", email);
-        toast.success("Welcome back! You've been automatically signed in.");
-        navigate("/dashboard");
-        return;
-      }
-      
-      // If sign-in fails, create a new account without email verification
-      const { data, error } = await supabase.auth.signUp({
+      // Create a new account without email verification
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -67,7 +53,6 @@ const Register = () => {
             first_name: firstName,
             last_name: lastName
           }
-          // No emailRedirectTo means no verification email
         }
       });
 
@@ -82,27 +67,9 @@ const Register = () => {
       // Store email for login page
       localStorage.setItem("lastLoginEmail", email);
 
-      // If we get a session, user is automatically logged in
-      if (data.session) {
-        toast.success("Account created successfully!");
-        navigate("/dashboard");
-        return;
-      } else {
-        // If no session but no error, try manual login
-        const { data: manualSignInData, error: manualSignInError } = await supabase.auth.signInWithPassword({
-          email,
-          password
-        });
-        
-        if (manualSignInError) {
-          console.error("Manual sign in error:", manualSignInError);
-          toast.success("Account created! Please log in.");
-          navigate("/login");
-        } else {
-          toast.success("Welcome aboard! 🎉");
-          navigate("/dashboard");
-        }
-      }
+      // Redirect to login page
+      toast.success("Account created successfully! Please log in.");
+      navigate("/login");
       
     } catch (error) {
       console.error("Exception during registration:", error);
