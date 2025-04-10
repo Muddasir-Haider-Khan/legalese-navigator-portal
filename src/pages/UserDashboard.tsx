@@ -1,22 +1,12 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowRight, FileText, MessageSquare } from 'lucide-react';
 import Layout from "@/components/layout/Layout";
-import LegalAdvice from '@/components/dashboard/LegalAdvice';
-import ScheduleMeeting from '@/components/dashboard/ScheduleMeeting';
-import PlanUpgrade from '@/components/dashboard/PlanUpgrade';
 import { supabase } from "@/integrations/supabase/client";
 import MakeDocuments from '@/components/dashboard/MakeDocuments';
-import AskLawyer from '@/components/dashboard/AskLawyer';
-import Articles from '@/components/dashboard/Articles';
-import Contact from '@/components/dashboard/Contact';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("make-documents");
   const [userName, setUserName] = useState("User");
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -82,37 +72,10 @@ const UserDashboard = () => {
           </p>
         </div>
         
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <div className="bg-white dark:bg-rocket-gray-800 rounded-lg p-1 shadow-sm overflow-x-auto">
-            <TabsList className="inline-flex min-w-max">
-              <TabsTrigger value="make-documents">Make Documents</TabsTrigger>
-              <TabsTrigger value="ask-lawyer">Ask a Lawyer</TabsTrigger>
-              <TabsTrigger value="legal-advice">Legal Advice</TabsTrigger>
-              <TabsTrigger value="articles">Articles</TabsTrigger>
-              <TabsTrigger value="contact">Contact Us</TabsTrigger>
-            </TabsList>
-          </div>
-          
-          <TabsContent value="make-documents">
-            <MakeDocuments />
-          </TabsContent>
-
-          <TabsContent value="ask-lawyer">
-            <AskLawyer />
-          </TabsContent>
-          
-          <TabsContent value="legal-advice">
-            <LegalAdvice />
-          </TabsContent>
-
-          <TabsContent value="articles">
-            <Articles />
-          </TabsContent>
-
-          <TabsContent value="contact">
-            <Contact />
-          </TabsContent>
-        </Tabs>
+        {/* Content section - directly showing MakeDocuments by default */}
+        <div className="space-y-8">
+          <MakeDocuments />
+        </div>
       </div>
     </Layout>
   );
