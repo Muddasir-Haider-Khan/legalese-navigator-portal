@@ -19,6 +19,7 @@ const UserDashboard = lazy(() => import("./pages/UserDashboard"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SSOCallback = lazy(() => import("./pages/SSOCallback"));
+const AskALawyer = lazy(() => import("./pages/AskALawyer"));
 
 // Loading component for suspense fallback
 const PageLoader = () => (
@@ -63,6 +64,7 @@ const App = () => (
               <Route path="/" element={<LandingPage />} />
               <Route path="/documents" element={<DocumentTemplates />} />
               <Route path="/contact-lawyer" element={<ContactLawyer />} />
+              <Route path="/ask-a-lawyer" element={<AskALawyer />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/register" element={<Register />} />

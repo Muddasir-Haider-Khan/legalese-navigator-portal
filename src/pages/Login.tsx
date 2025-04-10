@@ -24,7 +24,7 @@ const Login = () => {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
       if (data.session) {
-        navigate("/dashboard");
+        navigate("/user-dashboard");  // Changed from "/dashboard" to "/user-dashboard"
       }
     };
     checkSession();
@@ -65,7 +65,7 @@ const Login = () => {
 
       // Login successful
       toast.success("Welcome back!");
-      navigate("/dashboard");
+      navigate("/user-dashboard");  // Changed from "/dashboard" to "/user-dashboard"
       
     } catch (error) {
       console.error("Exception during login:", error);

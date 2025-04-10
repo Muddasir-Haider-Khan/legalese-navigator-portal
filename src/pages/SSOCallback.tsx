@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -37,7 +38,7 @@ const SSOCallback = () => {
             // Successfully authenticated
             console.log("Authentication successful, session obtained");
             toast.success("Authentication successful!");
-            navigate("/dashboard");
+            navigate("/user-dashboard");  // Redirect to user dashboard
             return;
           } else {
             console.error("No session returned after code exchange");
@@ -52,7 +53,7 @@ const SSOCallback = () => {
         if (sessionData.session) {
           console.log("Session already exists");
           toast.success("Authentication successful!");
-          navigate("/dashboard");
+          navigate("/user-dashboard");  // Redirect to user dashboard
           return;
         }
         
