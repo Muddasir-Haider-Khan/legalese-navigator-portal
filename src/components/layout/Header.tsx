@@ -1,9 +1,19 @@
 
 import { useState, useEffect, memo, useCallback } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 // Memoize NavLink components to prevent unnecessary re-renders
 const NavLink = memo(({ 
@@ -75,7 +85,12 @@ MobileNavLink.displayName = 'MobileNavLink';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userInitial, setUserInitial] = useState("");
+  
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Memoize scroll handler to prevent unnecessary re-renders
   const handleScroll = useCallback(() => {
@@ -84,6 +99,38 @@ const Header = () => {
     } else {
       setScrolled(false);
     }
+  }, []);
+
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        setIsAuthenticated(true);
+        const email = data.session.user.email || "";
+        setUserName(email.split('@')[0] || "User");
+        setUserInitial((email.charAt(0) || "U").toUpperCase());
+      } else {
+        setIsAuthenticated(false);
+      }
+    };
+    
+    checkAuth();
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session) {
+          setIsAuthenticated(true);
+          const email = session.user.email || "";
+          setUserName(email.split('@')[0] || "User");
+          setUserInitial((email.charAt(0) || "U").toUpperCase());
+        } else {
+          setIsAuthenticated(false);
+        }
+      }
+    );
+    
+    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -100,6 +147,17 @@ const Header = () => {
   const isActive = useCallback((path: string) => {
     return location.pathname === path;
   }, [location.pathname]);
+
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      toast.success("Successfully logged out");
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Failed to log out");
+    }
+  };
 
   return (
     <header 
@@ -153,25 +211,68 @@ const Header = () => {
           </NavLink>
         </nav>
 
-        {/* Auth Buttons */}
+        {/* Auth Buttons or User Profile */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link to="/login">
-            <Button variant="outline" 
-              className={cn(
-                "bg-transparent border-rocket-blue hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:hover:bg-rocket-gray-800 transition-all",
-                !scrolled && location.pathname === "/" 
-                  ? "border-rocket-blue-500 text-rocket-blue-700 hover:bg-rocket-blue-50/50 dark:border-white dark:text-white dark:hover:bg-white/10" 
-                  : "text-rocket-blue-600 border-rocket-blue-500 dark:text-rocket-blue-300"
-              )}
-            >
-              Login
-            </Button>
-          </Link>
-          <Link to="/signup">
-            <Button className="bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600 transition-all">
-              Sign Up
-            </Button>
-          </Link>
+          {isAuthenticated ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="rounded-full w-10 h-10 p-0 bg-rocket-gray-100 border-rocket-gray-200 hover:bg-rocket-gray-200 dark:bg-rocket-gray-800 dark:border-rocket-gray-700"
+                >
+                  <Avatar className="h-9 w-9">
+                    <AvatarFallback className="bg-rocket-blue-500 text-white">
+                      {userInitial}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                align="end" 
+                className="w-56 mt-2 bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700"
+              >
+                <div className="px-4 py-3 border-b border-rocket-gray-200 dark:border-rocket-gray-700">
+                  <p className="text-sm font-medium text-rocket-gray-900 dark:text-white">
+                    {userName}
+                  </p>
+                </div>
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link to="/user-dashboard" className="flex items-center">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  className="cursor-pointer text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button variant="outline" 
+                  className={cn(
+                    "bg-transparent border-rocket-blue hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:hover:bg-rocket-gray-800 transition-all",
+                    !scrolled && location.pathname === "/" 
+                      ? "border-rocket-blue-500 text-rocket-blue-700 hover:bg-rocket-blue-50/50 dark:border-white dark:text-white dark:hover:bg-white/10" 
+                      : "text-rocket-blue-600 border-rocket-blue-500 dark:text-rocket-blue-300"
+                  )}
+                >
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button className="bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600 transition-all">
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -217,16 +318,35 @@ const Header = () => {
               Contact Us
             </MobileNavLink>
             <div className="flex flex-col space-y-2 pt-4 border-t border-rocket-gray-100 dark:border-rocket-gray-800">
-              <Link to="/login" onClick={toggleMenu}>
-                <Button variant="outline" className="w-full bg-transparent border-rocket-blue-500 text-rocket-blue-600 hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:text-rocket-blue-300 dark:hover:bg-rocket-gray-800">
-                  Login
-                </Button>
-              </Link>
-              <Link to="/signup" onClick={toggleMenu}>
-                <Button className="w-full bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600">
-                  Sign Up
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link to="/user-dashboard" onClick={toggleMenu} className="flex items-center space-x-2 text-rocket-blue-600 dark:text-rocket-blue-300">
+                    <User size={18} />
+                    <span>Dashboard</span>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-900/20"
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={18} className="mr-2" />
+                    Log out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={toggleMenu}>
+                    <Button variant="outline" className="w-full bg-transparent border-rocket-blue-500 text-rocket-blue-600 hover:bg-rocket-blue-50 dark:border-rocket-blue-300 dark:text-rocket-blue-300 dark:hover:bg-rocket-gray-800">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/signup" onClick={toggleMenu}>
+                    <Button className="w-full bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600">
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </nav>
         </div>
