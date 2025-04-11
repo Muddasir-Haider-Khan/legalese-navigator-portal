@@ -7,9 +7,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { useEffect } from "react";
+import LandingPage from "./pages/LandingPage"; // Change to static import
 
-// Lazy load pages for better performance
-const LandingPage = lazy(() => import("./pages/LandingPage"));
+// Lazy load other pages for better performance
 const DocumentTemplates = lazy(() => import("./pages/DocumentTemplates"));
 const ContactLawyer = lazy(() => import("./pages/ContactLawyer"));
 const Login = lazy(() => import("./pages/Login"));
