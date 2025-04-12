@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ArrowRight, Star } from "lucide-react";
@@ -11,7 +10,7 @@ const CTASection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-rocket-gray-900 dark:text-white mb-6">
-              Join millions who trust Rocket Lawyer
+              Join millions who trust Legal Gram
             </h2>
             <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 mb-6">
               Get access to all our legal documents, attorney advice, and more with a monthly membership.
@@ -65,7 +64,7 @@ const CTASection = () => {
             <div className="space-y-6">
               <div className="border-l-4 border-rocket-blue-500 pl-4">
                 <p className="text-rocket-gray-600 dark:text-rocket-gray-300 italic mb-4">
-                  "Rocket Lawyer made creating my LLC so easy. The step-by-step process and customer service were excellent!"
+                  "Legal Gram made creating my LLC so easy. The step-by-step process and customer service were excellent!"
                 </p>
                 <p className="font-medium text-rocket-gray-900 dark:text-white">— Michael T., Small Business Owner</p>
               </div>

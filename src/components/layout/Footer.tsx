@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { memo } from "react";
@@ -39,9 +38,9 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-md bg-white flex items-center justify-center text-rocket-blue-500 font-bold">
-                RL
+                LG
               </div>
-              <span className="text-xl font-bold text-white">Rocket Lawyer</span>
+              <span className="text-xl font-bold text-white">Legal Gram</span>
             </div>
             <p className="text-rocket-gray-200">
               We provide affordable, accessible legal services for individuals and businesses.
@@ -108,8 +107,8 @@ const Footer = () => {
                 <span className="text-rocket-gray-200">+1 (555) 123-4567</span>
               </ContactItem>
               <ContactItem icon={Mail}>
-                <a href="mailto:info@rocketlawyer.com" className="text-rocket-gray-200 hover:text-white transition-colors">
-                  info@rocketlawyer.com
+                <a href="mailto:info@legalgram.com" className="text-rocket-gray-200 hover:text-white transition-colors">
+                  info@legalgram.com
                 </a>
               </ContactItem>
             </ul>
@@ -117,7 +116,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 pt-6 border-t border-rocket-blue-400 dark:border-rocket-blue-800 text-center text-rocket-gray-200">
-          <p>&copy; {currentYear} Rocket Lawyer. All rights reserved.</p>
+          <p>&copy; {currentYear} Legal Gram. All rights reserved.</p>
         </div>
       </div>
     </footer>

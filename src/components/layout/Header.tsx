@@ -1,4 +1,3 @@
-
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
@@ -15,7 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
-// Memoize NavLink components to prevent unnecessary re-renders
 const NavLink = memo(({ 
   to, 
   children, 
@@ -52,7 +50,6 @@ const NavLink = memo(({
 
 NavLink.displayName = 'NavLink';
 
-// Memoize MobileNavLink for mobile menu
 const MobileNavLink = memo(({ 
   to, 
   children, 
@@ -92,7 +89,6 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Memoize scroll handler to prevent unnecessary re-renders
   const handleScroll = useCallback(() => {
     if (window.scrollY > 20) {
       setScrolled(true);
@@ -101,7 +97,6 @@ const Header = () => {
     }
   }, []);
 
-  // Check authentication status
   useEffect(() => {
     const checkAuth = async () => {
       const { data } = await supabase.auth.getSession();
@@ -169,11 +164,10 @@ const Header = () => {
       )}
     >
       <div className="container-custom py-4 flex items-center justify-between">
-        {/* Logo */}
         <Link to="/" className="flex items-center">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-md bg-rocket-blue-500 flex items-center justify-center text-white font-bold shadow-md transition-transform hover:scale-105 duration-300">
-              RL
+              LG
             </div>
             <span className={cn(
               "text-xl font-bold transition-colors",
@@ -181,12 +175,11 @@ const Header = () => {
                 ? "text-rocket-blue-500 dark:text-white" 
                 : "text-rocket-blue-700 dark:text-white"
             )}>
-              Rocket Lawyer
+              Legal Gram
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           <NavLink to="/" isActive={isActive("/")} scrolled={scrolled}>
             Home
@@ -211,7 +204,6 @@ const Header = () => {
           </NavLink>
         </nav>
 
-        {/* Auth Buttons or User Profile */}
         <div className="hidden md:flex items-center space-x-4">
           {isAuthenticated ? (
             <DropdownMenu>
@@ -275,7 +267,6 @@ const Header = () => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
           <button 
             className={cn(
@@ -292,7 +283,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white/95 backdrop-blur-md border-b border-rocket-gray-100 shadow-md animate-fade-in dark:bg-rocket-gray-900/95 dark:border-rocket-gray-800">
           <nav className="container-custom py-4 flex flex-col space-y-4">
