@@ -41,8 +41,10 @@ const AdminDashboard = () => {
       setIsAuthorized(isAdmin);
       
       if (isAdmin) {
-        // Fetch dashboard data
+        // Fetch dashboard data directly from tables
         try {
+          console.log("Fetching dashboard data...");
+          
           // Fetch recent activity
           const { data: activityData, error: activityError } = await supabase
             .from('activity_log')
@@ -51,9 +53,11 @@ const AdminDashboard = () => {
             .limit(5);
             
           if (activityError) {
+            console.error("Activity fetch error:", activityError);
             throw activityError;
           }
           
+          console.log("Activity data received:", activityData);
           if (activityData) {
             setRecentActivity(activityData);
           }
@@ -64,12 +68,22 @@ const AdminDashboard = () => {
             .select('*');
             
           if (statusError) {
+            console.error("Status fetch error:", statusError);
             throw statusError;
           }
           
+          console.log("Status data received:", statusData);
           if (statusData) {
             setSystemStatus(statusData);
           }
+          
+          // Alternatively, we could use the DB function
+          // const { data, error } = await supabase.rpc('get_dashboard_data');
+          // if (error) throw error;
+          // if (data) {
+          //   setRecentActivity(data.activities || []);
+          //   setSystemStatus(data.status || []);
+          // }
         } catch (error) {
           console.error("Error fetching dashboard data:", error);
           toast.error("Failed to load some dashboard data");
@@ -108,27 +122,27 @@ const AdminDashboard = () => {
     switch(status) {
       case "Operational":
         return {
-          bg: "bg-green-50 dark:bg-green-900/20",
-          text: "text-green-700 dark:text-green-300",
-          dot: "bg-green-500"
+          bg: "bg-rocket-gray-800 dark:bg-rocket-gray-800",
+          text: "text-green-400",
+          dot: "bg-green-400"
         };
       case "Partial Outage":
         return {
-          bg: "bg-yellow-50 dark:bg-yellow-900/20",
-          text: "text-yellow-700 dark:text-yellow-300",
-          dot: "bg-yellow-500"
+          bg: "bg-rocket-gray-800 dark:bg-rocket-gray-800",
+          text: "text-yellow-400",
+          dot: "bg-yellow-400"
         };
       case "Major Outage":
         return {
-          bg: "bg-red-50 dark:bg-red-900/20",
-          text: "text-red-700 dark:text-red-300",
-          dot: "bg-red-500"
+          bg: "bg-rocket-gray-800 dark:bg-rocket-gray-800",
+          text: "text-red-400",
+          dot: "bg-red-400"
         };
       default:
         return {
-          bg: "bg-gray-50 dark:bg-gray-900/20",
-          text: "text-gray-700 dark:text-gray-300",
-          dot: "bg-gray-500"
+          bg: "bg-rocket-gray-800 dark:bg-rocket-gray-800",
+          text: "text-gray-400",
+          dot: "bg-gray-400"
         };
     }
   };
@@ -153,7 +167,7 @@ const AdminDashboard = () => {
         <h1 className="heading-lg mb-6">Admin Dashboard</h1>
         
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <div className="bg-white dark:bg-rocket-gray-800 rounded-lg p-1 shadow-sm">
+          <div className="bg-rocket-gray-800 rounded-lg p-1 shadow-sm">
             <TabsList className="grid grid-cols-3 gap-2">
               <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
               <TabsTrigger value="users">Users</TabsTrigger>
@@ -167,33 +181,33 @@ const AdminDashboard = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
               {/* Recent activity section */}
-              <div className="bg-white dark:bg-rocket-gray-800 p-6 rounded-lg shadow-sm">
+              <div className="bg-rocket-gray-800 p-6 rounded-lg shadow-sm text-white">
                 <h3 className="text-lg font-medium mb-4">Recent Activity</h3>
                 <ul className="space-y-4">
                   {recentActivity.length === 0 && isLoading ? (
                     // Loading skeleton for activity
                     Array(4).fill(0).map((_, i) => (
-                      <li key={i} className="flex items-center justify-between border-b pb-2">
+                      <li key={i} className="flex items-center justify-between border-b border-gray-700 pb-2">
                         <div className="w-full">
-                          <div className="h-5 bg-muted rounded w-1/3 animate-pulse mb-2"></div>
-                          <div className="h-4 bg-muted rounded w-2/3 animate-pulse"></div>
+                          <div className="h-5 bg-rocket-gray-700 rounded w-1/3 animate-pulse mb-2"></div>
+                          <div className="h-4 bg-rocket-gray-700 rounded w-2/3 animate-pulse"></div>
                         </div>
-                        <div className="h-4 bg-muted rounded w-16 animate-pulse"></div>
+                        <div className="h-4 bg-rocket-gray-700 rounded w-16 animate-pulse"></div>
                       </li>
                     ))
                   ) : recentActivity.length === 0 ? (
-                    <li className="text-center py-4 text-muted-foreground">No recent activity</li>
+                    <li className="text-center py-4 text-gray-400">No recent activity</li>
                   ) : (
                     recentActivity.map((activity) => (
-                      <li key={activity.id} className="flex items-center justify-between border-b pb-2">
+                      <li key={activity.id} className="flex items-center justify-between border-b border-gray-700 pb-2">
                         <div>
                           <p className="font-medium">{activity.description}</p>
-                          <p className="text-sm text-rocket-gray-500">
+                          <p className="text-sm text-gray-400">
                             {activity.user_name && `${activity.user_name} `}
                             {activity.details}
                           </p>
                         </div>
-                        <span className="text-xs text-rocket-gray-500">
+                        <span className="text-xs text-gray-400">
                           {getRelativeTime(activity.created_at)}
                         </span>
                       </li>
@@ -203,33 +217,33 @@ const AdminDashboard = () => {
               </div>
               
               {/* System status section */}
-              <div className="bg-white dark:bg-rocket-gray-800 p-6 rounded-lg shadow-sm">
+              <div className="bg-rocket-gray-800 p-6 rounded-lg shadow-sm text-white">
                 <h3 className="text-lg font-medium mb-4">System Status</h3>
                 <div className="space-y-4">
                   {systemStatus.length === 0 && isLoading ? (
                     // Loading skeleton for status
                     Array(4).fill(0).map((_, i) => (
-                      <div key={i} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800/20 rounded-md">
+                      <div key={i} className="flex justify-between items-center p-3 bg-rocket-gray-700 rounded-md">
                         <div className="flex items-center space-x-2">
-                          <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-                          <div className="h-5 w-28 bg-muted rounded animate-pulse"></div>
+                          <div className="w-3 h-3 rounded-full bg-gray-500"></div>
+                          <div className="h-5 w-28 bg-rocket-gray-600 rounded animate-pulse"></div>
                         </div>
-                        <div className="h-4 w-24 bg-muted rounded animate-pulse"></div>
+                        <div className="h-4 w-24 bg-rocket-gray-600 rounded animate-pulse"></div>
                       </div>
                     ))
                   ) : systemStatus.length === 0 ? (
-                    <div className="text-center py-4 text-muted-foreground">No system status data</div>
+                    <div className="text-center py-4 text-gray-400">No system status data</div>
                   ) : (
                     systemStatus.map((status) => {
                       const statusClasses = getStatusClasses(status.status);
                       return (
                         <div 
                           key={status.id} 
-                          className={`flex justify-between items-center p-3 ${statusClasses.bg} rounded-md`}
+                          className={`flex justify-between items-center p-3 ${statusClasses.bg} rounded-md border border-gray-700`}
                         >
                           <div className="flex items-center">
                             <div className={`w-3 h-3 rounded-full ${statusClasses.dot} mr-2`}></div>
-                            <span className={`font-medium ${statusClasses.text}`}>{status.service_name}</span>
+                            <span className="font-medium text-white">{status.service_name}</span>
                           </div>
                           <span className={`text-sm ${statusClasses.text}`}>{status.status}</span>
                         </div>

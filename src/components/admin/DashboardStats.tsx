@@ -46,16 +46,21 @@ const DashboardStats = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
+      setIsLoading(true);
       try {
+        console.log("Fetching dashboard statistics...");
         const { data, error } = await supabase
           .from('system_stats')
           .select('*');
         
         if (error) {
+          console.error("Database error:", error);
           throw error;
         }
 
-        if (data) {
+        console.log("Stats data received:", data);
+
+        if (data && data.length > 0) {
           // Map database stats to our UI stats
           const statsMap = {
             "Total Users": 0,
@@ -80,6 +85,9 @@ const DashboardStats = () => {
           });
           
           setStats(updatedStats);
+          console.log("Stats updated:", updatedStats);
+        } else {
+          console.log("No stats data found or empty array");
         }
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -95,25 +103,31 @@ const DashboardStats = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat, index) => (
-        <Card key={index}>
+        <Card key={index} className="bg-rocket-gray-800 border-0 text-white">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-sm font-medium text-gray-300">
               {stat.title}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center">
-              <stat.icon className="h-5 w-5 text-primary mr-2" />
+              <stat.icon className="h-5 w-5 text-blue-400 mr-2" />
               {isLoading ? (
-                <div className="h-7 w-16 bg-muted animate-pulse rounded" />
+                <div className="h-7 w-16 bg-rocket-gray-700 animate-pulse rounded" />
               ) : (
                 <span className="text-2xl font-bold">{stat.value.toLocaleString()}</span>
               )}
             </div>
             {isLoading ? (
-              <div className="h-4 w-20 bg-muted animate-pulse rounded mt-2" />
+              <div className="h-4 w-20 bg-rocket-gray-700 animate-pulse rounded mt-2" />
             ) : (
-              <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-600' : 'text-red-600'} mt-2`}>
+              <p className={`text-xs ${
+                stat.change.startsWith('+') 
+                ? 'text-green-400' 
+                : stat.change.startsWith('-') 
+                  ? 'text-red-400' 
+                  : 'text-gray-400'
+              } mt-2`}>
                 {stat.change} {stat.description}
               </p>
             )}
