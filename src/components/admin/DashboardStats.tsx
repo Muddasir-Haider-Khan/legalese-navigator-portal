@@ -61,23 +61,15 @@ const DashboardStats = () => {
         console.log("Stats data received:", data);
 
         if (data && data.length > 0) {
-          // Map database stats to our UI stats
-          const statsMap = {
-            "Total Users": 0,
-            "Documents Created": 1,
-            "Pending Submissions": 2,
-            "Issues Reported": 3
-          };
-
           // Create a copy of current stats to update
           const updatedStats = [...stats];
           
-          // Update stats with values from database
+          // Update stats with values from database by matching stat_name
           data.forEach(stat => {
-            const index = statsMap[stat.stat_name];
-            if (index !== undefined) {
-              updatedStats[index] = {
-                ...updatedStats[index],
+            const statIndex = updatedStats.findIndex(s => s.title === stat.stat_name);
+            if (statIndex !== -1) {
+              updatedStats[statIndex] = {
+                ...updatedStats[statIndex],
                 value: stat.stat_value,
                 change: `${stat.change_percentage >= 0 ? '+' : ''}${stat.change_percentage}%`
               };
@@ -86,8 +78,6 @@ const DashboardStats = () => {
           
           setStats(updatedStats);
           console.log("Stats updated:", updatedStats);
-        } else {
-          console.log("No stats data found or empty array");
         }
       } catch (error) {
         console.error("Error fetching stats:", error);
