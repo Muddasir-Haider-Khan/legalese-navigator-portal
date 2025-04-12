@@ -17,6 +17,7 @@ const Register = lazy(() => import("./pages/Register"));
 const Signup = lazy(() => import("./pages/Signup"));
 const UserDashboard = lazy(() => import("./pages/UserDashboard"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin")); // Added admin login page
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SSOCallback = lazy(() => import("./pages/SSOCallback"));
 const AskALawyer = lazy(() => import("./pages/AskALawyer"));
@@ -71,6 +72,7 @@ const App = () => (
               <Route path="/register" element={<Register />} />
               <Route path="/user-dashboard" element={<UserDashboard />} />
               <Route path="/admin-dashboard" element={<AdminDashboard />} />
+              <Route path="/admin-login" element={<AdminLogin />} /> {/* Added admin login route */}
               <Route path="/sso-callback" element={<SSOCallback />} />
               <Route path="/dashboard" element={<Dashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
