@@ -188,6 +188,13 @@ const Login = () => {
                   Sign up
                 </Link>
               </p>
+              
+              {/* Admin login link */}
+              <p className="text-rocket-gray-500 mt-4 text-xs">
+                <Link to="/admin-login" className="text-rocket-blue-300/70 hover:underline hover:text-rocket-blue-200 transition-colors">
+                  Admin Login
+                </Link>
+              </p>
             </div>
           </div>
         </div>
