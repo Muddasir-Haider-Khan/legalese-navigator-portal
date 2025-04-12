@@ -20,6 +20,7 @@ export const isAdmin = async (): Promise<boolean> => {
 // Function to ensure admin user exists using the edge function
 const ensureAdminExists = async (): Promise<boolean> => {
   try {
+    console.log("Ensuring admin user exists...");
     // Use the edge function to create admin if needed
     const { data, error } = await supabase.functions.invoke('manage-user', {
       body: { 
@@ -35,7 +36,8 @@ const ensureAdminExists = async (): Promise<boolean> => {
     }
     
     if (data?.success) {
-      console.log(data.message);
+      console.log("Admin ensure success:", data.message);
+      console.log("Admin user ID:", data.userId);
       return true;
     }
     
@@ -55,9 +57,17 @@ export const loginAsAdmin = async (email: string, password: string): Promise<boo
   
   try {
     // First ensure the admin user exists
-    await ensureAdminExists();
+    console.log("Starting admin login process");
+    const adminCreated = await ensureAdminExists();
+    
+    if (!adminCreated) {
+      console.error("Failed to ensure admin exists");
+      toast.error("Failed to verify admin account");
+      return false;
+    }
     
     // Then try to login
+    console.log("Attempting to sign in with admin credentials");
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -69,6 +79,7 @@ export const loginAsAdmin = async (email: string, password: string): Promise<boo
       return false;
     }
     
+    console.log("Admin login successful");
     toast.success("Admin login successful");
     return true;
   } catch (error) {

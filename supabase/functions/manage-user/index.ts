@@ -1,3 +1,4 @@
+
 // This edge function would require Supabase service role to work
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1'
@@ -24,23 +25,28 @@ serve(async (req) => {
     const headers = { ...corsHeaders, 'Content-Type': 'application/json' };
     
     const { action, userId, email, password } = await req.json();
+    console.log(`Received request with action: ${action}`);
     
     // Handle different action types
     switch (action) {
       case 'create-admin':
+        console.log("Creating admin user with email:", email);
         // Check if admin exists already
         const { data: userData, error: userError } = await supabase.auth.admin.getUserByEmail(email);
         
         if (userData?.user) {
-          // Admin exists
+          console.log("Admin user already exists with ID:", userData.user.id);
+          // Admin exists - return success
           return new Response(JSON.stringify({ 
             success: true,
             exists: true,
+            userId: userData.user.id,
             message: 'Admin user already exists'
           }), { headers, status: 200 });
         }
         
         // Create admin user if doesn't exist
+        console.log("Creating new admin user");
         const { data, error } = await supabase.auth.admin.createUser({
           email,
           password,
@@ -48,14 +54,17 @@ serve(async (req) => {
         });
         
         if (error) {
+          console.error("Error creating admin:", error.message);
           return new Response(JSON.stringify({ 
             success: false,
             message: `Failed to create admin: ${error.message}`
           }), { headers, status: 500 });
         }
         
+        console.log("Admin user created successfully with ID:", data.user.id);
         return new Response(JSON.stringify({ 
           success: true,
+          userId: data.user.id,
           message: 'Admin user created successfully' 
         }), { headers, status: 200 });
         
@@ -74,6 +83,7 @@ serve(async (req) => {
         }), { headers, status: 400 });
     }
   } catch (error) {
+    console.error("Error in manage-user function:", error.message);
     return new Response(JSON.stringify({ 
       success: false, 
       error: error.message 
