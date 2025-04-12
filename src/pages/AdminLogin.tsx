@@ -95,7 +95,7 @@ const AdminLogin = () => {
                   </button>
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  Default password: legalgram.admin
+                
                 </p>
               </div>
 
