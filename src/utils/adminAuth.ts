@@ -17,41 +17,29 @@ export const isAdmin = async (): Promise<boolean> => {
   return data.session.user.email === ADMIN_EMAIL;
 };
 
-// Function to ensure admin user exists
+// Function to ensure admin user exists using the edge function
 const ensureAdminExists = async (): Promise<boolean> => {
   try {
-    // Check if admin can sign in
-    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-      email: ADMIN_EMAIL,
-      password: ADMIN_PASSWORD,
+    // Use the edge function to create admin if needed
+    const { data, error } = await supabase.functions.invoke('manage-user', {
+      body: { 
+        action: 'create-admin',
+        email: ADMIN_EMAIL,
+        password: ADMIN_PASSWORD
+      }
     });
     
-    // If sign in works, admin exists
-    if (signInData.session) {
-      // Sign out immediately since we're just checking existence
-      await supabase.auth.signOut();
+    if (error) {
+      console.error("Admin creation error:", error);
+      return false;
+    }
+    
+    if (data?.success) {
+      console.log(data.message);
       return true;
     }
     
-    // If error is not "Invalid login credentials", something else is wrong
-    if (signInError && signInError.message !== "Invalid login credentials") {
-      console.error("Admin check error:", signInError);
-      return false;
-    }
-    
-    // Admin doesn't exist, try to create it
-    const { error: signUpError } = await supabase.auth.signUp({
-      email: ADMIN_EMAIL,
-      password: ADMIN_PASSWORD,
-    });
-    
-    if (signUpError) {
-      console.error("Failed to create admin user:", signUpError);
-      return false;
-    }
-    
-    console.log("Admin user created successfully");
-    return true;
+    return false;
   } catch (error) {
     console.error("Admin user check/creation error:", error);
     return false;
@@ -66,15 +54,17 @@ export const loginAsAdmin = async (email: string, password: string): Promise<boo
   }
   
   try {
-    // Ensure admin user exists in the database
+    // First ensure the admin user exists
     await ensureAdminExists();
     
+    // Then try to login
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (error) {
+      console.error("Admin login error:", error.message);
       toast.error("Admin authentication failed: " + error.message);
       return false;
     }
