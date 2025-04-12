@@ -1,4 +1,3 @@
-
 // This edge function would require Supabase service role to work
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1'
@@ -31,16 +30,21 @@ serve(async (req) => {
     switch (action) {
       case 'create-admin':
         console.log("Creating admin user with email:", email);
-        // Check if admin exists already
-        const { data: userData, error: userError } = await supabase.auth.admin.getUserByEmail(email);
         
-        if (userData?.user) {
-          console.log("Admin user already exists with ID:", userData.user.id);
+        // Check if admin exists by trying to sign in
+        // This is a workaround since getUserByEmail isn't available in this version
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        
+        if (!signInError && signInData?.user) {
+          console.log("Admin user already exists with ID:", signInData.user.id);
           // Admin exists - return success
           return new Response(JSON.stringify({ 
             success: true,
             exists: true,
-            userId: userData.user.id,
+            userId: signInData.user.id,
             message: 'Admin user already exists'
           }), { headers, status: 200 });
         }

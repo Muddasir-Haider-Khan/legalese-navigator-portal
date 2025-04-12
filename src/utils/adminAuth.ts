@@ -17,7 +17,7 @@ export const isAdmin = async (): Promise<boolean> => {
   return data.session.user.email === ADMIN_EMAIL;
 };
 
-// Function to ensure admin user exists using the edge function
+// Function to ensure admin user exists using the edge function with better error handling
 const ensureAdminExists = async (): Promise<boolean> => {
   try {
     console.log("Ensuring admin user exists...");
@@ -32,6 +32,7 @@ const ensureAdminExists = async (): Promise<boolean> => {
     
     if (error) {
       console.error("Admin creation error:", error);
+      toast.error(`Error connecting to server: ${error.message}`);
       return false;
     }
     
@@ -41,14 +42,16 @@ const ensureAdminExists = async (): Promise<boolean> => {
       return true;
     }
     
+    toast.error("Failed to verify admin account");
     return false;
   } catch (error) {
     console.error("Admin user check/creation error:", error);
+    toast.error("Connection error: Please try again later");
     return false;
   }
 };
 
-// Function to authenticate admin
+// Function to authenticate admin with better error handling
 export const loginAsAdmin = async (email: string, password: string): Promise<boolean> => {
   if (email !== ADMIN_EMAIL) {
     toast.error("Invalid admin credentials");

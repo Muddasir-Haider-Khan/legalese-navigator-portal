@@ -1,12 +1,13 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Eye, EyeOff, ShieldAlert } from "lucide-react";
+import { Eye, EyeOff, ShieldAlert, AlertCircle } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { loginAsAdmin } from "@/utils/adminAuth";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -14,16 +15,21 @@ const AdminLogin = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage("");
 
     try {
       const success = await loginAsAdmin(email, password);
       if (success) {
         navigate("/admin-dashboard");
       }
+    } catch (error) {
+      setErrorMessage("Failed to connect to authentication service");
+      console.error("Login error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -45,6 +51,15 @@ const AdminLogin = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {errorMessage && (
+              <Alert className="mb-6 bg-red-100 dark:bg-red-900/20 border-red-300 dark:border-red-800/30">
+                <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                <AlertDescription className="text-red-600 dark:text-red-400">
+                  {errorMessage}
+                </AlertDescription>
+              </Alert>
+            )}
+            
             <form onSubmit={handleAdminLogin} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
@@ -79,6 +94,9 @@ const AdminLogin = () => {
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  Default password: legalgram.admin
+                </p>
               </div>
 
               <Button
@@ -98,6 +116,12 @@ const AdminLogin = () => {
                   "Sign In as Admin"
                 )}
               </Button>
+              
+              <div className="text-center mt-4">
+                <Link to="/login" className="text-blue-500 hover:underline text-sm">
+                  Return to normal login
+                </Link>
+              </div>
             </form>
           </CardContent>
         </Card>
