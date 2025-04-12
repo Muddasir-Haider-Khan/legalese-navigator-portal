@@ -9,13 +9,87 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      activity_log: {
+        Row: {
+          activity_type: string
+          created_at: string
+          description: string
+          details: string | null
+          id: string
+          user_name: string | null
+        }
+        Insert: {
+          activity_type: string
+          created_at?: string
+          description: string
+          details?: string | null
+          id?: string
+          user_name?: string | null
+        }
+        Update: {
+          activity_type?: string
+          created_at?: string
+          description?: string
+          details?: string | null
+          id?: string
+          user_name?: string | null
+        }
+        Relationships: []
+      }
+      system_stats: {
+        Row: {
+          change_percentage: number
+          id: string
+          last_updated: string
+          stat_name: string
+          stat_value: number
+        }
+        Insert: {
+          change_percentage: number
+          id?: string
+          last_updated?: string
+          stat_name: string
+          stat_value: number
+        }
+        Update: {
+          change_percentage?: number
+          id?: string
+          last_updated?: string
+          stat_name?: string
+          stat_value?: number
+        }
+        Relationships: []
+      }
+      system_status: {
+        Row: {
+          id: string
+          last_updated: string
+          service_name: string
+          status: string
+        }
+        Insert: {
+          id?: string
+          last_updated?: string
+          service_name: string
+          status: string
+        }
+        Update: {
+          id?: string
+          last_updated?: string
+          service_name?: string
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_dashboard_data: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

@@ -1,46 +1,96 @@
 
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { UsersRound, FileText, Inbox, AlertTriangle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const DashboardStats = () => {
-  // Mock statistics data
-  const stats = [
+  const [stats, setStats] = useState([
     {
       title: "Total Users",
-      value: 2543,
-      change: "+12%",
+      value: 0,
+      change: "0%",
       icon: UsersRound,
       description: "from last month"
     },
     {
       title: "Documents Created",
-      value: 8729,
-      change: "+8%",
+      value: 0,
+      change: "0%",
       icon: FileText,
       description: "from last month"
     },
     {
       title: "Pending Submissions",
-      value: 42,
-      change: "+15%",
+      value: 0,
+      change: "0%",
       icon: Inbox,
       description: "from last month"
     },
     {
       title: "Issues Reported",
-      value: 7,
-      change: "-3%",
+      value: 0,
+      change: "0%",
       icon: AlertTriangle,
       description: "from last month"
     }
-  ];
+  ]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('system_stats')
+          .select('*');
+        
+        if (error) {
+          throw error;
+        }
+
+        if (data) {
+          // Map database stats to our UI stats
+          const statsMap = {
+            "Total Users": 0,
+            "Documents Created": 1,
+            "Pending Submissions": 2,
+            "Issues Reported": 3
+          };
+
+          // Create a copy of current stats to update
+          const updatedStats = [...stats];
+          
+          // Update stats with values from database
+          data.forEach(stat => {
+            const index = statsMap[stat.stat_name];
+            if (index !== undefined) {
+              updatedStats[index] = {
+                ...updatedStats[index],
+                value: stat.stat_value,
+                change: `${stat.change_percentage >= 0 ? '+' : ''}${stat.change_percentage}%`
+              };
+            }
+          });
+          
+          setStats(updatedStats);
+        }
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+        toast.error("Failed to load dashboard statistics");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -54,11 +104,19 @@ const DashboardStats = () => {
           <CardContent>
             <div className="flex items-center">
               <stat.icon className="h-5 w-5 text-primary mr-2" />
-              <span className="text-2xl font-bold">{stat.value.toLocaleString()}</span>
+              {isLoading ? (
+                <div className="h-7 w-16 bg-muted animate-pulse rounded" />
+              ) : (
+                <span className="text-2xl font-bold">{stat.value.toLocaleString()}</span>
+              )}
             </div>
-            <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-600' : 'text-red-600'} mt-2`}>
-              {stat.change} {stat.description}
-            </p>
+            {isLoading ? (
+              <div className="h-4 w-20 bg-muted animate-pulse rounded mt-2" />
+            ) : (
+              <p className={`text-xs ${stat.change.startsWith('+') ? 'text-green-600' : 'text-red-600'} mt-2`}>
+                {stat.change} {stat.description}
+              </p>
+            )}
           </CardContent>
         </Card>
       ))}

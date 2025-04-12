@@ -8,23 +8,130 @@ import { redirectIfNotAdmin } from "@/utils/adminAuth";
 import DashboardStats from "@/components/admin/DashboardStats";
 import UserManagementTable from "@/components/admin/UserManagementTable";
 import SubmissionsTable from "@/components/admin/SubmissionsTable";
+import { supabase } from "@/integrations/supabase/client";
+
+interface ActivityItem {
+  id: string;
+  activity_type: string;
+  description: string;
+  user_name: string | null;
+  details: string | null;
+  created_at: string;
+}
+
+interface SystemStatus {
+  id: string;
+  service_name: string;
+  status: string;
+  last_updated: string;
+}
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
+  const [systemStatus, setSystemStatus] = useState<SystemStatus[]>([]);
   
   useEffect(() => {
     const checkAdminStatus = async () => {
       setIsLoading(true);
       const isAdmin = await redirectIfNotAdmin(navigate);
       setIsAuthorized(isAdmin);
+      
+      if (isAdmin) {
+        // Fetch dashboard data
+        try {
+          // Fetch recent activity
+          const { data: activityData, error: activityError } = await supabase
+            .from('activity_log')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(5);
+            
+          if (activityError) {
+            throw activityError;
+          }
+          
+          if (activityData) {
+            setRecentActivity(activityData);
+          }
+          
+          // Fetch system status
+          const { data: statusData, error: statusError } = await supabase
+            .from('system_status')
+            .select('*');
+            
+          if (statusError) {
+            throw statusError;
+          }
+          
+          if (statusData) {
+            setSystemStatus(statusData);
+          }
+        } catch (error) {
+          console.error("Error fetching dashboard data:", error);
+          toast.error("Failed to load some dashboard data");
+        }
+      }
+      
       setIsLoading(false);
     };
     
     checkAdminStatus();
   }, [navigate]);
+  
+  // Format relative time
+  const getRelativeTime = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHour = Math.floor(diffMin / 60);
+    const diffDay = Math.floor(diffHour / 24);
+    
+    if (diffDay > 0) {
+      return diffDay === 1 ? "Yesterday" : `${diffDay} days ago`;
+    } else if (diffHour > 0) {
+      return `${diffHour} ${diffHour === 1 ? "hour" : "hours"} ago`;
+    } else if (diffMin > 0) {
+      return `${diffMin} ${diffMin === 1 ? "minute" : "minutes"} ago`;
+    } else {
+      return "Just now";
+    }
+  };
+  
+  // Get CSS classes for status
+  const getStatusClasses = (status: string) => {
+    switch(status) {
+      case "Operational":
+        return {
+          bg: "bg-green-50 dark:bg-green-900/20",
+          text: "text-green-700 dark:text-green-300",
+          dot: "bg-green-500"
+        };
+      case "Partial Outage":
+        return {
+          bg: "bg-yellow-50 dark:bg-yellow-900/20",
+          text: "text-yellow-700 dark:text-yellow-300",
+          dot: "bg-yellow-500"
+        };
+      case "Major Outage":
+        return {
+          bg: "bg-red-50 dark:bg-red-900/20",
+          text: "text-red-700 dark:text-red-300",
+          dot: "bg-red-500"
+        };
+      default:
+        return {
+          bg: "bg-gray-50 dark:bg-gray-900/20",
+          text: "text-gray-700 dark:text-gray-300",
+          dot: "bg-gray-500"
+        };
+    }
+  };
   
   // If loading, show loading screen
   if (isLoading) {
@@ -63,69 +170,72 @@ const AdminDashboard = () => {
               <div className="bg-white dark:bg-rocket-gray-800 p-6 rounded-lg shadow-sm">
                 <h3 className="text-lg font-medium mb-4">Recent Activity</h3>
                 <ul className="space-y-4">
-                  <li className="flex items-center justify-between border-b pb-2">
-                    <div>
-                      <p className="font-medium">New user registered</p>
-                      <p className="text-sm text-rocket-gray-500">Amy Wilson joined with Professional plan</p>
-                    </div>
-                    <span className="text-xs text-rocket-gray-500">2 hours ago</span>
-                  </li>
-                  <li className="flex items-center justify-between border-b pb-2">
-                    <div>
-                      <p className="font-medium">Document created</p>
-                      <p className="text-sm text-rocket-gray-500">Will and Testament created by John Smith</p>
-                    </div>
-                    <span className="text-xs text-rocket-gray-500">5 hours ago</span>
-                  </li>
-                  <li className="flex items-center justify-between border-b pb-2">
-                    <div>
-                      <p className="font-medium">Payment received</p>
-                      <p className="text-sm text-rocket-gray-500">Sarah Johnson renewed Premium subscription</p>
-                    </div>
-                    <span className="text-xs text-rocket-gray-500">Yesterday</span>
-                  </li>
-                  <li className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium">Lawyer consultation scheduled</p>
-                      <p className="text-sm text-rocket-gray-500">Michael Brown scheduled call with Attorney Henderson</p>
-                    </div>
-                    <span className="text-xs text-rocket-gray-500">Yesterday</span>
-                  </li>
+                  {recentActivity.length === 0 && isLoading ? (
+                    // Loading skeleton for activity
+                    Array(4).fill(0).map((_, i) => (
+                      <li key={i} className="flex items-center justify-between border-b pb-2">
+                        <div className="w-full">
+                          <div className="h-5 bg-muted rounded w-1/3 animate-pulse mb-2"></div>
+                          <div className="h-4 bg-muted rounded w-2/3 animate-pulse"></div>
+                        </div>
+                        <div className="h-4 bg-muted rounded w-16 animate-pulse"></div>
+                      </li>
+                    ))
+                  ) : recentActivity.length === 0 ? (
+                    <li className="text-center py-4 text-muted-foreground">No recent activity</li>
+                  ) : (
+                    recentActivity.map((activity) => (
+                      <li key={activity.id} className="flex items-center justify-between border-b pb-2">
+                        <div>
+                          <p className="font-medium">{activity.description}</p>
+                          <p className="text-sm text-rocket-gray-500">
+                            {activity.user_name && `${activity.user_name} `}
+                            {activity.details}
+                          </p>
+                        </div>
+                        <span className="text-xs text-rocket-gray-500">
+                          {getRelativeTime(activity.created_at)}
+                        </span>
+                      </li>
+                    ))
+                  )}
                 </ul>
               </div>
               
-              {/* Quick actions section */}
+              {/* System status section */}
               <div className="bg-white dark:bg-rocket-gray-800 p-6 rounded-lg shadow-sm">
                 <h3 className="text-lg font-medium mb-4">System Status</h3>
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-md">
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                      <span className="font-medium text-green-700 dark:text-green-300">Authentication Service</span>
-                    </div>
-                    <span className="text-sm text-green-600 dark:text-green-300">Operational</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-md">
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                      <span className="font-medium text-green-700 dark:text-green-300">Document Generation</span>
-                    </div>
-                    <span className="text-sm text-green-600 dark:text-green-300">Operational</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-md">
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-                      <span className="font-medium text-green-700 dark:text-green-300">Payment Processing</span>
-                    </div>
-                    <span className="text-sm text-green-600 dark:text-green-300">Operational</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-md">
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
-                      <span className="font-medium text-yellow-700 dark:text-yellow-300">Email Notifications</span>
-                    </div>
-                    <span className="text-sm text-yellow-600 dark:text-yellow-300">Partial Outage</span>
-                  </div>
+                  {systemStatus.length === 0 && isLoading ? (
+                    // Loading skeleton for status
+                    Array(4).fill(0).map((_, i) => (
+                      <div key={i} className="flex justify-between items-center p-3 bg-gray-50 dark:bg-gray-800/20 rounded-md">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                          <div className="h-5 w-28 bg-muted rounded animate-pulse"></div>
+                        </div>
+                        <div className="h-4 w-24 bg-muted rounded animate-pulse"></div>
+                      </div>
+                    ))
+                  ) : systemStatus.length === 0 ? (
+                    <div className="text-center py-4 text-muted-foreground">No system status data</div>
+                  ) : (
+                    systemStatus.map((status) => {
+                      const statusClasses = getStatusClasses(status.status);
+                      return (
+                        <div 
+                          key={status.id} 
+                          className={`flex justify-between items-center p-3 ${statusClasses.bg} rounded-md`}
+                        >
+                          <div className="flex items-center">
+                            <div className={`w-3 h-3 rounded-full ${statusClasses.dot} mr-2`}></div>
+                            <span className={`font-medium ${statusClasses.text}`}>{status.service_name}</span>
+                          </div>
+                          <span className={`text-sm ${statusClasses.text}`}>{status.status}</span>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </div>
