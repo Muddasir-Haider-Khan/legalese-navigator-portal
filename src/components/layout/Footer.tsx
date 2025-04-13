@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { memo } from "react";
@@ -57,13 +58,8 @@ const Footer = () => {
                 </FooterLink>
               </li>
               <li>
-                <FooterLink to="/advice">
-                  Get Legal Advice
-                </FooterLink>
-              </li>
-              <li>
-                <FooterLink to="/articles">
-                  Legal Articles
+                <FooterLink to="/pricing">
+                  Pricing Plans
                 </FooterLink>
               </li>
               <li>
