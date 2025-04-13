@@ -1,5 +1,6 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +9,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { FileText, Search, Star, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 // Mock document data
 const documents = [
@@ -72,8 +75,45 @@ const documents = [
 const DocumentTemplates = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   
   const categories = ["all", "Business", "Estate Planning", "Real Estate", "Employment", "Intellectual Property", "Family"];
+  
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        setIsAuthenticated(!!data.session);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        setIsAuthenticated(false);
+        setIsLoading(false);
+      }
+    };
+    
+    checkAuth();
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setIsAuthenticated(!!session);
+      }
+    );
+    
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+  
+  const handleUseTemplate = (id: number) => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to use document templates");
+      navigate("/login");
+      return;
+    }
+    
+    navigate(`/documents/${id}`);
+  };
   
   const filteredDocuments = documents.filter(doc => {
     const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -84,6 +124,16 @@ const DocumentTemplates = () => {
     return matchesSearch && matchesCategory;
   });
 
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="flex h-screen w-full items-center justify-center">
+          <div className="h-16 w-16 animate-spin rounded-full border-4 border-primary/30 border-t-primary"></div>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="container-custom py-12 md:py-16">
@@ -93,6 +143,16 @@ const DocumentTemplates = () => {
             <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-400 max-w-3xl mx-auto">
               Browse our collection of professionally drafted legal documents. Customize and download what you need in minutes.
             </p>
+            {!isAuthenticated && (
+              <div className="mt-6">
+                <Link to="/login">
+                  <Button size="lg" className="mx-2">Log in</Button>
+                </Link>
+                <Link to="/signup">
+                  <Button size="lg" variant="outline" className="mx-2">Sign up</Button>
+                </Link>
+              </div>
+            )}
           </div>
           
           <div className="flex items-center gap-4 mb-8">
@@ -146,11 +206,12 @@ const DocumentTemplates = () => {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Link to={`/documents/${doc.id}`} className="w-full">
-                      <Button className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600">
-                        Use Template
-                      </Button>
-                    </Link>
+                    <Button 
+                      className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600"
+                      onClick={() => handleUseTemplate(doc.id)}
+                    >
+                      {isAuthenticated ? "Use Template" : "Log in to Use"}
+                    </Button>
                   </CardFooter>
                 </Card>
               ))}

@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Download, ArrowRight } from "lucide-react";
+import { FileText, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const documentTemplates = [
   { id: 1, name: "Last Will and Testament", category: "Estate Planning", complexity: "Medium" },
@@ -15,12 +16,17 @@ const documentTemplates = [
 
 const MakeDocuments = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const navigate = useNavigate();
   
   const categories = [...new Set(documentTemplates.map(doc => doc.category))];
   
   const filteredDocuments = selectedCategory 
     ? documentTemplates.filter(doc => doc.category === selectedCategory)
     : documentTemplates;
+
+  const handleStartCreating = (id: number) => {
+    navigate(`/documents/${id}`);
+  };
 
   return (
     <div>
@@ -68,7 +74,10 @@ const MakeDocuments = () => {
               </p>
             </CardContent>
             <CardFooter>
-              <Button className="w-full">
+              <Button 
+                className="w-full"
+                onClick={() => handleStartCreating(doc.id)}
+              >
                 Start Creating <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardFooter>

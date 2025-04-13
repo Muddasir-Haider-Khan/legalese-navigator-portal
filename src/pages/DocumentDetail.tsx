@@ -1,12 +1,13 @@
 
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Download, ArrowLeft, CheckCircle } from "lucide-react";
 import DocumentForm from "@/components/documents/DocumentForm";
+import { supabase } from "@/integrations/supabase/client";
 
 // This matches the document structure from DocumentTemplates.tsx
 interface Document {
@@ -82,9 +83,52 @@ const DocumentDetail = () => {
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
   const [documentGenerated, setDocumentGenerated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        if (!data.session) {
+          navigate("/login");
+          return;
+        }
+        setIsAuthenticated(true);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        navigate("/login");
+      }
+    };
+    
+    checkAuth();
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (!session) {
+          navigate("/login");
+          return;
+        }
+        setIsAuthenticated(true);
+      }
+    );
+    
+    return () => subscription.unsubscribe();
+  }, [navigate]);
   
   // Find the document with the given id
   const document = documents.find(doc => doc.id === Number(id));
+  
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="flex h-screen w-full items-center justify-center">
+          <div className="h-16 w-16 animate-spin rounded-full border-4 border-primary/30 border-t-primary"></div>
+        </div>
+      </Layout>
+    );
+  }
   
   if (!document) {
     return (
@@ -162,7 +206,7 @@ const DocumentDetail = () => {
                 </div>
                 
                 <p className="text-sm text-center text-rocket-gray-500 dark:text-rocket-gray-400">
-                  Need help? <Link to="/contact-lawyer" className="text-rocket-blue-500 hover:underline">Contact a lawyer</Link> for professional assistance.
+                  Need help? <Link to="/contact" className="text-rocket-blue-500 hover:underline">Contact us</Link> for professional assistance.
                 </p>
               </CardFooter>
             </Card>
@@ -249,7 +293,7 @@ const DocumentDetail = () => {
                 </Button>
                 
                 <p className="text-sm text-center text-rocket-gray-500 dark:text-rocket-gray-400">
-                  Need help? <Link to="/contact-lawyer" className="text-rocket-blue-500 hover:underline">Contact a lawyer</Link> for professional assistance.
+                  Need help? <Link to="/contact" className="text-rocket-blue-500 hover:underline">Contact us</Link> for professional assistance.
                 </p>
               </CardFooter>
             </Card>
