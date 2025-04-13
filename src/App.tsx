@@ -21,7 +21,6 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SSOCallback = lazy(() => import("./pages/SSOCallback"));
-const AskALawyer = lazy(() => import("./pages/AskALawyer"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 
 // Loading component for suspense fallback
@@ -66,9 +65,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/documents" element={<DocumentTemplates />} />
-              <Route path="/documents/:id" element={<DocumentDetail />} /> {/* Add the new route */}
+              <Route path="/documents/:id" element={<DocumentDetail />} /> 
               <Route path="/contact-lawyer" element={<ContactLawyer />} />
-              <Route path="/ask-a-lawyer" element={<AskALawyer />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/register" element={<Register />} />
