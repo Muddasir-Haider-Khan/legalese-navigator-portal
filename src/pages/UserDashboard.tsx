@@ -5,7 +5,26 @@ import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import MakeDocuments from '@/components/dashboard/MakeDocuments';
 import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import { 
+  FileText, 
+  User, 
+  CreditCard, 
+  MessageSquare, 
+  Bell, 
+  Home 
+} from "lucide-react";
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarTrigger
+} from "@/components/ui/sidebar";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -74,59 +93,140 @@ const UserDashboard = () => {
     return null;
   }
 
+  // Dashboard navigation items
+  const sidebarItems = [
+    { icon: Home, label: "Dashboard", onClick: () => setActiveTab("documents") },
+    { icon: User, label: "Profile", onClick: () => setActiveTab("profile") },
+    { icon: CreditCard, label: "Payment", onClick: () => setActiveTab("payment") },
+    { icon: FileText, label: "Documents", onClick: () => setActiveTab("documents") },
+    { icon: MessageSquare, label: "Consultations", onClick: () => setActiveTab("consultations") },
+    { icon: Bell, label: "Notifications", onClick: () => setActiveTab("notifications") },
+  ];
+
   return (
-    <Layout>
-      <div className="container-custom py-8">
-        <div className="mb-8">
-          <h1 className="heading-lg mb-2">Welcome back, {userName}</h1>
-          <p className="text-rocket-gray-600 dark:text-rocket-gray-400">
-            Manage your legal documents, consultations, and get expert advice.
-          </p>
-        </div>
-        
-        <div className="mb-6">
-          <div className="flex space-x-2 border-b border-border pb-2">
-            <button
-              onClick={() => setActiveTab("documents")}
-              className={`px-4 py-2 rounded-t-md ${
-                activeTab === "documents"
-                  ? "bg-primary text-white"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Documents
-            </button>
-            <button
-              onClick={() => setActiveTab("consultations")}
-              className={`px-4 py-2 rounded-t-md ${
-                activeTab === "consultations"
-                  ? "bg-primary text-white"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Consultations
-            </button>
+    <div className="min-h-screen w-full">
+      <SidebarProvider>
+        <div className="flex min-h-screen w-full">
+          {/* Sidebar */}
+          <Sidebar>
+            <SidebarHeader className="border-b p-4">
+              <div className="flex items-center space-x-2">
+                <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white">
+                  {userName.charAt(0).toUpperCase()}
+                </div>
+                <div className="text-sm font-medium">{userName}</div>
+              </div>
+            </SidebarHeader>
+            <SidebarContent>
+              <SidebarMenu>
+                {sidebarItems.map((item) => (
+                  <SidebarMenuItem key={item.label}>
+                    <SidebarMenuButton 
+                      onClick={item.onClick} 
+                      isActive={activeTab === item.label.toLowerCase()}
+                      tooltip={item.label}
+                    >
+                      <item.icon className="h-5 w-5" />
+                      <span>{item.label}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarContent>
+          </Sidebar>
+          
+          {/* Main Content */}
+          <div className="flex-1 overflow-auto">
+            <div className="container-custom p-8">
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold">Welcome to Legal Portal</h1>
+                <p className="text-muted-foreground mt-2">
+                  Manage your legal documents, consultations, and get expert advice.
+                </p>
+              </div>
+              
+              <div className="mb-8">
+                <SidebarTrigger className="md:hidden mb-4" />
+                
+                {/* Dashboard Content based on active tab */}
+                {activeTab === "documents" && (
+                  <div>
+                    <h2 className="text-2xl font-semibold mb-6">Your Documents</h2>
+                    <MakeDocuments />
+                  </div>
+                )}
+                
+                {activeTab === "consultations" && (
+                  <div>
+                    <h2 className="text-2xl font-semibold mb-6">Your Consultations</h2>
+                    <Card>
+                      <CardContent className="p-6">
+                        <p className="text-muted-foreground">
+                          You don't have any active consultations. Schedule a meeting with a lawyer to get started.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+                
+                {activeTab === "profile" && (
+                  <div>
+                    <h2 className="text-2xl font-semibold mb-6">Your Profile</h2>
+                    <Card>
+                      <CardContent className="p-6">
+                        <div className="space-y-4">
+                          <div>
+                            <h3 className="text-lg font-medium">Account Information</h3>
+                            <p className="text-muted-foreground">
+                              Email: {userName}@example.com
+                            </p>
+                            <p className="text-muted-foreground">
+                              Member since: January 2025
+                            </p>
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-medium">Subscription</h3>
+                            <p className="text-muted-foreground">
+                              Plan: Basic
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+                
+                {activeTab === "payment" && (
+                  <div>
+                    <h2 className="text-2xl font-semibold mb-6">Payment Information</h2>
+                    <Card>
+                      <CardContent className="p-6">
+                        <p className="text-muted-foreground">
+                          No payment methods on file. Add a payment method to access premium features.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+                
+                {activeTab === "notifications" && (
+                  <div>
+                    <h2 className="text-2xl font-semibold mb-6">Notifications</h2>
+                    <Card>
+                      <CardContent className="p-6">
+                        <p className="text-muted-foreground">
+                          You don't have any notifications at this time.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div className="space-y-8">
-          {activeTab === "documents" && (
-            <MakeDocuments />
-          )}
-          
-          {activeTab === "consultations" && (
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Your Consultations</h2>
-                <p className="text-muted-foreground">
-                  You don't have any active consultations. Schedule a meeting with a lawyer to get started.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </div>
-    </Layout>
+      </SidebarProvider>
+    </div>
   );
 };
 

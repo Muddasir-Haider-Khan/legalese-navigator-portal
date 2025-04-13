@@ -72,11 +72,6 @@ const MakeDocuments = () => {
 
   return (
     <div>
-      <h1 className="heading-lg mb-2">Create Legal Documents</h1>
-      <p className="text-rocket-gray-500 mb-6">
-        Choose from our library of legal document templates to get started.
-      </p>
-      
       <div className="mb-6 flex flex-wrap gap-2">
         <Button 
           variant={selectedCategory === null ? "default" : "outline"} 
