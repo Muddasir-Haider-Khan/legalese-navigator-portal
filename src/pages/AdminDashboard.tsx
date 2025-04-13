@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -5,16 +6,18 @@ import { redirectIfNotAdmin } from "@/utils/adminAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarGroupLabel, 
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from "@/components/ui/sidebar";
-import { LayoutDashboard, FileText, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, Users, LogOut, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import UserManagementTable from "@/components/admin/UserManagementTable";
 import SubmissionsTable from "@/components/admin/SubmissionsTable";
+import ConsultationsTable from "@/components/admin/ConsultationsTable";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeView, setActiveView] = useState<"dashboard" | "submissions" | "users">("dashboard");
+  const [activeView, setActiveView] = useState<"dashboard" | "submissions" | "users" | "consultations">("dashboard");
 
   useEffect(() => {
     const checkAdminStatus = async () => {
@@ -99,6 +102,15 @@ const AdminDashboard = () => {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton 
+                    onClick={() => setActiveView("consultations")}
+                    isActive={activeView === "consultations"}
+                  >
+                    <Calendar className="mr-2 h-4 w-4" />
+                    <span>Consultations</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton 
                     onClick={() => setActiveView("users")}
                     isActive={activeView === "users"}
                   >
@@ -134,6 +146,15 @@ const AdminDashboard = () => {
                   
                   <div 
                     className="bg-rocket-gray-800 p-6 rounded-lg shadow-sm border border-rocket-gray-700 cursor-pointer hover:border-primary transition-colors"
+                    onClick={() => setActiveView("consultations")}
+                  >
+                    <Calendar className="h-8 w-8 mb-4 text-primary" />
+                    <h3 className="text-lg font-medium mb-1">Consultations</h3>
+                    <p className="text-sm text-gray-400">Review and manage consultation requests.</p>
+                  </div>
+                  
+                  <div 
+                    className="bg-rocket-gray-800 p-6 rounded-lg shadow-sm border border-rocket-gray-700 cursor-pointer hover:border-primary transition-colors"
                     onClick={() => setActiveView("users")}
                   >
                     <Users className="h-8 w-8 mb-4 text-primary" />
@@ -145,6 +166,7 @@ const AdminDashboard = () => {
             )}
             
             {activeView === "submissions" && <SubmissionsTable />}
+            {activeView === "consultations" && <ConsultationsTable />}
             {activeView === "users" && <UserManagementTable />}
           </div>
         </SidebarInset>
