@@ -1,9 +1,11 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const documentTemplates = [
   { id: 1, name: "Last Will and Testament", category: "Estate Planning", complexity: "Medium" },
@@ -16,7 +18,33 @@ const documentTemplates = [
 
 const MakeDocuments = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        setIsAuthenticated(!!data.session);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        setIsAuthenticated(false);
+        setIsLoading(false);
+      }
+    };
+    
+    checkAuth();
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setIsAuthenticated(!!session);
+      }
+    );
+    
+    return () => subscription.unsubscribe();
+  }, []);
   
   const categories = [...new Set(documentTemplates.map(doc => doc.category))];
   
@@ -25,8 +53,22 @@ const MakeDocuments = () => {
     : documentTemplates;
 
   const handleStartCreating = (id: number) => {
+    if (!isAuthenticated) {
+      toast.error("Please log in to use document templates");
+      navigate("/login");
+      return;
+    }
+    
     navigate(`/documents/${id}`);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center py-12">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary/30 border-t-primary"></div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -78,7 +120,7 @@ const MakeDocuments = () => {
                 className="w-full"
                 onClick={() => handleStartCreating(doc.id)}
               >
-                Start Creating <ArrowRight className="ml-2 h-4 w-4" />
+                {isAuthenticated ? "Start Creating" : "Log in to Create"} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardFooter>
           </Card>
