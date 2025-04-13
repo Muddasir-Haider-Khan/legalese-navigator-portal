@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { X, Send, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { legalFaqData } from "@/data/legalFaqData";
 
 interface Message {
   id: string;
@@ -24,30 +25,6 @@ const ChatWidget = () => {
   const chatRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // FAQ data
-  const faqs = [
-    {
-      keywords: ["payment", "pay", "pricing", "subscription", "cost", "free", "trial"],
-      answer: "We offer several payment plans starting from $9.99/month. We also have a 7-day free trial available for all new users. You can check our pricing page for more details."
-    },
-    {
-      keywords: ["document", "template", "create", "generate", "download", "pdf"],
-      answer: "You can create legal documents by selecting a template from our Documents page, filling in the required information, and downloading it as a PDF. All templates are legally verified."
-    },
-    {
-      keywords: ["account", "sign up", "register", "login", "password", "reset", "forgot"],
-      answer: "To create an account, click the Sign Up button on the homepage. If you already have an account, use the Login button. If you forgot your password, there's a 'Forgot Password' link on the login page."
-    },
-    {
-      keywords: ["contact", "support", "help", "talk", "lawyer", "legal", "advice"],
-      answer: "For personalized legal advice, you can schedule a consultation with one of our lawyers through the 'Ask a Lawyer' page. Our support team is also available 24/7 via email at support@legalgram.com."
-    },
-    {
-      keywords: ["refund", "cancel", "subscription", "money back"],
-      answer: "We offer a 30-day money-back guarantee if you're not satisfied with our service. To cancel your subscription or request a refund, please contact our support team."
-    }
-  ];
-  
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
@@ -56,7 +33,7 @@ const ChatWidget = () => {
   const findFaqMatch = (text: string): string | null => {
     const lowercaseText = text.toLowerCase();
     
-    for (const faq of faqs) {
+    for (const faq of legalFaqData) {
       for (const keyword of faq.keywords) {
         if (lowercaseText.includes(keyword.toLowerCase())) {
           return faq.answer;
