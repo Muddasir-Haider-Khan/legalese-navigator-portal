@@ -1,5 +1,9 @@
-import { useLocation } from "react-router-dom";
+
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
+import Layout from "@/components/layout/Layout";
+import { Button } from "@/components/ui/button";
+import { FileX } from "lucide-react";
 
 const NotFound = () => {
   const location = useLocation();
@@ -12,15 +16,26 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
+    <Layout>
+      <div className="container-custom py-16 md:py-24 flex items-center justify-center min-h-[60vh]">
+        <div className="text-center max-w-md">
+          <div className="flex justify-center mb-6">
+            <div className="p-4 bg-red-100 dark:bg-red-900/30 rounded-full">
+              <FileX className="h-12 w-12 text-red-500 dark:text-red-400" />
+            </div>
+          </div>
+          <h1 className="text-4xl font-bold mb-4">404</h1>
+          <p className="text-xl text-rocket-gray-600 dark:text-rocket-gray-300 mb-8">
+            Oops! The page you're looking for doesn't exist.
+          </p>
+          <Link to="/">
+            <Button size="lg">
+              Return to Home
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

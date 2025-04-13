@@ -11,13 +11,14 @@ import LandingPage from "./pages/LandingPage"; // Change to static import
 
 // Lazy load other pages for better performance
 const DocumentTemplates = lazy(() => import("./pages/DocumentTemplates"));
+const DocumentDetail = lazy(() => import("./pages/DocumentDetail")); // Add the new page
 const ContactLawyer = lazy(() => import("./pages/ContactLawyer"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Signup = lazy(() => import("./pages/Signup"));
 const UserDashboard = lazy(() => import("./pages/UserDashboard"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
-const AdminLogin = lazy(() => import("./pages/AdminLogin")); // Added admin login page
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SSOCallback = lazy(() => import("./pages/SSOCallback"));
 const AskALawyer = lazy(() => import("./pages/AskALawyer"));
@@ -65,6 +66,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/documents" element={<DocumentTemplates />} />
+              <Route path="/documents/:id" element={<DocumentDetail />} /> {/* Add the new route */}
               <Route path="/contact-lawyer" element={<ContactLawyer />} />
               <Route path="/ask-a-lawyer" element={<AskALawyer />} />
               <Route path="/login" element={<Login />} />
@@ -72,7 +74,7 @@ const App = () => (
               <Route path="/register" element={<Register />} />
               <Route path="/user-dashboard" element={<UserDashboard />} />
               <Route path="/admin-dashboard" element={<AdminDashboard />} />
-              <Route path="/admin-login" element={<AdminLogin />} /> {/* Added admin login route */}
+              <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/sso-callback" element={<SSOCallback />} />
               <Route path="/dashboard" element={<Dashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
