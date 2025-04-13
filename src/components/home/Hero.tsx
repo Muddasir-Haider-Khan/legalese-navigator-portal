@@ -4,49 +4,6 @@ import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
 import { memo, useState, useEffect } from "react";
 
-// Memoize feature items to prevent unnecessary re-renders
-const FeatureItem = memo(({ 
-  icon: Icon, 
-  title, 
-  description, 
-  delay 
-}: { 
-  icon: React.ElementType; 
-  title: string; 
-  description: string;
-  delay: string;
-}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, parseInt(delay) * 1000);
-    
-    return () => clearTimeout(timer);
-  }, [delay]);
-
-  return (
-    <div 
-      className={`flex items-start gap-4 group transform transition-all duration-700 ${
-        isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
-      }`}
-    >
-      <div className="bg-white/20 p-3 rounded-lg group-hover:bg-white/30 transition-all duration-300">
-        <Icon size={24} className="text-white group-hover:scale-110 transition-transform duration-300" />
-      </div>
-      <div>
-        <h3 className="font-semibold text-lg group-hover:text-rocket-gray-100 transition-colors duration-300">{title}</h3>
-        <p className="text-rocket-gray-200 mt-1 group-hover:text-white/90 transition-colors duration-300">
-          {description}
-        </p>
-      </div>
-    </div>
-  );
-});
-
-FeatureItem.displayName = 'FeatureItem';
-
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   
@@ -109,38 +66,23 @@ const Hero = () => {
           </div>
           
           <div className={`hidden lg:flex flex-col gap-8 glass-card backdrop-blur-lg bg-white/10 rounded-xl p-8 border border-white/20 shadow-2xl transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/10">
-              <h3 className="text-2xl font-semibold mb-4">Popular legal documents</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-2">
-                  <FileText size={18} className="text-rocket-blue-300" />
-                  <span className="text-white">Last Will and Testament</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <FileText size={18} className="text-rocket-blue-300" />
-                  <span className="text-white">Power of Attorney</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <FileText size={18} className="text-rocket-blue-300" />
-                  <span className="text-white">LLC Operating Agreement</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <FileText size={18} className="text-rocket-blue-300" />
-                  <span className="text-white">Non-Disclosure Agreement</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <FileText size={18} className="text-rocket-blue-300" />
-                  <span className="text-white">Residential Lease</span>
-                </li>
-              </ul>
-              <div className="mt-4">
-                <Link to="/documents" className="inline-flex items-center text-white hover:text-rocket-gray-200 transition-colors">
-                  <span>View all documents</span>
-                  <ArrowRight size={16} className="ml-2" />
-                </Link>
-              </div>
+            <div className="grid grid-cols-2 gap-4">
+              <img 
+                src={`https://images.unsplash.com/photo-1649972904349-6e44c42644a7`} 
+                alt="Legal Services" 
+                className="w-full h-48 object-cover rounded-lg"
+              />
+              <img 
+                src={`https://images.unsplash.com/photo-1488590528505-98d2b5aba04b`} 
+                alt="Business Consultation" 
+                className="w-full h-48 object-cover rounded-lg"
+              />
+              <img 
+                src={`https://images.unsplash.com/photo-1581091226825-a6a2a5aee158`} 
+                alt="Document Preparation" 
+                className="w-full h-48 object-cover rounded-lg col-span-2"
+              />
             </div>
-            
             <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/10">
               <h3 className="text-2xl font-semibold mb-4">Talk to a lawyer</h3>
               <p className="text-rocket-gray-200 mb-4">Get quick legal advice from experienced attorneys</p>
@@ -159,3 +101,4 @@ const Hero = () => {
 };
 
 export default memo(Hero);
+
