@@ -34,6 +34,8 @@ const UserDashboard = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState("documents");
   const [userEmail, setUserEmail] = useState("");
+  const [userCreatedAt, setUserCreatedAt] = useState("");
+  const [userMetadata, setUserMetadata] = useState<any>(null);
 
   const handleLogout = async () => {
     try {
@@ -66,8 +68,22 @@ const UserDashboard = () => {
           
           setIsAuthenticated(true);
           setUserEmail(email);
+          
+          // Format the created_at date to a readable format
+          const createdAt = new Date(data.session.user.created_at);
+          const createdAtFormatted = createdAt.toLocaleString('default', { 
+            month: 'long', 
+            year: 'numeric' 
+          });
+          setUserCreatedAt(createdAtFormatted);
+          
+          // Store user metadata
+          setUserMetadata(data.session.user.user_metadata);
+          
+          // Set the user name
           const firstName = data.session.user.user_metadata?.first_name;
           setUserName(firstName || email.split('@')[0] || "User");
+          
           setIsLoaded(true);
         } else {
           toast.error("Please log in to access your dashboard");
@@ -96,8 +112,22 @@ const UserDashboard = () => {
           
           setIsAuthenticated(true);
           setUserEmail(email);
+          
+          // Format the created_at date to a readable format
+          const createdAt = new Date(session.user.created_at);
+          const createdAtFormatted = createdAt.toLocaleString('default', { 
+            month: 'long', 
+            year: 'numeric' 
+          });
+          setUserCreatedAt(createdAtFormatted);
+          
+          // Store user metadata
+          setUserMetadata(session.user.user_metadata);
+          
+          // Set the user name
           const firstName = session.user.user_metadata?.first_name;
           setUserName(firstName || email.split('@')[0] || "User");
+          
           setIsLoaded(true);
         } else {
           setIsAuthenticated(false);
@@ -130,6 +160,18 @@ const UserDashboard = () => {
     { icon: MessageSquare, label: "Consultations", onClick: () => setActiveTab("consultations") },
     { icon: Bell, label: "Notifications", onClick: () => setActiveTab("notifications") },
   ];
+
+  // Get full name from metadata
+  const getFullName = () => {
+    if (userMetadata) {
+      const firstName = userMetadata.first_name || '';
+      const lastName = userMetadata.last_name || '';
+      if (firstName || lastName) {
+        return `${firstName} ${lastName}`.trim();
+      }
+    }
+    return userName;
+  };
 
   return (
     <div className="min-h-screen w-full">
@@ -212,11 +254,30 @@ const UserDashboard = () => {
                           <div>
                             <h3 className="text-lg font-medium">Account Information</h3>
                             <p className="text-muted-foreground">
-                              Email: {userName}@example.com
+                              Email: {userEmail}
                             </p>
                             <p className="text-muted-foreground">
-                              Member since: January 2025
+                              Member since: {userCreatedAt}
                             </p>
+                            {userMetadata && (
+                              <>
+                                {userMetadata.first_name && (
+                                  <p className="text-muted-foreground">
+                                    First Name: {userMetadata.first_name}
+                                  </p>
+                                )}
+                                {userMetadata.last_name && (
+                                  <p className="text-muted-foreground">
+                                    Last Name: {userMetadata.last_name}
+                                  </p>
+                                )}
+                                {userMetadata.phone && (
+                                  <p className="text-muted-foreground">
+                                    Phone: {userMetadata.phone}
+                                  </p>
+                                )}
+                              </>
+                            )}
                           </div>
                           <div>
                             <h3 className="text-lg font-medium">Subscription</h3>
