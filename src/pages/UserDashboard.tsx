@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -25,6 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
 import MakeDocuments from '@/components/dashboard/MakeDocuments';
+import ScheduleMeeting from '@/components/dashboard/ScheduleMeeting';
 import { Card, CardContent } from "@/components/ui/card";
 
 const UserDashboard = () => {
@@ -157,11 +157,10 @@ const UserDashboard = () => {
     { icon: User, label: "Profile", onClick: () => setActiveTab("profile") },
     { icon: CreditCard, label: "Payment", onClick: () => setActiveTab("payment") },
     { icon: FileText, label: "Documents", onClick: () => setActiveTab("documents") },
-    { icon: MessageSquare, label: "Consultations", onClick: () => setActiveTab("consultations") },
+    { icon: MessageSquare, label: "Book Consultation", onClick: () => setActiveTab("consultations") },
     { icon: Bell, label: "Notifications", onClick: () => setActiveTab("notifications") },
   ];
 
-  // Get full name from metadata
   const getFullName = () => {
     if (userMetadata) {
       const firstName = userMetadata.first_name || '';
@@ -234,14 +233,8 @@ const UserDashboard = () => {
                 
                 {activeTab === "consultations" && (
                   <div>
-                    <h2 className="text-2xl font-semibold mb-6">Your Consultations</h2>
-                    <Card>
-                      <CardContent className="p-6">
-                        <p className="text-muted-foreground">
-                          You don't have any active consultations. Schedule a meeting with a lawyer to get started.
-                        </p>
-                      </CardContent>
-                    </Card>
+                    <h2 className="text-2xl font-semibold mb-6">Book a Consultation</h2>
+                    <ScheduleMeeting />
                   </div>
                 )}
                 
