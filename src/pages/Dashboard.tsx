@@ -16,27 +16,20 @@ import {
   Calendar, 
   Home, 
   FileText, 
-  MessageCircle, 
   User, 
   Mail, 
-  Phone, 
-  Book, 
-  HelpCircle
+  Phone
 } from "lucide-react";
 import ScheduleMeeting from "@/components/dashboard/ScheduleMeeting";
-import LegalAdvice from "@/components/dashboard/LegalAdvice";
-import PlanUpgrade from "@/components/dashboard/PlanUpgrade";
 import AccountInfo from "@/components/dashboard/AccountInfo";
 import { supabase } from "@/integrations/supabase/client";
 
 type TabType = 
   | "dashboard" 
   | "schedule" 
-  | "advice" 
   | "documents" 
   | "contact" 
   | "book-call" 
-  | "ask-lawyer" 
   | "account";
 
 const Dashboard = () => {
@@ -97,19 +90,6 @@ const Dashboard = () => {
             </div>
             
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/30 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-300">Need legal advice?</h3>
-                <p className="text-blue-600 dark:text-blue-400 mt-1 mb-4">Speak with a qualified lawyer today</p>
-                <button 
-                  className="text-sm font-medium flex items-center text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 transition-colors"
-                  onClick={() => setActiveTab("advice")}
-                >
-                  Get advice
-                  <svg className="ml-1 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>
-              </div>
               <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-100 dark:border-purple-800/30 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                 <h3 className="text-lg font-semibold text-purple-800 dark:text-purple-300">Schedule a consultation</h3>
                 <p className="text-purple-600 dark:text-purple-400 mt-1 mb-4">Book time with one of our lawyers</p>
@@ -118,6 +98,19 @@ const Dashboard = () => {
                   onClick={() => setActiveTab("schedule")}
                 >
                   Schedule now
+                  <svg className="ml-1 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-100 dark:border-blue-800/30 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-300">Document Creation</h3>
+                <p className="text-blue-600 dark:text-blue-400 mt-1 mb-4">Create and manage legal documents</p>
+                <button 
+                  className="text-sm font-medium flex items-center text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 transition-colors"
+                  onClick={() => setActiveTab("documents")}
+                >
+                  Create documents
                   <svg className="ml-1 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 12L10 8L6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -156,20 +149,6 @@ const Dashboard = () => {
             </p>
             <div className="bg-white dark:bg-rocket-gray-800 rounded-xl border border-border/40 dark:border-rocket-gray-700 shadow-sm p-6">
               <h2 className="text-xl font-semibold mb-4">Create a Document</h2>
-            </div>
-          </div>
-        );
-      case "advice":
-        return <LegalAdvice />;
-      case "ask-lawyer":
-        return (
-          <div>
-            <h1 className="heading-lg mb-2">Ask a Lawyer</h1>
-            <p className="text-rocket-gray-500 mb-6">
-              Get quick answers to your legal questions from our experts.
-            </p>
-            <div className="bg-white dark:bg-rocket-gray-800 rounded-xl border border-border/40 dark:border-rocket-gray-700 shadow-sm p-6">
-              <h2 className="text-xl font-semibold mb-4">Submit Your Question</h2>
             </div>
           </div>
         );
@@ -258,28 +237,6 @@ const Dashboard = () => {
                     >
                       <FileText className={`h-4 w-4 ${activeTab === "documents" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
                       <span>Document Creation</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton 
-                      isActive={activeTab === "ask-lawyer"}
-                      onClick={() => setActiveTab("ask-lawyer")}
-                      tooltip="Ask a Lawyer"
-                      className="w-full group transition-colors duration-200"
-                    >
-                      <HelpCircle className={`h-4 w-4 ${activeTab === "ask-lawyer" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
-                      <span>Ask a Lawyer</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton 
-                      isActive={activeTab === "advice"}
-                      onClick={() => setActiveTab("advice")}
-                      tooltip="Legal Advice"
-                      className="w-full group transition-colors duration-200"
-                    >
-                      <MessageCircle className={`h-4 w-4 ${activeTab === "advice" ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"}`} />
-                      <span>Legal Advice</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
