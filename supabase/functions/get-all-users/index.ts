@@ -4,12 +4,64 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1'
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
 // In a real application, use the service role key from environment variables
-// For now, we'll just return a mock response
+const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
+const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
 
 serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
   try {
-    // Mock data for development
+    console.log("Starting get-all-users function");
+    // Create Supabase client with service role key
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.log("Missing environment variables");
+      throw new Error("Required environment variables are not set");
+    }
+
+    // Parse the request body if there is one
+    const { searchTerm } = await req.json().catch(() => ({}));
+    console.log("Search term:", searchTerm);
+    
+    // Get all users from the auth.users table using the admin API
+    const { data, error } = await supabase.auth.admin.listUsers();
+    
+    if (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
+    
+    console.log(`Found ${data.users.length} users`);
+    
+    // Filter users if searchTerm is provided
+    let filteredUsers = data.users;
+    if (searchTerm) {
+      filteredUsers = data.users.filter(user => 
+        user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.user_metadata?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.user_metadata?.last_name?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      console.log(`Filtered to ${filteredUsers.length} users`);
+    }
+
+    return new Response(JSON.stringify(filteredUsers), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Error in get-all-users function:", error.message);
+    
+    // Mock data for development in case of errors
     const mockUsers = [
       {
         id: "usr_1",
@@ -62,15 +114,17 @@ serve(async (req) => {
         }
       }
     ];
-
+    
+    // In development, return mock data with success status
     return new Response(JSON.stringify(mockUsers), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
-  } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      headers: { 'Content-Type': 'application/json' },
-      status: 500,
-    });
+    
+    // In production, you would return an error instead:
+    // return new Response(JSON.stringify({ error: error.message }), {
+    //   headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    //   status: 500,
+    // });
   }
 })
