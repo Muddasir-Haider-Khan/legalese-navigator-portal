@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -23,16 +22,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+// Update interface to match the exact data shape from Supabase
 interface Submission {
   id: string;
   created_at: string;
   user_email: string;
   type: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: string; // Changed from specific union type to string to match database
   title: string;
   content: string;
 }
 
+// Update interface to match the exact data shape from Supabase
 interface Consultation {
   id: string;
   created_at: string;
@@ -40,7 +41,7 @@ interface Consultation {
   email: string;
   phone: string | null;
   message: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: string; // Changed from specific union type to string to match database
 }
 
 type SubmissionType = Submission | Consultation;
@@ -53,78 +54,9 @@ const SubmissionsTable = () => {
   const [filter, setFilter] = useState<'all' | 'documents' | 'consultations'>('all');
   
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      
-      try {
-        // Fetch document submissions
-        const { data: documentData, error: documentError } = await supabase
-          .from('document_submissions')
-          .select('*');
-
-        if (documentError) {
-          console.error('Error fetching document submissions:', documentError);
-          toast.error('Failed to load document submissions');
-        }
-
-        // Fetch consultations
-        const { data: consultationData, error: consultationError } = await supabase
-          .from('consultations')
-          .select('*');
-
-        if (consultationError) {
-          console.error('Error fetching consultations:', consultationError);
-          toast.error('Failed to load consultations');
-        }
-
-        // Combine both types of data
-        const allData = [
-          ...(documentData || []),
-          ...(consultationData || [])
-        ];
-
-        // Sort by created_at date, newest first
-        allData.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        
-        setSubmissions(allData);
-      } catch (error) {
-        console.error('Unexpected error:', error);
-        toast.error('An unexpected error occurred');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
   
-  const handleSearch = () => {
-    if (!searchTerm.trim()) {
-      // If search is empty, refresh data
-      fetchData();
-      return;
-    }
-    
-    // Client-side filtering based on search term
-    const filtered = submissions.filter(item => {
-      const lowerSearchTerm = searchTerm.toLowerCase();
-      
-      if (isConsultation(item)) {
-        return item.name.toLowerCase().includes(lowerSearchTerm) || 
-               item.email.toLowerCase().includes(lowerSearchTerm) ||
-               item.message.toLowerCase().includes(lowerSearchTerm);
-      } else {
-        return item.user_email.toLowerCase().includes(lowerSearchTerm) || 
-               item.title.toLowerCase().includes(lowerSearchTerm) ||
-               item.type.toLowerCase().includes(lowerSearchTerm) ||
-               item.content.toLowerCase().includes(lowerSearchTerm);
-      }
-    });
-    
-    setSubmissions(filtered);
-  };
-
-  // Function to refresh data
   const fetchData = async () => {
     setLoading(true);
     
@@ -158,13 +90,40 @@ const SubmissionsTable = () => {
       // Sort by created_at date, newest first
       allData.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       
-      setSubmissions(allData);
+      // Cast the data to match our interfaces
+      setSubmissions(allData as SubmissionType[]);
     } catch (error) {
       console.error('Unexpected error:', error);
       toast.error('An unexpected error occurred');
     } finally {
       setLoading(false);
     }
+  };
+  
+  const handleSearch = () => {
+    if (!searchTerm.trim()) {
+      // If search is empty, refresh data
+      fetchData();
+      return;
+    }
+    
+    // Client-side filtering based on search term
+    const filtered = submissions.filter(item => {
+      const lowerSearchTerm = searchTerm.toLowerCase();
+      
+      if (isConsultation(item)) {
+        return item.name.toLowerCase().includes(lowerSearchTerm) || 
+               item.email.toLowerCase().includes(lowerSearchTerm) ||
+               item.message.toLowerCase().includes(lowerSearchTerm);
+      } else {
+        return item.user_email.toLowerCase().includes(lowerSearchTerm) || 
+               item.title.toLowerCase().includes(lowerSearchTerm) ||
+               item.type.toLowerCase().includes(lowerSearchTerm) ||
+               item.content.toLowerCase().includes(lowerSearchTerm);
+      }
+    });
+    
+    setSubmissions(filtered);
   };
 
   const updateItemStatus = async (id: string, status: 'approved' | 'rejected', itemType: 'consultation' | 'document') => {
@@ -204,13 +163,16 @@ const SubmissionsTable = () => {
       }
       
       toast.success(`${itemType === 'consultation' ? 'Consultation' : 'Document'} ${status === 'approved' ? 'approved' : 'rejected'} successfully`);
+      
+      // Refresh data to ensure we have the latest from the server
+      fetchData();
     } catch (error) {
       console.error('Unexpected error:', error);
       toast.error('An unexpected error occurred');
     }
   };
 
-  // Fixed isConsultation function - Add null check to prevent errors
+  // Fixed isConsultation function with null check
   const isConsultation = (item: SubmissionType | null): item is Consultation => {
     return item !== null && 'name' in item;
   };
