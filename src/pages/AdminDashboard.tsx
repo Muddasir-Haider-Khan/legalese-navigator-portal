@@ -6,10 +6,9 @@ import { redirectIfNotAdmin } from "@/utils/adminAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarGroupLabel, 
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from "@/components/ui/sidebar";
-import { LayoutDashboard, FileText, Users, LogOut, Calendar } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import UserManagementTable from "@/components/admin/UserManagementTable";
-import SubmissionsTable from "@/components/admin/SubmissionsTable";
 import ConsultationsTable from "@/components/admin/ConsultationsTable";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
@@ -17,7 +16,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeView, setActiveView] = useState<"dashboard" | "submissions" | "users" | "consultations">("dashboard");
+  const [activeView, setActiveView] = useState<"dashboard" | "consultations" | "users">("dashboard");
 
   useEffect(() => {
     const checkAdminStatus = async () => {
@@ -93,15 +92,6 @@ const AdminDashboard = () => {
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton 
-                    onClick={() => setActiveView("submissions")}
-                    isActive={activeView === "submissions"}
-                  >
-                    <FileText className="mr-2 h-4 w-4" />
-                    <span>Document Submissions</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton 
                     onClick={() => setActiveView("consultations")}
                     isActive={activeView === "consultations"}
                   >
@@ -137,15 +127,6 @@ const AdminDashboard = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   <div 
                     className="bg-rocket-gray-800 p-6 rounded-lg shadow-sm border border-rocket-gray-700 cursor-pointer hover:border-primary transition-colors"
-                    onClick={() => setActiveView("submissions")}
-                  >
-                    <FileText className="h-8 w-8 mb-4 text-primary" />
-                    <h3 className="text-lg font-medium mb-1">Document Submissions</h3>
-                    <p className="text-sm text-gray-400">Review and manage user document requests.</p>
-                  </div>
-                  
-                  <div 
-                    className="bg-rocket-gray-800 p-6 rounded-lg shadow-sm border border-rocket-gray-700 cursor-pointer hover:border-primary transition-colors"
                     onClick={() => setActiveView("consultations")}
                   >
                     <Calendar className="h-8 w-8 mb-4 text-primary" />
@@ -165,7 +146,6 @@ const AdminDashboard = () => {
               </div>
             )}
             
-            {activeView === "submissions" && <SubmissionsTable />}
             {activeView === "consultations" && <ConsultationsTable />}
             {activeView === "users" && <UserManagementTable />}
           </div>
@@ -176,3 +156,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
