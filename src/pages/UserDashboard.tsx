@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +33,7 @@ const UserDashboard = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState("documents");
+  const [userEmail, setUserEmail] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -53,8 +55,17 @@ const UserDashboard = () => {
       try {
         const { data } = await supabase.auth.getSession();
         if (data.session) {
-          setIsAuthenticated(true);
           const email = data.session.user.email || "";
+          
+          // Check if the current user is admin
+          if (email === "admin@legalgram.com") {
+            // Redirect to admin dashboard
+            navigate("/admin-dashboard");
+            return;
+          }
+          
+          setIsAuthenticated(true);
+          setUserEmail(email);
           const firstName = data.session.user.user_metadata?.first_name;
           setUserName(firstName || email.split('@')[0] || "User");
           setIsLoaded(true);
@@ -74,8 +85,17 @@ const UserDashboard = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (session) {
-          setIsAuthenticated(true);
           const email = session.user.email || "";
+          
+          // Check if the current user is admin
+          if (email === "admin@legalgram.com") {
+            // Redirect to admin dashboard
+            navigate("/admin-dashboard");
+            return;
+          }
+          
+          setIsAuthenticated(true);
+          setUserEmail(email);
           const firstName = session.user.user_metadata?.first_name;
           setUserName(firstName || email.split('@')[0] || "User");
           setIsLoaded(true);
