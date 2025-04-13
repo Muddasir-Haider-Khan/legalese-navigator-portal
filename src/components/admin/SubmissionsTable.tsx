@@ -55,11 +55,13 @@ const SubmissionsTable = () => {
   const [filter, setFilter] = useState<'all' | 'documents' | 'consultations'>('all');
   
   useEffect(() => {
+    console.log("Component mounted, fetching data...");
     fetchData();
   }, []);
   
   const fetchData = async () => {
     setLoading(true);
+    console.log("Fetching data from Supabase...");
     
     try {
       // Fetch document submissions
@@ -70,7 +72,10 @@ const SubmissionsTable = () => {
       if (documentError) {
         console.error('Error fetching document submissions:', documentError);
         toast.error('Failed to load document submissions');
+        return;
       }
+
+      console.log("Document submissions fetched:", documentData);
 
       // Fetch consultations
       const { data: consultationData, error: consultationError } = await supabase
@@ -80,7 +85,10 @@ const SubmissionsTable = () => {
       if (consultationError) {
         console.error('Error fetching consultations:', consultationError);
         toast.error('Failed to load consultations');
+        return;
       }
+
+      console.log("Consultations fetched:", consultationData);
 
       // Combine both types of data
       const allData = [
@@ -90,6 +98,8 @@ const SubmissionsTable = () => {
 
       // Sort by created_at date, newest first
       allData.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      
+      console.log("Combined and sorted data:", allData);
       
       // Cast the data to match our interfaces
       setSubmissions(allData as SubmissionType[]);
@@ -185,6 +195,12 @@ const SubmissionsTable = () => {
   } else if (filter === 'consultations') {
     filteredSubmissions = submissions.filter(item => isConsultation(item));
   }
+
+  // Debug output
+  console.log("Current filter:", filter);
+  console.log("Filtered submissions:", filteredSubmissions);
+  console.log("Total submissions:", submissions.length);
+  console.log("Loading state:", loading);
 
   return (
     <div className="space-y-4">
