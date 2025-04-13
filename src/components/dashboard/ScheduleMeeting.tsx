@@ -6,27 +6,47 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Users, MessageSquare } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const ScheduleMeeting = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSchedule = () => {
+  const handleSchedule = async () => {
     if (!name || !email) {
       toast.error("Please fill in all required fields");
       return;
     }
 
-    // In a real app, we would send this data to the backend
-    toast.success("Consultation request submitted successfully!");
-    
-    // Reset form
-    setName("");
-    setEmail("");
-    setPhone("");
-    setMessage("");
+    setIsSubmitting(true);
+
+    try {
+      // In a real app with Supabase, this would store the consultation
+      // const { data, error } = await supabase
+      //   .from('consultations')
+      //   .insert([
+      //     { name, email, phone, message, status: 'pending' }
+      //   ]);
+      
+      // if (error) throw error;
+
+      // For now, we're just showing a success toast
+      toast.success("Consultation request submitted successfully!");
+      
+      // Reset form
+      setName("");
+      setEmail("");
+      setPhone("");
+      setMessage("");
+    } catch (error) {
+      console.error("Error submitting consultation:", error);
+      toast.error("There was a problem submitting your request. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -94,10 +114,10 @@ const ScheduleMeeting = () => {
             <Button 
               className="w-full mt-6" 
               size="lg"
-              disabled={!name || !email}
+              disabled={!name || !email || isSubmitting}
               onClick={handleSchedule}
             >
-              Book Consultation
+              {isSubmitting ? "Submitting..." : "Book Consultation"}
             </Button>
           </CardContent>
         </Card>
