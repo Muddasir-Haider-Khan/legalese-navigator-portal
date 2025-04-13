@@ -3,23 +3,113 @@ import { useState, useRef, useEffect } from "react";
 import { X, Send, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+interface Message {
+  id: string;
+  sender: 'user' | 'support';
+  text: string;
+  timestamp: string;
+}
+
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [inputMessage, setInputMessage] = useState("");
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "welcome",
+      sender: "support",
+      text: "Hello there! 👋\nHow can we help?",
+      timestamp: "02:55 AM",
+    }
+  ]);
   const chatRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // FAQ data
+  const faqs = [
+    {
+      keywords: ["payment", "pay", "pricing", "subscription", "cost", "free", "trial"],
+      answer: "We offer several payment plans starting from $9.99/month. We also have a 7-day free trial available for all new users. You can check our pricing page for more details."
+    },
+    {
+      keywords: ["document", "template", "create", "generate", "download", "pdf"],
+      answer: "You can create legal documents by selecting a template from our Documents page, filling in the required information, and downloading it as a PDF. All templates are legally verified."
+    },
+    {
+      keywords: ["account", "sign up", "register", "login", "password", "reset", "forgot"],
+      answer: "To create an account, click the Sign Up button on the homepage. If you already have an account, use the Login button. If you forgot your password, there's a 'Forgot Password' link on the login page."
+    },
+    {
+      keywords: ["contact", "support", "help", "talk", "lawyer", "legal", "advice"],
+      answer: "For personalized legal advice, you can schedule a consultation with one of our lawyers through the 'Ask a Lawyer' page. Our support team is also available 24/7 via email at support@legalgram.com."
+    },
+    {
+      keywords: ["refund", "cancel", "subscription", "money back"],
+      answer: "We offer a 30-day money-back guarantee if you're not satisfied with our service. To cancel your subscription or request a refund, please contact our support team."
+    }
+  ];
   
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
 
+  // Find FAQ matches from user input
+  const findFaqMatch = (text: string): string | null => {
+    const lowercaseText = text.toLowerCase();
+    
+    for (const faq of faqs) {
+      for (const keyword of faq.keywords) {
+        if (lowercaseText.includes(keyword.toLowerCase())) {
+          return faq.answer;
+        }
+      }
+    }
+    
+    return null;
+  };
+  
+  const getCurrentTime = (): string => {
+    const now = new Date();
+    return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim()) {
-      // In a real app, you would send this message to your backend
-      console.log("Sending message:", message);
-      setMessage("");
+    
+    if (inputMessage.trim()) {
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        sender: 'user',
+        text: inputMessage,
+        timestamp: getCurrentTime(),
+      };
+      
+      // Add user message to chat
+      setMessages(prev => [...prev, userMessage]);
+      setInputMessage("");
+      
+      // Check for FAQ matches
+      const faqAnswer = findFaqMatch(inputMessage);
+      
+      // Simulate a short delay before assistant responds
+      setTimeout(() => {
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          sender: 'support',
+          text: faqAnswer || "I don't have a specific answer for that question. For personalized assistance, please email us at support@legalgram.com or call us at 1-800-LEGAL-HELP.",
+          timestamp: getCurrentTime(),
+        };
+        
+        setMessages(prev => [...prev, assistantMessage]);
+      }, 1000);
     }
   };
+  
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
   
   // Close chat when clicking outside
   useEffect(() => {
@@ -63,28 +153,46 @@ const ChatWidget = () => {
           
           {/* Chat Messages */}
           <div className="bg-gray-100 h-60 overflow-auto p-3 bg-[url('/lovable-uploads/386a6ab3-6e61-47e3-ac6e-8da415db5752.png')] bg-opacity-10">
-            <div className="bg-white rounded-lg p-3 shadow-sm max-w-[80%] mb-2">
-              <p className="text-xs text-gray-500 font-medium mb-1">Legal Gram Support</p>
-              <p className="text-gray-800">Hello there! 👋</p>
-              <p className="text-gray-800">How can we help?</p>
-              <p className="text-xs text-gray-400 text-right mt-1">02:55 AM ✓✓</p>
-            </div>
+            {messages.map((msg) => (
+              <div 
+                key={msg.id} 
+                className={`${
+                  msg.sender === 'user' 
+                    ? 'ml-auto bg-green-500 text-white' 
+                    : 'bg-white text-gray-800'
+                } rounded-lg p-3 shadow-sm max-w-[80%] mb-2`}
+              >
+                {msg.sender === 'support' && (
+                  <p className="text-xs text-gray-500 font-medium mb-1">Legal Gram Support</p>
+                )}
+                {msg.text.split('\n').map((text, i) => (
+                  <p key={i} className={msg.sender === 'user' ? 'text-white' : 'text-gray-800'}>
+                    {text}
+                  </p>
+                ))}
+                <p className={`text-xs ${msg.sender === 'user' ? 'text-green-100' : 'text-gray-400'} text-right mt-1`}>
+                  {msg.timestamp} {msg.sender === 'user' ? '✓✓' : ''}
+                </p>
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
           </div>
           
           {/* Chat Input */}
           <form onSubmit={handleSendMessage} className="bg-white p-2 flex items-center">
             <input
               type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
               placeholder="Type a message..."
               className="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-500"
             />
             <button 
               type="submit" 
               className="ml-2 bg-gray-200 hover:bg-gray-300 rounded-full p-2 transition-colors"
+              disabled={!inputMessage.trim()}
             >
-              <Send size={18} className="text-gray-600" />
+              <Send size={18} className={`${!inputMessage.trim() ? 'text-gray-400' : 'text-gray-600'}`} />
             </button>
           </form>
         </div>
