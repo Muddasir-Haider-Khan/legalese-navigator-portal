@@ -200,8 +200,9 @@ const SubmissionsTable = () => {
     });
   }
 
-  const isConsultation = (item: SubmissionType): item is Consultation => {
-    return 'name' in item;
+  // Fixed isConsultation function - Add null check to prevent errors
+  const isConsultation = (item: SubmissionType | null): item is Consultation => {
+    return item !== null && 'name' in item;
   };
 
   return (
@@ -316,12 +317,12 @@ const SubmissionsTable = () => {
                             <DialogTitle>
                               {isConsultation(selectedItem) ? 
                                 'Consultation Request' : 
-                                selectedItem?.title}
+                                selectedItem?.title || 'Document Request'}
                             </DialogTitle>
                             <DialogDescription>
                               {isConsultation(selectedItem) ? 
                                 `From ${selectedItem?.name}` : 
-                                `From ${selectedItem?.user_email}`}
+                                `From ${selectedItem?.user_email || 'Unknown'}`}
                             </DialogDescription>
                           </DialogHeader>
                           <div className="space-y-4 mt-4">
