@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -6,7 +5,8 @@ import { redirectIfNotAdmin } from "@/utils/adminAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarGroupLabel, 
   SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset } from "@/components/ui/sidebar";
-import { LayoutDashboard, FileText, Users } from "lucide-react";
+import { LayoutDashboard, FileText, Users, LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import UserManagementTable from "@/components/admin/UserManagementTable";
 import SubmissionsTable from "@/components/admin/SubmissionsTable";
 
@@ -27,6 +27,21 @@ const AdminDashboard = () => {
     checkAdminStatus();
   }, [navigate]);
 
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        toast.error("Error logging out");
+        return;
+      }
+      toast.success("Logged out successfully");
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("An unexpected error occurred");
+    }
+  };
+
   // If loading, show loading screen
   if (isLoading) {
     return (
@@ -45,11 +60,20 @@ const AdminDashboard = () => {
     <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen flex w-full bg-rocket-gray-900">
         <Sidebar>
-          <SidebarHeader className="py-6">
+          <SidebarHeader className="py-6 flex justify-between items-center">
             <div className="px-3">
               <h1 className="text-xl font-bold text-white">Admin Dashboard</h1>
               <p className="text-sm text-gray-400">Manage your legal platform</p>
             </div>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleLogout}
+              className="mr-3 hover:bg-destructive/10"
+              title="Logout"
+            >
+              <LogOut className="h-5 w-5 text-destructive" />
+            </Button>
           </SidebarHeader>
           <SidebarContent>
             <SidebarGroup>
