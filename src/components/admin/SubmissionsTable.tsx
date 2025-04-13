@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -28,7 +29,7 @@ interface Submission {
   created_at: string;
   user_email: string;
   type: string;
-  status: string; // Changed from specific union type to string to match database
+  status: string;
   title: string;
   content: string;
 }
@@ -41,7 +42,7 @@ interface Consultation {
   email: string;
   phone: string | null;
   message: string;
-  status: string; // Changed from specific union type to string to match database
+  status: string;
 }
 
 type SubmissionType = Submission | Consultation;
