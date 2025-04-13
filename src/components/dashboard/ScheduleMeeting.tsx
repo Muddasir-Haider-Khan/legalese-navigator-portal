@@ -24,16 +24,16 @@ const ScheduleMeeting = () => {
     setIsSubmitting(true);
 
     try {
-      // In a real app with Supabase, this would store the consultation
-      // const { data, error } = await supabase
-      //   .from('consultations')
-      //   .insert([
-      //     { name, email, phone, message, status: 'pending' }
-      //   ]);
+      // Store the consultation in Supabase
+      const { data, error } = await supabase
+        .from('consultations')
+        .insert([
+          { name, email, phone, message, status: 'pending' }
+        ]);
       
-      // if (error) throw error;
+      if (error) throw error;
 
-      // For now, we're just showing a success toast
+      console.log("Consultation submitted successfully:", data);
       toast.success("Consultation request submitted successfully!");
       
       // Reset form
