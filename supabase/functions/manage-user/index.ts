@@ -24,12 +24,13 @@ serve(async (req) => {
     const headers = { ...corsHeaders, 'Content-Type': 'application/json' };
     
     const { action, userId, email, password } = await req.json();
-    console.log(`Received request with action: ${action}`);
+    console.log(`Received request with action: ${action}, userId: ${userId}`);
     
     // Only create a Supabase client if needed - check if environment variables are set
     let supabase;
     if (supabaseUrl && supabaseServiceKey) {
       supabase = createClient(supabaseUrl, supabaseServiceKey);
+      console.log("Created Supabase client with service role key");
     } else {
       console.log("Missing environment variables for Supabase client");
     }
@@ -90,25 +91,80 @@ serve(async (req) => {
         }), { headers, status: 200 });
         
       case 'ban':
-      case 'unban':
-        console.log(`${action} user with ID:`, userId);
+        console.log(`Banning user with ID: ${userId}`);
         
         if (!supabase) {
           // Return mock response if Supabase client couldn't be created
           return new Response(JSON.stringify({ 
             success: true,
-            message: `User ${action === 'ban' ? 'banned' : 'unbanned'} successfully (mock)` 
+            message: `User banned successfully (mock)` 
           }), { headers, status: 200 });
         }
         
-        // In a real implementation, we would call the appropriate Supabase admin API
-        // For ban: await supabase.auth.admin.updateUserById(userId, { banned: true })
-        // For unban: await supabase.auth.admin.updateUserById(userId, { banned: false })
+        try {
+          // In a real implementation, we would call the Supabase admin API
+          const { data, error } = await supabase.auth.admin.updateUserById(userId, {
+            ban_duration: '87600h' // Ban for 10 years (effectively permanent)
+          });
+          
+          if (error) {
+            console.error("Error banning user:", error);
+            return new Response(JSON.stringify({ 
+              success: false, 
+              message: `Error banning user: ${error.message}` 
+            }), { headers, status: 500 });
+          }
+          
+          console.log("User banned successfully:", data);
+          return new Response(JSON.stringify({ 
+            success: true,
+            message: `User banned successfully`
+          }), { headers, status: 200 });
+        } catch (error) {
+          console.error("Error in ban operation:", error);
+          return new Response(JSON.stringify({ 
+            success: false, 
+            message: `Error in ban operation: ${error.message}` 
+          }), { headers, status: 500 });
+        }
         
-        return new Response(JSON.stringify({ 
-          success: true,
-          message: `User ${action === 'ban' ? 'banned' : 'unbanned'} successfully`
-        }), { headers, status: 200 });
+      case 'unban':
+        console.log(`Unbanning user with ID: ${userId}`);
+        
+        if (!supabase) {
+          // Return mock response if Supabase client couldn't be created
+          return new Response(JSON.stringify({ 
+            success: true,
+            message: `User unbanned successfully (mock)` 
+          }), { headers, status: 200 });
+        }
+        
+        try {
+          // In a real implementation, we would call the Supabase admin API
+          const { data, error } = await supabase.auth.admin.updateUserById(userId, {
+            ban_duration: 'none' // Remove ban
+          });
+          
+          if (error) {
+            console.error("Error unbanning user:", error);
+            return new Response(JSON.stringify({ 
+              success: false, 
+              message: `Error unbanning user: ${error.message}` 
+            }), { headers, status: 500 });
+          }
+          
+          console.log("User unbanned successfully:", data);
+          return new Response(JSON.stringify({ 
+            success: true,
+            message: `User unbanned successfully`
+          }), { headers, status: 200 });
+        } catch (error) {
+          console.error("Error in unban operation:", error);
+          return new Response(JSON.stringify({ 
+            success: false, 
+            message: `Error in unban operation: ${error.message}` 
+          }), { headers, status: 500 });
+        }
         
       default:
         return new Response(JSON.stringify({ 

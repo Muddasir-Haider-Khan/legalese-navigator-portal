@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Search, UserX, UserCheck } from "lucide-react";
+import { Search, UserX, UserCheck, RefreshCw } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -16,12 +16,15 @@ import {
 
 interface User {
   id: string;
+  uid?: string;
   email: string;
+  display_name?: string;
   created_at: string;
   last_sign_in_at: string | null;
   user_metadata: {
     first_name?: string;
     last_name?: string;
+    name?: string;
   };
 }
 
@@ -31,84 +34,27 @@ const UserManagementTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   
   // Fetch users
-  const fetchUsers = async () => {
+  const fetchUsers = async (search?: string) => {
     try {
       setLoading(true);
       
-      // Get all users directly from Supabase auth
-      const { data: authData, error: authError } = await supabase.auth.admin.listUsers();
+      // Call our Supabase Edge Function to get users
+      const { data, error } = await supabase.functions.invoke('get-all-users', {
+        body: { searchTerm: search || searchTerm }
+      });
       
-      if (authError) {
-        // If admin API fails, fall back to the mock data
-        console.log("Falling back to local data due to error:", authError);
-        
-        // Mock data for development
-        const mockUsers = [
-          {
-            id: "usr_1",
-            email: "john@example.com",
-            created_at: "2023-04-15T10:30:00Z",
-            last_sign_in_at: "2023-05-10T15:45:00Z",
-            user_metadata: {
-              first_name: "John",
-              last_name: "Smith"
-            }
-          },
-          {
-            id: "usr_2",
-            email: "sarah@example.com",
-            created_at: "2023-04-21T09:15:00Z", 
-            last_sign_in_at: "2023-05-09T12:30:00Z",
-            user_metadata: {
-              first_name: "Sarah",
-              last_name: "Johnson"
-            }
-          },
-          {
-            id: "usr_3",
-            email: "michael@example.com",
-            created_at: "2023-05-02T14:20:00Z",
-            last_sign_in_at: "2023-05-08T10:15:00Z",
-            user_metadata: {
-              first_name: "Michael",
-              last_name: "Brown"
-            }
-          },
-          {
-            id: "usr_4",
-            email: "emily@example.com",
-            created_at: "2023-05-05T16:45:00Z",
-            last_sign_in_at: null,
-            user_metadata: {
-              first_name: "Emily",
-              last_name: "Davis"
-            }
-          },
-          {
-            id: "usr_5",
-            email: "david@example.com",
-            created_at: "2023-05-07T11:10:00Z",
-            last_sign_in_at: "2023-05-07T11:15:00Z",
-            user_metadata: {
-              first_name: "David",
-              last_name: "Wilson"
-            }
-          }
-        ];
-        
-        setUsers(mockUsers);
+      if (error) {
+        console.error('Error fetching users:', error);
+        toast.error('Failed to load users. Please try again later.');
+        return;
+      }
+      
+      if (Array.isArray(data)) {
+        setUsers(data);
+        console.log("Fetched users:", data);
       } else {
-        // Format the data from Supabase
-        const formattedUsers = authData.users.map(user => ({
-          id: user.id,
-          email: user.email || '',
-          created_at: user.created_at,
-          last_sign_in_at: user.last_sign_in_at,
-          user_metadata: user.user_metadata || {}
-        }));
-        
-        setUsers(formattedUsers);
-        console.log("Fetched users:", formattedUsers);
+        console.error('Invalid response format:', data);
+        toast.error('Received invalid data format from server.');
       }
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -123,32 +69,39 @@ const UserManagementTable = () => {
   }, []);
   
   const handleSearch = () => {
-    fetchUsers();
+    fetchUsers(searchTerm);
   };
 
-  // Handle user ban
+  // Handle user ban/unban
   const handleUserAction = async (userId: string, action: 'ban' | 'unban') => {
     try {
-      // In a real app, this would call the Supabase admin API to ban/unban users
-      if (action === 'ban') {
-        toast.success('User has been banned');
-      } else {
-        toast.success('User has been unbanned');
+      // Call our manage-user edge function
+      const { data, error } = await supabase.functions.invoke('manage-user', {
+        body: { action, userId }
+      });
+      
+      if (error) {
+        console.error(`Error ${action}ing user:`, error);
+        toast.error(`Failed to ${action} user`);
+        return;
       }
       
-      // Refresh user list
-      fetchUsers();
+      if (data?.success) {
+        toast.success(data.message || `User has been ${action === 'ban' ? 'banned' : 'unbanned'}`);
+        // Refresh user list
+        fetchUsers();
+      } else {
+        toast.error(data?.message || `Failed to ${action} user`);
+      }
     } catch (error) {
       console.error(`Error ${action}ing user:`, error);
       toast.error(`Failed to ${action} user`);
     }
   };
 
+  // Filter out admin user only for display (not during search)
   const filteredUsers = users.filter(user => 
-    user.email !== "admin@legalgram.com" && // Don't show admin in the list
-    (user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     user.user_metadata?.first_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     user.user_metadata?.last_name?.toLowerCase().includes(searchTerm.toLowerCase()))
+    !searchTerm || (user.email?.toLowerCase() !== "admin@legalgram.com")
   );
 
   return (
@@ -167,6 +120,15 @@ const UserManagementTable = () => {
             />
           </div>
           <Button variant="outline" onClick={handleSearch}>Search</Button>
+          <Button 
+            variant="outline" 
+            onClick={() => fetchUsers()} 
+            title="Refresh users"
+            className="flex items-center gap-1"
+          >
+            <RefreshCw className="h-4 w-4" />
+            <span>Refresh</span>
+          </Button>
         </div>
       </div>
 
@@ -176,6 +138,7 @@ const UserManagementTable = () => {
             <TableRow>
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
+              <TableHead>User ID</TableHead>
               <TableHead>Registered</TableHead>
               <TableHead>Last Login</TableHead>
               <TableHead>Actions</TableHead>
@@ -184,7 +147,7 @@ const UserManagementTable = () => {
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8">
+                <TableCell colSpan={6} className="text-center py-8">
                   <div className="flex justify-center">
                     <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
                   </div>
@@ -192,7 +155,7 @@ const UserManagementTable = () => {
               </TableRow>
             ) : filteredUsers.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                   No users found
                 </TableCell>
               </TableRow>
@@ -200,10 +163,13 @@ const UserManagementTable = () => {
               filteredUsers.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell className="font-medium">
-                    {user.user_metadata?.first_name} {user.user_metadata?.last_name}
+                    {user.display_name || `${user.user_metadata?.first_name || ''} ${user.user_metadata?.last_name || ''}`.trim() || '-'}
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{new Date(user.created_at).toLocaleDateString()}</TableCell>
+                  <TableCell className="font-mono text-xs truncate max-w-[150px]" title={user.id}>
+                    {user.id}
+                  </TableCell>
+                  <TableCell>{user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}</TableCell>
                   <TableCell>
                     {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : 'Never'}
                   </TableCell>
