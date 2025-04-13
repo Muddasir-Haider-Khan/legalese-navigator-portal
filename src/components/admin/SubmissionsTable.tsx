@@ -69,39 +69,45 @@ const SubmissionsTable = () => {
         .from('document_submissions')
         .select('*');
 
-      if (documentError) {
-        console.error('Error fetching document submissions:', documentError);
-        toast.error('Failed to load document submissions');
-        return;
-      }
-
-      console.log("Document submissions fetched:", documentData);
-
       // Fetch consultations
       const { data: consultationData, error: consultationError } = await supabase
         .from('consultations')
         .select('*');
-
+        
+      // Log any errors but don't return early - we might have partial data
+      if (documentError) {
+        console.error('Error fetching document submissions:', documentError);
+        toast.error('Failed to load some document submissions');
+      }
+      
       if (consultationError) {
         console.error('Error fetching consultations:', consultationError);
-        toast.error('Failed to load consultations');
-        return;
+        toast.error('Failed to load some consultations');
       }
 
+      console.log("Document submissions fetched:", documentData);
       console.log("Consultations fetched:", consultationData);
 
-      // Combine both types of data
+      // Combine both types of data - handle null/undefined cases
       const allData = [
         ...(documentData || []),
         ...(consultationData || [])
       ];
+
+      // Only proceed if we have data to display
+      if (allData.length === 0) {
+        console.log("No data retrieved from either source");
+        toast.warning('No submissions or consultations found');
+        setLoading(false);
+        return;
+      }
 
       // Sort by created_at date, newest first
       allData.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
       
       console.log("Combined and sorted data:", allData);
       
-      // Cast the data to match our interfaces
+      // Cast the data to match our interfaces and update state
       setSubmissions(allData as SubmissionType[]);
     } catch (error) {
       console.error('Unexpected error:', error);
