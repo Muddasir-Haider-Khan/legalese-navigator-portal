@@ -36,6 +36,66 @@ export type Database = {
         }
         Relationships: []
       }
+      consultations: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      document_submissions: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          status: string
+          title: string
+          type: string
+          user_email: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          status?: string
+          title: string
+          type: string
+          user_email: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          status?: string
+          title?: string
+          type?: string
+          user_email?: string
+        }
+        Relationships: []
+      }
       system_stats: {
         Row: {
           change_percentage: number

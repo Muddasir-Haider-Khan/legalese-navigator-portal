@@ -38,7 +38,7 @@ interface Consultation {
   created_at: string;
   name: string;
   email: string;
-  phone: string;
+  phone: string | null;
   message: string;
   status: 'pending' | 'approved' | 'rejected';
 }
@@ -52,158 +52,176 @@ const SubmissionsTable = () => {
   const [selectedItem, setSelectedItem] = useState<SubmissionType | null>(null);
   const [filter, setFilter] = useState<'all' | 'documents' | 'consultations'>('all');
   
-  // Mock submissions data since we don't have a real table yet
-  const mockSubmissions: Submission[] = [
-    {
-      id: "1",
-      created_at: "2023-05-12T10:30:00Z",
-      user_email: "sarah@example.com",
-      type: "Document Request",
-      status: "pending",
-      title: "Will and Testament Template",
-      content: "I need a customized will and testament template for a client with complex family structure."
-    },
-    {
-      id: "2",
-      created_at: "2023-05-10T14:20:00Z",
-      user_email: "john@example.com",
-      type: "Legal Advice",
-      status: "approved",
-      title: "Business Formation Question",
-      content: "I'm starting an LLC in California and need advice on tax implications versus forming an S-Corp."
-    },
-    {
-      id: "3",
-      created_at: "2023-05-09T09:45:00Z",
-      user_email: "michael@example.com",
-      type: "Document Request",
-      status: "rejected",
-      title: "NDA Template",
-      content: "I need a non-disclosure agreement template that's enforceable in both US and EU jurisdictions."
-    },
-    {
-      id: "4",
-      created_at: "2023-05-08T16:10:00Z",
-      user_email: "emily@example.com",
-      type: "Legal Advice",
-      status: "pending",
-      title: "Property Dispute",
-      content: "Need advice about a boundary dispute with my neighbor who built a fence 2 feet into my property."
-    },
-    {
-      id: "5",
-      created_at: "2023-05-07T11:05:00Z",
-      user_email: "david@example.com",
-      type: "Other",
-      status: "pending",
-      title: "Copyright Question",
-      content: "I'm an artist and want to know how to properly copyright my digital artwork and what protections that gives me."
-    }
-  ];
-  
-  // Mock consultation data
-  const mockConsultations: Consultation[] = [
-    {
-      id: "c1",
-      created_at: "2023-05-15T09:00:00Z",
-      name: "Jennifer Smith",
-      email: "jennifer@example.com",
-      phone: "(555) 987-6543",
-      message: "I need legal consultation regarding a real estate transaction dispute.",
-      status: "pending"
-    },
-    {
-      id: "c2",
-      created_at: "2023-05-14T14:30:00Z",
-      name: "Robert Johnson",
-      email: "robert@example.com",
-      phone: "(555) 456-7890",
-      message: "Looking for advice on setting up a trust for my children.",
-      status: "approved"
-    },
-    {
-      id: "c3",
-      created_at: "2023-05-13T11:15:00Z",
-      name: "Amanda Wilson",
-      email: "amanda@example.com",
-      phone: "(555) 234-5678",
-      message: "Need consultation regarding divorce proceedings and child custody options.",
-      status: "rejected"
-    }
-  ];
-  
   useEffect(() => {
-    // In a real application, we would fetch from Supabase
-    // For now, we'll use the mock data
-    const combinedData = [...mockSubmissions, ...mockConsultations];
-    setSubmissions(combinedData);
-    setLoading(false);
+    const fetchData = async () => {
+      setLoading(true);
+      
+      try {
+        // Fetch document submissions
+        const { data: documentData, error: documentError } = await supabase
+          .from('document_submissions')
+          .select('*');
+
+        if (documentError) {
+          console.error('Error fetching document submissions:', documentError);
+          toast.error('Failed to load document submissions');
+        }
+
+        // Fetch consultations
+        const { data: consultationData, error: consultationError } = await supabase
+          .from('consultations')
+          .select('*');
+
+        if (consultationError) {
+          console.error('Error fetching consultations:', consultationError);
+          toast.error('Failed to load consultations');
+        }
+
+        // Combine both types of data
+        const allData = [
+          ...(documentData || []),
+          ...(consultationData || [])
+        ];
+
+        // Sort by created_at date, newest first
+        allData.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        
+        setSubmissions(allData);
+      } catch (error) {
+        console.error('Unexpected error:', error);
+        toast.error('An unexpected error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
   
   const handleSearch = () => {
-    let filtered: SubmissionType[] = [];
-    
-    if (filter === 'documents' || filter === 'all') {
-      filtered = [
-        ...filtered,
-        ...mockSubmissions.filter(sub => 
-          sub.user_email.toLowerCase().includes(searchTerm.toLowerCase()) || 
-          sub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          sub.type.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      ];
+    if (!searchTerm.trim()) {
+      // If search is empty, refresh data
+      fetchData();
+      return;
     }
     
-    if (filter === 'consultations' || filter === 'all') {
-      filtered = [
-        ...filtered,
-        ...mockConsultations.filter(cons => 
-          cons.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-          cons.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          cons.message.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      ];
-    }
+    // Client-side filtering based on search term
+    const filtered = submissions.filter(item => {
+      const lowerSearchTerm = searchTerm.toLowerCase();
+      
+      if (isConsultation(item)) {
+        return item.name.toLowerCase().includes(lowerSearchTerm) || 
+               item.email.toLowerCase().includes(lowerSearchTerm) ||
+               item.message.toLowerCase().includes(lowerSearchTerm);
+      } else {
+        return item.user_email.toLowerCase().includes(lowerSearchTerm) || 
+               item.title.toLowerCase().includes(lowerSearchTerm) ||
+               item.type.toLowerCase().includes(lowerSearchTerm) ||
+               item.content.toLowerCase().includes(lowerSearchTerm);
+      }
+    });
     
     setSubmissions(filtered);
   };
 
-  const updateItemStatus = (id: string, status: 'approved' | 'rejected') => {
-    // In a real app, we would update in Supabase
-    const updatedSubmissions = submissions.map(item => 
-      item.id === id ? { ...item, status } : item
-    );
-    setSubmissions(updatedSubmissions);
-    toast.success(`Item ${status === 'approved' ? 'approved' : 'rejected'} successfully`);
+  // Function to refresh data
+  const fetchData = async () => {
+    setLoading(true);
+    
+    try {
+      // Fetch document submissions
+      const { data: documentData, error: documentError } = await supabase
+        .from('document_submissions')
+        .select('*');
+
+      if (documentError) {
+        console.error('Error fetching document submissions:', documentError);
+        toast.error('Failed to load document submissions');
+      }
+
+      // Fetch consultations
+      const { data: consultationData, error: consultationError } = await supabase
+        .from('consultations')
+        .select('*');
+
+      if (consultationError) {
+        console.error('Error fetching consultations:', consultationError);
+        toast.error('Failed to load consultations');
+      }
+
+      // Combine both types of data
+      const allData = [
+        ...(documentData || []),
+        ...(consultationData || [])
+      ];
+
+      // Sort by created_at date, newest first
+      allData.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+      
+      setSubmissions(allData);
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error('An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Filter submissions based on current filter
-  let filteredSubmissions = submissions;
-  if (filter === 'documents') {
-    filteredSubmissions = submissions.filter(item => 'title' in item);
-  } else if (filter === 'consultations') {
-    filteredSubmissions = submissions.filter(item => 'name' in item);
-  }
-  
-  // Apply search filter if term exists
-  if (searchTerm) {
-    filteredSubmissions = filteredSubmissions.filter(item => {
-      if ('title' in item) { // Document submission
-        return item.user_email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-               item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-               item.type.toLowerCase().includes(searchTerm.toLowerCase());
-      } else { // Consultation
-        return item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-               item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-               item.message.toLowerCase().includes(searchTerm.toLowerCase());
+  const updateItemStatus = async (id: string, status: 'approved' | 'rejected', itemType: 'consultation' | 'document') => {
+    try {
+      let result;
+      
+      if (itemType === 'consultation') {
+        // Update consultation status
+        result = await supabase
+          .from('consultations')
+          .update({ status })
+          .eq('id', id);
+      } else {
+        // Update document submission status
+        result = await supabase
+          .from('document_submissions')
+          .update({ status })
+          .eq('id', id);
       }
-    });
-  }
+      
+      if (result.error) {
+        console.error(`Error updating ${itemType}:`, result.error);
+        toast.error(`Failed to update ${itemType}`);
+        return;
+      }
+      
+      // Update the local state
+      setSubmissions(prev => 
+        prev.map(item => 
+          item.id === id ? { ...item, status } : item
+        )
+      );
+      
+      // If the selected item is being updated, update that too
+      if (selectedItem && selectedItem.id === id) {
+        setSelectedItem({ ...selectedItem, status });
+      }
+      
+      toast.success(`${itemType === 'consultation' ? 'Consultation' : 'Document'} ${status === 'approved' ? 'approved' : 'rejected'} successfully`);
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error('An unexpected error occurred');
+    }
+  };
 
   // Fixed isConsultation function - Add null check to prevent errors
   const isConsultation = (item: SubmissionType | null): item is Consultation => {
     return item !== null && 'name' in item;
   };
+
+  // Filter submissions based on current filter
+  let filteredSubmissions = submissions;
+  if (filter === 'documents') {
+    filteredSubmissions = submissions.filter(item => !isConsultation(item));
+  } else if (filter === 'consultations') {
+    filteredSubmissions = submissions.filter(item => isConsultation(item));
+  }
 
   return (
     <div className="space-y-4">
@@ -232,6 +250,15 @@ const SubmissionsTable = () => {
             />
           </div>
           <Button variant="outline" onClick={handleSearch}>Search</Button>
+          <Button variant="outline" onClick={fetchData} className="gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-refresh-cw">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+              <path d="M21 3v5h-5"/>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+              <path d="M3 21v-5h5"/>
+            </svg>
+            <span>Refresh</span>
+          </Button>
         </div>
       </div>
 
@@ -339,7 +366,7 @@ const SubmissionsTable = () => {
                                 </div>
                                 <div>
                                   <span className="text-sm font-medium">Phone:</span>
-                                  <p>{selectedItem.phone}</p>
+                                  <p>{selectedItem.phone || 'Not provided'}</p>
                                 </div>
                                 <div>
                                   <span className="text-sm font-medium">Request:</span>
@@ -367,14 +394,30 @@ const SubmissionsTable = () => {
                               <Button
                                 variant="outline"
                                 className="gap-1 text-red-500 hover:bg-red-50 hover:text-red-600"
-                                onClick={() => selectedItem && updateItemStatus(selectedItem.id, 'rejected')}
+                                onClick={() => {
+                                  if (selectedItem) {
+                                    updateItemStatus(
+                                      selectedItem.id, 
+                                      'rejected', 
+                                      isConsultation(selectedItem) ? 'consultation' : 'document'
+                                    );
+                                  }
+                                }}
                               >
                                 <XCircle className="h-4 w-4" />
                                 <span>Reject</span>
                               </Button>
                               <Button
                                 className="gap-1"
-                                onClick={() => selectedItem && updateItemStatus(selectedItem.id, 'approved')}
+                                onClick={() => {
+                                  if (selectedItem) {
+                                    updateItemStatus(
+                                      selectedItem.id, 
+                                      'approved', 
+                                      isConsultation(selectedItem) ? 'consultation' : 'document'
+                                    );
+                                  }
+                                }}
                               >
                                 <CheckCircle className="h-4 w-4" />
                                 <span>Approve</span>
@@ -388,7 +431,11 @@ const SubmissionsTable = () => {
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-green-500 hover:text-green-600 hover:bg-green-50"
-                        onClick={() => updateItemStatus(item.id, 'approved')}
+                        onClick={() => updateItemStatus(
+                          item.id, 
+                          'approved', 
+                          isConsultation(item) ? 'consultation' : 'document'
+                        )}
                         disabled={item.status === 'approved'}
                       >
                         <CheckCircle className="h-3.5 w-3.5" />
@@ -399,7 +446,11 @@ const SubmissionsTable = () => {
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-red-500 hover:text-red-600 hover:bg-red-50"
-                        onClick={() => updateItemStatus(item.id, 'rejected')}
+                        onClick={() => updateItemStatus(
+                          item.id, 
+                          'rejected', 
+                          isConsultation(item) ? 'consultation' : 'document'
+                        )}
                         disabled={item.status === 'rejected'}
                       >
                         <XCircle className="h-3.5 w-3.5" />
