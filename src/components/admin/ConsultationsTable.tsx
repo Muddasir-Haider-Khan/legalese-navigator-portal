@@ -43,7 +43,7 @@ interface Consultation {
   phone: string | null;
   message: string;
   status: string;
-  user_id?: string;
+  user_id?: string | null;
 }
 
 const ConsultationsTable = () => {

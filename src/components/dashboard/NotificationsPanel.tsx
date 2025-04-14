@@ -24,9 +24,9 @@ const NotificationsPanel: React.FC = () => {
 
   const fetchNotifications = async () => {
     try {
-      const { data: session } = await supabase.auth.getSession();
+      const { data: sessionData } = await supabase.auth.getSession();
       
-      if (!session.session) {
+      if (!sessionData.session) {
         setLoading(false);
         return;
       }
@@ -34,7 +34,7 @@ const NotificationsPanel: React.FC = () => {
       const { data, error } = await supabase
         .from('notifications')
         .select('*')
-        .eq('user_id', session.session.user.id)
+        .eq('user_id', sessionData.session.user.id)
         .order('created_at', { ascending: false });
       
       if (error) {
@@ -44,7 +44,7 @@ const NotificationsPanel: React.FC = () => {
         return;
       }
       
-      setNotifications(data || []);
+      setNotifications(data as Notification[] || []);
     } catch (error) {
       console.error('Unexpected error:', error);
     } finally {
@@ -62,9 +62,8 @@ const NotificationsPanel: React.FC = () => {
         { event: 'INSERT', schema: 'public', table: 'notifications' },
         (payload) => {
           // Check if the notification is for the current user
-          const { data: session } = supabase.auth.getSession();
-          session.then(({ session }) => {
-            if (session && payload.new.user_id === session.user.id) {
+          supabase.auth.getSession().then(({ data }) => {
+            if (data.session && payload.new.user_id === data.session.user.id) {
               setNotifications(prev => [payload.new as Notification, ...prev]);
               toast.info("You have a new notification!");
             }
@@ -136,16 +135,16 @@ const NotificationsPanel: React.FC = () => {
   
   const markAllAsRead = async () => {
     try {
-      const { data: session } = await supabase.auth.getSession();
+      const { data: sessionData } = await supabase.auth.getSession();
       
-      if (!session.session) {
+      if (!sessionData.session) {
         return;
       }
       
       const { error } = await supabase
         .from('notifications')
         .update({ is_read: true })
-        .eq('user_id', session.session.user.id)
+        .eq('user_id', sessionData.session.user.id)
         .eq('is_read', false);
         
       if (error) {
