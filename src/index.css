@@ -1,16 +1,17 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 120 100% 98%; /* #FBFEFB (clean white) */
-    --foreground: 240 89% 7%; /* #020122 (deep blue) */
+    --background: 120 100% 98%; /* #FBFEFB */
+    --foreground: 240 89% 7%; /* #020122 */
     --card: 120 100% 98%;
     --card-foreground: 240 89% 7%;
     --popover: 120 100% 98%;
     --popover-foreground: 240 89% 7%;
-    --primary: 36 99% 47%; /* #F18F01 (bright orange) */
+    --primary: 36 99% 47%; /* #F18F01 */
     --primary-foreground: 120 100% 98%;
     --secondary: 36 99% 70%;
     --secondary-foreground: 240 89% 7%;
@@ -26,9 +27,8 @@
     --radius: 0.75rem;
   }
 
-  * {
-    @apply text-foreground;
-  }
+  /* Base text styling */
+  * { @apply text-foreground; }
 
   html {
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif, 
@@ -40,40 +40,18 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply text-foreground;
-  }
-
-  p, span, div, label {
-    @apply text-foreground;
-  }
+  /* Typography elements */
+  h1, h2, h3, h4, h5, h6, p, span, div, label { @apply text-foreground; }
 }
 
 /* Form elements specifics */
 @layer base {
-  input::placeholder,
-  textarea::placeholder {
-    @apply text-muted-foreground;
-  }
-
-  input,
-  textarea,
-  select {
-    @apply bg-background border-input text-foreground;
-  }
-
-  label {
-    @apply text-foreground;
-  }
-
+  input::placeholder, textarea::placeholder { @apply text-muted-foreground; }
+  input, textarea, select { @apply bg-background border-input text-foreground; }
+  
   /* For dropdowns and select boxes */
-  [data-radix-select-content] {
-    @apply bg-background border-border;
-  }
-
-  [data-radix-select-item] {
-    @apply text-foreground hover:bg-muted;
-  }
+  [data-radix-select-content] { @apply bg-background border-border; }
+  [data-radix-select-item] { @apply text-foreground hover:bg-muted; }
 }
 
 /* Custom Animations */
@@ -82,20 +60,15 @@
     @apply bg-gradient-to-r from-bright-orange-500 to-bright-orange-300 bg-clip-text text-transparent;
   }
 
-  .transition-smooth {
-    @apply transition-all duration-300 ease-in-out;
-  }
-
+  .transition-smooth { @apply transition-all duration-300 ease-in-out; }
+  
   .animate-hover-float {
     transition: transform 0.3s ease;
-  }
-  
-  .animate-hover-float:hover {
-    transform: translateY(-5px);
+    &:hover { transform: translateY(-5px); }
   }
 }
 
-/* Enhanced glassmorphism for signup page */
+/* Enhanced glassmorphism */
 .glass-card {
   backdrop-filter: blur(16px);
   background-color: rgba(255, 255, 255, 0.05);
@@ -125,15 +98,9 @@
 }
 
 /* Custom animations */
-.animate-glow {
-  animation: glow 2s infinite alternate;
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(241, 143, 1, 0.5); }
+  100% { box-shadow: 0 0 15px rgba(241, 143, 1, 0.8); }
 }
 
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 5px rgba(241, 143, 1, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 15px rgba(241, 143, 1, 0.8);
-  }
-}
+.animate-glow { animation: glow 2s infinite alternate; }

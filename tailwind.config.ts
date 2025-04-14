@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -66,6 +67,7 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Color palette definitions
 				'bright-orange': {
 					DEFAULT: '#F18F01',
 					50: '#FFF1DE',
@@ -156,8 +158,8 @@ export default {
 					'50%': { transform: 'translateY(-10px)' }
 				},
 				'glow': {
-					'0%, 100%': { boxShadow: '0 0 5px rgba(15, 52, 96, 0.5)' },
-					'50%': { boxShadow: '0 0 20px rgba(15, 52, 96, 0.8)' }
+					'0%, 100%': { boxShadow: '0 0 5px rgba(241, 143, 1, 0.5)' },
+					'50%': { boxShadow: '0 0 20px rgba(241, 143, 1, 0.8)' }
 				}
 			},
 			animation: {
@@ -182,9 +184,7 @@ export default {
 		require("tailwindcss-animate"),
 		function({ addBase }: { addBase: Function }) {
 			addBase({
-				'html': {
-					scrollBehavior: 'smooth',
-				},
+				'html': { scrollBehavior: 'smooth' },
 				':root': {
 					'--font-sans': '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 				},
@@ -194,9 +194,7 @@ export default {
 					'-webkit-text-fill-color': 'transparent',
 					backgroundImage: 'linear-gradient(90deg, #F18F01, #FFD096)',
 				},
-				'.shadow-glow': {
-					boxShadow: '0 0 15px rgba(241, 143, 1, 0.5)',
-				},
+				'.shadow-glow': { boxShadow: '0 0 15px rgba(241, 143, 1, 0.5)' },
 				'.container-custom': {
 					width: '100%',
 					maxWidth: '1200px',
@@ -208,28 +206,6 @@ export default {
 				'.section-padding': {
 					paddingTop: '4rem',
 					paddingBottom: '4rem',
-				},
-				'.heading-lg': {
-					fontSize: '2.5rem',
-					lineHeight: '1.2',
-					fontWeight: '700',
-					'@media (min-width: 768px)': {
-						fontSize: '3.5rem',
-					},
-					'@media (min-width: 1024px)': {
-						fontSize: '4rem',
-					},
-				},
-				'.heading-md': {
-					fontSize: '2rem',
-					lineHeight: '1.2',
-					fontWeight: '700',
-					'@media (min-width: 768px)': {
-						fontSize: '2.5rem',
-					},
-					'@media (min-width: 1024px)': {
-						fontSize: '3rem',
-					},
 				},
 				'.glass-card': {
 					backdropFilter: 'blur(10px)',

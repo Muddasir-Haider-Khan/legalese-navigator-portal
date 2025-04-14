@@ -12,20 +12,18 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #F18F01aa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #F18F01aa);
 }
 
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -42,53 +40,7 @@
   color: #888;
 }
 
-/* Page transition animations */
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(10px);
-}
-.page-transition-enter-active {
-  opacity: 1;
-  transform: translateY(0px);
-  transition: opacity 500ms, transform 500ms;
-}
-.page-transition-exit {
-  opacity: 1;
-  transform: translateY(0px);
-}
-.page-transition-exit-active {
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 500ms, transform 500ms;
-}
-
-/* Custom animations for glow effect */
-.animate-glow {
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  0% {
-    box-shadow: 0 0 5px rgba(241, 143, 1, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 15px rgba(241, 143, 1, 0.8);
-  }
-}
-
 /* Form styling */
-input::placeholder,
-textarea::placeholder {
-  color: rgba(156, 163, 175, 0.8);
-}
-
-input,
-textarea {
-  color: #020122;
-  background-color: rgba(251, 254, 251, 0.9);
-  border-color: rgba(241, 143, 1, 0.3);
-}
-
 input:focus,
 textarea:focus {
   border-color: #F18F01;
