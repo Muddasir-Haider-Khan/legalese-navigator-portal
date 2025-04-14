@@ -165,17 +165,24 @@ const ConsultationsTable = () => {
         
         // If we don't have a user_id yet, try to find it from the auth system
         if (!userId) {
-          // Get the user data from the auth API
-          const { data: userData, error: userError } = await supabase.auth.admin.getUserByEmail(consultationData.email);
-          
-          if (!userError && userData && userData.user) {
-            userId = userData.user.id;
+          try {
+            // Use supabase.auth.admin is not available in client-side code
+            // Instead, we'll search for users who have the same email
+            const { data: { users }, error: userError } = await supabase.functions.invoke('get-user-by-email', {
+              body: { email: consultationData.email }
+            });
             
-            // Update the consultation with the user_id for future reference
-            await supabase
-              .from('consultations')
-              .update({ user_id: userId })
-              .eq('id', id);
+            if (!userError && users && users.length > 0) {
+              userId = users[0].id;
+              
+              // Update the consultation with the user_id for future reference
+              await supabase
+                .from('consultations')
+                .update({ user_id: userId })
+                .eq('id', id);
+            }
+          } catch (error) {
+            console.error('Error finding user by email:', error);
           }
         }
         
