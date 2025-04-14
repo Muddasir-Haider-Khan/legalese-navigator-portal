@@ -10,6 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Link } from "react-router-dom";
+import { Switch } from "@/components/ui/switch";
 
 // Define plan feature types
 interface PlanFeature {
@@ -129,31 +130,20 @@ const Pricing = () => {
             Choose the perfect legal plan for your personal or business needs with our flexible pricing options.
           </p>
           
-          <div className="inline-flex items-center p-1 bg-rocket-blue-600/30 backdrop-blur-sm rounded-lg max-w-xs mx-auto mb-12">
-            <button
-              onClick={() => setBillingCycle("monthly")}
-              className={`px-6 py-3 ${
-                billingCycle === "monthly"
-                  ? "bg-white text-black"
-                  : "text-black"
-              } rounded-md transition-all duration-300 font-medium text-sm`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle("annually")}
-              className={`px-6 py-3 ${
-                billingCycle === "annually"
-                  ? "bg-white text-black"
-                  : "text-black"
-              } rounded-md transition-all duration-300 font-medium text-sm`}
-            >
-              Annually
-            </button>
+          <div className="inline-flex items-center justify-center gap-3 bg-white p-3 rounded-xl shadow-lg mb-12">
+            <span className={`text-sm font-medium ${billingCycle === "monthly" ? "text-black" : "text-rocket-gray-500"}`}>Monthly</span>
+            <div className="relative">
+              <Switch 
+                checked={billingCycle === "annually"} 
+                onCheckedChange={() => setBillingCycle(billingCycle === "monthly" ? "annually" : "monthly")}
+                className="bg-rocket-gray-300 data-[state=checked]:bg-bright-orange-500"
+              />
+            </div>
+            <span className={`text-sm font-medium ${billingCycle === "annually" ? "text-black" : "text-rocket-gray-500"}`}>Annual</span>
           </div>
 
           {billingCycle === "annually" && (
-            <div className="bg-rocket-blue-50 text-black py-2 px-4 rounded-full inline-flex items-center mb-8 font-medium text-sm">
+            <div className="bg-bright-orange-500 text-white py-2 px-6 rounded-full inline-flex items-center mb-8 font-medium text-sm animate-pulse shadow-md">
               <span className="mr-2">🎉</span> Save up to 33% with annual billing
             </div>
           )}
@@ -176,7 +166,7 @@ const Pricing = () => {
                   }`}
                 >
                   {plan.popular && (
-                    <div className="absolute top-0 right-0 bg-rocket-blue-500 text-black text-xs font-bold px-3 py-1 rounded-bl-lg">
+                    <div className="absolute top-0 right-0 bg-bright-orange-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
                       MOST POPULAR
                     </div>
                   )}
@@ -200,7 +190,7 @@ const Pricing = () => {
                       </div>
                       
                       {billingCycle === "annually" && plan.price.annually > 0 && (
-                        <div className="text-sm text-black font-medium mt-1">
+                        <div className="text-sm text-bright-orange-500 font-medium mt-1">
                           Save ${savings.amount.toFixed(2)} per year ({savings.percentage}%)
                         </div>
                       )}
@@ -214,10 +204,10 @@ const Pricing = () => {
                       <Button 
                         className={`w-full ${
                           plan.popular
-                            ? "bg-rocket-blue-500 hover:bg-rocket-blue-600 text-black"
+                            ? "bg-bright-orange-500 hover:bg-bright-orange-600 text-white"
                             : ""
                         } mb-8`}
-                        variant={plan.popular ? "default" : "outline"}
+                        variant={plan.popular ? "orange" : "outline"}
                       >
                         {plan.callToAction}
                       </Button>
@@ -304,7 +294,7 @@ const Pricing = () => {
               
               <div className="text-center mt-12">
                 <Link to="/contact">
-                  <Button variant="outline" className="min-w-[200px]">
+                  <Button variant="orange" className="min-w-[200px] text-white">
                     Contact Support
                   </Button>
                 </Link>
@@ -327,7 +317,7 @@ const Pricing = () => {
             </div>
             
             <Link to="/signup">
-              <Button size="lg" className="bg-white text-rocket-blue-800 hover:bg-rocket-gray-100">
+              <Button size="lg" className="bg-bright-orange-500 text-white hover:bg-bright-orange-600">
                 Get Free Consultation
               </Button>
             </Link>
