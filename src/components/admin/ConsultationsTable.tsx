@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -43,7 +42,6 @@ interface Consultation {
   phone: string | null;
   message: string;
   status: string;
-  user_id?: string | null;
 }
 
 const ConsultationsTable = () => {
@@ -107,52 +105,8 @@ const ConsultationsTable = () => {
     setConsultations(filtered);
   };
 
-  const createNotification = async (consultation: Consultation, status: 'approved' | 'rejected') => {
-    // Skip if there's no user_id (could be a consultation from a non-logged in user)
-    if (!consultation.user_id) {
-      console.warn('No user_id found for consultation, skipping notification');
-      return;
-    }
-    
-    const notificationTitle = status === 'approved' 
-      ? 'Consultation Request Approved' 
-      : 'Consultation Request Rejected';
-      
-    const notificationMessage = status === 'approved'
-      ? `Your consultation request has been approved. We will contact you soon.`
-      : `Your consultation request has been rejected. Please contact support for more information.`;
-    
-    try {
-      const { error } = await supabase
-        .from('notifications')
-        .insert({
-          user_id: consultation.user_id,
-          title: notificationTitle,
-          message: notificationMessage,
-          is_read: false
-        });
-      
-      if (error) {
-        console.error('Error creating notification:', error);
-        return;
-      }
-      
-      console.log('Notification created successfully');
-    } catch (error) {
-      console.error('Unexpected error creating notification:', error);
-    }
-  };
-
   const updateConsultationStatus = async (id: string, status: 'approved' | 'rejected') => {
     try {
-      // First, find the consultation to get its user_id
-      const consultation = consultations.find(item => item.id === id);
-      if (!consultation) {
-        toast.error('Consultation not found');
-        return;
-      }
-      
-      // Update the consultation status
       const { error } = await supabase
         .from('consultations')
         .update({ status })
@@ -164,7 +118,6 @@ const ConsultationsTable = () => {
         return;
       }
       
-      // Update the UI
       setConsultations(prev => 
         prev.map(item => 
           item.id === id ? { ...item, status } : item
@@ -174,9 +127,6 @@ const ConsultationsTable = () => {
       if (selectedConsultation && selectedConsultation.id === id) {
         setSelectedConsultation({ ...selectedConsultation, status });
       }
-      
-      // Create a notification for the user
-      await createNotification(consultation, status);
       
       toast.success(`Consultation ${status === 'approved' ? 'approved' : 'rejected'} successfully`);
       

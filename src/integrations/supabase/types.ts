@@ -45,7 +45,6 @@ export type Database = {
           name: string
           phone: string | null
           status: string
-          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -55,7 +54,6 @@ export type Database = {
           name: string
           phone?: string | null
           status?: string
-          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -65,7 +63,6 @@ export type Database = {
           name?: string
           phone?: string | null
           status?: string
-          user_id?: string | null
         }
         Relationships: []
       }
@@ -96,33 +93,6 @@ export type Database = {
           title?: string
           type?: string
           user_email?: string
-        }
-        Relationships: []
-      }
-      notifications: {
-        Row: {
-          created_at: string
-          id: string
-          is_read: boolean
-          message: string
-          title: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          is_read?: boolean
-          message: string
-          title: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          is_read?: boolean
-          message?: string
-          title?: string
-          user_id?: string
         }
         Relationships: []
       }

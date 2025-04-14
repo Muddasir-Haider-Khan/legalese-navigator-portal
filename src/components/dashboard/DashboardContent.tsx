@@ -1,10 +1,11 @@
 
 import React from 'react';
-import PaymentInfo from './PaymentInfo';
-import UserProfile from './UserProfile';
-import DocumentsPanel from './DocumentsPanel';
-import ConsultationsPanel from './ConsultationsPanel';
-import NotificationsPanel from './NotificationsPanel';
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import MakeDocuments from '@/components/dashboard/MakeDocuments';
+import ScheduleMeeting from '@/components/dashboard/ScheduleMeeting';
+import UserProfile from '@/components/dashboard/UserProfile';
+import PaymentInfo from '@/components/dashboard/PaymentInfo';
+import NotificationsPanel from '@/components/dashboard/NotificationsPanel';
 
 interface DashboardContentProps {
   activeTab: string;
@@ -13,43 +14,45 @@ interface DashboardContentProps {
   userMetadata: any;
 }
 
-const DashboardContent: React.FC<DashboardContentProps> = ({
+const DashboardContent: React.FC<DashboardContentProps> = ({ 
   activeTab,
   userEmail,
   userCreatedAt,
   userMetadata
 }) => {
-  if (activeTab === 'documents') {
-    return <DocumentsPanel userEmail={userEmail} />;
-  }
-  
-  if (activeTab === 'consultations') {
-    return <ConsultationsPanel userEmail={userEmail} />;
-  }
-  
-  if (activeTab === 'profile') {
-    return (
-      <UserProfile 
-        email={userEmail}
-        createdAt={userCreatedAt}
-        firstName={userMetadata?.first_name}
-        lastName={userMetadata?.last_name}
-      />
-    );
-  }
-  
-  if (activeTab === 'payment') {
-    return <PaymentInfo />;
-  }
-  
-  if (activeTab === 'notifications') {
-    return <NotificationsPanel />;
-  }
-  
   return (
-    <div>
-      <h2 className="text-2xl font-semibold mb-4">Unknown tab</h2>
-      <p className="text-muted-foreground">The requested tab does not exist.</p>
+    <div className="mb-8">
+      <SidebarTrigger className="md:hidden mb-4" />
+      
+      {activeTab === "documents" && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-6">Your Documents</h2>
+          <MakeDocuments />
+        </div>
+      )}
+      
+      {activeTab === "consultations" && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-6">Book a Consultation</h2>
+          <ScheduleMeeting />
+        </div>
+      )}
+      
+      {activeTab === "profile" && (
+        <UserProfile 
+          userEmail={userEmail}
+          userCreatedAt={userCreatedAt}
+          userMetadata={userMetadata}
+        />
+      )}
+      
+      {activeTab === "payment" && (
+        <PaymentInfo />
+      )}
+      
+      {activeTab === "notifications" && (
+        <NotificationsPanel />
+      )}
     </div>
   );
 };
