@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { PaymentInfo } from './PaymentInfo';
-import { UserProfile } from './UserProfile';
-import DocumentsPanel from './Documents/DocumentsPanel';
+import PaymentInfo from './PaymentInfo';
+import UserProfile from './UserProfile';
+import DocumentsPanel from './DocumentsPanel';
 import ConsultationsPanel from './ConsultationsPanel';
 import NotificationsPanel from './NotificationsPanel';
 
