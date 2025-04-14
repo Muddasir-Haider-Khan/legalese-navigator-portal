@@ -111,7 +111,7 @@ const Testimonials = () => {
   }, [activeIndex, isAnimating]);
 
   return (
-    <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
+    <section className="py-16 md:py-24 bg-[#FDE1D3]">
       <div className="container-custom">
         <div className="text-center mb-12">
           <span className="text-rocket-blue-500 font-medium mb-2 block text-white">Testimonials</span>
