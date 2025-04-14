@@ -28,21 +28,31 @@ export const supabase = createClient<Database>(
   }
 );
 
-// Enable replication for notifications table
+// Enable replication for notifications table using proper channel subscription
 const enableReplication = async () => {
   try {
-    // Using the correct method to enable replication
-    const { data, error } = await supabase.from('notifications')
-      .on('INSERT', (payload) => {
-        console.log('New notification:', payload);
-      })
-      .subscribe();
+    // Create a channel to subscribe to INSERT events on the notifications table
+    const channel = supabase
+      .channel('notifications_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'notifications'
+        },
+        (payload) => {
+          console.log('New notification:', payload);
+        }
+      )
+      .subscribe((status) => {
+        console.log(`Subscription status: ${status}`);
+      });
+      
+    console.log('Replication enabled for notifications table');
     
-    if (error) {
-      console.error('Error enabling replication:', error);
-    } else {
-      console.log('Replication enabled for notifications table');
-    }
+    // Note: We're not returning the channel or subscription here,
+    // as this is just to set up the initial subscription at app load
   } catch (error) {
     console.error('Error enabling replication:', error);
   }
