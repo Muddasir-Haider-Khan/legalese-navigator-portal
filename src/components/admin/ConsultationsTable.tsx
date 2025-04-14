@@ -42,6 +42,7 @@ interface Consultation {
   phone: string | null;
   message: string;
   status: string;
+  user_id: string | null;
 }
 
 const ConsultationsTable = () => {
@@ -105,8 +106,44 @@ const ConsultationsTable = () => {
     setConsultations(filtered);
   };
 
+  const createNotification = async (userId: string, title: string, message: string) => {
+    if (!userId) return;
+    
+    try {
+      const { error } = await supabase
+        .from('notifications')
+        .insert({
+          user_id: userId,
+          title,
+          message,
+          is_read: false
+        });
+        
+      if (error) {
+        console.error('Error creating notification:', error);
+        return;
+      }
+      
+      console.log(`Notification created for user ${userId}`);
+    } catch (error) {
+      console.error('Unexpected error creating notification:', error);
+    }
+  };
+
   const updateConsultationStatus = async (id: string, status: 'approved' | 'rejected') => {
     try {
+      const { data: consultationData, error: fetchError } = await supabase
+        .from('consultations')
+        .select('*')
+        .eq('id', id)
+        .single();
+        
+      if (fetchError) {
+        console.error('Error fetching consultation:', fetchError);
+        toast.error('Failed to update consultation status');
+        return;
+      }
+      
       const { error } = await supabase
         .from('consultations')
         .update({ status })
@@ -116,6 +153,18 @@ const ConsultationsTable = () => {
         console.error('Error updating consultation status:', error);
         toast.error('Failed to update consultation status');
         return;
+      }
+      
+      if (consultationData && consultationData.user_id) {
+        const title = status === 'approved' 
+          ? 'Consultation Approved' 
+          : 'Consultation Rejected';
+          
+        const message = status === 'approved'
+          ? `Your consultation request regarding "${consultationData.message.substring(0, 30)}${consultationData.message.length > 30 ? '...' : ''}" has been approved.`
+          : `Your consultation request regarding "${consultationData.message.substring(0, 30)}${consultationData.message.length > 30 ? '...' : ''}" has been rejected.`;
+          
+        await createNotification(consultationData.user_id, title, message);
       }
       
       setConsultations(prev => 
