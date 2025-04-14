@@ -11,7 +11,7 @@ export default function AskLawyerHero() {
           <div className="flex-1 space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-rocket-gray-900 dark:text-white">
               Get Legal Advice From{" "}
-              <span className="text-gradient-blue">Certified Lawyers</span>
+              <span className="text-gradient">Certified Lawyers</span>
             </h1>
             
             <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-2xl">

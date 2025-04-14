@@ -1,7 +1,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "system";
+type Theme = "dark" | "light" | "system";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ type ThemeProviderState = {
 };
 
 const initialState: ThemeProviderState = {
-  theme: "dark",
+  theme: "system",
   setTheme: () => null,
 };
 
@@ -23,7 +23,7 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
-  defaultTheme = "dark",
+  defaultTheme = "system",
   storageKey = "rocket-lawyer-theme",
   ...props
 }: ThemeProviderProps) {
@@ -40,13 +40,13 @@ export function ThemeProvider({
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
-        : "dark"; // Force dark theme
+        : "light";
       
       root.classList.add(systemTheme);
       return;
     }
     
-    root.classList.add("dark"); // Always add dark class to use our burgundy theme
+    root.classList.add(theme);
   }, [theme]);
 
   const value = {
