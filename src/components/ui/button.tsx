@@ -10,15 +10,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-rocket-orange-500 text-white hover:bg-rocket-orange-600 shadow-md",
+        default: "bg-bright-red-500 text-white hover:bg-bright-red-600 shadow-md",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border-2 border-rocket-orange-500 bg-transparent text-rocket-orange-500 hover:bg-rocket-orange-50 hover:text-rocket-orange-600 dark:border-rocket-orange-400 dark:text-rocket-orange-400 dark:hover:bg-rocket-orange-900/20",
+          "border-2 border-bright-red-500 bg-transparent text-bright-red-500 hover:bg-bright-red-50 hover:text-bright-red-600 dark:border-bright-red-400 dark:text-bright-red-400 dark:hover:bg-bright-red-900/20",
         secondary:
-          "bg-rocket-red-500 text-white hover:bg-rocket-red-600 shadow-md",
-        ghost: "hover:bg-rocket-orange-100 hover:text-rocket-orange-600 dark:hover:bg-rocket-orange-900/20 dark:hover:text-rocket-orange-400",
-        link: "text-rocket-orange-500 underline-offset-4 hover:underline dark:text-rocket-orange-400",
+          "bg-pink-red-500 text-white hover:bg-pink-red-600 shadow-md",
+        ghost: "hover:bg-bright-red-100 hover:text-bright-red-600 dark:hover:bg-bright-red-900/20 dark:hover:text-bright-red-400",
+        link: "text-bright-red-500 underline-offset-4 hover:underline dark:text-bright-red-400",
       },
       size: {
         default: "h-10 px-4 py-2",
