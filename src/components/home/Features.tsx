@@ -31,19 +31,19 @@ const FeatureCard = memo(({
 
   return (
     <Card 
-      className={`border border-rocket-gray-200 dark:border-rocket-gray-700 shadow-sm hover:shadow-md transition-all duration-500 h-full transform ${
+      className={`border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-500 h-full transform ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
       }`}
     >
       <CardContent className="p-6">
-        <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
-          <Icon className="h-6 w-6 text-rocket-blue-500 dark:text-rocket-blue-300" />
+        <div className="bg-bright-red-50 dark:bg-bright-red-900/20 p-3 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
+          <Icon className="h-6 w-6 text-bright-red-500 dark:text-bright-red-300" />
         </div>
-        <h3 className="text-xl font-semibold mb-2 text-rocket-gray-900 dark:text-white">{title}</h3>
-        <p className="text-rocket-gray-600 dark:text-rocket-gray-300">{description}</p>
+        <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{title}</h3>
+        <p className="text-gray-600 dark:text-gray-300">{description}</p>
       </CardContent>
       <CardFooter className="px-6 pb-6 pt-0">
-        <Link to={linkTo} className="text-rocket-blue-500 hover:text-rocket-blue-600 dark:text-rocket-blue-300 dark:hover:text-rocket-blue-200 inline-flex items-center group">
+        <Link to={linkTo} className="text-bright-red-500 hover:text-bright-red-600 dark:text-bright-red-300 dark:hover:text-bright-red-200 inline-flex items-center group">
           <span>{linkText}</span>
           <ArrowRight size={16} className="ml-2 transform group-hover:translate-x-1 transition-transform" />
         </Link>
@@ -101,14 +101,14 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-white dark:bg-rocket-gray-900">
+    <section className="py-16 md:py-24 bg-white dark:bg-gray-900">
       <div className="container-custom">
         <div className="text-center mb-12 md:mb-16">
-          <span className="text-rocket-blue-500 font-medium mb-2 block text-white">Our Services</span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
+          <span className="text-bright-red-500 font-medium mb-2 block">Our Services</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
             Complete Legal Solutions
           </h2>
-          <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Everything you need to manage your legal matters confidently and affordably.
           </p>
         </div>
@@ -132,4 +132,3 @@ const Features = () => {
 };
 
 export default memo(Features);
-

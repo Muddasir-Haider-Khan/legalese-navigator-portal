@@ -5,7 +5,7 @@ import { memo } from "react";
 
 // Memoized footer link component
 const FooterLink = memo(({ to, children }: { to: string; children: React.ReactNode }) => (
-  <Link to={to} className="text-gray-200 hover:text-white transition-colors">
+  <Link to={to} className="text-white hover:text-gray-200 transition-colors">
     {children}
   </Link>
 ));
@@ -20,7 +20,7 @@ const ContactItem = memo(({
   icon: React.ElementType; 
   children: React.ReactNode;
 }) => (
-  <li className="flex items-center gap-2">
+  <li className="flex items-center gap-2 text-white">
     <Icon size={18} />
     {children}
   </li>
@@ -43,14 +43,14 @@ const Footer = () => {
               </div>
               <span className="text-xl font-bold text-white">Legal Gram</span>
             </div>
-            <p className="text-gray-200">
+            <p className="text-white">
               We provide affordable, accessible legal services for individuals and businesses.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h5 className="font-semibold text-lg mb-4">Quick Links</h5>
+            <h5 className="font-semibold text-lg mb-4 text-white">Quick Links</h5>
             <ul className="space-y-2">
               <li>
                 <FooterLink to="/documents">
@@ -72,7 +72,7 @@ const Footer = () => {
 
           {/* Legal */}
           <div>
-            <h5 className="font-semibold text-lg mb-4">Legal</h5>
+            <h5 className="font-semibold text-lg mb-4 text-white">Legal</h5>
             <ul className="space-y-2">
               <li>
                 <FooterLink to="/terms">
@@ -94,16 +94,16 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h5 className="font-semibold text-lg mb-4">Contact</h5>
+            <h5 className="font-semibold text-lg mb-4 text-white">Contact</h5>
             <ul className="space-y-2">
               <ContactItem icon={MapPin}>
-                <span className="text-gray-200">123 Legal Ave, Suite 400</span>
+                <span className="text-white">123 Legal Ave, Suite 400</span>
               </ContactItem>
               <ContactItem icon={Phone}>
-                <span className="text-gray-200">+1 (555) 123-4567</span>
+                <span className="text-white">+1 (555) 123-4567</span>
               </ContactItem>
               <ContactItem icon={Mail}>
-                <a href="mailto:info@legalgram.com" className="text-gray-200 hover:text-white transition-colors">
+                <a href="mailto:info@legalgram.com" className="text-white hover:text-gray-200 transition-colors">
                   info@legalgram.com
                 </a>
               </ContactItem>
@@ -111,7 +111,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-bright-red-400 dark:border-bright-red-800 text-center text-gray-200">
+        <div className="mt-8 pt-6 border-t border-bright-red-400 dark:border-bright-red-800 text-center text-white">
           <p>&copy; {currentYear} Legal Gram. All rights reserved.</p>
         </div>
       </div>

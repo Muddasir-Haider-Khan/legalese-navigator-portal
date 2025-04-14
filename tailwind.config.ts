@@ -25,7 +25,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: {
 					DEFAULT: '#000000', // Pure black for default foreground
-					dark: '#333333',    // Dark gray for better readability
+					white: '#FFFFFF',   // White text for dark backgrounds
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -55,17 +55,7 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				},
-				'bright-red': {
+				bright-red: {
 					DEFAULT: '#E43D12',
 					50: '#FEF2F0', 
 					100: '#FCE5E0',
@@ -133,6 +123,18 @@ export default {
 					800: '#A8A363',
 					900: '#868344',
 				},
+				gray: {
+					50: '#F9FAFB',
+					100: '#F3F4F6',
+					200: '#E5E7EB',
+					300: '#D1D5DB',
+					400: '#9CA3AF',
+					500: '#6B7280',
+					600: '#4B5563',
+					700: '#374151',
+					800: '#1F2937',
+					900: '#111827',
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -44,14 +44,14 @@ const TestimonialCard = memo(({
 }) => {
   return (
     <div 
-      className={`bg-white dark:bg-rocket-gray-800 p-8 rounded-xl shadow-lg border border-rocket-gray-200 dark:border-rocket-gray-700 transform transition-all duration-700 ${
+      className={`bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transform transition-all duration-700 ${
         isActive ? 'scale-100 opacity-100' : 'scale-95 opacity-0 absolute'
       }`}
       style={{ display: isActive ? 'block' : 'none' }}
     >
-      <Quote className="h-10 w-10 text-rocket-blue-200 dark:text-rocket-blue-900 mb-4 transform -scale-x-100" />
+      <Quote className="h-10 w-10 text-bright-red-200 dark:text-bright-red-900 mb-4 transform -scale-x-100" />
       
-      <p className="text-lg text-rocket-gray-700 dark:text-rocket-gray-300 italic mb-6 leading-relaxed">
+      <p className="text-lg text-gray-700 dark:text-gray-300 italic mb-6 leading-relaxed">
         "{testimonial.text}"
       </p>
       
@@ -59,17 +59,17 @@ const TestimonialCard = memo(({
         <img 
           src={testimonial.image} 
           alt={testimonial.author} 
-          className="h-14 w-14 rounded-full object-cover border-2 border-rocket-blue-100 dark:border-rocket-blue-900"
+          className="h-14 w-14 rounded-full object-cover border-2 border-bright-red-100 dark:border-bright-red-900"
         />
         <div>
-          <h4 className="font-semibold text-rocket-gray-900 dark:text-white">{testimonial.author}</h4>
-          <p className="text-rocket-gray-500 dark:text-rocket-gray-400 text-sm">{testimonial.position}</p>
+          <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.author}</h4>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">{testimonial.position}</p>
           <div className="flex mt-1">
             {[...Array(5)].map((_, i) => (
               <Star 
                 key={i} 
                 fill={i < testimonial.rating ? "currentColor" : "none"} 
-                className={`h-4 w-4 ${i < testimonial.rating ? 'text-yellow-500' : 'text-rocket-gray-300'}`} 
+                className={`h-4 w-4 ${i < testimonial.rating ? 'text-yellow-500' : 'text-gray-300'}`} 
               />
             ))}
           </div>
@@ -111,15 +111,15 @@ const Testimonials = () => {
   }, [activeIndex, isAnimating]);
 
   return (
-    <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
+    <section className="py-16 md:py-24 bg-gray-50 dark:bg-gray-800/30">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <span className="text-rocket-blue-500 font-medium mb-2 block text-white">Testimonials</span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
+          <span className="text-bright-red-500 font-medium mb-2 block">Testimonials</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
             Trusted by Millions
           </h2>
-          <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
-            See what our customers have to say about their experience with Rocket Lawyer.
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            See what our customers have to say about their experience with us.
           </p>
         </div>
         
@@ -139,7 +139,7 @@ const Testimonials = () => {
               variant="outline" 
               size="icon" 
               onClick={handlePrev}
-              className="border-rocket-gray-300 dark:border-rocket-gray-600 hover:bg-rocket-gray-100 dark:hover:bg-rocket-gray-700"
+              className="border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
               disabled={isAnimating}
             >
               <ChevronLeft className="h-5 w-5" />
@@ -151,7 +151,7 @@ const Testimonials = () => {
                 <button
                   key={index}
                   className={`h-2 rounded-full transition-all ${
-                    index === activeIndex ? 'w-8 bg-rocket-blue-500' : 'w-2 bg-rocket-gray-300 dark:bg-rocket-gray-600'
+                    index === activeIndex ? 'w-8 bg-bright-red-500' : 'w-2 bg-gray-300 dark:bg-gray-600'
                   }`}
                   onClick={() => {
                     if (!isAnimating) {
@@ -169,7 +169,7 @@ const Testimonials = () => {
               variant="outline" 
               size="icon" 
               onClick={handleNext}
-              className="border-rocket-gray-300 dark:border-rocket-gray-600 hover:bg-rocket-gray-100 dark:hover:bg-rocket-gray-700"
+              className="border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
               disabled={isAnimating}
             >
               <ChevronRight className="h-5 w-5" />
@@ -184,10 +184,10 @@ const Testimonials = () => {
               <Star key={star} fill="currentColor" className="h-6 w-6 text-yellow-500 mx-0.5" />
             ))}
           </div>
-          <p className="text-xl md:text-2xl font-medium text-rocket-gray-900 dark:text-white mb-8">
+          <p className="text-xl md:text-2xl font-medium text-gray-900 dark:text-white mb-8">
             Join over 20 million satisfied customers
           </p>
-          <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white">
+          <Button className="bg-bright-red-500 hover:bg-bright-red-600 text-white">
             Get started today
           </Button>
         </div>

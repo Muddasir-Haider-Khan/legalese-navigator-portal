@@ -7,6 +7,7 @@ import { ArrowRight, FileText, MessageCircle, Scale, Building, Shield, CheckCirc
 import Hero from "@/components/home/Hero";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
+import Features from "@/components/home/Features";
 
 const LandingPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -88,6 +89,9 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
+        
+        {/* Features Section */}
+        <Features />
         
         {/* Testimonials Section */}
         <Testimonials />

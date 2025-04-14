@@ -16,7 +16,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="bg-gradient-to-br from-bright-red-500 to-pink-red-600 text-white relative min-h-[90vh] flex items-center transition-all duration-500">
+    <section className="bg-gradient-to-br from-bright-red-500 to-pink-red-600 relative min-h-[90vh] flex items-center transition-all duration-500">
       {/* Optimized background pattern with reduced opacity */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')]"></div>
@@ -29,7 +29,7 @@ const Hero = () => {
       <div className="container-custom py-16 md:py-24 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`space-y-8 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
               Legal made simple
             </h1>
             <p className="text-xl md:text-2xl text-white leading-relaxed max-w-lg">
@@ -39,15 +39,15 @@ const Hero = () => {
             <div className="space-y-4 pt-2">
               <div className="flex items-center gap-2 text-lg">
                 <Check className="text-white" size={22} />
-                <span className="font-light">Create legal documents in minutes</span>
+                <span className="font-light text-white">Create legal documents in minutes</span>
               </div>
               <div className="flex items-center gap-2 text-lg">
                 <Check className="text-white" size={22} />
-                <span className="font-light">Consult with attorneys at an affordable price</span>
+                <span className="font-light text-white">Consult with attorneys at an affordable price</span>
               </div>
               <div className="flex items-center gap-2 text-lg">
                 <Check className="text-white" size={22} />
-                <span className="font-light">Start an LLC or incorporate your business</span>
+                <span className="font-light text-white">Start an LLC or incorporate your business</span>
               </div>
             </div>
             
@@ -97,7 +97,7 @@ const Hero = () => {
               </div>
             </div>
             <div className="mt-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/10">
-              <h3 className="text-xl font-semibold mb-2">Comprehensive Legal Support</h3>
+              <h3 className="text-xl font-semibold mb-2 text-white">Comprehensive Legal Support</h3>
               <p className="text-white">Access professional legal services from document preparation to attorney consultations.</p>
             </div>
           </div>
