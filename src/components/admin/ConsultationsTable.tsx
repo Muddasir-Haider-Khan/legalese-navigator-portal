@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -160,21 +161,22 @@ const ConsultationsTable = () => {
       }
       
       if (consultationData && consultationData.email) {
-        const { data: userData, error: userError } = await supabase
-          .from('auth.users')
-          .select('id')
-          .eq('email', consultationData.email)
-          .single();
-
         let userId = consultationData.user_id;
-
-        if (!userError && userData && !userId) {
-          userId = userData.id;
+        
+        // If we don't have a user_id yet, try to find it from the auth system
+        if (!userId) {
+          // Get the user data from the auth API
+          const { data: userData, error: userError } = await supabase.auth.admin.getUserByEmail(consultationData.email);
           
-          await supabase
-            .from('consultations')
-            .update({ user_id: userId })
-            .eq('id', id);
+          if (!userError && userData && userData.user) {
+            userId = userData.user.id;
+            
+            // Update the consultation with the user_id for future reference
+            await supabase
+              .from('consultations')
+              .update({ user_id: userId })
+              .eq('id', id);
+          }
         }
         
         if (userId) {

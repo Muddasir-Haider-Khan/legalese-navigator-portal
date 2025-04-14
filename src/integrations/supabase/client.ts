@@ -31,16 +31,16 @@ export const supabase = createClient<Database>(
 // Enable replication for notifications table
 const enableReplication = async () => {
   try {
-    await supabase.rpc('supabase_functions.http_request', {
-      method: 'POST',
-      url: '/rest/v1/rpc/postgres_changes',
-      headers: { 'Content-Type': 'application/json' },
-      body: {
-        table: 'notifications',
-        schema: 'public'
-      }
+    const { data, error } = await supabase.postgrest.rpc('postgres_changes', {
+      table: 'notifications',
+      schema: 'public'
     });
-    console.log('Replication enabled for notifications table');
+    
+    if (error) {
+      console.error('Error enabling replication:', error);
+    } else {
+      console.log('Replication enabled for notifications table');
+    }
   } catch (error) {
     console.error('Error enabling replication:', error);
   }
