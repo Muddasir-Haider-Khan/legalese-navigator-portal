@@ -114,11 +114,11 @@ const Testimonials = () => {
     <section className="py-16 md:py-24 bg-[#FDE1D3]">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <span className="text-rocket-blue-500 font-medium mb-2 block text-white">Testimonials</span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
+          <span className="text-rocket-blue-500 font-medium mb-2 block text-black">Testimonials</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">
             Trusted by Millions
           </h2>
-          <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-black max-w-3xl mx-auto">
             See what our customers have to say about their experience with Rocket Lawyer.
           </p>
         </div>
@@ -184,7 +184,7 @@ const Testimonials = () => {
               <Star key={star} fill="currentColor" className="h-6 w-6 text-yellow-500 mx-0.5" />
             ))}
           </div>
-          <p className="text-xl md:text-2xl font-medium text-rocket-gray-900 dark:text-white mb-8">
+          <p className="text-xl md:text-2xl font-medium text-black mb-8">
             Join over 20 million satisfied customers
           </p>
           <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white">
