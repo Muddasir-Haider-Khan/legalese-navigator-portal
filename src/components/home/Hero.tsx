@@ -65,12 +65,20 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className={`hidden lg:block transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
-            <img 
-              src="/lovable-uploads/3681337c-61ec-4947-8f47-03281882616d.png"
-              alt="Legal services illustration"
-              className="w-full h-auto rounded-lg shadow-2xl"
-            />
+          {/* Hero image - now showing on both desktop and mobile */}
+          <div className={`transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
+            <div className="relative rounded-lg shadow-2xl overflow-hidden">
+              <img 
+                src="/lovable-uploads/f71dcb3e-44f6-47f2-a368-b65778dfe4da.png"
+                alt="Person signing legal documents"
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-rocket-blue-900/50 to-transparent pointer-events-none"></div>
+            </div>
+            <div className="mt-4 bg-white/10 backdrop-blur-md rounded-lg p-4 border border-white/10 hidden md:block">
+              <h3 className="text-lg font-semibold">Professional Document Preparation</h3>
+              <p className="text-sm text-rocket-gray-100">Create, sign, and manage your legal documents with ease</p>
+            </div>
           </div>
         </div>
       </div>
