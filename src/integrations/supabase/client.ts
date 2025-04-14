@@ -19,6 +19,32 @@ export const supabase = createClient<Database>(
       detectSessionInUrl: true,
       flowType: 'pkce', // Using PKCE flow for better security and auto-session management
       storage: localStorage
+    },
+    realtime: {
+      params: {
+        eventsPerSecond: 10
+      }
     }
   }
 );
+
+// Enable replication for notifications table
+const enableReplication = async () => {
+  try {
+    await supabase.rpc('supabase_functions.http_request', {
+      method: 'POST',
+      url: '/rest/v1/rpc/postgres_changes',
+      headers: { 'Content-Type': 'application/json' },
+      body: {
+        table: 'notifications',
+        schema: 'public'
+      }
+    });
+    console.log('Replication enabled for notifications table');
+  } catch (error) {
+    console.error('Error enabling replication:', error);
+  }
+};
+
+// Call this function when the app loads
+enableReplication();

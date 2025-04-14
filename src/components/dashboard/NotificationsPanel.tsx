@@ -18,20 +18,26 @@ interface Notification {
 const NotificationsPanel: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const fetchNotifications = async () => {
     try {
+      console.log("Fetching notifications...");
       const { data: session } = await supabase.auth.getSession();
       if (!session.session) {
+        console.log("No active session found");
+        setLoading(false);
         return;
       }
       
-      const userId = session.session.user.id;
+      const currentUserId = session.session.user.id;
+      console.log(`Current user ID: ${currentUserId}`);
+      setUserId(currentUserId);
       
       const { data, error } = await supabase
         .from('notifications')
         .select('*')
-        .eq('user_id', userId)
+        .eq('user_id', currentUserId)
         .order('created_at', { ascending: false });
         
       if (error) {
@@ -39,6 +45,7 @@ const NotificationsPanel: React.FC = () => {
         return;
       }
       
+      console.log(`Fetched ${data?.length || 0} notifications:`, data);
       setNotifications(data || []);
     } catch (error) {
       console.error('Unexpected error:', error);
@@ -48,6 +55,14 @@ const NotificationsPanel: React.FC = () => {
   };
 
   const subscribeToNotifications = () => {
+    if (!userId) {
+      console.log("Cannot subscribe to notifications: No user ID available");
+      return () => {};
+    }
+
+    console.log(`Setting up subscription for user ${userId}`);
+    
+    // Enable PostgreSQL replication
     const channel = supabase
       .channel('notifications_changes')
       .on(
@@ -55,9 +70,11 @@ const NotificationsPanel: React.FC = () => {
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'notifications'
+          table: 'notifications',
+          filter: `user_id=eq.${userId}`
         },
         (payload) => {
+          console.log('New notification received:', payload);
           const newNotification = payload.new as Notification;
           setNotifications(current => [newNotification, ...current]);
           toast.info(newNotification.title, {
@@ -65,9 +82,12 @@ const NotificationsPanel: React.FC = () => {
           });
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log(`Subscription status: ${status}`);
+      });
 
     return () => {
+      console.log("Unsubscribing from notifications channel");
       supabase.removeChannel(channel);
     };
   };
@@ -129,12 +149,14 @@ const NotificationsPanel: React.FC = () => {
   
   useEffect(() => {
     fetchNotifications();
-    const unsubscribe = subscribeToNotifications();
-    
-    return () => {
-      unsubscribe();
-    };
   }, []);
+
+  useEffect(() => {
+    if (userId) {
+      const unsubscribe = subscribeToNotifications();
+      return unsubscribe;
+    }
+  }, [userId]);
 
   return (
     <div>
@@ -197,6 +219,12 @@ const NotificationsPanel: React.FC = () => {
           ))}
         </div>
       )}
+      
+      <div className="mt-4">
+        <Button variant="outline" onClick={fetchNotifications}>
+          Refresh Notifications
+        </Button>
+      </div>
     </div>
   );
 };

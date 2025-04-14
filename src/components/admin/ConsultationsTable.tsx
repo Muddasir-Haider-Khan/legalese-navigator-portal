@@ -107,10 +107,14 @@ const ConsultationsTable = () => {
   };
 
   const createNotification = async (userId: string, title: string, message: string) => {
-    if (!userId) return;
+    if (!userId) {
+      console.error('Cannot create notification: No user ID provided');
+      return;
+    }
     
     try {
-      const { error } = await supabase
+      console.log(`Creating notification for user ${userId} with title: ${title}`);
+      const { data, error } = await supabase
         .from('notifications')
         .insert({
           user_id: userId,
@@ -124,7 +128,7 @@ const ConsultationsTable = () => {
         return;
       }
       
-      console.log(`Notification created for user ${userId}`);
+      console.log(`Notification created successfully for user ${userId}`);
     } catch (error) {
       console.error('Unexpected error creating notification:', error);
     }
@@ -155,16 +159,37 @@ const ConsultationsTable = () => {
         return;
       }
       
-      if (consultationData && consultationData.user_id) {
-        const title = status === 'approved' 
-          ? 'Consultation Approved' 
-          : 'Consultation Rejected';
+      if (consultationData && consultationData.email) {
+        const { data: userData, error: userError } = await supabase
+          .from('auth.users')
+          .select('id')
+          .eq('email', consultationData.email)
+          .single();
+
+        let userId = consultationData.user_id;
+
+        if (!userError && userData && !userId) {
+          userId = userData.id;
           
-        const message = status === 'approved'
-          ? `Your consultation request regarding "${consultationData.message.substring(0, 30)}${consultationData.message.length > 30 ? '...' : ''}" has been approved.`
-          : `Your consultation request regarding "${consultationData.message.substring(0, 30)}${consultationData.message.length > 30 ? '...' : ''}" has been rejected.`;
-          
-        await createNotification(consultationData.user_id, title, message);
+          await supabase
+            .from('consultations')
+            .update({ user_id: userId })
+            .eq('id', id);
+        }
+        
+        if (userId) {
+          const title = status === 'approved' 
+            ? 'Consultation Approved' 
+            : 'Consultation Rejected';
+            
+          const message = status === 'approved'
+            ? `Your consultation request regarding "${consultationData.message.substring(0, 30)}${consultationData.message.length > 30 ? '...' : ''}" has been approved.`
+            : `Your consultation request regarding "${consultationData.message.substring(0, 30)}${consultationData.message.length > 30 ? '...' : ''}" has been rejected.`;
+            
+          await createNotification(userId, title, message);
+        } else {
+          console.warn(`No user_id found for consultation ${id} with email ${consultationData.email}`);
+        }
       }
       
       setConsultations(prev => 
@@ -415,7 +440,7 @@ const ConsultationsTable = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-8 gap-1 text-green-500 hover:text-green-600 hover:bg-green-50"
+                        className="gap-1 text-green-500 hover:text-green-600 hover:bg-green-50"
                         onClick={() => updateConsultationStatus(consultation.id, 'approved')}
                         disabled={consultation.status === 'approved'}
                       >
@@ -426,7 +451,7 @@ const ConsultationsTable = () => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-8 gap-1 text-red-500 hover:text-red-600 hover:bg-red-50"
+                        className="gap-1 text-red-500 hover:text-red-600 hover:bg-red-50"
                         onClick={() => updateConsultationStatus(consultation.id, 'rejected')}
                         disabled={consultation.status === 'rejected'}
                       >
