@@ -165,22 +165,22 @@ const DocumentDetail = () => {
               <ArrowLeft className="mr-1 h-4 w-4" /> Back to All Documents
             </Link>
             
-            <Card>
+            <Card className="bg-[#FDE1D3]">
               <CardHeader className="text-center">
                 <div className="mx-auto mb-4 p-3 bg-green-100 dark:bg-green-900/30 rounded-full inline-block">
                   <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-500" />
                 </div>
-                <CardTitle className="text-2xl">Document Generated Successfully</CardTitle>
-                <CardDescription className="text-lg">
+                <CardTitle className="text-2xl text-black">Document Generated Successfully</CardTitle>
+                <CardDescription className="text-lg text-black">
                   Your {document.title} has been created and downloaded.
                 </CardDescription>
               </CardHeader>
               
               <CardContent className="text-center">
-                <p className="mb-4 text-rocket-gray-600 dark:text-rocket-gray-400">
+                <p className="mb-4 text-black">
                   Thank you for using our service. Your document has been downloaded to your device.
                 </p>
-                <p className="mb-4 text-rocket-gray-600 dark:text-rocket-gray-400">
+                <p className="mb-4 text-black">
                   For any legal questions related to this document, consider consulting with a qualified attorney.
                 </p>
               </CardContent>
@@ -192,9 +192,9 @@ const DocumentDetail = () => {
                       setShowForm(false);
                       setDocumentGenerated(false);
                     }}
-                    className="bg-rocket-blue-500"
+                    className="bg-[#F97316] hover:bg-[#D15316] text-white"
                   >
-                    <Download className="mr-2 h-4 w-4" /> Create Another Copy
+                    <Download className="mr-2 h-4 w-4 group-hover:text-white" /> Create Another Copy
                   </Button>
                   
                   <Button 
@@ -205,7 +205,7 @@ const DocumentDetail = () => {
                   </Button>
                 </div>
                 
-                <p className="text-sm text-center text-rocket-gray-500 dark:text-rocket-gray-400">
+                <p className="text-sm text-center text-black">
                   Need help? <Link to="/contact" className="text-rocket-blue-500 hover:underline">Contact us</Link> for professional assistance.
                 </p>
               </CardFooter>
@@ -225,7 +225,7 @@ const DocumentDetail = () => {
           </Link>
           
           {showForm ? (
-            <Card className="mb-8">
+            <Card className="mb-8 bg-[#FDE1D3]">
               <CardHeader className="pb-4">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <Badge variant="outline">{document.category}</Badge>
@@ -233,8 +233,8 @@ const DocumentDetail = () => {
                     <Badge className="bg-yellow-500">Popular</Badge>
                   )}
                 </div>
-                <CardTitle className="text-2xl mb-2">{document.title}</CardTitle>
-                <CardDescription className="text-lg">
+                <CardTitle className="text-2xl mb-2 text-black">{document.title}</CardTitle>
+                <CardDescription className="text-lg text-black">
                   Please fill out the form below to generate your document.
                 </CardDescription>
               </CardHeader>
@@ -247,7 +247,7 @@ const DocumentDetail = () => {
               </CardContent>
             </Card>
           ) : (
-            <Card className="mb-8">
+            <Card className="mb-8 bg-[#FDE1D3]">
               <CardHeader className="pb-4">
                 <div className="flex flex-wrap items-center gap-2 mb-3">
                   <Badge variant="outline">{document.category}</Badge>
@@ -255,17 +255,17 @@ const DocumentDetail = () => {
                     <Badge className="bg-yellow-500">Popular</Badge>
                   )}
                 </div>
-                <CardTitle className="text-2xl mb-2">{document.title}</CardTitle>
-                <CardDescription className="text-lg">{document.description}</CardDescription>
+                <CardTitle className="text-2xl mb-2 text-black">{document.title}</CardTitle>
+                <CardDescription className="text-lg text-black">{document.description}</CardDescription>
               </CardHeader>
               
               <CardContent>
                 <div className="space-y-6">
-                  <div className="flex items-start gap-3 p-4 bg-rocket-gray-50 dark:bg-rocket-gray-800/50 rounded-lg">
-                    <FileText className="h-6 w-6 text-rocket-blue-500 flex-shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-rocket-gray-800/50 rounded-lg">
+                    <FileText className="h-6 w-6 text-[#F97316] flex-shrink-0 mt-0.5" />
                     <div>
-                      <h3 className="font-medium mb-1">Document Details</h3>
-                      <p className="text-rocket-gray-600 dark:text-rocket-gray-400">
+                      <h3 className="font-medium mb-1 text-black">Document Details</h3>
+                      <p className="text-black">
                         This is a customizable legal template that complies with current laws and regulations.
                         Once completed, you'll receive a downloadable document in PDF format.
                       </p>
@@ -273,8 +273,8 @@ const DocumentDetail = () => {
                   </div>
                   
                   <div className="flex flex-col gap-4">
-                    <h3 className="text-lg font-medium">What you'll need to complete this document:</h3>
-                    <ul className="list-disc list-inside space-y-2 text-rocket-gray-600 dark:text-rocket-gray-400">
+                    <h3 className="text-lg font-medium text-black">What you'll need to complete this document:</h3>
+                    <ul className="list-disc list-inside space-y-2 text-black">
                       <li>Personal identification information</li>
                       <li>Relevant dates and details specific to this document type</li>
                       <li>Any supporting documentation mentioned in the template</li>
@@ -286,13 +286,13 @@ const DocumentDetail = () => {
               <CardFooter className="flex-col space-y-4">
                 <Button 
                   onClick={() => setShowForm(true)} 
-                  className="w-full md:w-auto bg-rocket-blue-500" 
+                  className="w-full md:w-auto bg-[#F97316] hover:bg-[#D15316] text-white group" 
                   size="lg"
                 >
-                  <FileText className="mr-2 h-5 w-5" /> Fill Document Form
+                  <FileText className="mr-2 h-5 w-5 group-hover:text-white" /> Fill Document Form
                 </Button>
                 
-                <p className="text-sm text-center text-rocket-gray-500 dark:text-rocket-gray-400">
+                <p className="text-sm text-center text-black">
                   Need help? <Link to="/contact" className="text-rocket-blue-500 hover:underline">Contact us</Link> for professional assistance.
                 </p>
               </CardFooter>
