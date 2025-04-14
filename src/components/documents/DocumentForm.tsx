@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,14 +26,12 @@ import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
 import { jsPDF } from "jspdf";
 
-// Define form schema based on document type
 const getFormSchema = (documentType: string) => {
   const baseSchema = {
     fullName: z.string().min(2, { message: "Full name is required" }),
     email: z.string().email({ message: "Invalid email address" }),
   };
 
-  // Add fields based on document type
   switch (documentType) {
     case "Last Will and Testament":
       return z.object({
@@ -65,7 +62,6 @@ const getFormSchema = (documentType: string) => {
         powers: z.string().min(10, { message: "Powers description is required" }),
       });
       
-    // Default form for other document types
     default:
       return z.object({
         ...baseSchema,
@@ -77,27 +73,22 @@ const getFormSchema = (documentType: string) => {
   }
 };
 
-// Generate PDF based on document type and form data
 const generatePDF = (documentType: string, formData: any) => {
   const doc = new jsPDF();
   
-  // Add header
   doc.setFontSize(18);
   doc.setTextColor(0, 51, 102);
   doc.text(documentType, 105, 20, { align: "center" });
   
-  // Add underline
   doc.setDrawColor(0, 51, 102);
   doc.line(20, 25, 190, 25);
   
-  // Add form data
   doc.setFontSize(12);
   doc.setTextColor(0, 0, 0);
   
   let yPosition = 40;
   const lineHeight = 10;
   
-  // Add common fields
   doc.setFontSize(12);
   doc.text(`Full Name: ${formData.fullName}`, 20, yPosition);
   yPosition += lineHeight;
@@ -120,7 +111,6 @@ const generatePDF = (documentType: string, formData: any) => {
   doc.text(`Email: ${formData.email}`, 20, yPosition);
   yPosition += lineHeight * 1.5;
   
-  // Add document-specific fields
   doc.setFontSize(14);
   doc.text("Document Details", 20, yPosition);
   yPosition += lineHeight;
@@ -131,7 +121,6 @@ const generatePDF = (documentType: string, formData: any) => {
       doc.text("ASSETS:", 20, yPosition);
       yPosition += lineHeight;
       
-      // Handle multi-line text for assets
       const assetLines = doc.splitTextToSize(formData.assets, 170);
       doc.text(assetLines, 20, yPosition);
       yPosition += lineHeight * (assetLines.length + 1);
@@ -139,7 +128,6 @@ const generatePDF = (documentType: string, formData: any) => {
       doc.text("BENEFICIARIES:", 20, yPosition);
       yPosition += lineHeight;
       
-      // Handle multi-line text for beneficiaries
       const beneficiaryLines = doc.splitTextToSize(formData.beneficiaries, 170);
       doc.text(beneficiaryLines, 20, yPosition);
       break;
@@ -157,7 +145,6 @@ const generatePDF = (documentType: string, formData: any) => {
       doc.text("CONFIDENTIAL INFORMATION:", 20, yPosition);
       yPosition += lineHeight;
       
-      // Handle multi-line text for confidential information
       const confidentialLines = doc.splitTextToSize(formData.confidentialInfo, 170);
       doc.text(confidentialLines, 20, yPosition);
       break;
@@ -169,7 +156,6 @@ const generatePDF = (documentType: string, formData: any) => {
       doc.text("POWERS GRANTED:", 20, yPosition);
       yPosition += lineHeight;
       
-      // Handle multi-line text for powers
       const powerLines = doc.splitTextToSize(formData.powers, 170);
       doc.text(powerLines, 20, yPosition);
       break;
@@ -184,7 +170,6 @@ const generatePDF = (documentType: string, formData: any) => {
       }
   }
   
-  // Add signature section
   yPosition = 240;
   doc.line(20, yPosition, 100, yPosition);
   doc.text("Signature", 50, yPosition + 5);
@@ -192,7 +177,6 @@ const generatePDF = (documentType: string, formData: any) => {
   doc.line(120, yPosition, 190, yPosition);
   doc.text("Date", 150, yPosition + 5);
   
-  // Add footer
   doc.setFontSize(10);
   doc.setTextColor(128, 128, 128);
   doc.text("Generated with LawConnect - This document is for reference only", 105, 285, { align: "center" });
@@ -211,7 +195,6 @@ const DocumentForm = ({ documentTitle, onComplete }: DocumentFormProps) => {
   const formSchema = getFormSchema(documentTitle);
   type FormValues = z.infer<typeof formSchema>;
   
-  // Default values for the form based on document type
   const getDefaultValues = () => {
     const baseValues = {
       fullName: "",
@@ -265,10 +248,8 @@ const DocumentForm = ({ documentTitle, onComplete }: DocumentFormProps) => {
     try {
       setIsSubmitting(true);
       
-      // Generate PDF
       const pdf = generatePDF(documentTitle, data);
       
-      // Save the PDF
       pdf.save(`${documentTitle.replace(/\s+/g, "_").toLowerCase()}.pdf`);
       
       toast({
@@ -290,7 +271,6 @@ const DocumentForm = ({ documentTitle, onComplete }: DocumentFormProps) => {
     }
   };
   
-  // Render form fields based on document type
   const renderFormFields = () => {
     const commonFields = (
       <>
@@ -411,7 +391,6 @@ const DocumentForm = ({ documentTitle, onComplete }: DocumentFormProps) => {
       </>
     );
     
-    // Document specific fields
     switch (documentTitle) {
       case "Last Will and Testament":
         return (
@@ -626,7 +605,7 @@ const DocumentForm = ({ documentTitle, onComplete }: DocumentFormProps) => {
         <div className="flex justify-end">
           <Button 
             type="submit"
-            className="bg-rocket-blue-500"
+            className="bg-[#F97316] hover:bg-[#D15316] text-white"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Generating Document..." : "Generate Document"}
