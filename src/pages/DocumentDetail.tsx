@@ -262,7 +262,7 @@ const DocumentDetail = () => {
               <CardContent>
                 <div className="space-y-6">
                   <div className="flex items-start gap-3 p-4 bg-white/50 dark:bg-rocket-gray-800/50 rounded-lg">
-                    <FileText className="h-6 w-6 text-[#F97316] flex-shrink-0 mt-0.5" />
+                    <FileText color="white" className="h-6 w-6 bg-[#F97316] rounded p-1 flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="font-medium mb-1 text-black">Document Details</h3>
                       <p className="text-black">
@@ -289,7 +289,7 @@ const DocumentDetail = () => {
                   className="w-full md:w-auto bg-[#F97316] hover:bg-[#D15316] text-white group" 
                   size="lg"
                 >
-                  <FileText className="mr-2 h-5 w-5 group-hover:text-white" /> Fill Document Form
+                  <FileText className="mr-2 h-5 w-5 text-white" /> Fill Document Form
                 </Button>
                 
                 <p className="text-sm text-center text-black">
