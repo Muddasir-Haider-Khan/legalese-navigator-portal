@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -139,7 +138,7 @@ const Contact = () => {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-rocket-blue hover:bg-rocket-blue-600 gap-2"
+                    className="w-full bg-rocket-blue hover:bg-rocket-blue-600 gap-2 text-white"
                     disabled={isSubmitting}
                   >
                     <Send className="h-5 w-5" />
