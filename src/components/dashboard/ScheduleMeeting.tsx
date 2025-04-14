@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,6 +14,36 @@ const ScheduleMeeting = () => {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Retrieve user information from Supabase auth
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        // Prefill email from auth
+        setEmail(session.user.email || "");
+        
+        // Try to get user's name from metadata
+        const firstName = session.user.user_metadata?.first_name || "";
+        const lastName = session.user.user_metadata?.last_name || "";
+        
+        if (firstName || lastName) {
+          setName(`${firstName} ${lastName}`.trim());
+        } else {
+          // If no name in metadata, use the first part of email
+          setName(session.user.email?.split('@')[0] || "");
+        }
+        
+        // Check if phone exists in metadata
+        const userPhone = session.user.user_metadata?.phone || "";
+        if (userPhone) {
+          setPhone(userPhone);
+        }
+      }
+    };
+    
+    getUserInfo();
+  }, []);
 
   const handleSchedule = async () => {
     if (!name || !email) {
@@ -33,13 +63,10 @@ const ScheduleMeeting = () => {
       
       if (error) throw error;
 
-      console.log("Consultation submitted successfully:", data);
+      console.log("Consultation submitted successfully");
       toast.success("Consultation request submitted successfully!");
       
       // Reset form
-      setName("");
-      setEmail("");
-      setPhone("");
       setMessage("");
     } catch (error) {
       console.error("Error submitting consultation:", error);

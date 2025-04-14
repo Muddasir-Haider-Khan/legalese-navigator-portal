@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Search, Calendar, CheckCircle, XCircle, Phone, User } from "lucide-react";
+import { Search, Calendar, CheckCircle, XCircle, Phone, User, RefreshCw } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -39,21 +39,28 @@ const ConsultationsTable = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedConsultation, setSelectedConsultation] = useState<Consultation | null>(null);
+  const [filterStatus, setFilterStatus] = useState<"all" | "pending" | "approved" | "rejected">("all");
   
   useEffect(() => {
     console.log("ConsultationsTable component mounted, fetching data...");
     fetchConsultations();
-  }, []);
+  }, [filterStatus]);
   
   const fetchConsultations = async () => {
     setLoading(true);
     console.log("Fetching consultations from Supabase...");
     
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('consultations')
         .select('*')
-        .order('created_at', { ascending: false });
+        
+      // Apply status filter if not "all"
+      if (filterStatus !== "all") {
+        query = query.eq('status', filterStatus);
+      }
+      
+      const { data, error } = await query.order('created_at', { ascending: false });
         
       if (error) {
         console.error('Error fetching consultations:', error);
@@ -124,6 +131,12 @@ const ConsultationsTable = () => {
     }
   };
 
+  const formatDate = (dateString: string) => {
+    // Format date to MM/DD/YYYY
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
@@ -140,16 +153,50 @@ const ConsultationsTable = () => {
             />
           </div>
           <Button variant="outline" onClick={handleSearch}>Search</Button>
-          <Button variant="outline" onClick={fetchConsultations} className="gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-refresh-cw">
-              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-              <path d="M21 3v5h-5"/>
-              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-              <path d="M3 21v-5h5"/>
-            </svg>
+          <Button 
+            variant="outline" 
+            onClick={fetchConsultations} 
+            className="gap-1"
+          >
+            <RefreshCw className="h-4 w-4" />
             <span>Refresh</span>
           </Button>
         </div>
+      </div>
+      
+      {/* Status filter buttons */}
+      <div className="flex space-x-2">
+        <Button 
+          variant={filterStatus === "all" ? "default" : "outline"} 
+          size="sm" 
+          onClick={() => setFilterStatus("all")}
+        >
+          All
+        </Button>
+        <Button 
+          variant={filterStatus === "pending" ? "default" : "outline"} 
+          size="sm" 
+          onClick={() => setFilterStatus("pending")}
+          className="bg-yellow-100 text-yellow-800 hover:bg-yellow-200 border-yellow-200"
+        >
+          Pending
+        </Button>
+        <Button 
+          variant={filterStatus === "approved" ? "default" : "outline"} 
+          size="sm" 
+          onClick={() => setFilterStatus("approved")}
+          className="bg-green-100 text-green-800 hover:bg-green-200 border-green-200"
+        >
+          Approved
+        </Button>
+        <Button 
+          variant={filterStatus === "rejected" ? "default" : "outline"} 
+          size="sm" 
+          onClick={() => setFilterStatus("rejected")}
+          className="bg-red-100 text-red-800 hover:bg-red-200 border-red-200"
+        >
+          Rejected
+        </Button>
       </div>
 
       <div className="rounded-md border">
@@ -194,7 +241,7 @@ const ConsultationsTable = () => {
                   <TableCell className="max-w-[200px] truncate">
                     {consultation.message.substring(0, 40) + (consultation.message.length > 40 ? '...' : '')}
                   </TableCell>
-                  <TableCell>{new Date(consultation.created_at).toLocaleDateString()}</TableCell>
+                  <TableCell>{formatDate(consultation.created_at)}</TableCell>
                   <TableCell>
                     <Badge
                       className={
@@ -254,6 +301,10 @@ const ConsultationsTable = () => {
                                   <p className="mt-1 p-3 bg-muted rounded-md">{selectedConsultation.message}</p>
                                 </div>
                                 <div>
+                                  <span className="text-sm font-medium">Date:</span>
+                                  <p>{formatDate(selectedConsultation.created_at)}</p>
+                                </div>
+                                <div>
                                   <span className="text-sm font-medium">Status:</span>
                                   <p>{selectedConsultation.status.charAt(0).toUpperCase() + selectedConsultation.status.slice(1)}</p>
                                 </div>
@@ -264,6 +315,7 @@ const ConsultationsTable = () => {
                                     onClick={() => {
                                       updateConsultationStatus(selectedConsultation.id, 'rejected');
                                     }}
+                                    disabled={selectedConsultation.status === 'rejected'}
                                   >
                                     <XCircle className="h-4 w-4" />
                                     <span>Reject</span>
@@ -273,6 +325,7 @@ const ConsultationsTable = () => {
                                     onClick={() => {
                                       updateConsultationStatus(selectedConsultation.id, 'approved');
                                     }}
+                                    disabled={selectedConsultation.status === 'approved'}
                                   >
                                     <CheckCircle className="h-4 w-4" />
                                     <span>Approve</span>
