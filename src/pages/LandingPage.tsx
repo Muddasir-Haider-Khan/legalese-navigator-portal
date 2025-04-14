@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -106,12 +107,12 @@ const LandingPage = () => {
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
               {[
-                { link: "/documents/will", text: "Last Will and Testament" },
-                { link: "/documents/power-of-attorney", text: "Power of Attorney" },
-                { link: "/documents/nda", text: "Non-Disclosure Agreement" },
-                { link: "/documents/llc", text: "LLC Operating Agreement" },
-                { link: "/documents/lease", text: "Residential Lease" },
-                { link: "/documents/employment", text: "Employment Contract" }
+                { link: "/documents/1", text: "Last Will and Testament" },
+                { link: "/documents/4", text: "Power of Attorney" },
+                { link: "/documents/2", text: "Non-Disclosure Agreement" },
+                { link: "/documents/3", text: "LLC Operating Agreement" },
+                { link: "/documents/5", text: "Residential Lease" },
+                { link: "/documents/6", text: "Employment Contract" }
               ].map(({ link, text }) => (
                 <Link 
                   key={link} 
