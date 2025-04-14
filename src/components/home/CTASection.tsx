@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ArrowRight, Star } from "lucide-react";
@@ -50,7 +49,7 @@ const CTASection = () => {
                 </Button>
               </Link>
               <Link to="/pricing">
-                <Button size="lg" variant="outline" className="border-rocket-blue-500 text-rocket-blue-500 hover:bg-rocket-blue-50 dark:border-rocket-blue-400 dark:text-rocket-blue-400 dark:hover:bg-rocket-blue-900/30 px-8 py-6 h-auto text-base">
+                <Button size="lg" variant="outline" className="border-rocket-blue-500 text-white hover:bg-rocket-blue-50 dark:border-rocket-blue-400 dark:hover:bg-rocket-blue-900/30 px-8 py-6 h-auto text-base">
                   See pricing
                 </Button>
               </Link>
