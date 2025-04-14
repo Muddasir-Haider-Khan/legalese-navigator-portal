@@ -1,3 +1,4 @@
+
 import { useState, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
 import { FileText, MessageCircle, Scale, ArrowRight, BookOpen, Users, Building } from "lucide-react";
@@ -103,7 +104,7 @@ const Features = () => {
     <section className="py-16 md:py-24 bg-white dark:bg-rocket-gray-900">
       <div className="container-custom">
         <div className="text-center mb-12 md:mb-16">
-          <span className="text-rocket-blue-500 font-medium mb-2 block">Our Services</span>
+          <span className="text-rocket-blue-500 font-medium mb-2 block text-white">Our Services</span>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
             Complete Legal Solutions
           </h2>
@@ -131,3 +132,4 @@ const Features = () => {
 };
 
 export default memo(Features);
+
