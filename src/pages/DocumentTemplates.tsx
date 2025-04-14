@@ -134,20 +134,20 @@ const DocumentTemplates = () => {
 
   return (
     <Layout>
-      <div className="container-custom py-12 md:py-16">
+      <div className="container-custom py-12 md:py-16 bg-[#FDE1D3]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
-            <h1 className="heading-xl mb-4">Legal Document Templates</h1>
-            <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-400 max-w-3xl mx-auto">
+            <h1 className="heading-xl mb-4 text-black">Legal Document Templates</h1>
+            <p className="text-lg text-black max-w-3xl mx-auto">
               Browse our collection of professionally drafted legal documents. Customize and download what you need in minutes.
             </p>
             {!isAuthenticated && (
               <div className="mt-6">
                 <Link to="/login">
-                  <Button size="lg" className="mx-2">Log in</Button>
+                  <Button size="lg" className="mx-2 bg-[#F97316] text-white hover:bg-[#D15316]">Log in</Button>
                 </Link>
                 <Link to="/signup">
-                  <Button size="lg" variant="outline" className="mx-2">Sign up</Button>
+                  <Button size="lg" variant="orange" className="mx-2">Sign up</Button>
                 </Link>
               </div>
             )}
@@ -155,7 +155,7 @@ const DocumentTemplates = () => {
           
           <div className="flex items-center gap-4 mb-8">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-rocket-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#F97316]" />
               <Input
                 placeholder="Search documents..."
                 value={searchTerm}
@@ -163,8 +163,8 @@ const DocumentTemplates = () => {
                 className="pl-10"
               />
             </div>
-            <Button variant="outline" className="gap-2">
-              <Filter className="h-4 w-4" />
+            <Button variant="orange" className="gap-2">
+              <Filter className="h-4 w-4 text-white" />
               Filters
             </Button>
           </div>
@@ -182,30 +182,28 @@ const DocumentTemplates = () => {
           {filteredDocuments.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDocuments.map((doc) => (
-                <Card key={doc.id} className="overflow-hidden transition-all hover:shadow-md">
+                <Card key={doc.id} className="overflow-hidden transition-all hover:shadow-md bg-white">
                   <CardHeader className="pb-3">
                     <div className="flex justify-between items-start">
-                      <Badge variant="outline" className="mb-2">
-                        {doc.category}
-                      </Badge>
+                      <Badge variant="outline" className="mb-2 text-black">{doc.category}</Badge>
                       {doc.popular && (
-                        <Badge className="bg-yellow-500">
+                        <Badge className="bg-[#F97316] text-white">
                           <Star className="h-3 w-3 mr-1" /> Popular
                         </Badge>
                       )}
                     </div>
-                    <CardTitle className="text-lg">{doc.title}</CardTitle>
-                    <CardDescription className="line-clamp-2">{doc.description}</CardDescription>
+                    <CardTitle className="text-lg text-black">{doc.title}</CardTitle>
+                    <CardDescription className="line-clamp-2 text-black/70">{doc.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center text-sm text-rocket-gray-500 dark:text-rocket-gray-400">
-                      <FileText className="h-4 w-4 mr-1" />
+                    <div className="flex items-center text-sm text-black/70">
+                      <FileText className="h-4 w-4 mr-1 text-[#F97316]" />
                       <span>Customizable template</span>
                     </div>
                   </CardContent>
                   <CardFooter>
                     <Button 
-                      className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white"
+                      className="w-full bg-[#F97316] hover:bg-[#D15316] text-white"
                       onClick={() => handleUseTemplate(doc.id)}
                     >
                       {isAuthenticated ? "Use Template" : "Log in to Use"}
@@ -215,14 +213,14 @@ const DocumentTemplates = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 bg-rocket-gray-50 dark:bg-rocket-gray-800 rounded-lg">
-              <FileText className="h-12 w-12 mx-auto text-rocket-gray-400" />
-              <h3 className="mt-4 text-lg font-medium">No Documents Found</h3>
-              <p className="mt-1 text-rocket-gray-500 dark:text-rocket-gray-400">
+            <div className="text-center py-12 bg-white rounded-lg">
+              <FileText className="h-12 w-12 mx-auto text-[#F97316]" />
+              <h3 className="mt-4 text-lg font-medium text-black">No Documents Found</h3>
+              <p className="mt-1 text-black/70">
                 Try adjusting your search or filter to find what you need.
               </p>
               <Button 
-                variant="outline" 
+                variant="orange" 
                 className="mt-4"
                 onClick={() => {
                   setSearchTerm("");
