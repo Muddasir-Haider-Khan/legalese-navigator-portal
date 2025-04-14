@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -40,8 +41,8 @@ const LandingPage = () => {
             <div className="grid md:grid-cols-3 gap-8 md:gap-12">
               <div className="text-center">
                 <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                  <FileText className="h-8 w-8 text-rocket-blue-500 dark:text-rocket-blue-300" />
-                  <span className="absolute -top-2 -right-2 bg-rocket-blue-500 text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+                  <FileText className="h-8 w-8 text-[#F18F01]" />
+                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
                     1
                   </span>
                 </div>
@@ -53,8 +54,8 @@ const LandingPage = () => {
               
               <div className="text-center">
                 <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                  <CheckCircle className="h-8 w-8 text-rocket-blue-500 dark:text-rocket-blue-300" />
-                  <span className="absolute -top-2 -right-2 bg-rocket-blue-500 text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+                  <CheckCircle className="h-8 w-8 text-[#F18F01]" />
+                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
                     2
                   </span>
                 </div>
@@ -66,8 +67,8 @@ const LandingPage = () => {
               
               <div className="text-center">
                 <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                  <Shield className="h-8 w-8 text-rocket-blue-500 dark:text-rocket-blue-300" />
-                  <span className="absolute -top-2 -right-2 bg-rocket-blue-500 text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+                  <Shield className="h-8 w-8 text-[#F18F01]" />
+                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
                     3
                   </span>
                 </div>
@@ -80,7 +81,7 @@ const LandingPage = () => {
             
             <div className="mt-12 text-center">
               <Link to="/how-it-works">
-                <Button variant="outline" className="border-rocket-blue-500 text-rocket-blue-500 hover:bg-rocket-blue-50 dark:border-rocket-blue-400 dark:text-rocket-blue-400 dark:hover:bg-rocket-blue-900/30">
+                <Button variant="orange" className="hover:bg-[#D17701] shadow-md">
                   Learn more about our process <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -106,39 +107,39 @@ const LandingPage = () => {
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
               <Link to="/documents/will" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
                 <span className="font-medium text-rocket-gray-900 dark:text-white">Last Will and Testament</span>
               </Link>
               
               <Link to="/documents/power-of-attorney" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
                 <span className="font-medium text-rocket-gray-900 dark:text-white">Power of Attorney</span>
               </Link>
               
               <Link to="/documents/nda" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
                 <span className="font-medium text-rocket-gray-900 dark:text-white">Non-Disclosure Agreement</span>
               </Link>
               
               <Link to="/documents/llc" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
                 <span className="font-medium text-rocket-gray-900 dark:text-white">LLC Operating Agreement</span>
               </Link>
               
               <Link to="/documents/lease" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
                 <span className="font-medium text-rocket-gray-900 dark:text-white">Residential Lease</span>
               </Link>
               
               <Link to="/documents/employment" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
+                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
                 <span className="font-medium text-rocket-gray-900 dark:text-white">Employment Contract</span>
               </Link>
             </div>
             
             <div className="text-center">
               <Link to="/documents">
-                <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white">
+                <Button variant="orange" className="hover:bg-[#D17701] shadow-md">
                   View all documents <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
