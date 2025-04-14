@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ArrowRight, Star } from "lucide-react";
@@ -44,7 +45,7 @@ const CTASection = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/signup">
-                <Button size="lg" className="bg-rocket-blue-500 hover:bg-rocket-blue-600 px-8 py-6 h-auto text-base">
+                <Button size="lg" className="bg-rocket-blue-500 hover:bg-rocket-blue-600 px-8 py-6 h-auto text-base text-white">
                   Sign up now
                 </Button>
               </Link>
