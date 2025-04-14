@@ -250,7 +250,7 @@ const Header = () => {
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button className="bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600 transition-all">
+                <Button className="bg-rocket-blue hover:bg-rocket-blue-600 dark:bg-rocket-blue-500 dark:hover:bg-rocket-blue-600 transition-all text-white">
                   Sign Up
                 </Button>
               </Link>
