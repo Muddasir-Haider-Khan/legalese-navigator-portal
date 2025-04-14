@@ -114,7 +114,7 @@ const Testimonials = () => {
     <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <span className="text-rocket-blue-500 font-medium mb-2 block">Testimonials</span>
+          <span className="text-rocket-blue-500 font-medium mb-2 block text-white">Testimonials</span>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
             Trusted by Millions
           </h2>
@@ -187,7 +187,7 @@ const Testimonials = () => {
           <p className="text-xl md:text-2xl font-medium text-rocket-gray-900 dark:text-white mb-8">
             Join over 20 million satisfied customers
           </p>
-          <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600">
+          <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white">
             Get started today
           </Button>
         </div>
