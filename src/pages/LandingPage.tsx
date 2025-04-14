@@ -1,11 +1,9 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, FileText, MessageCircle, Scale, Building, Shield, CheckCircle } from "lucide-react";
 import Hero from "@/components/home/Hero";
-import Features from "@/components/home/Features";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 
@@ -25,9 +23,6 @@ const LandingPage = () => {
       <div className={`w-full transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
         {/* Hero Section */}
         <Hero />
-        
-        {/* Services Overview Section */}
-        <Features />
         
         {/* How It Works Section */}
         <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
@@ -159,4 +154,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
