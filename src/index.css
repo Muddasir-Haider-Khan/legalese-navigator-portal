@@ -11,7 +11,7 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
+    --primary: 24 95% 53%;  /* Changed to orange */
     --primary-foreground: 0 0% 98%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -23,7 +23,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
+    --ring: 24 95% 53%;  /* Changed to match primary */
     --radius: 0.75rem;
   }
 
@@ -34,7 +34,7 @@
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
+    --primary: 24 95% 53%;  /* Changed to orange */
     --primary-foreground: 240 5.9% 10%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -46,7 +46,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --ring: 24 95% 53%;  /* Changed to match primary */
   }
 }
 
@@ -99,7 +99,7 @@
 /* Custom Animations */
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-rocket-orange-500 to-rocket-red-600 bg-clip-text text-transparent;
   }
 
   .transition-smooth {
@@ -122,4 +122,13 @@
   border-radius: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Button styles for better contrast */
+.btn-high-contrast {
+  @apply bg-rocket-orange-500 hover:bg-rocket-orange-600 text-white font-medium shadow-md hover:shadow-lg transition-all duration-200;
+}
+
+.btn-outline-contrast {
+  @apply border-2 border-rocket-orange-500 text-rocket-orange-500 hover:bg-rocket-orange-50 hover:text-rocket-orange-600 font-medium shadow-sm hover:shadow-md transition-all duration-200 dark:border-rocket-orange-400 dark:text-rocket-orange-400 dark:hover:bg-rocket-orange-900/20;
 }
