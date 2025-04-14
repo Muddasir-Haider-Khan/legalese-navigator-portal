@@ -53,7 +53,7 @@ const Hero = () => {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <Link to="/documents" className="sm:col-span-1">
-                <Button size="lg" className="w-full bg-white text-rocket-blue-600 hover:bg-rocket-gray-100 shadow-lg dark:shadow-blue-900/20 px-8 py-6 text-lg h-auto">
+                <Button size="lg" variant="orange" className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-6 text-lg h-auto">
                   Create a document
                 </Button>
               </Link>
@@ -65,41 +65,12 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className={`hidden lg:block glass-card backdrop-blur-lg bg-white/10 rounded-xl p-6 border border-white/20 shadow-2xl transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="aspect-square overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/32617276-d4d0-4419-bffd-02f96a981caf.png" 
-                  alt="Digital Legal Gavel"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="aspect-square overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/a24da495-7093-4924-a981-c01c5e1780df.png" 
-                  alt="Wooden Gavel"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="aspect-square overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/9c117bfb-191c-4585-8bb1-55c62e7fd0ed.png" 
-                  alt="Professional in Suit"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="aspect-square overflow-hidden rounded-lg">
-                <img 
-                  src="/lovable-uploads/1f5c79d6-8f2a-4ed2-b3b5-ff3cf25c6b1e.png" 
-                  alt="Lady Justice Statue"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-            <div className="mt-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/10">
-              <h3 className="text-xl font-semibold mb-2">Comprehensive Legal Support</h3>
-              <p className="text-rocket-gray-100">Access professional legal services from document preparation to attorney consultations.</p>
-            </div>
+          <div className={`hidden lg:block transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
+            <img 
+              src="/lovable-uploads/3681337c-61ec-4947-8f47-03281882616d.png"
+              alt="Legal services illustration"
+              className="w-full h-auto rounded-lg shadow-2xl"
+            />
           </div>
         </div>
       </div>
