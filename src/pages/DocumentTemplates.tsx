@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -12,7 +11,6 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-// Mock document data
 const documents = [
   {
     id: 1,
@@ -207,7 +205,7 @@ const DocumentTemplates = () => {
                   </CardContent>
                   <CardFooter>
                     <Button 
-                      className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600"
+                      className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white"
                       onClick={() => handleUseTemplate(doc.id)}
                     >
                       {isAuthenticated ? "Use Template" : "Log in to Use"}
