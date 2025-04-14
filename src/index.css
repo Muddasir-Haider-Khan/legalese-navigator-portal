@@ -5,68 +5,68 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --background: 324 18% 14%;
+    --foreground: 0 0% 98%;
+    --card: 324 18% 14%;
+    --card-foreground: 0 0% 98%;
+    --popover: 324 18% 14%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 328 31% 18%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 328 25% 25%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 328 10% 20%;
+    --muted-foreground: 328 5% 65%;
+    --accent: 328 20% 30%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 328 15% 25%;
+    --input: 328 15% 25%;
+    --ring: 328 35% 25%;
     --radius: 0.75rem;
     
-    /* Custom Rocket-Lawyer theme colors */
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 224 71.4% 4.1%;
-    --sidebar-primary: 220.9 39.3% 11%;
-    --sidebar-primary-foreground: 210 20% 98%;
-    --sidebar-accent: 220.9 39.3% 11%;
-    --sidebar-accent-foreground: 210 20% 98%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 224 71.4% 4.1%;
+    /* Custom sidebar colors */
+    --sidebar-background: 324 31% 12%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 324 31% 12%;
+    --sidebar-accent: 0 0% 98%;
+    --sidebar-accent-foreground: 324 31% 12%;
+    --sidebar-border: 324 20% 18%;
+    --sidebar-ring: 324 25% 32%;
   }
 
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 20% 98%;
+    --background: 324 31% 14%;
+    --foreground: 0 0% 98%;
+    --card: 324 31% 14%;
+    --card-foreground: 0 0% 98%;
+    --popover: 324 31% 14%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 328 31% 18%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 324 20% 20%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 324 20% 20%;
+    --muted-foreground: 328 10% 70%;
+    --accent: 324 20% 20%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 324 20% 25%;
+    --input: 324 20% 25%;
+    --ring: 324 35% 35%;
     
-    /* Custom Rocket-Lawyer dark theme sidebar colors */
-    --sidebar-background: 217.2 32.6% 17.5%;
-    --sidebar-foreground: 210 20% 98%;
-    --sidebar-primary: 210 20% 98%;
-    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
-    --sidebar-accent: 210 20% 98%;
-    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
-    --sidebar-border: 215 27.9% 16.9%;
-    --sidebar-ring: 216.4 32.6% 32%;
+    /* Custom sidebar colors */
+    --sidebar-background: 324 31% 16%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 324 31% 16%;
+    --sidebar-accent: 0 0% 98%;
+    --sidebar-accent-foreground: 324 31% 16%;
+    --sidebar-border: 324 20% 20%;
+    --sidebar-ring: 324 25% 32%;
   }
 }
 
@@ -93,13 +93,13 @@
 @layer base {
   .dark input::placeholder,
   .dark textarea::placeholder {
-    @apply text-rocket-gray-400;
+    @apply text-burgundy-300;
   }
 
   .dark input,
   .dark textarea,
   .dark select {
-    @apply text-white bg-rocket-gray-700 border-rocket-gray-600;
+    @apply text-white bg-burgundy-700 border-burgundy-600;
   }
 
   .dark label {
@@ -108,18 +108,18 @@
 
   /* For dropdowns and select boxes in dark mode */
   .dark [data-radix-select-content] {
-    @apply bg-rocket-gray-800 border-rocket-gray-700;
+    @apply bg-burgundy-800 border-burgundy-700;
   }
 
   .dark [data-radix-select-item] {
-    @apply text-white hover:bg-rocket-gray-700;
+    @apply text-white hover:bg-burgundy-700;
   }
 }
 
 /* Custom Animations */
 @layer utilities {
-  .text-gradient-blue {
-    @apply bg-gradient-to-r from-rocket-blue-300 to-rocket-blue-500 bg-clip-text text-transparent;
+  .text-gradient-burgundy {
+    @apply bg-gradient-to-r from-burgundy-300 to-wine-500 bg-clip-text text-transparent;
   }
 
   .transition-smooth {
@@ -138,9 +138,8 @@
 /* Enhanced glassmorphism for signup page */
 .glass-card {
   backdrop-filter: blur(16px);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(46, 26, 37, 0.05);
   border-radius: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
-

@@ -46,7 +46,7 @@ export function ThemeProvider({
       return;
     }
     
-    root.classList.add("dark"); // Always add dark class
+    root.classList.add("dark"); // Always add dark class to use our burgundy theme
   }, [theme]);
 
   const value = {

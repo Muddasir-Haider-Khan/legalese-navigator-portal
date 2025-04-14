@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,7 +62,34 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Rocket Lawyer Custom Colors
+				'burgundy': {
+					DEFAULT: '#2E1A25',
+					50: '#F6F3F5', 
+					100: '#EBE5E8',
+					200: '#D7C9D1',
+					300: '#C2ADBA',
+					400: '#9E8192',
+					500: '#7A576B',
+					600: '#5E4152',
+					700: '#432C3A',
+					800: '#2E1A25',
+					900: '#1F1119',
+					950: '#150C12', 
+				},
+				'wine': {
+					DEFAULT: '#3B1F2B',
+					50: '#F8F3F5',
+					100: '#F0E6EA',
+					200: '#E0CDD5',
+					300: '#CFB3C0',
+					400: '#AD8197',
+					500: '#8B5F6D',
+					600: '#684853',
+					700: '#4F3540',
+					800: '#3B1F2B',
+					900: '#26141C',
+					950: '#190D13',
+				},
 				'rocket-blue': {
 					DEFAULT: '#0F3460',
 					50: '#E6EBF2', 
