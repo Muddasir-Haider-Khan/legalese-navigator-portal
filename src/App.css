@@ -13,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #F18F01aa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #F18F01aa);
 }
 
 @keyframes logo-spin {
@@ -62,41 +62,35 @@
   transition: opacity 500ms, transform 500ms;
 }
 
-/* Custom animations for light/dark modes */
-.dark .animate-glow {
-  animation: glow-dark 2s infinite alternate;
+/* Custom animations for glow effect */
+.animate-glow {
+  animation: glow 2s infinite alternate;
 }
 
-.light .animate-glow {
-  animation: glow-light 2s infinite alternate;
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(241, 143, 1, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(241, 143, 1, 0.8);
+  }
 }
 
-/* Form styling for dark mode */
-.dark input::placeholder,
-.dark textarea::placeholder {
+/* Form styling */
+input::placeholder,
+textarea::placeholder {
   color: rgba(156, 163, 175, 0.8);
 }
 
-.dark input,
-.dark textarea {
-  color: #fff;
-  background-color: rgba(31, 41, 55, 0.8);
+input,
+textarea {
+  color: #020122;
+  background-color: rgba(251, 254, 251, 0.9);
+  border-color: rgba(241, 143, 1, 0.3);
 }
 
-@keyframes glow-dark {
-  0% {
-    box-shadow: 0 0 5px rgba(79, 122, 255, 0.5);
-  }
-  100% {
-    box-shadow: 0 0 15px rgba(79, 122, 255, 0.8);
-  }
-}
-
-@keyframes glow-light {
-  0% {
-    box-shadow: 0 0 5px rgba(15, 52, 96, 0.3);
-  }
-  100% {
-    box-shadow: 0 0 15px rgba(15, 52, 96, 0.6);
-  }
+input:focus,
+textarea:focus {
+  border-color: #F18F01;
+  box-shadow: 0 0 0 2px rgba(241, 143, 1, 0.2);
 }
