@@ -65,32 +65,12 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className={`hidden lg:flex flex-col gap-8 glass-card backdrop-blur-lg bg-white/10 rounded-xl p-8 border border-white/20 shadow-2xl transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
-            <div className="grid grid-cols-2 gap-4">
-              <img 
-                src={`https://images.unsplash.com/photo-1649972904349-6e44c42644a7`} 
-                alt="Legal Services" 
-                className="w-full h-48 object-cover rounded-lg"
-              />
-              <img 
-                src={`https://images.unsplash.com/photo-1488590528505-98d2b5aba04b`} 
-                alt="Business Consultation" 
-                className="w-full h-48 object-cover rounded-lg"
-              />
-              <img 
-                src={`https://images.unsplash.com/photo-1581091226825-a6a2a5aee158`} 
-                alt="Document Preparation" 
-                className="w-full h-48 object-cover rounded-lg col-span-2"
-              />
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/10">
-              <h3 className="text-2xl font-semibold mb-4">Talk to a lawyer</h3>
-              <p className="text-rocket-gray-200 mb-4">Get quick legal advice from experienced attorneys</p>
-              <Link to="/ask-a-lawyer" className="inline-flex items-center text-white hover:text-rocket-gray-200 transition-colors">
-                <span>Get legal advice</span>
-                <ArrowRight size={16} className="ml-2" />
-              </Link>
-            </div>
+          <div className={`hidden lg:flex justify-center items-center glass-card backdrop-blur-lg bg-white/10 rounded-xl p-8 border border-white/20 shadow-2xl transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
+            <img 
+              src="/lovable-uploads/e8a4a65a-295a-4810-9ea0-3badc94d9bb8.png" 
+              alt="Digital Legal Gavel"
+              className="w-full h-auto max-h-[400px] object-contain"
+            />
           </div>
         </div>
       </div>
@@ -101,4 +81,3 @@ const Hero = () => {
 };
 
 export default memo(Hero);
-
