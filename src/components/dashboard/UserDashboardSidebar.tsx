@@ -1,82 +1,111 @@
 
 import React from 'react';
-import { 
-  FileText, 
-  User, 
-  CreditCard, 
-  MessageSquare, 
-  Bell, 
-  Home,
-  LogOut 
-} from "lucide-react";
 import {
-  Sidebar,
   SidebarContent,
-  SidebarHeader,
   SidebarMenu,
+  SidebarMenuItem,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarGroup,
+  SidebarGroupLabel,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
+import { FileText, Calendar, User, CreditCard, Bell, LogOut } from "lucide-react";
 
 interface UserDashboardSidebarProps {
   userName: string;
-  handleLogout: () => Promise<void>;
+  handleLogout: () => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
 }
 
-const UserDashboardSidebar: React.FC<UserDashboardSidebarProps> = ({ 
-  userName, 
-  handleLogout, 
+const UserDashboardSidebar: React.FC<UserDashboardSidebarProps> = ({
+  userName,
+  handleLogout,
   activeTab,
-  setActiveTab 
+  setActiveTab
 }) => {
-  const sidebarItems = [
-    { icon: Home, label: "Dashboard", onClick: () => setActiveTab("documents") },
-    { icon: User, label: "Profile", onClick: () => setActiveTab("profile") },
-    { icon: CreditCard, label: "Payment", onClick: () => setActiveTab("payment") },
-    { icon: FileText, label: "Documents", onClick: () => setActiveTab("documents") },
-    { icon: MessageSquare, label: "Book Consultation", onClick: () => setActiveTab("consultations") },
-    { icon: Bell, label: "Notifications", onClick: () => setActiveTab("notifications") },
-  ];
-
   return (
-    <Sidebar>
-      <SidebarHeader className="border-b p-4 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-white">
+    <SidebarContent className="w-full">
+      <div className="p-4">
+        <div className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-medium">
             {userName.charAt(0).toUpperCase()}
           </div>
-          <div className="text-sm font-medium">{userName}</div>
+          <h2 className="font-medium">{userName}</h2>
         </div>
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={handleLogout}
-          className="hover:bg-destructive/10"
-          title="Logout"
-        >
-          <LogOut className="h-5 w-5 text-destructive" />
-        </Button>
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarMenu>
-          {sidebarItems.map((item) => (
-            <SidebarMenuItem key={item.label}>
-              <SidebarMenuButton 
-                onClick={item.onClick} 
-                isActive={activeTab === item.label.toLowerCase()}
-                tooltip={item.label}
-              >
-                <item.icon className="h-5 w-5" />
-                <span>{item.label}</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
-      </SidebarContent>
-    </Sidebar>
+        <div className="mt-8">
+          <SidebarGroup>
+            <SidebarGroupLabel>Manage</SidebarGroupLabel>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={() => setActiveTab('documents')}
+                  isActive={activeTab === 'documents'}
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  <span>Documents</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={() => setActiveTab('consultations')}
+                  isActive={activeTab === 'consultations'}
+                >
+                  <Calendar className="h-4 w-4 mr-2" />
+                  <span>Consultations</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+          
+          <SidebarGroup className="mt-4">
+            <SidebarGroupLabel>Personal</SidebarGroupLabel>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={() => setActiveTab('profile')}
+                  isActive={activeTab === 'profile'}
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  <span>Profile</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={() => setActiveTab('payment')}
+                  isActive={activeTab === 'payment'}
+                >
+                  <CreditCard className="h-4 w-4 mr-2" />
+                  <span>Payment</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  onClick={() => setActiveTab('notifications')}
+                  isActive={activeTab === 'notifications'}
+                >
+                  <Bell className="h-4 w-4 mr-2" />
+                  <span>Notifications</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+          
+          <SidebarGroup className="mt-4">
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={handleLogout}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  <span>Log out</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+        </div>
+      </div>
+    </SidebarContent>
   );
 };
 
