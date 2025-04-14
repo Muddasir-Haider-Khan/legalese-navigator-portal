@@ -1,8 +1,6 @@
-
 import { useState, useEffect, memo } from "react";
 import { Link } from "react-router-dom";
 import { FileText, MessageCircle, Scale, ArrowRight, BookOpen, Users, Building } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 const FeatureCard = memo(({ 
@@ -126,12 +124,6 @@ const Features = () => {
               delay={index}
             />
           ))}
-        </div>
-        
-        <div className="text-center">
-          <Button size="lg" className="bg-rocket-blue-500 hover:bg-rocket-blue-600 px-8">
-            Explore all services
-          </Button>
         </div>
       </div>
     </section>
