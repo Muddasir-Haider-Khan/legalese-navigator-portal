@@ -6,99 +6,99 @@ import { memo } from "react";
 
 const CTASection = () => {
   return (
-    <section className="py-16 md:py-24 bg-slate-50 dark:bg-gray-900/20">
+    <section className="py-16 md:py-24 bg-[#FDE1D3]">
       <div className="container-custom">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
               Join millions who trust Legal Gram
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+            <p className="text-lg text-black mb-6">
               Get access to all our legal documents, attorney advice, and more with a monthly membership.
             </p>
             
             <div className="space-y-4 mb-8">
               <div className="flex items-start gap-2">
-                <Star className="h-5 w-5 text-yellow-500 mt-1 flex-shrink-0" />
+                <Star className="h-5 w-5 text-[#F18F01] mt-1 flex-shrink-0" fill="#F18F01" />
                 <div>
-                  <span className="font-medium text-gray-900 dark:text-white">Trusted by millions</span>
-                  <p className="text-gray-600 dark:text-gray-400">Over 20 million people have used our services</p>
+                  <span className="font-medium text-black">Trusted by millions</span>
+                  <p className="text-black">Over 20 million people have used our services</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-2">
-                <Star className="h-5 w-5 text-yellow-500 mt-1 flex-shrink-0" />
+                <Star className="h-5 w-5 text-[#F18F01] mt-1 flex-shrink-0" fill="#F18F01" />
                 <div>
-                  <span className="font-medium text-gray-900 dark:text-white">Affordable legal help</span>
-                  <p className="text-gray-600 dark:text-gray-400">Access legal services at a fraction of traditional costs</p>
+                  <span className="font-medium text-black">Affordable legal help</span>
+                  <p className="text-black">Access legal services at a fraction of traditional costs</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-2">
-                <Star className="h-5 w-5 text-yellow-500 mt-1 flex-shrink-0" />
+                <Star className="h-5 w-5 text-[#F18F01] mt-1 flex-shrink-0" fill="#F18F01" />
                 <div>
-                  <span className="font-medium text-gray-900 dark:text-white">Cancel anytime</span>
-                  <p className="text-gray-600 dark:text-gray-400">No long-term commitments or hidden fees</p>
+                  <span className="font-medium text-black">Cancel anytime</span>
+                  <p className="text-black">No long-term commitments or hidden fees</p>
                 </div>
               </div>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/signup">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 px-8 py-6 h-auto text-base text-white">
+                <Button variant="orange" size="lg" className="px-8 py-6 h-auto text-base">
                   Sign up now
                 </Button>
               </Link>
               <Link to="/pricing">
-                <Button size="lg" variant="outline" className="border-blue-500 text-blue-500 hover:bg-blue-50 dark:border-blue-400 dark:text-white dark:hover:bg-blue-900/30 px-8 py-6 h-auto text-base">
+                <Button size="lg" variant="outline" className="border-[#F18F01] text-[#F18F01] hover:bg-[#F18F01]/10 px-8 py-6 h-auto text-base">
                   See pricing
                 </Button>
               </Link>
             </div>
           </div>
           
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
+          <div className="bg-[#020122] rounded-xl p-8 shadow-lg border border-[#F18F01]/20">
+            <h3 className="text-2xl font-semibold mb-6 text-white">
               What our customers say
             </h3>
             
             <div className="space-y-6">
-              <div className="border-l-4 border-blue-500 pl-4">
-                <p className="text-gray-600 dark:text-gray-300 italic mb-4">
+              <div className="border-l-4 border-[#F18F01] pl-4">
+                <p className="text-white italic mb-4">
                   "Legal Gram made creating my LLC so easy. The step-by-step process and customer service were excellent!"
                 </p>
-                <p className="font-medium text-gray-900 dark:text-white">— Michael T., Small Business Owner</p>
+                <p className="font-medium text-white">— Michael T., Small Business Owner</p>
               </div>
               
-              <div className="border-l-4 border-blue-500 pl-4">
-                <p className="text-gray-600 dark:text-gray-300 italic mb-4">
+              <div className="border-l-4 border-[#F18F01] pl-4">
+                <p className="text-white italic mb-4">
                   "I was able to create my will quickly and easily. The guidance provided made the process stress-free."
                 </p>
-                <p className="font-medium text-gray-900 dark:text-white">— Sarah L., Family Protection</p>
+                <p className="font-medium text-white">— Sarah L., Family Protection</p>
               </div>
               
               <div className="flex items-center justify-between mt-6">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} fill="currentColor" className="h-5 w-5 text-yellow-500" />
+                    <Star key={star} fill="#F18F01" className="h-5 w-5 text-[#F18F01]" />
                   ))}
                 </div>
-                <Link to="/testimonials" className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 inline-flex items-center group">
+                <Link to="/testimonials" className="text-[#F18F01] hover:text-[#D17701] inline-flex items-center group">
                   <span>Read more</span>
                   <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
             
-            <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="mt-8 pt-6 border-t border-[#F18F01]/20">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="text-lg font-bold text-blue-500">4.8/5</div>
-                  <div className="text-sm text-gray-500">Overall rating</div>
+                  <div className="text-lg font-bold text-[#F18F01]">4.8/5</div>
+                  <div className="text-sm text-white/80">Overall rating</div>
                 </div>
                 <a
                   href="#"
-                  className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 inline-flex items-center"
+                  className="text-white/80 hover:text-white inline-flex items-center"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
