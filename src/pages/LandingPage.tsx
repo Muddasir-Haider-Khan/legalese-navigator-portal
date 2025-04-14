@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -99,7 +100,7 @@ const LandingPage = () => {
         <section className="py-16 md:py-24 bg-white dark:bg-rocket-gray-900">
           <div className="container-custom">
             <div className="text-center mb-12">
-              <span className="text-rocket-blue-500 font-medium mb-2 block">Popular Documents</span>
+              <span className="text-rocket-blue-500 font-medium mb-2 block text-white">Popular Documents</span>
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
                 Most Frequently Used Legal Documents
               </h2>
@@ -142,7 +143,7 @@ const LandingPage = () => {
             
             <div className="text-center">
               <Link to="/documents">
-                <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600">
+                <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white">
                   View all documents <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
@@ -158,3 +159,4 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
