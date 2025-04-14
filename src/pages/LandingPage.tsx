@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -13,7 +12,6 @@ const LandingPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   
   useEffect(() => {
-    // Set loaded after a small delay to trigger animations
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 100);
@@ -34,7 +32,7 @@ const LandingPage = () => {
         <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
           <div className="container-custom">
             <div className="text-center mb-12">
-              <span className="text-rocket-blue-500 font-medium mb-2 block">How It Works</span>
+              <span className="text-rocket-blue-500 font-medium mb-2 block text-white">How It Works</span>
               <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
                 Simple, Affordable Legal Solutions
               </h2>
