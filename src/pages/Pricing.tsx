@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "@/components/layout/Layout";
@@ -121,12 +120,12 @@ const Pricing = () => {
         <meta name="description" content="Choose the perfect legal plan for your needs. Our flexible pricing plans provide access to legal documents, attorney advice, and more." />
       </Helmet>
 
-      <div className="bg-gradient-to-b from-rocket-blue-800 to-rocket-blue-700 dark:from-rocket-blue-900 dark:to-rocket-blue-800 text-white py-16">
+      <div className="bg-gradient-to-b from-rocket-blue-800 to-rocket-blue-700 text-black dark:text-white py-16">
         <div className="container mx-auto px-4 max-w-7xl text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-black">
             Legal Plans That <span className="text-gradient-blue">Fit Your Needs</span>
           </h1>
-          <p className="text-xl md:text-2xl text-rocket-gray-200 max-w-3xl mx-auto mb-8">
+          <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto mb-8">
             Choose the perfect legal plan for your personal or business needs with our flexible pricing options.
           </p>
           
@@ -135,8 +134,8 @@ const Pricing = () => {
               onClick={() => setBillingCycle("monthly")}
               className={`px-6 py-3 ${
                 billingCycle === "monthly"
-                  ? "bg-white text-rocket-blue-600"
-                  : "text-white"
+                  ? "bg-white text-black"
+                  : "text-black"
               } rounded-md transition-all duration-300 font-medium text-sm`}
             >
               Monthly
@@ -145,8 +144,8 @@ const Pricing = () => {
               onClick={() => setBillingCycle("annually")}
               className={`px-6 py-3 ${
                 billingCycle === "annually"
-                  ? "bg-white text-rocket-blue-600"
-                  : "text-white"
+                  ? "bg-white text-black"
+                  : "text-black"
               } rounded-md transition-all duration-300 font-medium text-sm`}
             >
               Annually
@@ -154,14 +153,14 @@ const Pricing = () => {
           </div>
 
           {billingCycle === "annually" && (
-            <div className="bg-rocket-blue-50 text-rocket-blue-700 dark:bg-rocket-blue-900 dark:text-rocket-blue-300 py-2 px-4 rounded-full inline-flex items-center mb-8 font-medium text-sm">
+            <div className="bg-rocket-blue-50 text-black py-2 px-4 rounded-full inline-flex items-center mb-8 font-medium text-sm">
               <span className="mr-2">🎉</span> Save up to 33% with annual billing
             </div>
           )}
         </div>
       </div>
 
-      <div className="bg-white dark:bg-rocket-gray-900 py-12">
+      <div className="bg-white py-12">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {plans.map((plan) => {
@@ -172,41 +171,41 @@ const Pricing = () => {
                   key={plan.name}
                   className={`relative rounded-2xl overflow-hidden border ${
                     plan.popular
-                      ? "border-rocket-blue-500 shadow-lg shadow-rocket-blue-100 dark:shadow-rocket-blue-900/20"
-                      : "border-rocket-gray-200 dark:border-rocket-gray-700"
+                      ? "border-rocket-blue-500 shadow-lg"
+                      : "border-rocket-gray-200"
                   }`}
                 >
                   {plan.popular && (
-                    <div className="absolute top-0 right-0 bg-rocket-blue-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                    <div className="absolute top-0 right-0 bg-rocket-blue-500 text-black text-xs font-bold px-3 py-1 rounded-bl-lg">
                       MOST POPULAR
                     </div>
                   )}
                   
                   <div className="p-8">
-                    <h3 className="text-2xl font-bold text-rocket-gray-900 dark:text-white mb-2">
+                    <h3 className="text-2xl font-bold text-black mb-2">
                       {plan.name}
                     </h3>
-                    <p className="text-rocket-gray-500 dark:text-rocket-gray-400 mb-6">
+                    <p className="text-black mb-6">
                       {plan.description}
                     </p>
                     
                     <div className="mb-6">
                       <div className="flex items-end">
-                        <span className="text-4xl font-bold text-rocket-gray-900 dark:text-white">
+                        <span className="text-4xl font-bold text-black">
                           ${plan.price[billingCycle]}
                         </span>
-                        <span className="text-rocket-gray-500 dark:text-rocket-gray-400 ml-1 mb-1">
+                        <span className="text-black ml-1 mb-1">
                           /month
                         </span>
                       </div>
                       
                       {billingCycle === "annually" && plan.price.annually > 0 && (
-                        <div className="text-sm text-rocket-green-600 dark:text-rocket-green-400 font-medium mt-1">
+                        <div className="text-sm text-black font-medium mt-1">
                           Save ${savings.amount.toFixed(2)} per year ({savings.percentage}%)
                         </div>
                       )}
                       
-                      <div className="text-xs text-rocket-gray-500 dark:text-rocket-gray-400 mt-1">
+                      <div className="text-xs text-black mt-1">
                         {billingCycle === "annually" ? "Billed annually" : "Billed monthly"}
                       </div>
                     </div>
@@ -215,7 +214,7 @@ const Pricing = () => {
                       <Button 
                         className={`w-full ${
                           plan.popular
-                            ? "bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white"
+                            ? "bg-rocket-blue-500 hover:bg-rocket-blue-600 text-black"
                             : ""
                         } mb-8`}
                         variant={plan.popular ? "default" : "outline"}
@@ -230,12 +229,12 @@ const Pricing = () => {
                           {feature.included ? (
                             <Check className="h-5 w-5 text-rocket-green-500 mr-3 flex-shrink-0" />
                           ) : (
-                            <X className="h-5 w-5 text-rocket-gray-300 dark:text-rocket-gray-600 mr-3 flex-shrink-0" />
+                            <X className="h-5 w-5 text-rocket-gray-300 mr-3 flex-shrink-0" />
                           )}
-                          <span className={`text-sm ${
+                          <span className={`text-sm text-black ${
                             feature.included
-                              ? "text-rocket-gray-700 dark:text-rocket-gray-200"
-                              : "text-rocket-gray-500 dark:text-rocket-gray-400"
+                              ? ""
+                              : "opacity-50"
                           }`}>
                             {feature.name}
                           </span>
@@ -245,11 +244,11 @@ const Pricing = () => {
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <button className="ml-1">
-                                    <HelpCircle className="h-3.5 w-3.5 text-rocket-gray-400" />
+                                    <HelpCircle className="h-3.5 w-3.5 text-black" />
                                   </button>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                  <p className="text-xs max-w-xs">{feature.info}</p>
+                                  <p className="text-xs max-w-xs text-black">{feature.info}</p>
                                 </TooltipContent>
                               </Tooltip>
                             </TooltipProvider>
