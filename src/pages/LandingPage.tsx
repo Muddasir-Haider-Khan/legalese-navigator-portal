@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -96,45 +95,33 @@ const LandingPage = () => {
         <section className="py-16 md:py-24 bg-white dark:bg-rocket-gray-900">
           <div className="container-custom">
             <div className="text-center mb-12">
-              <span className="text-rocket-blue-500 font-medium mb-2 block text-white">Popular Documents</span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
+              <span className="text-rocket-blue-500 font-medium mb-2 block text-black">Popular Documents</span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">
                 Most Frequently Used Legal Documents
               </h2>
-              <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
+              <p className="text-lg text-black max-w-3xl mx-auto">
                 Create any of these documents in minutes with our easy-to-use platform.
               </p>
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
-              <Link to="/documents/will" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
-                <span className="font-medium text-rocket-gray-900 dark:text-white">Last Will and Testament</span>
-              </Link>
-              
-              <Link to="/documents/power-of-attorney" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
-                <span className="font-medium text-rocket-gray-900 dark:text-white">Power of Attorney</span>
-              </Link>
-              
-              <Link to="/documents/nda" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
-                <span className="font-medium text-rocket-gray-900 dark:text-white">Non-Disclosure Agreement</span>
-              </Link>
-              
-              <Link to="/documents/llc" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
-                <span className="font-medium text-rocket-gray-900 dark:text-white">LLC Operating Agreement</span>
-              </Link>
-              
-              <Link to="/documents/lease" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
-                <span className="font-medium text-rocket-gray-900 dark:text-white">Residential Lease</span>
-              </Link>
-              
-              <Link to="/documents/employment" className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-                <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
-                <span className="font-medium text-rocket-gray-900 dark:text-white">Employment Contract</span>
-              </Link>
+              {[
+                { link: "/documents/will", text: "Last Will and Testament" },
+                { link: "/documents/power-of-attorney", text: "Power of Attorney" },
+                { link: "/documents/nda", text: "Non-Disclosure Agreement" },
+                { link: "/documents/llc", text: "LLC Operating Agreement" },
+                { link: "/documents/lease", text: "Residential Lease" },
+                { link: "/documents/employment", text: "Employment Contract" }
+              ].map(({ link, text }) => (
+                <Link 
+                  key={link} 
+                  to={link} 
+                  className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow"
+                >
+                  <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
+                  <span className="font-medium text-black">{text}</span>
+                </Link>
+              ))}
             </div>
             
             <div className="text-center">
