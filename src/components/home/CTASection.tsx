@@ -45,12 +45,12 @@ const CTASection = () => {
             
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/signup">
-                <Button size="lg" className="bg-bright-red-500 hover:bg-bright-red-600 px-8 py-6 h-auto text-base text-white">
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 px-8 py-6 h-auto text-base text-white">
                   Sign up now
                 </Button>
               </Link>
               <Link to="/pricing">
-                <Button size="lg" variant="outline" className="border-bright-red-500 text-bright-red-500 hover:bg-bright-red-50 dark:border-bright-red-400 dark:text-bright-red-400 dark:hover:bg-bright-red-900/30 px-8 py-6 h-auto text-base">
+                <Button size="lg" variant="outline" className="border-blue-500 text-blue-500 hover:bg-blue-50 dark:border-blue-400 dark:text-white dark:hover:bg-blue-900/30 px-8 py-6 h-auto text-base">
                   See pricing
                 </Button>
               </Link>
@@ -63,14 +63,14 @@ const CTASection = () => {
             </h3>
             
             <div className="space-y-6">
-              <div className="border-l-4 border-bright-red-500 pl-4">
+              <div className="border-l-4 border-blue-500 pl-4">
                 <p className="text-gray-600 dark:text-gray-300 italic mb-4">
                   "Legal Gram made creating my LLC so easy. The step-by-step process and customer service were excellent!"
                 </p>
                 <p className="font-medium text-gray-900 dark:text-white">— Michael T., Small Business Owner</p>
               </div>
               
-              <div className="border-l-4 border-bright-red-500 pl-4">
+              <div className="border-l-4 border-blue-500 pl-4">
                 <p className="text-gray-600 dark:text-gray-300 italic mb-4">
                   "I was able to create my will quickly and easily. The guidance provided made the process stress-free."
                 </p>
@@ -83,7 +83,7 @@ const CTASection = () => {
                     <Star key={star} fill="currentColor" className="h-5 w-5 text-yellow-500" />
                   ))}
                 </div>
-                <Link to="/testimonials" className="text-bright-red-500 hover:text-bright-red-600 dark:text-bright-red-400 dark:hover:text-bright-red-300 inline-flex items-center group">
+                <Link to="/testimonials" className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 inline-flex items-center group">
                   <span>Read more</span>
                   <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                 </Link>
@@ -93,7 +93,7 @@ const CTASection = () => {
             <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="text-lg font-bold text-bright-red-500">4.8/5</div>
+                  <div className="text-lg font-bold text-blue-500">4.8/5</div>
                   <div className="text-sm text-gray-500">Overall rating</div>
                 </div>
                 <a

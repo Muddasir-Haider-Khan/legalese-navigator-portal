@@ -13,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em rgba(228, 61, 18, 0.6));
+  filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em rgba(228, 61, 18, 0.6));
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
@@ -85,18 +85,18 @@
 
 @keyframes glow-dark {
   0% {
-    box-shadow: 0 0 5px rgba(228, 61, 18, 0.5);
+    box-shadow: 0 0 5px rgba(79, 122, 255, 0.5);
   }
   100% {
-    box-shadow: 0 0 15px rgba(228, 61, 18, 0.8);
+    box-shadow: 0 0 15px rgba(79, 122, 255, 0.8);
   }
 }
 
 @keyframes glow-light {
   0% {
-    box-shadow: 0 0 5px rgba(228, 61, 18, 0.3);
+    box-shadow: 0 0 5px rgba(15, 52, 96, 0.3);
   }
   100% {
-    box-shadow: 0 0 15px rgba(228, 61, 18, 0.6);
+    box-shadow: 0 0 15px rgba(15, 52, 96, 0.6);
   }
 }
