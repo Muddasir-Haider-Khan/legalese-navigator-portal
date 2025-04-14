@@ -5,7 +5,6 @@ import MakeDocuments from '@/components/dashboard/MakeDocuments';
 import ScheduleMeeting from '@/components/dashboard/ScheduleMeeting';
 import UserProfile from '@/components/dashboard/UserProfile';
 import PaymentInfo from '@/components/dashboard/PaymentInfo';
-import NotificationsPanel from '@/components/dashboard/NotificationsPanel';
 
 interface DashboardContentProps {
   activeTab: string;
@@ -48,10 +47,6 @@ const DashboardContent: React.FC<DashboardContentProps> = ({
       
       {activeTab === "payment" && (
         <PaymentInfo />
-      )}
-      
-      {activeTab === "notifications" && (
-        <NotificationsPanel />
       )}
     </div>
   );

@@ -5,7 +5,6 @@ import {
   User, 
   CreditCard, 
   MessageSquare, 
-  Bell, 
   Home,
   LogOut 
 } from "lucide-react";
@@ -38,7 +37,6 @@ const UserDashboardSidebar: React.FC<UserDashboardSidebarProps> = ({
     { icon: CreditCard, label: "Payment", onClick: () => setActiveTab("payment") },
     { icon: FileText, label: "Documents", onClick: () => setActiveTab("documents") },
     { icon: MessageSquare, label: "Book Consultation", onClick: () => setActiveTab("consultations") },
-    { icon: Bell, label: "Notifications", onClick: () => setActiveTab("notifications") },
   ];
 
   return (
