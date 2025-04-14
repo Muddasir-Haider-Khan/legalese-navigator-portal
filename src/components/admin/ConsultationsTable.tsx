@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Search, Calendar, CheckCircle, XCircle, Phone, User, RefreshCw } from "lucide-react";
+import { Search, Calendar, CheckCircle, XCircle, Phone, User, RefreshCw, Trash2 } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -21,9 +20,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
-// Define the consultation interface based on our Supabase schema
 interface Consultation {
   id: string;
   created_at: string;
@@ -55,7 +65,6 @@ const ConsultationsTable = () => {
         .from('consultations')
         .select('*')
         
-      // Apply status filter if not "all"
       if (filterStatus !== "all") {
         query = query.eq('status', filterStatus);
       }
@@ -81,12 +90,10 @@ const ConsultationsTable = () => {
   
   const handleSearch = () => {
     if (!searchTerm.trim()) {
-      // If search is empty, refresh data
       fetchConsultations();
       return;
     }
     
-    // Client-side filtering based on search term
     const lowerSearchTerm = searchTerm.toLowerCase();
     const filtered = consultations.filter(item => 
       item.name.toLowerCase().includes(lowerSearchTerm) || 
@@ -111,14 +118,12 @@ const ConsultationsTable = () => {
         return;
       }
       
-      // Update the local state
       setConsultations(prev => 
         prev.map(item => 
           item.id === id ? { ...item, status } : item
         )
       );
       
-      // If the selected consultation is being updated, update that too
       if (selectedConsultation && selectedConsultation.id === id) {
         setSelectedConsultation({ ...selectedConsultation, status });
       }
@@ -131,8 +136,30 @@ const ConsultationsTable = () => {
     }
   };
 
+  const deleteConsultation = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('consultations')
+        .delete()
+        .eq('id', id);
+      
+      if (error) {
+        console.error('Error deleting consultation:', error);
+        toast.error('Failed to delete consultation');
+        return;
+      }
+      
+      setConsultations(prev => prev.filter(item => item.id !== id));
+      
+      toast.success('Consultation deleted successfully');
+      
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error('An unexpected error occurred');
+    }
+  };
+
   const formatDate = (dateString: string) => {
-    // Format date to MM/DD/YYYY
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
@@ -164,7 +191,6 @@ const ConsultationsTable = () => {
         </div>
       </div>
       
-      {/* Status filter buttons */}
       <div className="flex space-x-2">
         <Button 
           variant={filterStatus === "all" ? "default" : "outline"} 
@@ -358,6 +384,36 @@ const ConsultationsTable = () => {
                         <XCircle className="h-3.5 w-3.5" />
                         <span>Reject</span>
                       </Button>
+                      
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="h-8 gap-1 text-red-500 hover:text-red-600 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                            <span>Delete</span>
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Consultation</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete this consultation request? This action cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction 
+                              className="bg-red-500 hover:bg-red-600"
+                              onClick={() => deleteConsultation(consultation.id)}
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </TableCell>
                 </TableRow>
