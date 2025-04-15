@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -51,22 +50,16 @@ const Hero = () => {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-1 gap-4 pt-2">
               <Link to="/documents" className="sm:col-span-1 flex flex-col items-center">
                 <Button size="lg" variant="orange" className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-6 text-lg h-auto hover:bg-bright-orange-600">
                   Create a document
                 </Button>
                 <p className="mt-2 text-sm text-black">Trusted legal help on single touch</p>
               </Link>
-              <Link to="/services" className="sm:col-span-1">
-                <Button size="lg" variant="orange" className="w-full px-8 py-6 text-lg h-auto hover:bg-bright-orange-600">
-                  Explore services
-                </Button>
-              </Link>
             </div>
           </div>
           
-          {/* Hero image - now showing on both desktop and mobile */}
           <div className={`transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
             <div className="relative rounded-lg shadow-2xl overflow-hidden">
               <img 
