@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -77,7 +76,7 @@ const Contact = () => {
               </div>
             ) : (
               <div className="bg-white dark:bg-rocket-gray-800 rounded-lg shadow-lg p-6 md:p-8">
-                <h2 className="text-xl font-bold mb-6 text-black dark:text-white">Get In Touch</h2>
+                <h2 className="text-xl font-bold mb-6 text-black dark:text-black">Get In Touch</h2>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
