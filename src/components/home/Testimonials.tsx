@@ -187,7 +187,7 @@ const Testimonials = () => {
           <p className="text-xl md:text-2xl font-medium text-black mb-8">
             Join over 20 million satisfied customers
           </p>
-          <Button className="bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white">
+          <Button variant="orange" className="bg-bright-orange-500 hover:bg-bright-orange-600 text-white">
             Get started today
           </Button>
         </div>
