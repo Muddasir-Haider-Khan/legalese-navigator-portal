@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -134,7 +135,7 @@ const DocumentTemplates = () => {
 
   return (
     <Layout>
-      <div className="container-custom py-12 md:py-16 bg-[#FDE1D3]">
+      <div className="container-custom py-12 md:py-16 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <h1 className="heading-xl mb-4 text-black">Legal Document Templates</h1>
@@ -160,7 +161,7 @@ const DocumentTemplates = () => {
                 placeholder="Search documents..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
+                className="pl-10 bg-white border-gray-200"
               />
             </div>
             <Button variant="orange" className="gap-2">
@@ -170,9 +171,9 @@ const DocumentTemplates = () => {
           </div>
           
           <Tabs defaultValue="all" value={activeCategory} onValueChange={setActiveCategory} className="mb-8">
-            <TabsList className="grid grid-cols-3 md:grid-cols-7">
+            <TabsList className="grid grid-cols-3 md:grid-cols-7 bg-white border border-gray-200">
               {categories.map((category) => (
-                <TabsTrigger key={category} value={category}>
+                <TabsTrigger key={category} value={category} className="bg-white hover:bg-gray-100">
                   {category === "all" ? "All" : category}
                 </TabsTrigger>
               ))}
