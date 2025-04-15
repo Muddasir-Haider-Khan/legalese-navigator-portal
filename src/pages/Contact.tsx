@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -50,7 +49,7 @@ const Contact = () => {
       <div className="bg-rocket-blue-500 py-12">
         <div className="container-custom">
           <h1 className="heading-md text-black mb-4">Contact Us</h1>
-          <p className="text-rocket-gray-100 max-w-2xl">
+          <p className="text-black max-w-2xl">
             Have questions or need assistance? Our team is here to help. Fill out the form below, and we'll get back to you as soon as possible.
           </p>
         </div>
@@ -156,8 +155,8 @@ const Contact = () => {
                     <Phone className="h-5 w-5 text-rocket-blue-500 dark:text-rocket-blue-300" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-black dark:text-white">Phone</h3>
-                    <p className="text-black dark:text-rocket-gray-300 mt-1">+1 (555) 123-4567</p>
+                    <h3 className="font-medium text-black">Phone</h3>
+                    <p className="text-black mt-1">+1 (555) 123-4567</p>
                   </div>
                 </div>
                 
@@ -166,9 +165,9 @@ const Contact = () => {
                     <Mail className="h-5 w-5 text-rocket-blue-500 dark:text-rocket-blue-300" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-black dark:text-white">Email</h3>
-                    <p className="text-black dark:text-rocket-gray-300 mt-1">
-                      <a href="mailto:info@rocketlawyer.com" className="hover:text-rocket-blue-500 dark:hover:text-rocket-blue-300">
+                    <h3 className="font-medium text-black">Email</h3>
+                    <p className="text-black mt-1">
+                      <a href="mailto:info@rocketlawyer.com" className="text-black hover:text-rocket-blue-500">
                         info@rocketlawyer.com
                       </a>
                     </p>
@@ -180,8 +179,8 @@ const Contact = () => {
                     <MapPin className="h-5 w-5 text-rocket-blue-500 dark:text-rocket-blue-300" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-black dark:text-white">Office Address</h3>
-                    <p className="text-black dark:text-rocket-gray-300 mt-1">
+                    <h3 className="font-medium text-black">Office Address</h3>
+                    <p className="text-black mt-1">
                       123 Legal Avenue<br />
                       Suite 400<br />
                       San Francisco, CA 94103
@@ -192,8 +191,8 @@ const Contact = () => {
             </div>
             
             <div className="bg-rocket-blue-50 dark:bg-rocket-gray-800 rounded-lg p-6">
-              <h3 className="font-semibold mb-3 text-black dark:text-white">Office Hours</h3>
-              <ul className="space-y-2 text-black dark:text-rocket-gray-300">
+              <h3 className="font-semibold mb-3 text-black">Office Hours</h3>
+              <ul className="space-y-2 text-black">
                 <li className="flex justify-between">
                   <span>Monday - Friday:</span>
                   <span>9:00 AM - 6:00 PM</span>
