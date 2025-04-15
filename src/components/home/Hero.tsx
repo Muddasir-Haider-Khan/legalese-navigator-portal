@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -56,7 +55,7 @@ const Hero = () => {
                 <Button size="lg" variant="orange" className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-6 text-lg h-auto">
                   Create a document
                 </Button>
-                <p className="mt-2 text-sm text-white/80">Trusted legal help on single touch</p>
+                <p className="mt-2 text-sm text-black">Trusted legal help on single touch</p>
               </Link>
               <Link to="/services" className="sm:col-span-1">
                 <Button size="lg" variant="outline" className="w-full border-2 bg-transparent border-white text-white hover:bg-rocket-blue-600/50 px-8 py-6 text-lg h-auto">
@@ -90,4 +89,3 @@ const Hero = () => {
 };
 
 export default memo(Hero);
-
