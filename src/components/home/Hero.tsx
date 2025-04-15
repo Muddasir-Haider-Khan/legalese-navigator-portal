@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -52,13 +53,13 @@ const Hero = () => {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <Link to="/documents" className="sm:col-span-1 flex flex-col items-center">
-                <Button size="lg" variant="orange" className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-6 text-lg h-auto">
+                <Button size="lg" variant="orange" className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-6 text-lg h-auto hover:bg-bright-orange-600">
                   Create a document
                 </Button>
                 <p className="mt-2 text-sm text-black">Trusted legal help on single touch</p>
               </Link>
               <Link to="/services" className="sm:col-span-1">
-                <Button size="lg" variant="outline" className="w-full border-2 bg-transparent border-white text-white hover:bg-rocket-blue-600/50 px-8 py-6 text-lg h-auto">
+                <Button size="lg" variant="orange" className="w-full px-8 py-6 text-lg h-auto hover:bg-bright-orange-600">
                   Explore services
                 </Button>
               </Link>
