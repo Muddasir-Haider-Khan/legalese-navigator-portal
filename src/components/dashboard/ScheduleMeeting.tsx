@@ -87,8 +87,8 @@ const ScheduleMeeting = () => {
       {!isSubmitted ? (
         <>
           <div>
-            <h1 className="text-2xl font-semibold mb-2">Book a Consultation</h1>
-            <p className="text-muted-foreground mb-6">
+            <h1 className="text-2xl font-semibold mb-2 text-black dark:text-white">Book a Consultation</h1>
+            <p className="text-black dark:text-muted-foreground mb-6">
               Fill out the form below to schedule a consultation with one of our legal experts.
             </p>
           </div>
@@ -96,23 +96,24 @@ const ScheduleMeeting = () => {
           <div className="max-w-3xl mx-auto">
             <Card>
               <CardContent className="pt-6">
-                <h2 className="text-lg font-medium mb-4 flex items-center">
+                <h2 className="text-lg font-medium mb-4 flex items-center text-black dark:text-white">
                   <Users className="mr-2 h-5 w-5" />
                   Your Information
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-1">Full Name *</label>
+                    <label htmlFor="name" className="block text-sm font-medium mb-1 text-black dark:text-white">Full Name *</label>
                     <Input 
                       id="name" 
                       value={name} 
                       onChange={(e) => setName(e.target.value)} 
                       placeholder="John Doe" 
                       required 
+                      className="text-black dark:text-white"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address *</label>
+                    <label htmlFor="email" className="block text-sm font-medium mb-1 text-black dark:text-white">Email Address *</label>
                     <Input 
                       id="email" 
                       type="email" 
@@ -120,20 +121,22 @@ const ScheduleMeeting = () => {
                       onChange={(e) => setEmail(e.target.value)} 
                       placeholder="john@example.com" 
                       required 
+                      className="text-black dark:text-white"
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone Number</label>
+                    <label htmlFor="phone" className="block text-sm font-medium mb-1 text-black dark:text-white">Phone Number</label>
                     <Input 
                       id="phone" 
                       type="tel" 
                       value={phone} 
                       onChange={(e) => setPhone(e.target.value)} 
                       placeholder="(555) 123-4567" 
+                      className="text-black dark:text-white"
                     />
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-1 flex items-center">
+                    <label htmlFor="message" className="block text-sm font-medium mb-1 flex items-center text-black dark:text-white">
                       <MessageSquare className="mr-2 h-4 w-4" />
                       Additional Details
                     </label>
@@ -143,12 +146,14 @@ const ScheduleMeeting = () => {
                       onChange={(e) => setMessage(e.target.value)} 
                       placeholder="Please describe your legal issue briefly..." 
                       rows={4} 
+                      className="text-black dark:text-white"
                     />
                   </div>
                 </div>
                 <Button 
                   className="w-full mt-6" 
                   size="lg"
+                  variant="orange"
                   disabled={!name || !email || isSubmitting}
                   onClick={handleSchedule}
                 >
@@ -165,8 +170,8 @@ const ScheduleMeeting = () => {
               <div className="mx-auto bg-green-100 dark:bg-green-900/30 h-20 w-20 rounded-full flex items-center justify-center mb-6">
                 <Check className="h-10 w-10 text-green-600 dark:text-green-400" />
               </div>
-              <h2 className="text-2xl font-semibold mb-4">Consultation Request Submitted</h2>
-              <p className="text-muted-foreground mb-4">
+              <h2 className="text-2xl font-semibold mb-4 text-black dark:text-white">Consultation Request Submitted</h2>
+              <p className="text-black dark:text-muted-foreground mb-4">
                 Thank you for scheduling a consultation. Our team will review your request and get back to you shortly.
               </p>
               <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 mb-6">
@@ -175,7 +180,7 @@ const ScheduleMeeting = () => {
                   You will be notified via both your email ({email}) and phone number ({phone || "Not provided"}) with the details of your consultation.
                 </p>
               </div>
-              <Button onClick={handleReset}>Submit Another Request</Button>
+              <Button onClick={handleReset} variant="orange">Submit Another Request</Button>
             </CardContent>
           </Card>
         </div>

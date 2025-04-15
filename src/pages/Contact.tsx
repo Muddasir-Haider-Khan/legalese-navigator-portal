@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -36,11 +37,6 @@ const Contact = () => {
       return;
     }
 
-    // In a real scenario, this is where we'd send the data to Supabase
-    // const { data, error } = await supabase
-    //   .from("contact_submissions")
-    //   .insert([formData]);
-
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
@@ -68,37 +64,37 @@ const Contact = () => {
                 <div className="w-20 h-20 mx-auto bg-rocket-green-50 dark:bg-rocket-blue-800 rounded-full flex items-center justify-center mb-6">
                   <CheckCircle className="h-10 w-10 text-green-500" />
                 </div>
-                <h2 className="text-2xl font-bold mb-4 text-rocket-gray-900 dark:text-white">Thank You!</h2>
-                <p className="text-rocket-gray-500 dark:text-rocket-gray-300 mb-6">
+                <h2 className="text-2xl font-bold mb-4 text-black dark:text-white">Thank You!</h2>
+                <p className="text-black dark:text-rocket-gray-300 mb-6">
                   Your message has been received. A member of our team will contact you shortly.
                 </p>
                 <Button
                   onClick={() => setIsSuccess(false)}
-                  className="bg-rocket-blue hover:bg-rocket-blue-600"
+                  variant="orange"
                 >
                   Send Another Message
                 </Button>
               </div>
             ) : (
               <div className="bg-white dark:bg-rocket-gray-800 rounded-lg shadow-lg p-6 md:p-8">
-                <h2 className="text-xl font-bold mb-6 text-rocket-gray-900 dark:text-white">Get In Touch</h2>
+                <h2 className="text-xl font-bold mb-6 text-black dark:text-white">Get In Touch</h2>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <Label htmlFor="fullName" className="text-rocket-gray-700 dark:text-rocket-gray-200">Full Name*</Label>
+                    <Label htmlFor="fullName" className="text-black dark:text-rocket-gray-200">Full Name*</Label>
                     <Input
                       id="fullName"
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}
                       placeholder="Enter your full name"
-                      className="mt-1 bg-white dark:bg-rocket-gray-900 text-rocket-gray-900 dark:text-white border-rocket-gray-300 dark:border-rocket-gray-700"
+                      className="mt-1 bg-white dark:bg-rocket-gray-900 text-black dark:text-white border-rocket-gray-300 dark:border-rocket-gray-700"
                       required
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="email" className="text-rocket-gray-700 dark:text-rocket-gray-200">Email Address*</Label>
+                    <Label htmlFor="email" className="text-black dark:text-rocket-gray-200">Email Address*</Label>
                     <Input
                       id="email"
                       name="email"
@@ -106,39 +102,40 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="Enter your email address"
-                      className="mt-1 bg-white dark:bg-rocket-gray-900 text-rocket-gray-900 dark:text-white border-rocket-gray-300 dark:border-rocket-gray-700"
+                      className="mt-1 bg-white dark:bg-rocket-gray-900 text-black dark:text-white border-rocket-gray-300 dark:border-rocket-gray-700"
                       required
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="phone" className="text-rocket-gray-700 dark:text-rocket-gray-200">Phone Number</Label>
+                    <Label htmlFor="phone" className="text-black dark:text-rocket-gray-200">Phone Number</Label>
                     <Input
                       id="phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="Enter your phone number"
-                      className="mt-1 bg-white dark:bg-rocket-gray-900 text-rocket-gray-900 dark:text-white border-rocket-gray-300 dark:border-rocket-gray-700"
+                      className="mt-1 bg-white dark:bg-rocket-gray-900 text-black dark:text-white border-rocket-gray-300 dark:border-rocket-gray-700"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="message" className="text-rocket-gray-700 dark:text-rocket-gray-200">Message*</Label>
+                    <Label htmlFor="message" className="text-black dark:text-rocket-gray-200">Message*</Label>
                     <Textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="How can we help you?"
-                      className="mt-1 min-h-[120px] bg-white dark:bg-rocket-gray-900 text-rocket-gray-900 dark:text-white border-rocket-gray-300 dark:border-rocket-gray-700"
+                      className="mt-1 min-h-[120px] bg-white dark:bg-rocket-gray-900 text-black dark:text-white border-rocket-gray-300 dark:border-rocket-gray-700"
                       required
                     />
                   </div>
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-rocket-blue hover:bg-rocket-blue-600 gap-2 text-white"
+                    className="w-full gap-2"
+                    variant="orange"
                     disabled={isSubmitting}
                   >
                     <Send className="h-5 w-5" />
@@ -151,7 +148,7 @@ const Contact = () => {
 
           <div>
             <div className="bg-white dark:bg-rocket-gray-800 rounded-lg shadow-lg p-6 md:p-8 mb-6">
-              <h2 className="text-xl font-bold mb-6 text-rocket-gray-900 dark:text-white">Contact Information</h2>
+              <h2 className="text-xl font-bold mb-6 text-black dark:text-white">Contact Information</h2>
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
@@ -159,8 +156,8 @@ const Contact = () => {
                     <Phone className="h-5 w-5 text-rocket-blue-500 dark:text-rocket-blue-300" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-rocket-gray-900 dark:text-white">Phone</h3>
-                    <p className="text-rocket-gray-500 dark:text-rocket-gray-300 mt-1">+1 (555) 123-4567</p>
+                    <h3 className="font-medium text-black dark:text-white">Phone</h3>
+                    <p className="text-black dark:text-rocket-gray-300 mt-1">+1 (555) 123-4567</p>
                   </div>
                 </div>
                 
@@ -169,8 +166,8 @@ const Contact = () => {
                     <Mail className="h-5 w-5 text-rocket-blue-500 dark:text-rocket-blue-300" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-rocket-gray-900 dark:text-white">Email</h3>
-                    <p className="text-rocket-gray-500 dark:text-rocket-gray-300 mt-1">
+                    <h3 className="font-medium text-black dark:text-white">Email</h3>
+                    <p className="text-black dark:text-rocket-gray-300 mt-1">
                       <a href="mailto:info@rocketlawyer.com" className="hover:text-rocket-blue-500 dark:hover:text-rocket-blue-300">
                         info@rocketlawyer.com
                       </a>
@@ -183,8 +180,8 @@ const Contact = () => {
                     <MapPin className="h-5 w-5 text-rocket-blue-500 dark:text-rocket-blue-300" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-rocket-gray-900 dark:text-white">Office Address</h3>
-                    <p className="text-rocket-gray-500 dark:text-rocket-gray-300 mt-1">
+                    <h3 className="font-medium text-black dark:text-white">Office Address</h3>
+                    <p className="text-black dark:text-rocket-gray-300 mt-1">
                       123 Legal Avenue<br />
                       Suite 400<br />
                       San Francisco, CA 94103
@@ -195,8 +192,8 @@ const Contact = () => {
             </div>
             
             <div className="bg-rocket-blue-50 dark:bg-rocket-gray-800 rounded-lg p-6">
-              <h3 className="font-semibold mb-3 text-rocket-gray-900 dark:text-white">Office Hours</h3>
-              <ul className="space-y-2 text-rocket-gray-700 dark:text-rocket-gray-300">
+              <h3 className="font-semibold mb-3 text-black dark:text-white">Office Hours</h3>
+              <ul className="space-y-2 text-black dark:text-rocket-gray-300">
                 <li className="flex justify-between">
                   <span>Monday - Friday:</span>
                   <span>9:00 AM - 6:00 PM</span>

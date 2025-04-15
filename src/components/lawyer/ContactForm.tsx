@@ -70,10 +70,10 @@ export default function ContactForm() {
   return (
     <section className="py-16" id="contact-form">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold text-rocket-gray-900 dark:text-white mb-4">
+        <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
           Get in Touch
         </h2>
-        <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
+        <p className="text-black dark:text-rocket-gray-300 max-w-3xl mx-auto">
           Have more questions or need specific help? Send us a message and our team will get back to you shortly.
         </p>
       </div>
@@ -87,9 +87,9 @@ export default function ContactForm() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel className="text-black dark:text-white">Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} />
+                      <Input placeholder="John Doe" {...field} className="text-black dark:text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -101,9 +101,9 @@ export default function ContactForm() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address</FormLabel>
+                    <FormLabel className="text-black dark:text-white">Email Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="john@example.com" {...field} />
+                      <Input placeholder="john@example.com" {...field} className="text-black dark:text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -117,9 +117,9 @@ export default function ContactForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone Number (optional)</FormLabel>
+                    <FormLabel className="text-black dark:text-white">Phone Number (optional)</FormLabel>
                     <FormControl>
-                      <Input placeholder="(555) 123-4567" {...field} />
+                      <Input placeholder="(555) 123-4567" {...field} className="text-black dark:text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -131,9 +131,9 @@ export default function ContactForm() {
                 name="subject"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Subject</FormLabel>
+                    <FormLabel className="text-black dark:text-white">Subject</FormLabel>
                     <FormControl>
-                      <Input placeholder="Legal question about..." {...field} />
+                      <Input placeholder="Legal question about..." {...field} className="text-black dark:text-white" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -146,11 +146,11 @@ export default function ContactForm() {
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Your Message</FormLabel>
+                  <FormLabel className="text-black dark:text-white">Your Message</FormLabel>
                   <FormControl>
                     <Textarea 
                       placeholder="Please describe your legal question or issue in detail..." 
-                      className="min-h-[120px]"
+                      className="min-h-[120px] text-black dark:text-white"
                       {...field} 
                     />
                   </FormControl>
@@ -163,6 +163,7 @@ export default function ContactForm() {
               <Button 
                 type="submit"
                 size="lg"
+                variant="orange"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Sending..." : "Send Message"}

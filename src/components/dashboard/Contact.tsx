@@ -39,8 +39,8 @@ const Contact = () => {
 
   return (
     <div>
-      <h1 className="heading-lg mb-2">Contact Us</h1>
-      <p className="text-rocket-gray-500 mb-6">
+      <h1 className="heading-lg mb-2 text-black dark:text-white">Contact Us</h1>
+      <p className="text-black dark:text-rocket-gray-300 mb-6">
         Get in touch with our team for any questions or support.
       </p>
 
@@ -48,8 +48,8 @@ const Contact = () => {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>Send Us a Message</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-black dark:text-white">Send Us a Message</CardTitle>
+              <CardDescription className="text-black/70 dark:text-rocket-gray-300">
                 Fill out the form below and we'll get back to you as soon as possible.
               </CardDescription>
             </CardHeader>
@@ -57,17 +57,18 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-1">Name *</label>
+                    <label htmlFor="name" className="block text-sm font-medium mb-1 text-black dark:text-white">Name *</label>
                     <Input
                       id="name"
                       placeholder="Your name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
+                      className="text-black dark:text-white"
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-1">Email *</label>
+                    <label htmlFor="email" className="block text-sm font-medium mb-1 text-black dark:text-white">Email *</label>
                     <Input
                       id="email"
                       type="email"
@@ -75,22 +76,24 @@ const Contact = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      className="text-black dark:text-white"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium mb-1">Subject</label>
+                  <label htmlFor="subject" className="block text-sm font-medium mb-1 text-black dark:text-white">Subject</label>
                   <Input
                     id="subject"
                     placeholder="Subject of your message"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
+                    className="text-black dark:text-white"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-1">Message *</label>
+                  <label htmlFor="message" className="block text-sm font-medium mb-1 text-black dark:text-white">Message *</label>
                   <Textarea
                     id="message"
                     placeholder="Your message"
@@ -98,10 +101,11 @@ const Contact = () => {
                     onChange={(e) => setMessage(e.target.value)}
                     rows={6}
                     required
+                    className="text-black dark:text-white"
                   />
                 </div>
 
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                <Button type="submit" className="w-full" variant="orange" disabled={isSubmitting}>
                   {isSubmitting ? (
                     <>
                       <span className="mr-2">Sending...</span>
@@ -121,8 +125,8 @@ const Contact = () => {
         <div>
           <Card>
             <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-black dark:text-white">Contact Information</CardTitle>
+              <CardDescription className="text-black/70 dark:text-rocket-gray-300">
                 Our team is here to help you with any questions you may have.
               </CardDescription>
             </CardHeader>
@@ -130,7 +134,7 @@ const Contact = () => {
               <div className="flex items-start gap-3">
                 <Mail className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <h3 className="font-medium">Email</h3>
+                  <h3 className="font-medium text-black dark:text-white">Email</h3>
                   <a href="mailto:support@example.com" className="text-sm text-primary hover:underline">
                     support@example.com
                   </a>
@@ -140,11 +144,11 @@ const Contact = () => {
               <div className="flex items-start gap-3">
                 <Phone className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <h3 className="font-medium">Phone</h3>
+                  <h3 className="font-medium text-black dark:text-white">Phone</h3>
                   <a href="tel:+1-800-123-4567" className="text-sm text-primary hover:underline">
                     +1 (800) 123-4567
                   </a>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-black/70 dark:text-muted-foreground mt-1">
                     Monday-Friday: 9am-5pm EST
                   </p>
                 </div>
@@ -153,8 +157,8 @@ const Contact = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary mt-1" />
                 <div>
-                  <h3 className="font-medium">Office</h3>
-                  <address className="text-sm not-italic text-muted-foreground">
+                  <h3 className="font-medium text-black dark:text-white">Office</h3>
+                  <address className="text-sm not-italic text-black/70 dark:text-muted-foreground">
                     123 Legal Street<br />
                     New York, NY 10001<br />
                     United States
@@ -165,7 +169,7 @@ const Contact = () => {
               <Separator className="my-4" />
               
               <div>
-                <h3 className="font-medium mb-2">Follow Us</h3>
+                <h3 className="font-medium mb-2 text-black dark:text-white">Follow Us</h3>
                 <div className="flex gap-2">
                   <Button variant="outline" size="icon" className="h-9 w-9 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
