@@ -49,7 +49,7 @@ const Contact = () => {
     <Layout>
       <div className="bg-rocket-blue-500 py-12">
         <div className="container-custom">
-          <h1 className="heading-md text-white mb-4">Contact Us</h1>
+          <h1 className="heading-md text-black mb-4">Contact Us</h1>
           <p className="text-rocket-gray-100 max-w-2xl">
             Have questions or need assistance? Our team is here to help. Fill out the form below, and we'll get back to you as soon as possible.
           </p>
