@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -22,18 +21,16 @@ const LandingPage = () => {
   return (
     <Layout>
       <div className={`w-full transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-        {/* Hero Section */}
         <Hero />
         
-        {/* How It Works Section */}
         <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
           <div className="container-custom">
             <div className="text-center mb-12">
-              <span className="text-rocket-blue-500 font-medium mb-2 block text-white">How It Works</span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
+              <span className="text-rocket-blue-500 font-medium mb-2 block text-black">How It Works</span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">
                 Simple, Affordable Legal Solutions
               </h2>
-              <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 max-w-3xl mx-auto">
+              <p className="text-lg text-black max-w-3xl mx-auto">
                 We make legal matters easy to understand and manage through our streamlined process.
               </p>
             </div>
@@ -46,8 +43,8 @@ const LandingPage = () => {
                     1
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-rocket-gray-900 dark:text-white">Select Your Document</h3>
-                <p className="text-rocket-gray-600 dark:text-rocket-gray-300">
+                <h3 className="text-xl font-semibold mb-2 text-black">Select Your Document</h3>
+                <p className="text-black">
                   Choose from hundreds of legal documents designed for personal and business needs.
                 </p>
               </div>
@@ -59,8 +56,8 @@ const LandingPage = () => {
                     2
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-rocket-gray-900 dark:text-white">Customize It</h3>
-                <p className="text-rocket-gray-600 dark:text-rocket-gray-300">
+                <h3 className="text-xl font-semibold mb-2 text-black">Customize It</h3>
+                <p className="text-black">
                   Answer simple questions to create your personalized legal document.
                 </p>
               </div>
@@ -72,8 +69,8 @@ const LandingPage = () => {
                     3
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-rocket-gray-900 dark:text-white">Sign & Share</h3>
-                <p className="text-rocket-gray-600 dark:text-rocket-gray-300">
+                <h3 className="text-xl font-semibold mb-2 text-black">Sign & Share</h3>
+                <p className="text-black">
                   Save, print, download, or share your legal document instantly.
                 </p>
               </div>
@@ -89,10 +86,8 @@ const LandingPage = () => {
           </div>
         </section>
         
-        {/* Testimonials Section */}
         <Testimonials />
         
-        {/* Popular Documents Section */}
         <section className="py-16 md:py-24 bg-white dark:bg-rocket-gray-900">
           <div className="container-custom">
             <div className="text-center mb-12">
@@ -135,7 +130,6 @@ const LandingPage = () => {
           </div>
         </section>
         
-        {/* CTA Section */}
         <CTASection />
       </div>
     </Layout>
