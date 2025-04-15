@@ -29,7 +29,7 @@ const Hero = () => {
       <div className="container-custom py-16 md:py-24 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`space-y-8 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
               Legal made simple
             </h1>
             <p className="text-xl md:text-2xl text-rocket-gray-100 leading-relaxed max-w-lg">
