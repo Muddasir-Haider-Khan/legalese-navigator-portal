@@ -2,7 +2,6 @@
 import React from 'react';
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import MakeDocuments from '@/components/dashboard/MakeDocuments';
-import ScheduleMeeting from '@/components/dashboard/ScheduleMeeting';
 import UserProfile from '@/components/dashboard/UserProfile';
 import PaymentInfo from '@/components/dashboard/PaymentInfo';
 
@@ -30,13 +29,6 @@ const DashboardContent: React.FC<DashboardContentProps> = ({
         </div>
       )}
       
-      {activeTab === "consultations" && (
-        <div>
-          <h2 className="text-2xl font-semibold mb-6">Book a Consultation</h2>
-          <ScheduleMeeting />
-        </div>
-      )}
-      
       {activeTab === "profile" && (
         <UserProfile 
           userEmail={userEmail}
@@ -53,3 +45,4 @@ const DashboardContent: React.FC<DashboardContentProps> = ({
 };
 
 export default DashboardContent;
+
