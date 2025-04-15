@@ -1,7 +1,4 @@
 
-// This component is kept but not used in the UI
-// It's maintained for potential future use if needed
-
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/providers/ThemeProvider";
