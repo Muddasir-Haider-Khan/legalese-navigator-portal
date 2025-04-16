@@ -144,7 +144,7 @@ const Login = () => {
                     onCheckedChange={(checked) => setRememberMe(!!checked)}
                     className="border-white/50 data-[state=checked]:bg-rocket-blue-500"
                   />
-                  <label htmlFor="remember-me" className="text-sm cursor-pointer text-gray">
+                  <label htmlFor="remember-me" className="text-sm cursor-pointer text-rocket-gray-300">
                     Remember me
                   </label>
                 </div>
