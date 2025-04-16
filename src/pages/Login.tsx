@@ -79,7 +79,7 @@ const Login = () => {
         <div className="absolute bottom-0 left-1/3 w-[70vh] h-[70vh] bg-rocket-blue-400/10 rounded-full opacity-20 blur-3xl"></div>
         
         <div className="w-full max-w-md mx-auto relative z-10">
-          <div className="text-center mb-8 animate-fade-in">
+          <div className="text-center mb-8 ">
             <h1 className="heading-md mb-2 text-gradient text-white">Welcome Back</h1>
             <p className="text-rocket-gray-300 font-medium">
               Sign in to access your legal documents and advice history.
