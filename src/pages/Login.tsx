@@ -109,10 +109,14 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
+<<<<<<< HEAD
+                  className="mt-1 bg-white/10 border-white/20 text-black placeholder-gray-500"
+======= 
                   className="mt-1 bg-white/10 border-white/20 text-white 
                     placeholder:text-black placeholder:font-medium 
                     focus:placeholder:text-black/80 
                     hover:placeholder:text-black/80"
+>>>>>>> 34676d89c7b13e1e4bcff0baba52de7ac72d8524
                   required
                 />
               </div>
@@ -126,10 +130,14 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
+<<<<<<< HEAD
+                    className="mt-1 bg-white/10 border-white/20 text-black placeholder-gray-500"
+=======
                     className="mt-1 bg-white/10 border-white/20 text-white 
                       placeholder:text-black placeholder:font-medium 
                       focus:placeholder:text-black/80 
                       hover:placeholder:text-black/80"
+>>>>>>> 34676d89c7b13e1e4bcff0baba52de7ac72d8524
                     required
                   />
                   <button
