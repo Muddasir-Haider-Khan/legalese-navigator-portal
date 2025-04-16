@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -24,12 +23,11 @@ const Login = () => {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
       if (data.session) {
-        navigate("/user-dashboard");  // Changed from "/dashboard" to "/user-dashboard"
+        navigate("/user-dashboard");
       }
     };
     checkSession();
     
-    // Pre-fill email if available from localStorage
     const savedEmail = localStorage.getItem("lastLoginEmail");
     if (savedEmail) {
       setEmail(savedEmail);
@@ -49,7 +47,6 @@ const Login = () => {
     }
 
     try {
-      // Sign in with password
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -63,10 +60,8 @@ const Login = () => {
         return;
       }
 
-      // Login successful
       toast.success("Welcome back!");
-      navigate("/user-dashboard");  // Changed from "/dashboard" to "/user-dashboard"
-      
+      navigate("/user-dashboard");
     } catch (error) {
       console.error("Exception during login:", error);
       setErrorMessage("An unexpected error occurred. Please try again.");
@@ -85,23 +80,23 @@ const Login = () => {
         
         <div className="w-full max-w-md mx-auto relative z-10">
           <div className="text-center mb-8 animate-fade-in">
-            <h1 className="heading-md mb-2 text-gradient">Welcome Back</h1>
-            <p className="text-rocket-gray-500">
+            <h1 className="heading-md mb-2 text-gradient text-white">Welcome Back</h1>
+            <p className="text-rocket-gray-300 font-medium">
               Sign in to access your legal documents and advice history.
             </p>
           </div>
 
           <div className="glass-card rounded-xl shadow-xl border border-rocket-blue-50/20 p-8 animate-scale-in backdrop-blur-lg bg-white/5">
-            <Alert className="mb-6 bg-amber-50/10 border-amber-300/20 animate-slide-in" style={{ animationDelay: "0.025s" }}>
+            <Alert className="mb-6 bg-amber-50/20 border-amber-300/30 animate-slide-in" style={{ animationDelay: "0.025s" }}>
               <InfoIcon className="h-4 w-4 text-amber-400" />
-              <AlertDescription className="text-xs text-amber-200">
+              <AlertDescription className="text-xs text-amber-100 font-medium">
                 Sign in to access your account. Your information is securely stored in Supabase.
               </AlertDescription>
             </Alert>
 
             <form onSubmit={handleLogin} className="space-y-6">
               {errorMessage && (
-                <div className="p-3 bg-red-900/30 border border-red-800 text-red-300 text-sm rounded-md">
+                <div className="p-3 bg-red-900/50 border border-red-800 text-red-200 text-sm rounded-md">
                   {errorMessage}
                 </div>
               )}
@@ -114,7 +109,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="mt-1 bg-white/10 border-white/20 text-white"
+                  className="mt-1 bg-white/20 border-white/30 text-white placeholder-rocket-gray-300"
                   required
                 />
               </div>
@@ -128,7 +123,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="mt-1 pr-10 bg-white/10 border-white/20 text-white"
+                    className="mt-1 pr-10 bg-white/20 border-white/30 text-white placeholder-rocket-gray-300"
                     required
                   />
                   <button
@@ -147,7 +142,7 @@ const Login = () => {
                     id="remember-me"
                     checked={rememberMe}
                     onCheckedChange={(checked) => setRememberMe(!!checked)}
-                    className="border-white/30 data-[state=checked]:bg-rocket-blue-500"
+                    className="border-white/50 data-[state=checked]:bg-rocket-blue-500"
                   />
                   <label htmlFor="remember-me" className="text-sm cursor-pointer text-white">
                     Remember me
@@ -189,7 +184,6 @@ const Login = () => {
                 </Link>
               </p>
               
-              {/* Admin login link */}
               <p className="text-rocket-gray-500 mt-4 text-xs">
                 <Link to="/admin-login" className="text-rocket-blue-300/70 hover:underline hover:text-rocket-blue-200 transition-colors">
                   Admin Login
