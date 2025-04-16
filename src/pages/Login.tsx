@@ -104,13 +104,13 @@ const Login = () => {
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray mb-1">Email</label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="mt-1 bg-white/10 border-white/20 text-white"
-                  required
+                   id="email"
+                   type="email"
+                   value={email}
+                   onChange={(e) => setEmail(e.target.value)}
+                   placeholder="Enter your email"
+                   className="mt-1 bg-white/10 border-white/20 text-white"
+                   required
                 />
               </div>
 
