@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -109,6 +108,11 @@ const MakeDocuments = () => {
               <p className="text-sm text-muted-foreground">
                 This document template provides a standard format that complies with legal requirements.
               </p>
+              <img 
+                src="/lovable-uploads/9801c5c6-e681-4287-a680-17a2d1cadfd7.png" 
+                alt="Document signing" 
+                className="w-full h-48 object-cover rounded-lg mt-4 opacity-80"
+              />
             </CardContent>
             <CardFooter>
               <Button 
