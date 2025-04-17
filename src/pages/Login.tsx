@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -110,9 +111,9 @@ const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   className="mt-1 bg-white/10 border-white/20 text-white 
-                    placeholder:text-white/40 placeholder:font-medium 
-                    focus:placeholder:text-white/60 
-                    hover:placeholder:text-white/60"
+                    placeholder:text-black placeholder:font-medium 
+                    focus:placeholder:text-black/80 
+                    hover:placeholder:text-black/80"
                   required
                 />
               </div>
@@ -127,9 +128,9 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
                     className="mt-1 bg-white/10 border-white/20 text-white 
-                      placeholder:text-white/40 placeholder:font-medium 
-                      focus:placeholder:text-white/60 
-                      hover:placeholder:text-white/60"
+                      placeholder:text-black placeholder:font-medium 
+                      focus:placeholder:text-black/80 
+                      hover:placeholder:text-black/80"
                     required
                   />
                   <button
