@@ -51,11 +51,17 @@ const Hero = () => {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-1 gap-4 pt-2">
-              <Link to="/documents" className="sm:col-span-1 flex flex-col items-center">
-                <Button size="lg" variant="orange" className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-6 text-lg h-auto hover:bg-bright-orange-600">
-                  Create a document
+              <Link to="/signup" className="sm:col-span-1 flex flex-col items-center">
+                <Button 
+                  size="lg" 
+                  variant="orange" 
+                  className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-6 text-lg h-auto hover:bg-bright-orange-600"
+                >
+                  Post a Job
                 </Button>
-                <p className="mt-2 text-sm text-black">Trusted legal help on single touch</p>
+                <p className="mt-2 text-sm text-white opacity-80">
+                  Trusted by 25,000+ businesses, from startups to Fortune 500 companies
+                </p>
               </Link>
             </div>
           </div>
