@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -54,7 +55,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="text-black">Legal made simple</span>
+              <span className="text-gradient">Legal made simple</span>
             </h1>
             <p className="text-xl md:text-2xl text-black leading-relaxed max-w-lg">
               Affordable legal services for your family and business
