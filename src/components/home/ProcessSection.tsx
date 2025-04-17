@@ -196,7 +196,7 @@ const ProcessSection = () => {
         >
           <div className="bg-gradient-to-r from-white to-gray-50 rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-2xl border border-gray-100">
             <div className="absolute top-0 right-0 -mt-10 -mr-10 opacity-10">
-              <Award className="h-40 w-40 text-bright-orange-500" stroke={1} />
+              <Award className="h-40 w-40 text-bright-orange-500" stroke="1" />
             </div>
             
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
