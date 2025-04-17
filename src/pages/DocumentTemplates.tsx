@@ -135,11 +135,11 @@ const DocumentTemplates = () => {
 
   return (
     <Layout>
-      {/* Enhanced hero section with professional styling */}
+      {/* Enhanced hero section with new background image */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="/lovable-uploads/d9bd64b3-e28d-4aa4-b6b9-ef00aec62a9b.png" 
+            src="/lovable-uploads/97408c62-dad7-4243-bb40-15c826e9ba0a.png" 
             alt="Legal document background" 
             className="w-full h-full object-cover object-center"
           />
