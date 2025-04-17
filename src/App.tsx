@@ -55,38 +55,40 @@ const ScrollToTop = () => {
   return null;
 };
 
-const App = () => (
-  <ThemeProvider defaultTheme="dark">
+const App = () => {
+  return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route path="/documents" element={<DocumentTemplates />} />
-              <Route path="/documents/:id" element={<DocumentDetail />} /> 
-              <Route path="/contact-lawyer" element={<ContactLawyer />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/user-dashboard" element={<UserDashboard />} />
-              <Route path="/admin-dashboard" element={<AdminDashboard />} />
-              <Route path="/admin-login" element={<AdminLogin />} />
-              <Route path="/sso-callback" element={<SSOCallback />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/contact" element={<Contact />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </TooltipProvider>
+      <ThemeProvider defaultTheme="dark">
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/documents" element={<DocumentTemplates />} />
+                <Route path="/documents/:id" element={<DocumentDetail />} /> 
+                <Route path="/contact-lawyer" element={<ContactLawyer />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/user-dashboard" element={<UserDashboard />} />
+                <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                <Route path="/admin-login" element={<AdminLogin />} />
+                <Route path="/sso-callback" element={<SSOCallback />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/contact" element={<Contact />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
-  </ThemeProvider>
-);
+  );
+};
 
 export default App;
