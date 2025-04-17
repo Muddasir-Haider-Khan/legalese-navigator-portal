@@ -95,7 +95,7 @@ const Documents = () => {
               
               <div className="w-full md:w-1/2 relative rounded-lg overflow-hidden shadow-md">
                 <img 
-                  src="/lovable-uploads/f63fbe1d-a2d5-4195-9493-2c1fdd21a520.png" 
+                  src="/lovable-uploads/bbae67ec-7fdd-49d8-adfd-ca2a1c8a05a1.png" 
                   alt="People working on legal documents" 
                   className="w-full h-full object-cover rounded-lg"
                 />
