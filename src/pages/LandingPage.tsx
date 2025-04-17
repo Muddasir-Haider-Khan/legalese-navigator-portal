@@ -1,17 +1,26 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, FileText, MessageCircle, Scale, Building, Shield, CheckCircle } from "lucide-react";
+import { ArrowRight, FileText } from "lucide-react";
 import Hero from "@/components/home/Hero";
-import Testimonials from "@/components/home/Testimonials";
-import CTASection from "@/components/home/CTASection";
-import Features from "@/components/home/Features";
-import PracticeAreas from "@/components/home/PracticeAreas";
-import StatsSection from "@/components/home/StatsSection";
-import ProcessSection from "@/components/home/ProcessSection";
-import TrustBadges from "@/components/home/TrustBadges";
+
+// Lazy loaded components for performance optimization
+const Testimonials = lazy(() => import("@/components/home/Testimonials"));
+const CTASection = lazy(() => import("@/components/home/CTASection"));
+const Features = lazy(() => import("@/components/home/Features"));
+const PracticeAreas = lazy(() => import("@/components/home/PracticeAreas"));
+const StatsSection = lazy(() => import("@/components/home/StatsSection"));
+const ProcessSection = lazy(() => import("@/components/home/ProcessSection"));
+const TrustBadges = lazy(() => import("@/components/home/TrustBadges"));
+
+// Loading placeholder for suspense
+const SectionPlaceholder = () => (
+  <div className="w-full h-72 flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-t-bright-orange-500 border-gray-200 rounded-full animate-spin"></div>
+  </div>
+);
 
 const LandingPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,64 +30,88 @@ const LandingPage = () => {
       setIsLoaded(true);
     }, 100);
     
+    // Preload critical images
+    const preloadImages = [
+      "/lovable-uploads/f71dcb3e-44f6-47f2-a368-b65778dfe4da.png",
+      "/lovable-uploads/a5f2d63e-9556-45d9-a3cc-f9c6a97852df.png",
+      "/lovable-uploads/bbae67ec-7fdd-49d8-adfd-ca2a1c8a05a1.png"
+    ];
+    
+    preloadImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+    
     return () => clearTimeout(timer);
   }, []);
+
+  // Popular documents data
+  const popularDocuments = useMemo(() => [
+    { link: "/documents/1", text: "Last Will and Testament" },
+    { link: "/documents/4", text: "Power of Attorney" },
+    { link: "/documents/2", text: "Non-Disclosure Agreement" },
+    { link: "/documents/3", text: "LLC Operating Agreement" },
+    { link: "/documents/5", text: "Residential Lease" },
+    { link: "/documents/6", text: "Employment Contract" }
+  ], []);
 
   return (
     <Layout>
       <div className={`w-full transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
         <Hero />
         
-        <TrustBadges />
+        <Suspense fallback={<SectionPlaceholder />}>
+          <TrustBadges />
+        </Suspense>
 
-        <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
+        <section className="py-20 md:py-28 bg-rocket-gray-50">
           <div className="container-custom">
-            <div className="text-center mb-12">
-              <span className="text-rocket-blue-500 font-medium mb-2 block text-black">How It Works</span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">
+            <div className="text-center mb-16">
+              <span className="inline-block bg-bright-orange-100 text-bright-orange-600 font-medium px-4 py-1 rounded-full text-sm mb-3">How It Works</span>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 text-black">
                 Simple, Affordable Legal Solutions
               </h2>
-              <p className="text-lg text-black max-w-3xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                 We make legal matters easy to understand and manage through our streamlined process.
               </p>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-              <div className="text-center">
-                <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                  <FileText className="h-8 w-8 text-[#F18F01]" />
-                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
+                <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                  <FileText className="h-10 w-10 text-[#F18F01]" />
+                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
                     1
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-black">Select Your Document</h3>
-                <p className="text-black">
+                <h3 className="text-2xl font-bold mb-4 text-black">Select Your Document</h3>
+                <p className="text-gray-600">
                   Choose from hundreds of legal documents designed for personal and business needs.
                 </p>
               </div>
               
-              <div className="text-center">
-                <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                  <CheckCircle className="h-8 w-8 text-[#F18F01]" />
-                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
+                <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                  <CheckCircle className="h-10 w-10 text-[#F18F01]" />
+                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
                     2
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-black">Customize It</h3>
-                <p className="text-black">
+                <h3 className="text-2xl font-bold mb-4 text-black">Customize It</h3>
+                <p className="text-gray-600">
                   Answer simple questions to create your personalized legal document.
                 </p>
               </div>
               
-              <div className="text-center">
-                <div className="bg-rocket-blue-50 dark:bg-rocket-blue-900/20 h-16 w-16 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-                  <Shield className="h-8 w-8 text-[#F18F01]" />
-                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-6 w-6 rounded-full flex items-center justify-center text-sm font-medium">
+              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
+                <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                  <Fingerprint className="h-10 w-10 text-[#F18F01]" />
+                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
                     3
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-black">Sign & Share</h3>
-                <p className="text-black">
+                <h3 className="text-2xl font-bold mb-4 text-black">Sign & Share</h3>
+                <p className="text-gray-600">
                   Save, print, download, or share your legal document instantly.
                 </p>
               </div>
@@ -86,51 +119,56 @@ const LandingPage = () => {
             
             <div className="mt-12 text-center">
               <Link to="/how-it-works">
-                <Button variant="orange" className="hover:bg-[#D17701] shadow-md">
-                  Learn more about our process <ArrowRight className="ml-2 h-4 w-4" />
+                <Button variant="orange" className="hover:bg-[#D17701] shadow-md px-8 py-6 h-auto text-lg">
+                  Learn more about our process <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>
           </div>
         </section>
         
-        <Features />
+        <Suspense fallback={<SectionPlaceholder />}>
+          <Features />
+        </Suspense>
         
-        <StatsSection />
+        <Suspense fallback={<SectionPlaceholder />}>
+          <StatsSection />
+        </Suspense>
         
-        <PracticeAreas />
+        <Suspense fallback={<SectionPlaceholder />}>
+          <PracticeAreas />
+        </Suspense>
         
-        <ProcessSection />
+        <Suspense fallback={<SectionPlaceholder />}>
+          <ProcessSection />
+        </Suspense>
         
-        <Testimonials />
+        <Suspense fallback={<SectionPlaceholder />}>
+          <Testimonials />
+        </Suspense>
         
-        <section className="py-16 md:py-24 bg-white dark:bg-rocket-gray-900">
+        <section className="py-20 md:py-28 bg-white">
           <div className="container-custom">
-            <div className="text-center mb-12">
-              <span className="text-rocket-blue-500 font-medium mb-2 block text-black">Popular Documents</span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">
+            <div className="text-center mb-16">
+              <span className="inline-block bg-bright-orange-100 text-bright-orange-600 font-medium px-4 py-1 rounded-full text-sm mb-3">Popular Documents</span>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 text-black">
                 Most Frequently Used Legal Documents
               </h2>
-              <p className="text-lg text-black max-w-3xl mx-auto">
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
                 Create any of these documents in minutes with our easy-to-use platform.
               </p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
-              {[
-                { link: "/documents/1", text: "Last Will and Testament" },
-                { link: "/documents/4", text: "Power of Attorney" },
-                { link: "/documents/2", text: "Non-Disclosure Agreement" },
-                { link: "/documents/3", text: "LLC Operating Agreement" },
-                { link: "/documents/5", text: "Residential Lease" },
-                { link: "/documents/6", text: "Employment Contract" }
-              ].map(({ link, text }) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+              {popularDocuments.map(({ link, text }) => (
                 <Link 
-                  key={link} 
                   to={link} 
-                  className="bg-white dark:bg-rocket-gray-800 border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center hover:shadow-md transition-shadow"
+                  key={link} 
+                  className="bg-white rounded-xl p-6 text-center border border-gray-200 hover:border-bright-orange-300 hover:shadow-xl transition-all group"
                 >
-                  <FileText className="h-8 w-8 mx-auto mb-2 text-[#F18F01]" />
+                  <div className="bg-bright-orange-100 p-4 rounded-full mx-auto mb-4 w-16 h-16 flex items-center justify-center group-hover:bg-bright-orange-200 transition-colors">
+                    <FileText className="h-8 w-8 text-[#F18F01]" />
+                  </div>
                   <span className="font-medium text-black">{text}</span>
                 </Link>
               ))}
@@ -138,15 +176,17 @@ const LandingPage = () => {
             
             <div className="text-center">
               <Link to="/documents">
-                <Button variant="orange" className="hover:bg-[#D17701] shadow-md">
-                  View all documents <ArrowRight className="ml-2 h-4 w-4" />
+                <Button variant="orange" className="hover:bg-[#D17701] shadow-md px-8 py-6 h-auto text-lg">
+                  View all documents <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>
           </div>
         </section>
         
-        <CTASection />
+        <Suspense fallback={<SectionPlaceholder />}>
+          <CTASection />
+        </Suspense>
       </div>
     </Layout>
   );
