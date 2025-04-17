@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -6,6 +7,11 @@ import { ArrowRight, FileText, MessageCircle, Scale, Building, Shield, CheckCirc
 import Hero from "@/components/home/Hero";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
+import Features from "@/components/home/Features";
+import PracticeAreas from "@/components/home/PracticeAreas";
+import StatsSection from "@/components/home/StatsSection";
+import ProcessSection from "@/components/home/ProcessSection";
+import TrustBadges from "@/components/home/TrustBadges";
 
 const LandingPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -23,6 +29,8 @@ const LandingPage = () => {
       <div className={`w-full transition-all duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
         <Hero />
         
+        <TrustBadges />
+
         <section className="py-16 md:py-24 bg-rocket-gray-50 dark:bg-rocket-gray-800/30">
           <div className="container-custom">
             <div className="text-center mb-12">
@@ -85,6 +93,14 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
+        
+        <Features />
+        
+        <StatsSection />
+        
+        <PracticeAreas />
+        
+        <ProcessSection />
         
         <Testimonials />
         
