@@ -17,14 +17,14 @@ const Hero = () => {
 
   return (
     <section className="bg-gradient-to-br from-rocket-blue-500 to-rocket-blue-700 text-white relative min-h-[90vh] flex items-center transition-all duration-500">
-      {/* Background image with reduced opacity overlay */}
+      {/* Background image with overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/lovable-uploads/afb31403-e9c9-4c0e-b67b-b37c4d3da399.png" 
+          src="/lovable-uploads/a5f2d63e-9556-45d9-a3cc-f9c6a97852df.png" 
           alt="Lady Justice statue" 
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-500/60 to-rocket-blue-700/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-500/90 to-rocket-blue-700/90"></div>
       </div>
 
       {/* Optimized background pattern with reduced opacity */}
@@ -40,7 +40,7 @@ const Hero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`space-y-8 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-200">Legal made simple</span>
+              Legal made simple
             </h1>
             <p className="text-xl md:text-2xl text-rocket-gray-100 leading-relaxed max-w-lg">
               Affordable legal services for your family and business
