@@ -1,4 +1,3 @@
-
 import { memo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { 
@@ -10,7 +9,8 @@ import {
   Scale, 
   ScrollText, 
   HelpingHand,
-  GraduationCap
+  GraduationCap,
+  ArrowRight
 } from "lucide-react";
 
 const PracticeAreas = () => {

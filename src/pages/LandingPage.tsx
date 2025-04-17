@@ -3,7 +3,7 @@ import { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, FileText } from "lucide-react";
+import { ArrowRight, FileText, CheckCircle, Fingerprint } from "lucide-react";
 import Hero from "@/components/home/Hero";
 
 // Lazy loaded components for performance optimization
