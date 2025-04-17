@@ -135,33 +135,40 @@ const DocumentTemplates = () => {
 
   return (
     <Layout>
-      <div className="container-custom py-12 md:py-16 bg-white relative">
-        <div className="absolute inset-0 z-0 opacity-30 overflow-hidden">
+      {/* Hero section with background image */}
+      <div className="relative overflow-hidden bg-white">
+        <div className="absolute inset-0 z-0">
           <img 
-            src="/lovable-uploads/8321364c-7d8c-4838-a85b-a3eb201c3d54.png" 
-            alt="People working on documents" 
-            className="w-full h-full object-cover object-center" 
+            src="/lovable-uploads/40887453-2587-459b-b169-fea056cc311a.png" 
+            alt="Legal documents background" 
+            className="w-full h-full object-cover object-center"
           />
         </div>
-
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="text-center mb-10">
-            <h1 className="heading-xl mb-4 text-black">Legal Document Templates</h1>
-            <p className="text-lg text-black max-w-3xl mx-auto">
-              Browse our collection of professionally drafted legal documents. Customize and download what you need in minutes.
-            </p>
-            {!isAuthenticated && (
-              <div className="mt-6">
-                <Link to="/login">
-                  <Button size="lg" className="mx-2 bg-[#F97316] text-white hover:bg-[#D15316]">Log in</Button>
-                </Link>
-                <Link to="/signup">
-                  <Button size="lg" variant="orange" className="mx-2">Sign up</Button>
-                </Link>
-              </div>
-            )}
+        <div className="container-custom py-12 md:py-16 relative z-10">
+          <div className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-lg p-8 shadow-sm">
+            <div className="text-center mb-8">
+              <h1 className="heading-xl mb-4 text-black">Legal Document Templates</h1>
+              <p className="text-lg text-black max-w-2xl mx-auto">
+                Browse our collection of professionally drafted legal documents. Customize and download what you need in minutes.
+              </p>
+              {!isAuthenticated && (
+                <div className="mt-6">
+                  <Link to="/login">
+                    <Button size="lg" className="mx-2 bg-[#F97316] text-white hover:bg-[#D15316]">Log in</Button>
+                  </Link>
+                  <Link to="/signup">
+                    <Button size="lg" variant="orange" className="mx-2">Sign up</Button>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
-          
+        </div>
+      </div>
+      
+      {/* Search and filters section */}
+      <div className="container-custom py-8 bg-white">
+        <div className="max-w-5xl mx-auto">
           <div className="flex items-center gap-4 mb-8">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#F97316]" />
@@ -188,6 +195,7 @@ const DocumentTemplates = () => {
             </TabsList>
           </Tabs>
           
+          {/* Document cards grid */}
           {filteredDocuments.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDocuments.map((doc) => (
