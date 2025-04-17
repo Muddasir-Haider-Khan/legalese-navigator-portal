@@ -1,4 +1,3 @@
-
 import { memo, useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -159,7 +158,6 @@ const ProcessSection = () => {
 
   return (
     <section ref={sectionRef} className="py-24 md:py-32 bg-gradient-to-b from-white to-rocket-gray-50 relative overflow-hidden">
-      {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-0 w-64 h-64 bg-bright-orange-50 rounded-full opacity-60 blur-3xl"></div>
         <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-blue-50 rounded-full opacity-60 blur-3xl"></div>
@@ -179,7 +177,7 @@ const ProcessSection = () => {
           className="text-center mb-16 md:mb-20"
         >
           <span className="inline-block bg-gradient-to-r from-bright-orange-100 to-amber-100 text-bright-orange-600 font-medium px-4 py-2 rounded-full text-sm mb-4">Our Simple Process</span>
-          <h2 className="text-3xl md:text-5xl font-bold mb-5 text-black bg-clip-text bg-gradient-to-r from-black to-gray-800">
+          <h2 className="text-3xl md:text-5xl font-bold mb-5 text-black">
             Create Legal Documents in Three Easy Steps
           </h2>
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
@@ -187,7 +185,6 @@ const ProcessSection = () => {
           </p>
         </motion.div>
         
-        {/* Process spotlight */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -233,7 +230,6 @@ const ProcessSection = () => {
         </motion.div>
         
         <div className="relative">
-          {/* Connecting line between process steps */}
           <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-bright-orange-300 via-bright-orange-500 to-amber-500 hidden lg:block -translate-y-1/2 z-0 opacity-50"></div>
           
           <motion.div
