@@ -2,18 +2,60 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, ArrowRight } from "lucide-react";
+import { FileText, ArrowRight, Clock, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const documentTemplates = [
-  { id: 1, name: "Last Will and Testament", category: "Estate Planning", complexity: "Medium" },
-  { id: 2, name: "Non-Disclosure Agreement", category: "Business", complexity: "Low" },
-  { id: 3, name: "Power of Attorney", category: "Estate Planning", complexity: "Medium" },
-  { id: 4, name: "Residential Lease Agreement", category: "Real Estate", complexity: "Medium" },
-  { id: 5, name: "Employment Contract", category: "Business", complexity: "High" },
-  { id: 6, name: "Freelance Contract", category: "Business", complexity: "Medium" }
+  { 
+    id: 1, 
+    name: "Last Will and Testament", 
+    category: "Estate Planning", 
+    complexity: "Medium",
+    timeEstimate: "15 min",
+    userCount: "10.2k" 
+  },
+  { 
+    id: 2, 
+    name: "Non-Disclosure Agreement", 
+    category: "Business", 
+    complexity: "Low",
+    timeEstimate: "8 min",
+    userCount: "15.7k" 
+  },
+  { 
+    id: 3, 
+    name: "Power of Attorney", 
+    category: "Estate Planning", 
+    complexity: "Medium",
+    timeEstimate: "10 min",
+    userCount: "8.5k" 
+  },
+  { 
+    id: 4, 
+    name: "Residential Lease Agreement", 
+    category: "Real Estate", 
+    complexity: "Medium",
+    timeEstimate: "20 min",
+    userCount: "12.3k" 
+  },
+  { 
+    id: 5, 
+    name: "Employment Contract", 
+    category: "Business", 
+    complexity: "High",
+    timeEstimate: "25 min",
+    userCount: "7.8k" 
+  },
+  { 
+    id: 6, 
+    name: "Freelance Contract", 
+    category: "Business", 
+    complexity: "Medium",
+    timeEstimate: "15 min",
+    userCount: "9.4k" 
+  }
 ];
 
 const MakeDocuments = () => {
@@ -101,6 +143,16 @@ const MakeDocuments = () => {
               <CardDescription>{doc.category}</CardDescription>
             </CardHeader>
             <CardContent>
+              <div className="flex items-center gap-4 text-sm text-black/70 mb-3">
+                <div className="flex items-center">
+                  <Clock className="h-4 w-4 mr-1 text-[#F97316]" />
+                  <span>{doc.timeEstimate} setup</span>
+                </div>
+                <div className="flex items-center">
+                  <Users className="h-4 w-4 mr-1 text-[#F97316]" />
+                  <span>{doc.userCount} users</span>
+                </div>
+              </div>
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">
                   {doc.complexity} Complexity
