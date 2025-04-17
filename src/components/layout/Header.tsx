@@ -1,3 +1,4 @@
+
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
@@ -137,9 +138,11 @@ const Header = () => {
       <div className="container-custom py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-clean-white flex items-center justify-center text-primary font-bold shadow-md transition-transform hover:scale-105 duration-300">
-              <span className="text-lg">LG</span>
-            </div>
+            <img 
+              src="/lovable-uploads/bbae67ec-7fdd-49d8-adfd-ca2a1c8a05a1.png" 
+              alt="Legalgram Logo" 
+              className="w-10 h-10 rounded-full shadow-md transition-transform hover:scale-105 duration-300"
+            />
             <span className="text-xl font-bold text-clean-white">
               Legalgram
             </span>
