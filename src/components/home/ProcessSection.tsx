@@ -1,3 +1,4 @@
+
 import { memo, useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -69,7 +70,7 @@ const ProcessCard = memo(({
           <Icon className="h-10 w-10 text-[#F18F01]" />
         </div>
         
-        <h3 className="text-2xl md:text-3xl font-bold mb-4 text-black dark:text-white">{title}</h3>
+        <h3 className="text-2xl md:text-3xl font-bold mb-4 text-black">{title}</h3>
         
         <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">{description}</p>
         
@@ -86,7 +87,7 @@ const ProcessCard = memo(({
 ProcessCard.displayName = 'ProcessCard';
 
 const FeaturePoint = ({ icon: Icon, text }: { icon: React.ElementType, text: string }) => (
-  <div className="flex items-center gap-3 mb-3 text-gray-700">
+  <div className="flex items-center gap-3 mb-3 text-black">
     <div className="bg-bright-orange-100 p-1.5 rounded-full">
       <Icon className="h-4 w-4 text-bright-orange-600" />
     </div>
@@ -180,7 +181,7 @@ const ProcessSection = () => {
           <h2 className="text-3xl md:text-5xl font-bold mb-5 text-black">
             Create Legal Documents in Three Easy Steps
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-black max-w-3xl mx-auto">
             Get legally binding documents in minutes, not hours. Our streamlined process makes legal paperwork simple and efficient.
           </p>
         </motion.div>
@@ -202,7 +203,7 @@ const ProcessSection = () => {
                   <Clock className="h-4 w-4 mr-1" /> Ready in minutes
                 </div>
                 <h3 className="text-2xl md:text-4xl font-bold mb-5 text-black">Lawyer-Backed Legal Documents</h3>
-                <p className="text-lg text-gray-600 mb-6">
+                <p className="text-lg text-black mb-6">
                   Our platform simplifies the creation of legal documents while maintaining professional quality and legal compliance.
                 </p>
                 <div className="grid md:grid-cols-2 gap-x-4 gap-y-2 mb-6">
@@ -264,7 +265,7 @@ const ProcessSection = () => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
-          <p className="mt-4 text-gray-600">No credit card required</p>
+          <p className="mt-4 text-black">No credit card required</p>
         </motion.div>
       </div>
     </section>
