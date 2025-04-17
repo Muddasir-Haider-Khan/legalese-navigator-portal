@@ -139,8 +139,8 @@ const DocumentTemplates = () => {
       <div className="relative overflow-hidden bg-white">
         <div className="absolute inset-0 z-0">
           <img 
-            src="/lovable-uploads/40887453-2587-459b-b169-fea056cc311a.png" 
-            alt="Legal documents background" 
+            src="/lovable-uploads/93b7d702-da41-491c-ae74-c5459f026214.png" 
+            alt="Legal document signing" 
             className="w-full h-full object-cover object-center"
           />
         </div>
