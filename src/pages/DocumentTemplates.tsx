@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Search, Filter, ArrowRight, CheckCircle, Users, Clock, Sparkles, ChevronRight, Shield, Balance, Award } from "lucide-react";
+import { FileText, Search, Filter, ArrowRight, CheckCircle, Users, Clock, Sparkles, ChevronRight, Shield, Scale, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -176,7 +176,7 @@ const DocumentTemplates = () => {
                 <span>Easy customization</span>
               </div>
               <div className="flex items-center px-4 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 text-white">
-                <Balance className="h-5 w-5 mr-3 text-[#F97316]" />
+                <Scale className="h-5 w-5 mr-3 text-[#F97316]" />
                 <span>Legal compliance</span>
               </div>
             </div>
