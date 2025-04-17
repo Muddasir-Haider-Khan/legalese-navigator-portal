@@ -14,6 +14,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 
 const NavLink = memo(({ 
   to, 
@@ -79,6 +87,7 @@ const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
   const [userInitial, setUserInitial] = useState("");
+  const [scrolled, setScrolled] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -110,8 +119,22 @@ const Header = () => {
         }
       }
     );
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
     
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription.unsubscribe();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const toggleMenu = useCallback(() => {
@@ -133,93 +156,202 @@ const Header = () => {
     }
   };
 
-  return (
-    <header className="bg-primary w-full z-50 sticky top-0">
-      <div className="container-custom py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <div className="flex items-center gap-2">
-            <img 
-              src="/lovable-uploads/bbae67ec-7fdd-49d8-adfd-ca2a1c8a05a1.png" 
-              alt="Legalgram Logo" 
-              className="w-10 h-10 rounded-full shadow-md transition-transform hover:scale-105 duration-300"
-            />
-            <span className="text-xl font-bold text-clean-white">
-              Legalgram
-            </span>
-          </div>
-        </Link>
+  const navBarVariants = {
+    initial: { opacity: 0, y: -20 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.5, 
+        staggerChildren: 0.1,
+        when: "beforeChildren"
+      }
+    }
+  };
 
-        <nav className="hidden md:flex items-center space-x-8">
-          <NavLink to="/" isActive={isActive("/")}>
-            Home
-          </NavLink>
-          <NavLink to="/documents" isActive={isActive("/documents")}>
-            Make Documents
-          </NavLink>
-          <NavLink to="/pricing" isActive={isActive("/pricing")}>
-            Pricing
-          </NavLink>
-        </nav>
+  const navItemVariants = {
+    initial: { opacity: 0, y: -10 },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.3 }
+    }
+  };
+
+  const logoVariants = {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { 
+      opacity: 1, 
+      scale: 1,
+      transition: { 
+        duration: 0.5,
+        type: "spring",
+        stiffness: 100
+      }
+    }
+  };
+
+  return (
+    <motion.header 
+      className={cn(
+        "bg-primary w-full z-50 sticky top-0 transition-all duration-300",
+        scrolled && "shadow-md"
+      )}
+      initial="initial"
+      animate="animate"
+      variants={navBarVariants}
+    >
+      <div className="container-custom py-4 flex items-center justify-between">
+        <motion.div variants={logoVariants}>
+          <Link to="/" className="flex items-center">
+            <div className="flex items-center gap-2">
+              <img 
+                src="/lovable-uploads/bbae67ec-7fdd-49d8-adfd-ca2a1c8a05a1.png" 
+                alt="Legalgram Logo" 
+                className="w-10 h-10 rounded-full shadow-md transition-transform hover:scale-105 duration-300"
+              />
+              <span className="text-xl font-bold text-clean-white">
+                Legalgram
+              </span>
+            </div>
+          </Link>
+        </motion.div>
+
+        <NavigationMenu className="hidden md:flex max-w-none">
+          <NavigationMenuList className="gap-8">
+            <motion.div variants={navItemVariants}>
+              <NavigationMenuItem>
+                <NavigationMenuLink 
+                  className={cn(
+                    "font-medium transition-colors relative group",
+                    isActive("/") 
+                      ? "text-clean-white font-semibold" 
+                      : "text-clean-white/90 hover:text-clean-white"
+                  )}
+                  asChild
+                >
+                  <Link to="/">
+                    Home
+                    <span className={cn(
+                      "absolute bottom-[-4px] left-0 w-full h-0.5 bg-clean-white transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
+                      isActive("/") ? "scale-x-100" : ""
+                    )}></span>
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </motion.div>
+            
+            <motion.div variants={navItemVariants}>
+              <NavigationMenuItem>
+                <NavigationMenuLink 
+                  className={cn(
+                    "font-medium transition-colors relative group",
+                    isActive("/documents") 
+                      ? "text-clean-white font-semibold" 
+                      : "text-clean-white/90 hover:text-clean-white"
+                  )}
+                  asChild
+                >
+                  <Link to="/documents">
+                    Make Documents
+                    <span className={cn(
+                      "absolute bottom-[-4px] left-0 w-full h-0.5 bg-clean-white transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
+                      isActive("/documents") ? "scale-x-100" : ""
+                    )}></span>
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </motion.div>
+            
+            <motion.div variants={navItemVariants}>
+              <NavigationMenuItem>
+                <NavigationMenuLink 
+                  className={cn(
+                    "font-medium transition-colors relative group",
+                    isActive("/pricing") 
+                      ? "text-clean-white font-semibold" 
+                      : "text-clean-white/90 hover:text-clean-white"
+                  )}
+                  asChild
+                >
+                  <Link to="/pricing">
+                    Pricing
+                    <span className={cn(
+                      "absolute bottom-[-4px] left-0 w-full h-0.5 bg-clean-white transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
+                      isActive("/pricing") ? "scale-x-100" : ""
+                    )}></span>
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </motion.div>
+          </NavigationMenuList>
+        </NavigationMenu>
 
         <div className="hidden md:flex items-center space-x-4">
           {isAuthenticated ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  className="rounded-full w-10 h-10 p-0 bg-clean-white border-clean-white hover:bg-clean-white/80"
+            <motion.div variants={navItemVariants}>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="rounded-full w-10 h-10 p-0 bg-clean-white border-clean-white hover:bg-clean-white/80"
+                  >
+                    <Avatar className="h-9 w-9">
+                      <AvatarFallback className="bg-primary text-clean-white">
+                        {userInitial}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  align="end" 
+                  className="w-56 mt-2 bg-clean-white border border-primary/20"
                 >
-                  <Avatar className="h-9 w-9">
-                    <AvatarFallback className="bg-primary text-clean-white">
-                      {userInitial}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent 
-                align="end" 
-                className="w-56 mt-2 bg-clean-white border border-primary/20"
-              >
-                <div className="px-4 py-3 border-b border-primary/20">
-                  <p className="text-sm font-medium text-deep-blue">
-                    {userName}
-                  </p>
-                </div>
-                <DropdownMenuItem asChild className="cursor-pointer">
-                  <Link to="/user-dashboard" className="flex items-center">
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Dashboard</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem 
-                  className="cursor-pointer text-red-500 hover:text-red-600"
-                  onClick={handleLogout}
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <div className="px-4 py-3 border-b border-primary/20">
+                    <p className="text-sm font-medium text-deep-blue">
+                      {userName}
+                    </p>
+                  </div>
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <Link to="/user-dashboard" className="flex items-center">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Dashboard</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    className="cursor-pointer text-red-500 hover:text-red-600"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </motion.div>
           ) : (
             <>
-              <Link to="/login">
-                <Button variant="outline" 
-                  className="border-clean-white text-clean-white hover:bg-clean-white hover:text-primary font-medium transition-all"
-                >
-                  Sign In
-                </Button>
-              </Link>
-              <Link to="/signup">
-                <Button className="bg-clean-white text-primary hover:bg-clean-white/80 transition-all font-medium">
-                  Sign Up
-                </Button>
-              </Link>
+              <motion.div variants={navItemVariants}>
+                <Link to="/login">
+                  <Button variant="outline" 
+                    className="border-clean-white text-clean-white hover:bg-clean-white hover:text-primary font-medium transition-all"
+                  >
+                    Sign In
+                  </Button>
+                </Link>
+              </motion.div>
+              <motion.div variants={navItemVariants}>
+                <Link to="/signup">
+                  <Button className="bg-clean-white text-primary hover:bg-clean-white/80 transition-all font-medium">
+                    Sign Up
+                  </Button>
+                </Link>
+              </motion.div>
             </>
           )}
         </div>
 
-        <div className="md:hidden flex items-center">
+        <motion.div variants={navItemVariants} className="md:hidden flex items-center">
           <button 
             className="text-clean-white" 
             onClick={toggleMenu}
@@ -227,11 +359,17 @@ const Header = () => {
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-        </div>
+        </motion.div>
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden bg-primary border-t border-clean-white/20 shadow-md animate-fade-in">
+        <motion.div 
+          className="md:hidden bg-primary border-t border-clean-white/20 shadow-md"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+        >
           <nav className="container-custom py-4 flex flex-col space-y-4">
             <MobileNavLink to="/" isActive={isActive("/")} onClick={toggleMenu}>
               Home
@@ -274,9 +412,9 @@ const Header = () => {
               )}
             </div>
           </nav>
-        </div>
+        </motion.div>
       )}
-    </header>
+    </motion.header>
   );
 };
 
