@@ -110,7 +110,7 @@ const MakeDocuments = () => {
                 This document template provides a standard format that complies with legal requirements.
               </p>
               <img 
-                src="/lovable-uploads/7cca8bb5-5f7b-46b1-b2ec-0f1fd438db5c.png" 
+                src="/lovable-uploads/e2c94a1b-86c1-4c4c-943c-2c7c8591d279.png" 
                 alt="Document signing" 
                 className="w-full h-48 object-cover rounded-lg mt-4 opacity-80"
               />
