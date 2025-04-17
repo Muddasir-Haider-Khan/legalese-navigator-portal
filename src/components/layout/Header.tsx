@@ -1,7 +1,7 @@
 
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Menu, X, User, LogOut, ChevronDown, MapPin, FileText, Briefcase, Scale, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +13,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 import { toast } from "sonner";
 
 const NavLink = memo(({ 
@@ -133,8 +142,37 @@ const Header = () => {
     }
   };
 
+  // Services megamenu data
+  const serviceCategories = [
+    {
+      title: "Business Formation",
+      icon: Briefcase,
+      items: ["LLC Formation", "Corporation", "Nonprofit", "Partnership"]
+    },
+    {
+      title: "Intellectual Property",
+      icon: Shield,
+      items: ["Trademark", "Copyright", "Patent", "Trade Secret"]
+    },
+    {
+      title: "Contracts",
+      icon: FileText,
+      items: ["NDA", "Service Agreement", "Employment Contracts", "Licensing"]
+    },
+    {
+      title: "Legal Advice",
+      icon: Scale,
+      items: ["Business Strategy", "Compliance", "Dispute Resolution", "Legal Research"]
+    }
+  ];
+
+  // Location data
+  const popularLocations = [
+    "New York", "California", "Texas", "Florida", "Illinois", "Pennsylvania"
+  ];
+
   return (
-    <header className="bg-primary w-full z-50 sticky top-0">
+    <header className="bg-primary w-full z-50 sticky top-0 shadow-md">
       <div className="container-custom py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center">
           <div className="flex items-center gap-2">
@@ -147,22 +185,113 @@ const Header = () => {
           </div>
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-8">
-          <NavLink to="/" isActive={isActive("/")}>
-            Home
-          </NavLink>
-          <NavLink to="/documents" isActive={isActive("/documents")}>
-            Make Documents
-          </NavLink>
-          <NavLink to="/pricing" isActive={isActive("/pricing")}>
-            Pricing
-          </NavLink>
-          <NavLink to="/contact" isActive={isActive("/contact")}>
-            Contact Us
-          </NavLink>
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center space-x-2">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent text-clean-white hover:bg-white/10 focus:bg-white/10 data-[state=open]:bg-white/10">
+                  Services
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="bg-white dark:bg-rocket-blue-900 border border-rocket-gray-200 dark:border-rocket-blue-800">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 w-[600px] lg:w-[800px]">
+                    {serviceCategories.map((category, index) => (
+                      <div key={index} className="space-y-2">
+                        <div className="flex items-center gap-2">
+                          <category.icon className="h-5 w-5 text-[#F18F01]" />
+                          <h3 className="text-black dark:text-white font-medium">{category.title}</h3>
+                        </div>
+                        <ul className="space-y-1">
+                          {category.items.map((item, itemIndex) => (
+                            <li key={itemIndex}>
+                              <Link
+                                to={`/services/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                className="block text-sm text-rocket-gray-700 dark:text-rocket-gray-300 hover:text-[#F18F01] dark:hover:text-[#F18F01]"
+                              >
+                                {item}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                        <Link
+                          to={`/services/${category.title.toLowerCase().replace(/\s+/g, '-')}`}
+                          className="text-xs text-[#F18F01] hover:underline flex items-center"
+                        >
+                          View All <ChevronDown className="h-3 w-3 ml-1 rotate-[-90deg]" />
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="bg-rocket-gray-50 dark:bg-rocket-blue-950 p-2 text-center border-t border-rocket-gray-200 dark:border-rocket-blue-800">
+                    <Link
+                      to="/services"
+                      className="text-sm text-[#F18F01] hover:underline flex items-center justify-center"
+                    >
+                      Browse all services <ChevronDown className="h-3 w-3 ml-1 rotate-[-90deg]" />
+                    </Link>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="bg-transparent text-clean-white hover:bg-white/10 focus:bg-white/10 data-[state=open]:bg-white/10">
+                  Locations
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="bg-white dark:bg-rocket-blue-900 border border-rocket-gray-200 dark:border-rocket-blue-800">
+                  <div className="p-4 w-[400px]">
+                    <h3 className="font-medium text-black dark:text-white mb-2">Popular Locations</h3>
+                    <div className="grid grid-cols-2 gap-2">
+                      {popularLocations.map((location, index) => (
+                        <Link
+                          key={index}
+                          to={`/locations/${location.toLowerCase()}`}
+                          className="flex items-center text-sm text-rocket-gray-700 dark:text-rocket-gray-300 hover:text-[#F18F01] dark:hover:text-[#F18F01]"
+                        >
+                          <MapPin className="h-3 w-3 mr-1" /> {location}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="mt-4 pt-2 border-t border-rocket-gray-200 dark:border-rocket-blue-800">
+                      <Link
+                        to="/locations"
+                        className="text-sm text-[#F18F01] hover:underline flex items-center"
+                      >
+                        View all locations <ChevronDown className="h-3 w-3 ml-1 rotate-[-90deg]" />
+                      </Link>
+                    </div>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavLink to="/attorneys" isActive={isActive("/attorneys")}>
+                  Attorneys
+                </NavLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavLink to="/pricing" isActive={isActive("/pricing")}>
+                  Pricing
+                </NavLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavLink to="/contact" isActive={isActive("/contact")}>
+                  Contact
+                </NavLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </nav>
 
+        {/* Right side buttons/user menu */}
         <div className="hidden md:flex items-center space-x-4">
+          <Link to="/post-job">
+            <Button variant="orange" size="sm" className="font-medium">
+              Post a Job
+            </Button>
+          </Link>
+          
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -220,7 +349,8 @@ const Header = () => {
           )}
         </div>
 
-        <div className="md:hidden flex items-center">
+        {/* Mobile menu button */}
+        <div className="lg:hidden flex items-center">
           <button 
             className="text-clean-white" 
             onClick={toggleMenu}
@@ -231,22 +361,74 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-primary border-t border-clean-white/20 shadow-md animate-fade-in">
+        <div className="lg:hidden bg-primary border-t border-clean-white/20 shadow-md animate-fade-in">
           <nav className="container-custom py-4 flex flex-col space-y-4">
             <MobileNavLink to="/" isActive={isActive("/")} onClick={toggleMenu}>
               Home
             </MobileNavLink>
-            <MobileNavLink to="/documents" isActive={isActive("/documents")} onClick={toggleMenu}>
-              Make Documents
+            <div className="border-t border-clean-white/10 pt-2">
+              <p className="text-white/60 text-sm mb-2">Services</p>
+              <div className="grid grid-cols-2 gap-2">
+                {serviceCategories.map((category, index) => (
+                  <MobileNavLink 
+                    key={index}
+                    to={`/services/${category.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    isActive={false}
+                    onClick={toggleMenu}
+                  >
+                    <div className="flex items-center">
+                      <category.icon className="h-4 w-4 mr-1 text-[#F18F01]" /> {category.title}
+                    </div>
+                  </MobileNavLink>
+                ))}
+              </div>
+              <MobileNavLink to="/services" isActive={isActive("/services")} onClick={toggleMenu}>
+                <span className="text-[#F18F01] text-sm">View all services →</span>
+              </MobileNavLink>
+            </div>
+            
+            <div className="border-t border-clean-white/10 pt-2">
+              <p className="text-white/60 text-sm mb-2">Popular Locations</p>
+              <div className="grid grid-cols-2 gap-2">
+                {popularLocations.slice(0, 4).map((location, index) => (
+                  <MobileNavLink 
+                    key={index}
+                    to={`/locations/${location.toLowerCase()}`}
+                    isActive={false}
+                    onClick={toggleMenu}
+                  >
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-1 text-[#F18F01]" /> {location}
+                    </div>
+                  </MobileNavLink>
+                ))}
+              </div>
+              <MobileNavLink to="/locations" isActive={isActive("/locations")} onClick={toggleMenu}>
+                <span className="text-[#F18F01] text-sm">View all locations →</span>
+              </MobileNavLink>
+            </div>
+            
+            <MobileNavLink to="/attorneys" isActive={isActive("/attorneys")} onClick={toggleMenu}>
+              Attorneys
             </MobileNavLink>
+            
             <MobileNavLink to="/pricing" isActive={isActive("/pricing")} onClick={toggleMenu}>
               Pricing
             </MobileNavLink>
+            
             <MobileNavLink to="/contact" isActive={isActive("/contact")} onClick={toggleMenu}>
-              Contact Us
+              Contact
             </MobileNavLink>
+            
             <div className="flex flex-col space-y-2 pt-4 border-t border-clean-white/20">
+              <Link to="/post-job" onClick={toggleMenu} className="w-full">
+                <Button variant="orange" className="w-full">
+                  Post a Job
+                </Button>
+              </Link>
+              
               {isAuthenticated ? (
                 <>
                   <Link to="/user-dashboard" onClick={toggleMenu} className="flex items-center space-x-2 text-clean-white">
