@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -135,11 +136,11 @@ const DocumentTemplates = () => {
   return (
     <Layout>
       <div className="container-custom py-12 md:py-16 bg-white relative">
-        <div className="absolute inset-0 z-0 opacity-10 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-30 overflow-hidden">
           <img 
             src="/lovable-uploads/8321364c-7d8c-4838-a85b-a3eb201c3d54.png" 
             alt="People working on documents" 
-            className="w-full h-full object-cover" 
+            className="w-full h-full object-cover object-center" 
           />
         </div>
 
