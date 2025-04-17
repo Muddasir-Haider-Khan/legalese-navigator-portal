@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Search, Star, Filter } from "lucide-react";
+import { FileText, Search, Star, Filter, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -135,7 +135,7 @@ const DocumentTemplates = () => {
 
   return (
     <Layout>
-      {/* Hero section with background image */}
+      {/* Enhanced hero section with background image */}
       <div className="relative overflow-hidden bg-white">
         <div className="absolute inset-0 z-0">
           <img 
@@ -143,21 +143,49 @@ const DocumentTemplates = () => {
             alt="Legal document signing" 
             className="w-full h-full object-cover object-center"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40"></div>
         </div>
-        <div className="container-custom py-12 md:py-16 relative z-10">
-          <div className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-lg p-8 shadow-sm">
+        <div className="container-custom py-16 md:py-24 relative z-10">
+          <div className="max-w-3xl mx-auto backdrop-blur-sm bg-white/10 rounded-xl p-8 shadow-xl border border-white/20">
             <div className="text-center mb-8">
-              <h1 className="heading-xl mb-4 text-black">Legal Document Templates</h1>
-              <p className="text-lg text-black max-w-2xl mx-auto">
+              <span className="inline-block px-3 py-1 bg-[#F97316]/90 text-white text-xs font-semibold rounded-full mb-4">
+                PROFESSIONAL LEGAL DOCUMENTS
+              </span>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gradient animate-fade-in text-white leading-tight">
+                Legal Document <span className="text-[#F97316]">Templates</span>
+              </h1>
+              <div className="h-1 w-24 bg-gradient-to-r from-[#F97316] to-[#FFBB66] mx-auto my-4 rounded-full"></div>
+              <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed animate-fade-in delay-75">
                 Browse our collection of professionally drafted legal documents. Customize and download what you need in minutes.
               </p>
+              
+              <div className="flex flex-wrap gap-3 justify-center mt-8">
+                <div className="flex items-center text-white/90 text-sm md:text-base">
+                  <CheckCircle className="h-5 w-5 mr-2 text-[#F97316]" />
+                  <span>Attorney-reviewed</span>
+                </div>
+                <div className="flex items-center text-white/90 text-sm md:text-base">
+                  <CheckCircle className="h-5 w-5 mr-2 text-[#F97316]" />
+                  <span>Easy customization</span>
+                </div>
+                <div className="flex items-center text-white/90 text-sm md:text-base">
+                  <CheckCircle className="h-5 w-5 mr-2 text-[#F97316]" />
+                  <span>Instant download</span>
+                </div>
+              </div>
+              
               {!isAuthenticated && (
-                <div className="mt-6">
+                <div className="mt-8 space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row justify-center">
                   <Link to="/login">
-                    <Button size="lg" className="mx-2 bg-[#F97316] text-white hover:bg-[#D15316]">Log in</Button>
+                    <Button size="lg" className="w-full md:w-auto bg-[#F97316] hover:bg-[#D15316] text-white shadow-lg shadow-[#F97316]/25 transition-transform hover:translate-y-[-2px]">
+                      Log in to Get Started
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
                   </Link>
                   <Link to="/signup">
-                    <Button size="lg" variant="orange" className="mx-2">Sign up</Button>
+                    <Button size="lg" variant="outline" className="w-full md:w-auto border-white text-white hover:bg-white/10 transition-transform hover:translate-y-[-2px]">
+                      Sign up for Free
+                    </Button>
                   </Link>
                 </div>
               )}
