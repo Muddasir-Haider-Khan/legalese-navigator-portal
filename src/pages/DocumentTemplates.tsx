@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Search, Star, Filter, ArrowRight, CheckCircle } from "lucide-react";
+import { FileText, Search, Star, Filter, ArrowRight, CheckCircle, Users, Clock, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -197,76 +197,102 @@ const DocumentTemplates = () => {
       {/* Search and filters section */}
       <div className="container-custom py-8 bg-white">
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 mb-8">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#F97316]" />
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#F97316]">
+                <Search className="h-5 w-5" />
+              </div>
               <Input
-                placeholder="Search documents..."
+                placeholder="Search for legal documents..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white border-gray-200"
+                className="pl-10 bg-white border-gray-200 focus-visible:ring-[#F97316] rounded-lg"
               />
             </div>
-            <Button variant="orange" className="gap-2">
+            <Button variant="orange" className="gap-2 shadow-md hover:shadow-lg transition-all">
               <Filter className="h-4 w-4 text-white" />
               Filters
             </Button>
           </div>
           
-          <Tabs defaultValue="all" value={activeCategory} onValueChange={setActiveCategory} className="mb-8">
-            <TabsList className="grid grid-cols-3 md:grid-cols-7 bg-white border border-gray-200">
-              {categories.map((category) => (
-                <TabsTrigger key={category} value={category} className="bg-white hover:bg-gray-100">
-                  {category === "all" ? "All" : category}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+          <div className="overflow-x-auto -mx-2 px-2 mb-8">
+            <Tabs defaultValue="all" value={activeCategory} onValueChange={setActiveCategory} className="w-full">
+              <TabsList className="grid grid-flow-col auto-cols-max gap-2 bg-transparent p-0 overflow-x-auto">
+                {categories.map((category) => (
+                  <TabsTrigger 
+                    key={category} 
+                    value={category} 
+                    className="rounded-full py-1.5 px-4 text-sm font-medium border border-gray-200 data-[state=active]:bg-[#F97316] data-[state=active]:text-white data-[state=active]:shadow-md transition-all"
+                  >
+                    {category === "all" ? "All Categories" : category}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
           
           {/* Document cards grid */}
           {filteredDocuments.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDocuments.map((doc) => (
-                <Card key={doc.id} className="overflow-hidden transition-all hover:shadow-md bg-white">
-                  <CardHeader className="pb-3">
-                    <div className="flex justify-between items-start">
-                      <Badge variant="outline" className="mb-2 text-black">{doc.category}</Badge>
-                      {doc.popular && (
-                        <Badge className="bg-[#F97316] text-white">
-                          <Star className="h-3 w-3 mr-1" /> Popular
-                        </Badge>
-                      )}
-                    </div>
-                    <CardTitle className="text-lg text-black">{doc.title}</CardTitle>
+                <Card key={doc.id} className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-white border border-gray-100">
+                  <div className="absolute top-0 right-0">
+                    {doc.popular && (
+                      <div className="bg-gradient-to-r from-[#F97316] to-[#FFBB66] text-white py-1 px-3 font-medium text-xs flex items-center rounded-bl-lg shadow-md">
+                        <Sparkles className="h-3 w-3 mr-1" /> Popular
+                      </div>
+                    )}
+                  </div>
+                  
+                  <CardHeader className="pb-3 relative">
+                    <Badge variant="outline" className="mb-2 text-black border-none bg-gray-100 text-xs inline-flex">
+                      {doc.category}
+                    </Badge>
+                    <CardTitle className="text-xl text-black group-hover:text-[#F97316] transition-colors">
+                      {doc.title}
+                    </CardTitle>
                     <CardDescription className="line-clamp-2 text-black/70">{doc.description}</CardDescription>
                   </CardHeader>
+                  
                   <CardContent>
+                    <div className="flex items-center gap-4 text-sm text-black/70 mb-4">
+                      <div className="flex items-center">
+                        <Clock className="h-4 w-4 mr-1 text-[#F97316]" />
+                        <span>5 min setup</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Users className="h-4 w-4 mr-1 text-[#F97316]" />
+                        <span>4.8k users</span>
+                      </div>
+                    </div>
                     <div className="flex items-center text-sm text-black/70">
-                      <FileText className="h-4 w-4 mr-1 text-[#F97316]" />
-                      <span>Customizable template</span>
+                      <FileText className="h-4 w-4 mr-2 text-[#F97316]" />
+                      <span>Complete template with guided instructions</span>
                     </div>
                   </CardContent>
-                  <CardFooter>
+                  
+                  <CardFooter className="pt-2">
                     <Button 
-                      className="w-full bg-[#F97316] hover:bg-[#D15316] text-white"
+                      className="w-full bg-white hover:bg-[#F97316] text-[#F97316] hover:text-white border border-[#F97316] group-hover:bg-[#F97316] group-hover:text-white transition-all duration-300"
                       onClick={() => handleUseTemplate(doc.id)}
                     >
                       {isAuthenticated ? "Use Template" : "Log in to Use"}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </CardFooter>
                 </Card>
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 bg-white rounded-lg">
-              <FileText className="h-12 w-12 mx-auto text-[#F97316]" />
+            <div className="text-center py-12 bg-gray-50 rounded-lg shadow-inner">
+              <FileText className="h-12 w-12 mx-auto text-[#F97316]/50" />
               <h3 className="mt-4 text-lg font-medium text-black">No Documents Found</h3>
               <p className="mt-1 text-black/70">
                 Try adjusting your search or filter to find what you need.
               </p>
               <Button 
                 variant="orange" 
-                className="mt-4"
+                className="mt-4 shadow-lg shadow-[#F97316]/20"
                 onClick={() => {
                   setSearchTerm("");
                   setActiveCategory("all");
