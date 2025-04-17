@@ -76,44 +76,56 @@ const LandingPage = () => {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
-                <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
-                  <FileText className="h-10 w-10 text-[#F18F01]" />
-                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
-                    1
-                  </span>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-black">Select Your Document</h3>
-                <p className="text-gray-600">
-                  Choose from hundreds of legal documents designed for personal and business needs.
-                </p>
+            <div className="flex flex-col md:flex-row gap-8 mb-12">
+              <div className="md:w-1/2">
+                <img 
+                  src="/lovable-uploads/30090127-0139-4668-898f-16fc25f52fae.png" 
+                  alt="Legal document signing" 
+                  className="rounded-xl shadow-lg w-full h-auto object-cover"
+                />
               </div>
               
-              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
-                <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
-                  <CheckCircle className="h-10 w-10 text-[#F18F01]" />
-                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
-                    2
-                  </span>
+              <div className="md:w-1/2">
+                <div className="grid md:grid-cols-1 gap-8">
+                  <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
+                    <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                      <FileText className="h-10 w-10 text-[#F18F01]" />
+                      <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
+                        1
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4 text-black">Select Your Document</h3>
+                    <p className="text-gray-600">
+                      Choose from hundreds of legal documents designed for personal and business needs.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
+                    <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                      <CheckCircle className="h-10 w-10 text-[#F18F01]" />
+                      <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
+                        2
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4 text-black">Customize It</h3>
+                    <p className="text-gray-600">
+                      Answer simple questions to create your personalized legal document.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
+                    <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                      <Fingerprint className="h-10 w-10 text-[#F18F01]" />
+                      <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
+                        3
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4 text-black">Sign & Share</h3>
+                    <p className="text-gray-600">
+                      Save, print, download, or share your legal document instantly.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-black">Customize It</h3>
-                <p className="text-gray-600">
-                  Answer simple questions to create your personalized legal document.
-                </p>
-              </div>
-              
-              <div className="bg-white rounded-xl p-8 text-center shadow-lg border border-gray-100 transform transition-transform hover:-translate-y-2 duration-300">
-                <div className="bg-rocket-blue-50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6 relative">
-                  <Fingerprint className="h-10 w-10 text-[#F18F01]" />
-                  <span className="absolute -top-2 -right-2 bg-[#F18F01] text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
-                    3
-                  </span>
-                </div>
-                <h3 className="text-2xl font-bold mb-4 text-black">Sign & Share</h3>
-                <p className="text-gray-600">
-                  Save, print, download, or share your legal document instantly.
-                </p>
               </div>
             </div>
             
