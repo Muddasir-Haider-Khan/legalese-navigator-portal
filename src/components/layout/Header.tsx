@@ -1,4 +1,3 @@
-
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
@@ -157,9 +156,6 @@ const Header = () => {
           <NavLink to="/pricing" isActive={isActive("/pricing")}>
             Pricing
           </NavLink>
-          <NavLink to="/contact" isActive={isActive("/contact")}>
-            Contact Us
-          </NavLink>
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
@@ -242,9 +238,6 @@ const Header = () => {
             </MobileNavLink>
             <MobileNavLink to="/pricing" isActive={isActive("/pricing")} onClick={toggleMenu}>
               Pricing
-            </MobileNavLink>
-            <MobileNavLink to="/contact" isActive={isActive("/contact")} onClick={toggleMenu}>
-              Contact Us
             </MobileNavLink>
             <div className="flex flex-col space-y-2 pt-4 border-t border-clean-white/20">
               {isAuthenticated ? (
