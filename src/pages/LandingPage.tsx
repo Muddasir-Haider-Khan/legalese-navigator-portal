@@ -70,7 +70,7 @@ const LandingPage = () => {
             <img 
               src="/lovable-uploads/c9d521b5-31e5-47a0-9d04-c2539ddd886e.png" 
               alt="Document signing background" 
-              className="w-full h-full object-cover opacity-65"
+              className="w-full h-full object-cover opacity-85"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/80 to-white/90"></div>
           </div>
