@@ -57,14 +57,14 @@ const Hero = () => {
               <span className="text-sm font-medium text-white">Professional Legal Solutions</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gradient">
-              Legal made <span className="text-bright-orange-400">simple</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+              <span className="text-bright-orange-400">Legal made simple</span>
             </h1>
             <p className="text-xl md:text-2xl text-white leading-relaxed max-w-lg">
               Affordable legal services for your family and business
             </p>
             
-            <div className="space-y-4 pt-2">
+            <div className="space-y-4 pt-2 bg-bright-orange-500/10 p-6 rounded-xl backdrop-blur-sm border border-bright-orange-500/20">
               <div className="flex items-center gap-3 text-lg group hover:translate-x-1 transition-transform">
                 <span className="bg-bright-orange-500/20 rounded-full p-1">
                   <Check className="text-bright-orange-400" size={22} />
@@ -85,8 +85,8 @@ const Hero = () => {
               </div>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-1 gap-4 pt-6">
-              <Link to="/documents" className="sm:col-span-1 flex flex-col items-center">
+            <div className="pt-6">
+              <Link to="/documents" className="flex flex-col items-center">
                 <Button size="lg" variant="orange" className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-7 text-lg h-auto hover:bg-bright-orange-600 hover:scale-[1.02] transition-all group">
                   Create a document
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -111,7 +111,7 @@ const Hero = () => {
                 Professional Services
               </div>
             </div>
-            <div className="mt-6 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/10 hidden md:block transform hover:translate-y-[-5px] transition-transform duration-300">
+            <div className="mt-6 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/10 transform hover:translate-y-[-5px] transition-transform duration-300">
               <h3 className="text-xl font-bold text-white">Professional Document Preparation</h3>
               <p className="text-white/80 mt-2">Create, sign, and manage your legal documents with our easy-to-use platform</p>
               <div className="mt-3 flex gap-2">
