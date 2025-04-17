@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -135,8 +134,16 @@ const DocumentTemplates = () => {
 
   return (
     <Layout>
-      <div className="container-custom py-12 md:py-16 bg-white">
-        <div className="max-w-5xl mx-auto">
+      <div className="container-custom py-12 md:py-16 bg-white relative">
+        <div className="absolute inset-0 z-0 opacity-10 overflow-hidden">
+          <img 
+            src="/lovable-uploads/8321364c-7d8c-4838-a85b-a3eb201c3d54.png" 
+            alt="People working on documents" 
+            className="w-full h-full object-cover" 
+          />
+        </div>
+
+        <div className="max-w-5xl mx-auto relative z-10">
           <div className="text-center mb-10">
             <h1 className="heading-xl mb-4 text-black">Legal Document Templates</h1>
             <p className="text-lg text-black max-w-3xl mx-auto">
