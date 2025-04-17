@@ -1,4 +1,3 @@
-
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
@@ -206,7 +205,7 @@ const Header = () => {
           <Link to="/" className="flex items-center">
             <div className="flex items-center gap-2">
               <img 
-                src="/lovable-uploads/8f9ffce5-5a21-468a-9794-be04d0e3eb9f.png" 
+                src="/lovable-uploads/a17fd11f-8e26-4052-9951-f94d83efbea4.png" 
                 alt="Legalgram Logo" 
                 className="w-10 h-10 rounded-full shadow-md transition-transform hover:scale-105 duration-300"
               />
