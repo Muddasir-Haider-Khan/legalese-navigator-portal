@@ -141,9 +141,9 @@ const DocumentTemplates = () => {
           <img 
             src="/lovable-uploads/d9bd64b3-e28d-4aa4-b6b9-ef00aec62a9b.png" 
             alt="Legal document background" 
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center opacity-60"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/70"></div>
         </div>
         
         <div className="container-custom relative z-10 py-20 md:py-28">
