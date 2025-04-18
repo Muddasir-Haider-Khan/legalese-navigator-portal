@@ -78,20 +78,21 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
           </div>
           
           {!isAuthenticated && (
-            <div className="flex flex-col gap-4 mt-8 px-4 md:px-0">
-              <Link to="/login" className="w-full sm:w-auto">
-                <Button size="lg" className="w-full bg-[#F97316] hover:bg-[#D15316] text-white shadow-xl shadow-[#F97316]/20 border border-[#F97316] px-8 py-6 text-lg h-auto group">
+            <div className="flex justify-center gap-3 mt-6">
+              <Link to="/login">
+                <Button 
+                  className="bg-[#F97316] hover:bg-[#D15316] text-white shadow-md border border-[#F97316] px-6 py-2 h-10 text-sm group"
+                >
                   <span className="text-white">Get Started Now</span>
-                  <ChevronRight className="ml-2 h-5 w-5 text-white transition-transform group-hover:translate-x-1" />
+                  <ChevronRight className="ml-1 h-4 w-4 text-white transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              <Link to="/signup" className="w-full sm:w-auto">
+              <Link to="/signup">
                 <Button 
-                  size="lg" 
                   variant="outline" 
-                  className="w-full border-white/70 text-white hover:bg-white/30 px-8 py-6 text-lg h-auto font-semibold shadow-lg transition-all duration-300 hover:scale-105"
+                  className="border-white/70 text-white hover:bg-white/30 px-6 py-2 h-10 text-sm font-medium shadow-md transition-all duration-300"
                 >
-                  <span className="text-white">Sign up for Free</span>
+                  Sign up for Free
                 </Button>
               </Link>
             </div>
@@ -105,4 +106,3 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
 };
 
 export default HeroSection;
-
