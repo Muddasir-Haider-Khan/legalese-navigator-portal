@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,7 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
       <div className="container-custom relative z-10 py-20 md:py-28">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center justify-center bg-gradient-to-r from-[#F97316]/90 to-[#FFBB66]/90 px-5 py-2 rounded-full mb-6 text-white text-sm font-semibold shadow-lg transform hover:scale-105 transition-all duration-300">
-            <Shield className="h-4 w-4 mr-2" />
+            <Shield className="h-4 w-4 mr-2 text-white" />
             ATTORNEY-APPROVED LEGAL TEMPLATES
           </div>
           
@@ -58,8 +59,8 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
             <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
               <Link to="/login">
                 <Button size="lg" className="w-full sm:w-auto bg-[#F97316] hover:bg-[#D15316] text-white shadow-xl shadow-[#F97316]/20 border border-[#F97316] px-8 group">
-                  <span>Get Started Now</span>
-                  <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <span className="text-white">Get Started Now</span>
+                  <ChevronRight className="ml-2 h-5 w-5 text-white transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
               <Link to="/signup">
@@ -68,7 +69,7 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
                   variant="outline" 
                   className="w-full sm:w-auto border-white/70 text-white hover:bg-white/30 px-8 font-semibold shadow-lg transition-all duration-300 hover:scale-105"
                 >
-                  <span>Sign up for Free</span>
+                  <span className="text-white">Sign up for Free</span>
                 </Button>
               </Link>
             </div>
