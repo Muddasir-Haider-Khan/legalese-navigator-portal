@@ -41,17 +41,17 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
           </p>
           
           <div className="flex flex-wrap justify-center gap-6 mb-10">
-            <div className="flex items-center px-4 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 text-white">
+            <div className="flex items-center px-4 py-3 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 text-white">
               <Award className="h-5 w-5 mr-3 text-[#F97316]" />
-              <span>Attorney-reviewed</span>
+              <span className="font-medium text-white">Attorney-reviewed</span>
             </div>
-            <div className="flex items-center px-4 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 text-white">
+            <div className="flex items-center px-4 py-3 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 text-white">
               <CheckCircle className="h-5 w-5 mr-3 text-[#F97316]" />
-              <span>Easy customization</span>
+              <span className="font-medium text-white">Easy customization</span>
             </div>
-            <div className="flex items-center px-4 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 text-white">
+            <div className="flex items-center px-4 py-3 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 text-white">
               <Scale className="h-5 w-5 mr-3 text-[#F97316]" />
-              <span>Legal compliance</span>
+              <span className="font-medium text-white">Legal compliance</span>
             </div>
           </div>
           
