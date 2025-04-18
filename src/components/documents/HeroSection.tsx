@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -79,11 +80,8 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
           {!isAuthenticated && (
             <div className="flex flex-col gap-4 mt-8 px-4 md:px-0">
               <Link to="/login" className="w-full sm:w-auto">
-                <Button 
-                  size="lg" 
-                  className="w-full bg-[#F97316] hover:bg-[#D15316] text-white text-lg h-auto py-4 group"
-                >
-                  <span>Get Started Now</span>
+                <Button size="lg" className="w-full bg-[#F97316] hover:bg-[#D15316] text-white shadow-xl shadow-[#F97316]/20 border border-[#F97316] px-8 py-6 text-lg h-auto group">
+                  <span className="text-white">Get Started Now</span>
                   <ChevronRight className="ml-2 h-5 w-5 text-white transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
@@ -91,9 +89,9 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="w-full border-black/70 text-black hover:bg-black/10 py-4 text-lg h-auto"
+                  className="w-full border-white/70 text-white hover:bg-white/30 px-8 py-6 text-lg h-auto font-semibold shadow-lg transition-all duration-300 hover:scale-105"
                 >
-                  <span>Sign up for Free</span>
+                  <span className="text-white">Sign up for Free</span>
                 </Button>
               </Link>
             </div>
@@ -107,3 +105,4 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
 };
 
 export default HeroSection;
+
