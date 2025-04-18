@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -64,7 +63,11 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto border-white text-white hover:bg-white/10 px-8">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="w-full sm:w-auto border-white/70 text-white hover:bg-white/20 px-8 font-semibold"
+                >
                   <span>Sign up for Free</span>
                 </Button>
               </Link>
