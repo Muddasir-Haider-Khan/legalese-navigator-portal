@@ -1,16 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-
-// Components
-import HeroSection from "@/components/documents/HeroSection";
-import SearchFilter from "@/components/documents/SearchFilter";
-import DocumentGrid from "@/components/documents/DocumentGrid";
-import LoadingSpinner from "@/components/documents/LoadingSpinner";
-import { DocumentItem } from "@/components/documents/DocumentCard";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const documents: DocumentItem[] = [
   {
@@ -77,6 +70,7 @@ const DocumentTemplates = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   const categories = ["all", "Business", "Estate Planning", "Real Estate", "Employment", "Intellectual Property", "Family"];
   
@@ -131,7 +125,7 @@ const DocumentTemplates = () => {
     <Layout>
       <HeroSection isAuthenticated={isAuthenticated} />
       
-      <div className="container-custom py-12 bg-white">
+      <div className={`container-custom py-8 md:py-12 bg-white ${isMobile ? 'px-4' : ''}`}>
         <SearchFilter 
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
