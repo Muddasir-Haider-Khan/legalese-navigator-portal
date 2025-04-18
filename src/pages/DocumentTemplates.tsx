@@ -4,6 +4,11 @@ import Layout from "@/components/layout/Layout";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
+import HeroSection from "@/components/documents/HeroSection";
+import SearchFilter from "@/components/documents/SearchFilter";
+import DocumentGrid from "@/components/documents/DocumentGrid";
+import LoadingSpinner from "@/components/documents/LoadingSpinner";
+import { DocumentItem } from "@/components/documents/DocumentCard";
 
 const documents: DocumentItem[] = [
   {
