@@ -66,7 +66,7 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="w-full sm:w-auto border-white/70 text-white hover:bg-white/20 px-8 font-semibold"
+                  className="w-full sm:w-auto border-white/70 text-white hover:bg-white/30 px-8 font-semibold shadow-lg transition-all duration-300 hover:scale-105"
                 >
                   <span>Sign up for Free</span>
                 </Button>
