@@ -59,8 +59,15 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
           </div>
           
           {!isAuthenticated && (
-            <div className="flex flex-col space-y-3 mt-4 px-4 md:flex-row md:space-y-0 md:space-x-3 md:px-0">
-              <Link to="/login" className="w-full md:w-auto">
+            <div className={cn(
+              "flex gap-3",
+              isMobile 
+                ? "flex-col px-4" 
+                : "justify-center items-center"
+            )}>
+              <Link to="/login" className={cn(
+                "w-full md:w-auto"
+              )}>
                 <Button 
                   className="w-full md:w-auto bg-[#F97316] hover:bg-[#D15316] text-white shadow-md border border-[#F97316] px-4 py-2 h-10 text-sm group"
                 >
@@ -68,7 +75,9 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
                   <ChevronRight className="ml-1 h-4 w-4 text-white transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              <Link to="/signup" className="w-full md:w-auto">
+              <Link to="/signup" className={cn(
+                "w-full md:w-auto"
+              )}>
                 <Button 
                   variant="outline" 
                   className="w-full md:w-auto border-white/70 text-white hover:bg-white/30 px-4 py-2 h-10 text-sm font-medium shadow-md transition-all duration-300"
@@ -87,4 +96,3 @@ const HeroSection = ({ isAuthenticated }: HeroSectionProps) => {
 };
 
 export default HeroSection;
-
