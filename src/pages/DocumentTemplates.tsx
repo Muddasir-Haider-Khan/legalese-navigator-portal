@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -130,23 +131,36 @@ const DocumentTemplates = () => {
     <Layout>
       <HeroSection isAuthenticated={isAuthenticated} />
       
-      <div className={`container-custom py-8 md:py-12 bg-white ${isMobile ? 'px-4' : ''}`}>
-        <SearchFilter 
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
-          categories={categories}
-        />
-        
-        <DocumentGrid
-          documents={documents}
-          isAuthenticated={isAuthenticated}
-          onUseTemplate={handleUseTemplate}
-          searchTerm={searchTerm}
-          activeCategory={activeCategory}
-          onReset={resetFilters}
-        />
+      <div className="bg-white">
+        <div className="container-custom py-8 md:py-12">
+          <div className={`max-w-7xl mx-auto ${isMobile ? 'px-4' : ''}`}>
+            <div className="mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                Available Templates
+              </h2>
+              <p className="text-gray-600 max-w-2xl">
+                Choose from our wide range of professionally crafted legal document templates.
+              </p>
+            </div>
+            
+            <SearchFilter 
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
+              categories={categories}
+            />
+            
+            <DocumentGrid
+              documents={documents}
+              isAuthenticated={isAuthenticated}
+              onUseTemplate={handleUseTemplate}
+              searchTerm={searchTerm}
+              activeCategory={activeCategory}
+              onReset={resetFilters}
+            />
+          </div>
+        </div>
       </div>
     </Layout>
   );
