@@ -1,25 +1,25 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet";
-import Layout from "@/components/layout/Layout";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Check, X, HelpCircle } from "lucide-react";
+import { Check, X, HelpCircle, ChevronRight } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Link } from "react-router-dom";
 import { Switch } from "@/components/ui/switch";
+import Layout from "@/components/layout/Layout";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
-// Define plan feature types
 interface PlanFeature {
   name: string;
   included: boolean;
   info?: string;
 }
 
-// Define plan types
 interface Plan {
   name: string;
   price: {
@@ -34,6 +34,7 @@ interface Plan {
 
 const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annually">("annually");
+  const isMobile = useIsMobile();
   
   const plans: Plan[] = [
     {
@@ -121,29 +122,63 @@ const Pricing = () => {
         <meta name="description" content="Choose the perfect legal plan for your needs. Our flexible pricing plans provide access to legal documents, attorney advice, and more." />
       </Helmet>
 
-      <div className="bg-gradient-to-b from-rocket-blue-800 to-rocket-blue-700 text-black dark:text-white py-16">
-        <div className="container mx-auto px-4 max-w-7xl text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-black">
-            Legal Plans That <span className="text-gradient-blue">Fit Your Needs</span>
+      <div className={cn(
+        "relative overflow-hidden",
+        isMobile ? "py-8" : "py-16"
+      )}>
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-rocket-blue-800/90 via-rocket-blue-700/70 to-rocket-blue-800/80"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 max-w-7xl relative z-10 text-center">
+          <div className={cn(
+            "inline-flex items-center justify-center bg-gradient-to-r from-[#F97316]/90 to-[#FFBB66]/90 px-3 py-1.5 rounded-full mb-4 text-white shadow-lg transform hover:scale-105 transition-all duration-300",
+            isMobile ? "text-xs" : "text-sm"
+          )}>
+            Pricing Plans
+          </div>
+          
+          <h1 className={cn(
+            "font-bold mb-4 text-white leading-tight tracking-tight animate-fade-in",
+            isMobile ? "text-2xl" : "text-2xl md:text-5xl lg:text-6xl"
+          )}>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-200">Legal</span> 
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F97316] to-[#FFBB66] px-2">Plans</span> 
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-200">Tailored for You</span>
           </h1>
-          <p className="text-xl md:text-2xl text-black max-w-3xl mx-auto mb-8">
-            Choose the perfect legal plan for your personal or business needs with our flexible pricing options.
+          
+          <div className={cn(
+            "bg-gradient-to-r from-[#F97316] to-[#FFBB66] mx-auto rounded-full shadow-glow",
+            isMobile ? "h-0.5 w-16 my-3" : "h-1.5 w-32 my-8"
+          )}></div>
+          
+          <p className={cn(
+            "leading-relaxed text-white/90 max-w-3xl mx-auto mb-6 animate-fade-in delay-100",
+            isMobile 
+              ? "text-sm px-2" 
+              : "text-sm md:text-xl px-2 md:px-0"
+          )}>
+            Discover flexible legal plans designed to provide comprehensive support for individuals and businesses. Choose the perfect plan that fits your legal needs.
           </p>
           
-          <div className="inline-flex items-center justify-center gap-3 bg-white p-3 rounded-xl shadow-lg mb-12">
-            <span className={`text-sm font-medium ${billingCycle === "monthly" ? "text-black" : "text-rocket-gray-500"}`}>Monthly</span>
-            <div className="relative">
-              <Switch 
-                checked={billingCycle === "annually"} 
-                onCheckedChange={() => setBillingCycle(billingCycle === "monthly" ? "annually" : "monthly")}
-                className="bg-rocket-gray-300 data-[state=checked]:bg-bright-orange-500"
-              />
-            </div>
-            <span className={`text-sm font-medium ${billingCycle === "annually" ? "text-black" : "text-rocket-gray-500"}`}>Annual</span>
+          <div className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm p-3 rounded-xl shadow-lg mb-6">
+            <span className={cn(
+              `text-sm font-medium`, 
+              billingCycle === "monthly" ? "text-white" : "text-white/70"
+            )}>Monthly</span>
+            <Switch 
+              checked={billingCycle === "annually"} 
+              onCheckedChange={() => setBillingCycle(billingCycle === "monthly" ? "annually" : "monthly")}
+              className="bg-white/30 data-[state=checked]:bg-[#F97316]"
+            />
+            <span className={cn(
+              `text-sm font-medium`, 
+              billingCycle === "annually" ? "text-white" : "text-white/70"
+            )}>Annual</span>
           </div>
 
           {billingCycle === "annually" && (
-            <div className="bg-bright-orange-500 text-white py-2 px-6 rounded-full inline-flex items-center mb-8 font-medium text-sm animate-pulse shadow-md">
+            <div className="bg-[#F97316] text-white py-2 px-6 rounded-full inline-flex items-center mb-6 font-medium text-sm animate-pulse shadow-md">
               <span className="mr-2">🎉</span> Save up to 33% with annual billing
             </div>
           )}
@@ -152,30 +187,34 @@ const Pricing = () => {
 
       <div className="bg-white py-12">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className={cn(
+            "grid gap-6",
+            isMobile ? "grid-cols-1" : "grid-cols-3"
+          )}>
             {plans.map((plan) => {
               const savings = calculateSavings(plan);
               
               return (
                 <div
                   key={plan.name}
-                  className={`relative rounded-2xl overflow-hidden border ${
-                    plan.popular
-                      ? "border-rocket-blue-500 shadow-lg"
+                  className={cn(
+                    "relative rounded-2xl border transition-all duration-300 shadow-lg hover:shadow-xl",
+                    plan.popular 
+                      ? "border-[#F97316] ring-2 ring-[#F97316]/50" 
                       : "border-rocket-gray-200"
-                  }`}
+                  )}
                 >
                   {plan.popular && (
-                    <div className="absolute top-0 right-0 bg-bright-orange-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                    <div className="absolute top-0 right-0 bg-[#F97316] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
                       MOST POPULAR
                     </div>
                   )}
                   
-                  <div className="p-8">
+                  <div className="p-6 md:p-8">
                     <h3 className="text-2xl font-bold text-black mb-2">
                       {plan.name}
                     </h3>
-                    <p className="text-black mb-6">
+                    <p className="text-rocket-gray-600 mb-6">
                       {plan.description}
                     </p>
                     
@@ -184,32 +223,33 @@ const Pricing = () => {
                         <span className="text-4xl font-bold text-black">
                           ${plan.price[billingCycle]}
                         </span>
-                        <span className="text-black ml-1 mb-1">
+                        <span className="text-rocket-gray-600 ml-1 mb-1">
                           /month
                         </span>
                       </div>
                       
                       {billingCycle === "annually" && plan.price.annually > 0 && (
-                        <div className="text-sm text-bright-orange-500 font-medium mt-1">
+                        <div className="text-sm text-[#F97316] font-medium mt-1">
                           Save ${savings.amount.toFixed(2)} per year ({savings.percentage}%)
                         </div>
                       )}
                       
-                      <div className="text-xs text-black mt-1">
+                      <div className="text-xs text-rocket-gray-600 mt-1">
                         {billingCycle === "annually" ? "Billed annually" : "Billed monthly"}
                       </div>
                     </div>
                     
                     <Link to="/signup">
                       <Button 
-                        className={`w-full ${
-                          plan.popular
-                            ? "bg-bright-orange-500 hover:bg-bright-orange-600 text-white"
-                            : ""
-                        } mb-8`}
-                        variant={plan.popular ? "orange" : "outline"}
+                        className={cn(
+                          "w-full mb-6",
+                          plan.popular 
+                            ? "bg-[#F97316] hover:bg-[#D15316] text-white" 
+                            : "border border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10"
+                        )}
                       >
                         {plan.callToAction}
+                        <ChevronRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>
                     
@@ -221,11 +261,10 @@ const Pricing = () => {
                           ) : (
                             <X className="h-5 w-5 text-rocket-gray-300 mr-3 flex-shrink-0" />
                           )}
-                          <span className={`text-sm text-black ${
-                            feature.included
-                              ? ""
-                              : "opacity-50"
-                          }`}>
+                          <span className={cn(
+                            "text-sm",
+                            feature.included ? "text-black" : "text-black/50"
+                          )}>
                             {feature.name}
                           </span>
                           
@@ -234,7 +273,7 @@ const Pricing = () => {
                               <Tooltip>
                                 <TooltipTrigger asChild>
                                   <button className="ml-1">
-                                    <HelpCircle className="h-3.5 w-3.5 text-black" />
+                                    <HelpCircle className="h-3.5 w-3.5 text-rocket-gray-500" />
                                   </button>
                                 </TooltipTrigger>
                                 <TooltipContent>
