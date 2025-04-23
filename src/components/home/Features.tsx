@@ -57,7 +57,7 @@ const FeatureCard = memo(({
             <Icon className="h-8 w-8" />
           </div>
           <h3 className="text-xl md:text-2xl font-bold mb-3 text-black group-hover:text-bright-orange-600 transition-colors duration-300">{title}</h3>
-          <p className="text-gray-600 mb-4 group-hover:text-gray-800 transition-colors duration-300">{description}</p>
+          <p className="text-white-600 mb-4 group-hover:text-orange-800 transition-colors duration-300">{description}</p>
         </CardContent>
         <CardFooter className="px-8 pb-8 pt-0">
           <Link 
