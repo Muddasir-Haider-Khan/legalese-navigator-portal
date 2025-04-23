@@ -35,7 +35,7 @@ export default function FindAttorneySection() {
             <p className="text-lg text-rocket-gray-600 mb-8">
               Try Avvo&apos;s free premium concierge service to chat with a live agent, tell them what you need, and get connected with an attorney in your area.
             </p>
-            {/* Avvo CTA Button */}
+            {/* Legalgram CTA Button */}
             <a
               href="https://www.avvo.com/ask-a-lawyer"
               target="_blank"
@@ -43,14 +43,14 @@ export default function FindAttorneySection() {
               className="inline-flex"
             >
               <Button
-                className="bg-[#006AFF] text-white hover:bg-[#0052cc] px-8 py-4 text-lg font-semibold rounded-lg shadow-md flex items-center"
+                className="bg-bright-orange-500 text-white hover:bg-bright-orange-600 px-8 py-4 text-lg font-semibold rounded-lg shadow-md flex items-center"
                 style={{ minWidth: 265 }}
               >
                 <span className="mr-3 inline-flex items-center">
                   <span className="inline-block w-3 h-3 bg-green-500 rounded-full mr-2"></span>
                   Chat with
                 </span>
-                <span className="ml-1 font-extrabold tracking-wide" style={{ fontStyle: "italic" }}>Avvo</span>
+                <span className="ml-1 font-extrabold tracking-wide" style={{ fontStyle: "italic" }}>Legalgram</span>
               </Button>
             </a>
           </div>
@@ -59,4 +59,3 @@ export default function FindAttorneySection() {
     </section>
   );
 }
-
