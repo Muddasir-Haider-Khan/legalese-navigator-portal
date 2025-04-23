@@ -178,10 +178,10 @@ const ProcessSection = () => {
           className="text-center mb-16 md:mb-20"
         >
           <span className="inline-block bg-gradient-to-r from-bright-orange-100 to-amber-100 text-bright-orange-600 font-medium px-4 py-2 rounded-full text-sm mb-4">Our Simple Process</span>
-          <h2 className="text-3xl md:text-5xl font-bold mb-5 text-black">
+          <h2 className="text-3xl md:text-5xl font-bold mb-5 text-white">
             Create Legal Documents in Three Easy Steps
           </h2>
-          <p className="text-lg md:text-xl text-black max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-white max-w-3xl mx-auto">
             Get legally binding documents in minutes, not hours. Our streamlined process makes legal paperwork simple and efficient.
           </p>
         </motion.div>
@@ -265,7 +265,7 @@ const ProcessSection = () => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
-          <p className="mt-4 text-black">No credit card required</p>
+          <p className="mt-4 text-white">No credit card required</p>
         </motion.div>
       </div>
     </section>
@@ -273,3 +273,4 @@ const ProcessSection = () => {
 };
 
 export default memo(ProcessSection);
+
