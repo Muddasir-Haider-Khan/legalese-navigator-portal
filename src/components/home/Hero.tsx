@@ -50,7 +50,7 @@ const Hero = () => {
       <div className="container-custom py-16 md:py-24 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`space-y-8 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="inline-block rounded-full bg-orange-400 backdrop-blur-sm px-4 py-1 border border-white/20 mb-4">
+            <div className="inline-block rounded-full bg-bright-orange-400 backdrop-blur-sm px-4 py-1 border border-white/20 mb-4">
               <span className="text-sm font-medium text-white">Professional Legal Solutions</span>
             </div>
             
