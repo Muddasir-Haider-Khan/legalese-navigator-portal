@@ -55,7 +55,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="text-bright-orange-600">Legal made simple</span>
+              <span className="text-bright-orange-500">Legal made simple</span>
             </h1>
             <p className="text-xl md:text-2xl text-black leading-relaxed max-w-lg">
               Affordable legal services for your family and business
@@ -111,9 +111,9 @@ const Hero = () => {
               <h3 className="text-xl font-bold text-black">Professional Document Preparation</h3>
               <p className="text-black/80 mt-2">Create, sign, and manage your legal documents with our easy-to-use platform</p>
               <div className="mt-3 flex gap-2">
-                <span className="inline-block bg-white/20 rounded-full px-3 py-1 text-xs text-black">Fast</span>
-                <span className="inline-block bg-white/20 rounded-full px-3 py-1 text-xs text-black">Secure</span>
-                <span className="inline-block bg-white/20 rounded-full px-3 py-1 text-xs text-black">Professional</span>
+                <span className="inline-block bg-bright-orange-40 rounded-full px-3 py-1 text-xs text-white">Fast</span>
+                <span className="inline-block bg-bright-orange-40 rounded-full px-3 py-1 text-xs text-white">Secure</span>
+                <span className="inline-block bg-bright-orange-40 rounded-full px-3 py-1 text-xs text-white">Professional</span>
               </div>
             </div>
           </div>
