@@ -55,7 +55,7 @@ const Hero = () => {
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="text-bright-orange-800">Legal made simple</span>
+              <span className="text-bright-orange-600">Legal made simple</span>
             </h1>
             <p className="text-xl md:text-2xl text-black leading-relaxed max-w-lg">
               Affordable legal services for your family and business
