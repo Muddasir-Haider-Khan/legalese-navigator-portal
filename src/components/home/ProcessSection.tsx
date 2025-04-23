@@ -72,7 +72,7 @@ const ProcessCard = memo(({
         
         <h3 className="text-2xl md:text-3xl font-bold mb-4 text-black">{title}</h3>
         
-        <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">{description}</p>
+        <p className="text-white-600 dark:text-gray-300 mb-6 text-lg">{description}</p>
         
         <div className="mt-auto">
           <Link to="/how-it-works" className="inline-flex items-center text-bright-orange-500 hover:text-bright-orange-600 font-medium group">
