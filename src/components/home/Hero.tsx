@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
 import { memo, useState, useEffect } from "react";
+import HeroBackgroundSlideshow from "./HeroBackgroundSlideshow";
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,20 +26,9 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-[92vh] flex items-center overflow-hidden transition-all duration-500">
-      <div 
-        className="absolute inset-0 z-0"
-        style={{ transform: `translateY(${parallaxOffset}px)` }}
-      >
-        <img 
-          src="/lovable-uploads/a5f2d63e-9556-45d9-a3cc-f9c6a97852df.png" 
-          alt="Lady Justice statue" 
-          className="w-full h-full object-cover opacity-30"
-          loading="eager"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-600/95 to-rocket-blue-900/95"></div>
-      </div>
+      <HeroBackgroundSlideshow />
 
-      <div className="absolute inset-0 opacity-8 z-10">
+      <div className="absolute inset-0 z-10">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')]"></div>
       </div>
 
