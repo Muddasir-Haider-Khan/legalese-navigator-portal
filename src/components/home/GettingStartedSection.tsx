@@ -2,7 +2,7 @@
 import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, FileText, UserCheck, FileCheck } from "lucide-react";
+import { ArrowRight, UserCheck, FileText, FileCheck } from "lucide-react";
 
 const GettingStartedSection = () => {
   const [inView, setInView] = useState(false);
@@ -92,7 +92,7 @@ const GettingStartedSection = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-lg text-gray-700 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -129,11 +129,11 @@ const GettingStartedSection = () => {
                     {index + 1}
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-black">{step.title}</h3>
-                <p className="text-gray-600 mb-6">{step.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
+                <p className="text-gray-700 mb-6">{step.description}</p>
                 <Link 
                   to={step.linkTo} 
-                  className="inline-flex items-center text-bright-orange-500 hover:text-bright-orange-600 font-medium group"
+                  className="inline-flex items-center text-bright-orange-600 hover:text-bright-orange-700 font-medium group"
                 >
                   <span>{step.linkText}</span>
                   <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
@@ -193,3 +193,4 @@ const GettingStartedSection = () => {
 };
 
 export default memo(GettingStartedSection);
+
