@@ -89,12 +89,12 @@ const WhyChooseUsSection = () => {
           </motion.span>
           
           <motion.h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-black"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <span className="bg-gradient-to-r from-bright-orange-500 to-rocket-blue-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-bright-orange-500 to-bright-orange-300 bg-clip-text text-transparent">
               The Smart Choice
             </span>{" "}
             for Legal Solutions
