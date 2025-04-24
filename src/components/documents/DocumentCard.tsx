@@ -46,7 +46,7 @@ const DocumentCard = ({ document, isAuthenticated, onUseTemplate }: DocumentCard
       <CardFooter className="mt-auto pt-4">
         <Button 
           className={cn(
-            "w-full group",
+            "w-full group transform transition-transform duration-300 hover:scale-105 hover:rotate-1",
             isAuthenticated 
               ? "bg-primary hover:bg-primary/90" 
               : "bg-gray-100 hover:bg-gray-200 text-gray-900"
@@ -62,3 +62,4 @@ const DocumentCard = ({ document, isAuthenticated, onUseTemplate }: DocumentCard
 };
 
 export default DocumentCard;
+
