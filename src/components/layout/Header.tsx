@@ -1,4 +1,3 @@
-
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
@@ -244,6 +243,22 @@ const Header = () => {
                 <NavigationMenuLink 
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
+                    isActive("/start-a-business") 
+                      ? "text-bright-orange-500" 
+                      : "text-bright-orange-500/90 hover:text-bright-orange-500"
+                  )}
+                  asChild
+                >
+                  <Link to="/start-a-business">Start a Business</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </motion.div>
+            
+            <motion.div variants={navItemVariants}>
+              <NavigationMenuItem>
+                <NavigationMenuLink 
+                  className={cn(
+                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/documents") 
                       ? "text-bright-orange-500" 
                       : "text-bright-orange-500/90 hover:text-bright-orange-500"
@@ -376,6 +391,9 @@ const Header = () => {
           <nav className="container-custom py-4 flex flex-col space-y-4">
             <MobileNavLink to="/" isActive={isActive("/")} onClick={toggleMenu}>
               Home
+            </MobileNavLink>
+            <MobileNavLink to="/start-a-business" isActive={isActive("/start-a-business")} onClick={toggleMenu}>
+              Start a Business
             </MobileNavLink>
             <MobileNavLink to="/documents" isActive={isActive("/documents")} onClick={toggleMenu}>
               Make Documents
