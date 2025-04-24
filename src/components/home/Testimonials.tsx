@@ -1,4 +1,3 @@
-
 import { useState, memo, useEffect } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -49,9 +48,9 @@ const TestimonialCard = memo(({
       }`}
       style={{ display: isActive ? 'block' : 'none' }}
     >
-      <Quote className="h-10 w-10 text-rocket-blue-200 dark:text-rocket-blue-900 mb-4 transform -scale-x-100" />
+      <Quote className="h-10 w-10 text-black mb-4 transform -scale-x-100" />
       
-      <p className="text-lg text-rocket-gray-700 dark:text-rocket-gray-300 italic mb-6 leading-relaxed">
+      <p className="text-lg text-black italic mb-6 leading-relaxed">
         "{testimonial.text}"
       </p>
       
@@ -59,17 +58,17 @@ const TestimonialCard = memo(({
         <img 
           src={testimonial.image} 
           alt={testimonial.author} 
-          className="h-14 w-14 rounded-full object-cover border-2 border-rocket-blue-100 dark:border-rocket-blue-900"
+          className="h-14 w-14 rounded-full object-cover border-2 border-black"
         />
         <div>
-          <h4 className="font-semibold text-rocket-gray-900 dark:text-white">{testimonial.author}</h4>
-          <p className="text-rocket-gray-500 dark:text-rocket-gray-400 text-sm">{testimonial.position}</p>
+          <h4 className="font-semibold text-black">{testimonial.author}</h4>
+          <p className="text-black text-sm">{testimonial.position}</p>
           <div className="flex mt-1">
             {[...Array(5)].map((_, i) => (
               <Star 
                 key={i} 
                 fill={i < testimonial.rating ? "currentColor" : "none"} 
-                className={`h-4 w-4 ${i < testimonial.rating ? 'text-yellow-500' : 'text-rocket-gray-300'}`} 
+                className={`h-4 w-4 ${i < testimonial.rating ? 'text-yellow-500' : 'text-black'}`} 
               />
             ))}
           </div>
@@ -114,7 +113,7 @@ const Testimonials = () => {
     <section className="py-16 md:py-24 bg-[#FDE1D3]">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <span className="text-rocket-blue-500 font-medium mb-2 block text-black">Testimonials</span>
+          <span className="text-black font-medium mb-2 block">Testimonials</span>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">
             Trusted by Millions
           </h2>
@@ -197,4 +196,3 @@ const Testimonials = () => {
 };
 
 export default memo(Testimonials);
-
