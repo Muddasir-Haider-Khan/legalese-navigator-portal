@@ -1,3 +1,4 @@
+
 import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -83,7 +84,7 @@ const GettingStartedSection = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <span className="bg-gradient-to-r from-bright-orange-500 to-rocket-blue-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-black to-black bg-clip-text text-transparent">
               Three Simple Steps
             </span>
           </motion.h2>
