@@ -1,3 +1,4 @@
+
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
@@ -36,13 +37,13 @@ const NavLink = memo(({
       className={cn(
         "font-medium transition-colors relative group",
         isActive 
-          ? "text-clean-white font-semibold" 
-          : "text-clean-white/90 hover:text-clean-white"
+          ? "text-black font-semibold" 
+          : "text-black/90 hover:text-black"
       )}
     >
       {children}
       <span className={cn(
-        "absolute bottom-[-4px] left-0 w-full h-0.5 bg-clean-white transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
+        "absolute bottom-[-4px] left-0 w-full h-0.5 bg-black transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
         isActive ? "scale-x-100" : ""
       )}></span>
     </Link>
@@ -68,8 +69,8 @@ const MobileNavLink = memo(({
       className={cn(
         "font-medium transition-colors",
         isActive 
-          ? "text-clean-white font-semibold" 
-          : "text-clean-white/90 hover:text-clean-white"
+          ? "text-black font-semibold" 
+          : "text-black/90 hover:text-black"
       )}
       onClick={onClick}
     >
@@ -210,7 +211,7 @@ const Header = () => {
                 alt="Legalgram Logo" 
                 className="w-10 h-10 rounded-full shadow-md transition-transform hover:scale-105 duration-300"
               />
-              <span className="text-xl font-bold text-clean-white">
+              <span className="text-xl font-bold text-black">
                 Legalgram
               </span>
             </div>
@@ -228,8 +229,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/") 
-                      ? "text-clean-white bg-white/10" 
-                      : "text-clean-white/90 hover:bg-white/5 hover:text-clean-white"
+                      ? "text-black bg-white/10" 
+                      : "text-black/90 hover:bg-white/5 hover:text-black"
                   )}
                   asChild
                 >
@@ -244,8 +245,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/documents") 
-                      ? "text-clean-white bg-white/10" 
-                      : "text-clean-white/90 hover:bg-white/5 hover:text-clean-white"
+                      ? "text-black bg-white/10" 
+                      : "text-black/90 hover:bg-white/5 hover:text-black"
                   )}
                   asChild
                 >
@@ -260,8 +261,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/pricing") 
-                      ? "text-clean-white bg-white/10" 
-                      : "text-clean-white/90 hover:bg-white/5 hover:text-clean-white"
+                      ? "text-black bg-white/10" 
+                      : "text-black/90 hover:bg-white/5 hover:text-black"
                   )}
                   asChild
                 >
@@ -287,7 +288,7 @@ const Header = () => {
                     )}
                   >
                     <Avatar className="h-9 w-9">
-                      <AvatarFallback className="bg-primary text-clean-white">
+                      <AvatarFallback className="bg-primary text-black">
                         {userInitial}
                       </AvatarFallback>
                     </Avatar>
@@ -298,11 +299,11 @@ const Header = () => {
                   className="w-56 mt-2 bg-white/10 backdrop-blur-md border border-white/10"
                 >
                   <div className="px-4 py-3 border-b border-white/10">
-                    <p className="text-sm font-medium text-clean-white">
+                    <p className="text-sm font-medium text-black">
                       {userName}
                     </p>
                   </div>
-                  <DropdownMenuItem asChild className="cursor-pointer text-clean-white hover:bg-white/10">
+                  <DropdownMenuItem asChild className="cursor-pointer text-black hover:bg-white/10">
                     <Link to="/user-dashboard" className="flex items-center">
                       <User className="mr-2 h-4 w-4" />
                       <span>Dashboard</span>
@@ -310,7 +311,7 @@ const Header = () => {
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-white/10" />
                   <DropdownMenuItem 
-                    className="cursor-pointer text-red-300 hover:bg-red-500/10 hover:text-red-200"
+                    className="cursor-pointer text-red-600 hover:bg-red-500/10 hover:text-red-700"
                     onClick={handleLogout}
                   >
                     <LogOut className="mr-2 h-4 w-4" />
@@ -325,7 +326,7 @@ const Header = () => {
                 <Link to="/login">
                   <Button variant="outline" 
                     className={cn(
-                      "border-white/20 text-clean-white transition-all duration-300",
+                      "border-black/20 text-black transition-all duration-300",
                       scrolled
                         ? "hover:bg-white/10 backdrop-blur-md"
                         : "hover:bg-white/5"
@@ -339,10 +340,10 @@ const Header = () => {
                 <Link to="/signup">
                   <Button 
                     className={cn(
-                      "text-primary transition-all duration-300",
+                      "text-white transition-all duration-300",
                       scrolled
-                        ? "bg-white/90 hover:bg-white/80"
-                        : "bg-white/80 hover:bg-white/70"
+                        ? "bg-black/90 hover:bg-black/80"
+                        : "bg-black/80 hover:bg-black/70"
                     )}
                   >
                     Sign Up
@@ -355,7 +356,7 @@ const Header = () => {
 
         <motion.div variants={navItemVariants} className="md:hidden flex items-center">
           <button 
-            className="text-clean-white" 
+            className="text-black" 
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -366,7 +367,7 @@ const Header = () => {
 
       {isMenuOpen && (
         <motion.div 
-          className="md:hidden bg-primary border-t border-clean-white/20 shadow-md"
+          className="md:hidden bg-white border-t border-black/20 shadow-md"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
@@ -382,16 +383,16 @@ const Header = () => {
             <MobileNavLink to="/pricing" isActive={isActive("/pricing")} onClick={toggleMenu}>
               Pricing
             </MobileNavLink>
-            <div className="flex flex-col space-y-2 pt-4 border-t border-clean-white/20">
+            <div className="flex flex-col space-y-2 pt-4 border-t border-black/20">
               {isAuthenticated ? (
                 <>
-                  <Link to="/user-dashboard" onClick={toggleMenu} className="flex items-center space-x-2 text-clean-white">
+                  <Link to="/user-dashboard" onClick={toggleMenu} className="flex items-center space-x-2 text-black">
                     <User size={18} />
                     <span>Dashboard</span>
                   </Link>
                   <Button 
                     variant="outline" 
-                    className="w-full justify-start text-red-300 border-red-400/30 hover:bg-red-400/10 hover:text-red-100"
+                    className="w-full justify-start text-red-600 border-red-400/30 hover:bg-red-400/10 hover:text-red-700"
                     onClick={handleLogout}
                   >
                     <LogOut size={18} className="mr-2" />
@@ -401,12 +402,12 @@ const Header = () => {
               ) : (
                 <>
                   <Link to="/login" onClick={toggleMenu}>
-                    <Button variant="outline" className="w-full border-clean-white text-clean-white hover:bg-clean-white hover:text-primary">
+                    <Button variant="outline" className="w-full border-black text-black hover:bg-black hover:text-white">
                       Sign In
                     </Button>
                   </Link>
                   <Link to="/signup" onClick={toggleMenu}>
-                    <Button className="w-full bg-clean-white text-primary hover:bg-clean-white/80">
+                    <Button className="w-full bg-black text-white hover:bg-black/80">
                       Sign Up
                     </Button>
                   </Link>
