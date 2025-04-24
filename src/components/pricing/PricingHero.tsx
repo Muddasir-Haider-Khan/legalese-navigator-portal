@@ -3,6 +3,7 @@ import React from "react";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { Sparkle, Wand, Stars } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface PricingHeroProps {
   billingCycle: "monthly" | "annually";
@@ -11,7 +12,7 @@ interface PricingHeroProps {
 
 const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
   return (
-    <div className="relative min-h-[60vh] overflow-hidden">
+    <div className="relative min-h-[70vh] overflow-hidden flex items-center">
       {/* Enhanced gradient background */}
       <div 
         className="absolute inset-0 bg-gradient-to-br from-bright-orange-500/20 via-bright-orange-400/10 to-bright-orange-500/20 opacity-70 z-0 animate-gradient"
@@ -25,20 +26,40 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
       
       <div className="container relative mx-auto px-4 py-24 sm:px-6 lg:px-8 z-10">
         <div className="mx-auto max-w-4xl text-center relative">
-          <div className="mb-8 flex justify-center gap-4">
+          <motion.div 
+            className="mb-8 flex justify-center gap-4"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <Wand className="h-12 w-12 text-bright-orange-500 animate-bounce-slow" />
             <Stars className="h-12 w-12 text-bright-orange-400 animate-bounce-slow delay-200" />
-          </div>
+          </motion.div>
           
-          <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-bright-orange-600 via-bright-orange-500 to-bright-orange-400 bg-clip-text text-transparent sm:text-5xl lg:text-6xl animate-fade-in">
+          <motion.h1 
+            className="text-4xl font-bold tracking-tight bg-gradient-to-r from-bright-orange-600 via-bright-orange-500 to-bright-orange-400 bg-clip-text text-transparent sm:text-5xl lg:text-6xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             Simple, Transparent Pricing
-          </h1>
+          </motion.h1>
           
-          <p className="mt-6 text-xl text-bright-orange-600 animate-fade-in delay-100">
+          <motion.p 
+            className="mt-6 text-xl text-bright-orange-600"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             Choose the plan that best fits your legal needs. All plans include access to our core features.
-          </p>
+          </motion.p>
 
-          <div className="mt-10 flex items-center justify-center gap-6">
+          <motion.div 
+            className="mt-10 flex items-center justify-center gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
             <span className={cn(
               "text-lg font-semibold transition-colors duration-200",
               billingCycle === "monthly" ? "text-bright-orange-500" : "text-bright-orange-400 hover:text-bright-orange-500"
@@ -60,15 +81,20 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
               "text-lg font-semibold transition-colors duration-200",
               billingCycle === "annually" ? "text-bright-orange-500" : "text-bright-orange-400 hover:text-bright-orange-500"
             )}>Annual</span>
-          </div>
+          </motion.div>
 
           {billingCycle === "annually" && (
-            <div className="mt-8 inline-flex animate-float items-center rounded-full bg-gradient-to-r from-bright-orange-500/20 via-bright-orange-400/30 to-bright-orange-500/20 px-8 py-4 backdrop-blur-sm transition-all duration-500 hover:scale-105">
+            <motion.div 
+              className="mt-8 inline-flex animate-float items-center rounded-full bg-gradient-to-r from-bright-orange-500/20 via-bright-orange-400/30 to-bright-orange-500/20 px-8 py-4 backdrop-blur-sm transition-all duration-500 hover:scale-105"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
               <Sparkle className="mr-3 h-5 w-5 text-bright-orange-500 animate-pulse" />
               <span className="relative font-semibold text-bright-orange-500">
                 Save up to <span className="text-bright-orange-600 font-bold animate-pulse">33%</span> with annual billing
               </span>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>
