@@ -1,4 +1,3 @@
-
 import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { 
@@ -75,7 +74,6 @@ const WhyChooseUsSection = () => {
 
   return (
     <section id="why-choose-us" className="py-24 md:py-32 bg-gradient-to-b from-white to-[#F8F9FF] relative overflow-hidden">
-      {/* Enhanced decorative elements */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-bright-orange-100/50 to-rocket-blue 100/30 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/2"></div>
       <div className="absolute bottom-40 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-100/50 to-bright-orange-100/30 rounded-full opacity-30 blur-3xl -translate-x-1/2"></div>
       
@@ -124,10 +122,8 @@ const WhyChooseUsSection = () => {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="relative overflow-hidden bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
-                {/* Dynamic gradient background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${reason.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
                 
-                {/* Icon with enhanced styling */}
                 <div className="relative z-10">
                   <div className="mb-6 transform transition-transform duration-300 group-hover:scale-110">
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-bright-orange-500 to-bright-orange-600 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
@@ -144,7 +140,6 @@ const WhyChooseUsSection = () => {
                   </p>
                 </div>
                 
-                {/* Animated border and shine effect */}
                 <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-bright-orange-500 to-bright-orange-300 transition-all duration-300 ${hoveredIndex === index ? 'w-full' : 'w-0'}`}></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               </div>
@@ -152,7 +147,6 @@ const WhyChooseUsSection = () => {
           ))}
         </div>
 
-        {/* Enhanced CTA section */}
         <motion.div 
           className="mt-20 relative overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
@@ -160,17 +154,16 @@ const WhyChooseUsSection = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
         >
           <div className="bg-gradient-to-r from-rocket-blue-600 to-rocket-blue-800 rounded-2xl p-10 md:p-14 shadow-2xl relative overflow-hidden">
-            {/* Enhanced background elements */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-bright-orange-500/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-rocket-blue-300/10 rounded-full blur-3xl"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-32 bg-white/5 rotate-45 blur-2xl"></div>
             
             <div className="relative z-10 text-center md:text-left md:flex items-center justify-between">
               <div className="mb-8 md:mb-0 md:max-w-lg">
-                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                <h3 className="text-3xl md:text-4xl font-bold text-black mb-4">
                   Ready for professional legal help?
                 </h3>
-                <p className="text-white/90 text-lg">
+                <p className="text-black text-lg">
                   Get started today with our easy-to-use legal services.
                 </p>
               </div>
@@ -195,4 +188,3 @@ const WhyChooseUsSection = () => {
 };
 
 export default memo(WhyChooseUsSection);
-
