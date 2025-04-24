@@ -16,6 +16,7 @@ import {
   Cell,
 } from "recharts";
 import { ChartContainer, ChartTooltipContent } from "./chart";
+import { cn } from "@/lib/utils";
 
 interface ChartProps {
   data: any;
@@ -146,9 +147,4 @@ export const PieChart = ({ data, className }: ChartProps) => {
       </ResponsiveContainer>
     </ChartContainer>
   );
-};
-
-// Helper function to merge tailwind classes
-const cn = (...classes: (string | undefined)[]) => {
-  return classes.filter(Boolean).join(" ");
 };
