@@ -170,8 +170,8 @@ const Pricing = () => {
                   viewport={{ once: true }}
                   className="p-6 rounded-2xl bg-gradient-to-br from-bright-orange-50 to-white shadow-lg"
                 >
-                  <h3 className="text-3xl md:text-4xl font-bold text-bright-orange-700 mb-2">{stat.number}</h3>
-                  <p className="text-bright-orange-800">{stat.label}</p>
+                  <h3 className="text-3xl md:text-4xl font-bold text-bright-orange-600 mb-2">{stat.number}</h3>
+                  <p className="text-bright-orange-700">{stat.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -187,7 +187,7 @@ const Pricing = () => {
           viewport={{ once: true }}
         >
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-bright-orange-800 to-bright-orange-600 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-bright-orange-700 to-bright-orange-500 bg-clip-text text-transparent">
               What Our Clients Say
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -221,13 +221,13 @@ const Pricing = () => {
                 >
                   <div className="flex items-center mb-4">
                     {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <StarIcon key={i} className="w-5 h-5 text-bright-orange-600" />
+                      <StarIcon key={i} className="w-5 h-5 text-bright-orange-500" />
                     ))}
                   </div>
-                  <p className="text-bright-orange-800 mb-4">{testimonial.text}</p>
+                  <p className="text-bright-orange-700 mb-4">{testimonial.text}</p>
                   <div className="border-t pt-4">
-                    <p className="font-semibold text-bright-orange-800">{testimonial.name}</p>
-                    <p className="text-sm text-bright-orange-600">{testimonial.role}</p>
+                    <p className="font-semibold text-bright-orange-700">{testimonial.name}</p>
+                    <p className="text-sm text-bright-orange-500">{testimonial.role}</p>
                   </div>
                 </motion.div>
               ))}
