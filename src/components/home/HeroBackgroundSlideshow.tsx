@@ -1,26 +1,28 @@
 
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { useState, useEffect } from "react";
+import type { CarouselApi } from "@/components/ui/carousel";
 
 const HeroBackgroundSlideshow = () => {
-  const [api, setApi] = useState<any>();
+  const [api, setApi] = useState<CarouselApi | null>(null);
   
   const images = [
-    "/lovable-uploads/b869bc73-691a-43d6-91bb-9c7ef26c4cdf.png",
-    "/lovable-uploads/48591f7b-0a7c-4a3e-8d9f-f801c572f6e4.png",
-    "/lovable-uploads/0f29654a-6c00-4bdb-978c-91e16948faf8.png",
-    "/lovable-uploads/49954e32-483e-447d-ba03-570ecb16dcaa.png",
-    "/lovable-uploads/c20ec661-23e3-4fff-bd02-54badc8b2dca.png",
-    "/lovable-uploads/0f2430fd-a1bc-47ab-a2f7-2d0459002225.png",
-    "/lovable-uploads/c00b81b1-8cbd-47a6-86b4-3e99402ecbf5.png"
+    "/lovable-uploads/697f8a63-6e9a-41a0-9995-812ce5ce9381.png",
+    "/lovable-uploads/74a69ce1-a6bf-4425-b520-90e996d23567.png",
+    "/lovable-uploads/895c7048-27af-4849-a014-fb3c7e9d698c.png",
+    "/lovable-uploads/8eb9991b-1c75-4153-bbc1-83cbb5662538.png",
+    "/lovable-uploads/cbdc3394-18f6-4530-a367-764e9851d995.png",
+    "/lovable-uploads/f5b383f8-da64-467e-904b-2578ce595c8a.png",
+    "/lovable-uploads/da854a04-d4c5-4d08-90c5-64874c1fd0e9.png"
   ];
 
   useEffect(() => {
     if (!api) return;
     
-    // Reduced interval from 5000ms to 2000ms to make the slideshow faster
+    console.log("Carousel API loaded:", api);
+    
     const interval = setInterval(() => {
-      api.next();
+      api.scrollNext();
     }, 2000);
     
     return () => clearInterval(interval);
