@@ -228,8 +228,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/") 
-                      ? "text-black bg-white/10" 
-                      : "text-black/90 hover:bg-white/5 hover:text-black"
+                      ? "text-white bg-white/10" 
+                      : "text-white/90 hover:bg-white/5 hover:text-white"
                   )}
                   asChild
                 >
@@ -244,8 +244,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/documents") 
-                      ? "text-black bg-white/10" 
-                      : "text-black/90 hover:bg-white/5 hover:text-black"
+                      ? "text-white bg-white/10" 
+                      : "text-white/90 hover:bg-white/5 hover:text-white"
                   )}
                   asChild
                 >
@@ -260,8 +260,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/pricing") 
-                      ? "text-black bg-white/10" 
-                      : "text-black/90 hover:bg-white/5 hover:text-black"
+                      ? "text-white bg-white/10" 
+                      : "text-white/90 hover:bg-white/5 hover:text-white"
                   )}
                   asChild
                 >
