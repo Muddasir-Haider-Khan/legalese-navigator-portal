@@ -4,6 +4,7 @@ import Layout from "@/components/layout/Layout";
 import MakeDocuments from "@/components/dashboard/MakeDocuments";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 const Documents = () => {
   const isMobile = useIsMobile();
@@ -17,8 +18,13 @@ const Documents = () => {
               "text-center mb-16",
               isMobile ? "px-4" : ""
             )}>
-              <div className="inline-flex items-center justify-center bg-bright-orange-100 text-bright-orange-500 px-3 py-1.5 rounded-full mb-4 text-xs md:text-sm font-medium">
-                PROFESSIONAL LEGAL DOCUMENTS
+              <div className="flex justify-center mb-4">
+                <Badge 
+                  variant="default" 
+                  className="bg-bright-orange-500 text-white text-xs md:text-sm font-medium px-4 py-1.5 rounded-full"
+                >
+                  Professional Legal Solutions
+                </Badge>
               </div>
               <h1 className={cn(
                 "text-4xl md:text-5xl font-bold mb-6 text-deep-blue-900",
