@@ -4,7 +4,6 @@ import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, FileText, CheckCircle, Fingerprint } from "lucide-react";
 import Hero from "@/components/home/Hero";
-import FindAttorneySection from "@/components/home/FindAttorneySection";
 
 // Lazy loaded components for performance optimization
 const Testimonials = lazy(() => import("@/components/home/Testimonials"));
@@ -199,7 +198,6 @@ const LandingPage = () => {
           <CTASection />
         </Suspense>
       </div>
-      <FindAttorneySection />
     </Layout>
   );
 };
