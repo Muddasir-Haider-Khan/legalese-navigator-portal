@@ -18,10 +18,10 @@ const HeroBackgroundSlideshow = () => {
   useEffect(() => {
     if (!api) return;
     
-    // Auto-advance slides every 5 seconds
+    // Reduced interval from 5000ms to 2000ms to make the slideshow faster
     const interval = setInterval(() => {
       api.next();
-    }, 5000);
+    }, 2000);
     
     return () => clearInterval(interval);
   }, [api]);
