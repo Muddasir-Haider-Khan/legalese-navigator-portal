@@ -6,6 +6,7 @@ import PricingHero from "@/components/pricing/PricingHero";
 import PricingCard from "@/components/pricing/PricingCard";
 import PricingFaq from "@/components/pricing/PricingFaq";
 import PricingCta from "@/components/pricing/PricingCta";
+import { Shield, Users, Package } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PlanFeature {
@@ -24,6 +25,7 @@ interface Plan {
   features: PlanFeature[];
   callToAction: string;
   popular?: boolean;
+  icon: React.ReactNode;
 }
 
 const Pricing = () => {
@@ -32,68 +34,71 @@ const Pricing = () => {
   
   const plans: Plan[] = [
     {
-      name: "Free",
+      name: "Starter",
       price: {
-        monthly: 0,
-        annually: 0
+        monthly: 39.99,
+        annually: 29.99
       },
-      description: "Basic legal tools for essential needs",
+      description: "Essential legal coverage for individuals",
+      icon: <Shield className="w-8 h-8 text-bright-orange-500" />,
       features: [
-        { name: "Access to document templates", included: true },
-        { name: "Create up to 3 legal documents", included: true },
-        { name: "Basic legal guides", included: true },
-        { name: "Download documents as PDF", included: true },
-        { name: "Email support", included: true },
-        { name: "Ask a Lawyer (limited)", included: false },
-        { name: "Unlimited document creation", included: false },
+        { name: "Unlimited legal document creation", included: true },
+        { name: "Attorney document review (2/month)", included: true },
+        { name: "Digital signature platform", included: true },
+        { name: "30-minute attorney consultation", included: true },
+        { name: "Standard customer support", included: true },
+        { name: "Document storage (5GB)", included: true },
+        { name: "Mobile app access", included: true },
         { name: "Priority support", included: false },
-        { name: "Attorney document review", included: false },
-        { name: "Phone consultations", included: false },
+        { name: "Advanced document automation", included: false },
+        { name: "Custom contract creation", included: false },
       ],
-      callToAction: "Sign up for free"
+      callToAction: "Start Free Trial"
     },
     {
       name: "Premium",
       price: {
-        monthly: 29.99,
-        annually: 19.99
-      },
-      description: "Comprehensive legal coverage for individuals & families",
-      features: [
-        { name: "Access to document templates", included: true },
-        { name: "Create unlimited legal documents", included: true },
-        { name: "Comprehensive legal guides", included: true },
-        { name: "Download documents as PDF", included: true },
-        { name: "Priority email & chat support", included: true },
-        { name: "Ask a Lawyer (30 min/month)", included: true },
-        { name: "Unlimited document creation", included: true },
-        { name: "Document storage & organization", included: true },
-        { name: "Attorney document review", included: false },
-        { name: "Phone consultations", included: false },
-      ],
-      callToAction: "Start Premium",
-      popular: true
-    },
-    {
-      name: "Business",
-      price: {
         monthly: 49.99,
         annually: 39.99
       },
-      description: "Complete legal solution for businesses of all sizes",
+      description: "Complete coverage for growing businesses",
+      icon: <Package className="w-8 h-8 text-bright-orange-500" />,
       features: [
-        { name: "Access to document templates", included: true },
-        { name: "Create unlimited legal documents", included: true },
-        { name: "Business-specific legal guides", included: true },
-        { name: "Download documents as PDF", included: true },
-        { name: "Priority support (24/7)", included: true },
-        { name: "Ask a Lawyer (60 min/month)", included: true, info: "Unlimited chat with business attorneys" },
-        { name: "Unlimited document creation", included: true },
-        { name: "Document storage & organization", included: true },
-        { name: "Attorney document review", included: true, info: "Up to 5 documents per month" },
-        { name: "Phone consultations", included: true, info: "Scheduled calls with business attorneys" },
+        { name: "Everything in Starter, plus:", included: true },
+        { name: "Unlimited attorney consultations", included: true },
+        { name: "Priority document review (24h)", included: true },
+        { name: "Custom contract creation", included: true },
+        { name: "Advanced document automation", included: true },
+        { name: "Priority customer support", included: true },
+        { name: "Document storage (25GB)", included: true },
+        { name: "Team collaboration tools", included: true },
+        { name: "API access", included: true },
+        { name: "Dedicated account manager", included: true },
       ],
-      callToAction: "Start Business Plan"
+      callToAction: "Start Premium Trial",
+      popular: true
+    },
+    {
+      name: "Enterprise",
+      price: {
+        monthly: 99.99,
+        annually: 89.99
+      },
+      description: "Custom solutions for large organizations",
+      icon: <Users className="w-8 h-8 text-bright-orange-500" />,
+      features: [
+        { name: "Everything in Premium, plus:", included: true },
+        { name: "Custom contract workflows", included: true },
+        { name: "Unlimited team members", included: true },
+        { name: "Enterprise API access", included: true },
+        { name: "Custom integrations", included: true },
+        { name: "Dedicated legal team", included: true },
+        { name: "Document storage (100GB)", included: true },
+        { name: "Compliance monitoring", included: true },
+        { name: "24/7 priority support", included: true },
+        { name: "Custom reporting", included: true },
+      ],
+      callToAction: "Contact Sales"
     }
   ];
   
@@ -112,15 +117,15 @@ const Pricing = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Membership & Pricing Plans | Rocket Lawyer</title>
-        <meta name="description" content="Choose the perfect legal plan for your needs. Our flexible pricing plans provide access to legal documents, attorney advice, and more." />
+        <title>Legal Plans & Pricing | Legal Gram</title>
+        <meta name="description" content="Choose the perfect legal plan for your needs. Get unlimited access to legal documents, attorney consultations, and more." />
       </Helmet>
 
       <PricingHero billingCycle={billingCycle} setBillingCycle={setBillingCycle} />
 
-      <div className="relative -mt-32 px-4 pb-20 bg-gradient-to-b from-white via-bright-orange-50/30 to-white">
+      <div className="relative -mt-32 px-4 pb-20">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
             {plans.map((plan) => (
               <PricingCard 
                 key={plan.name}
