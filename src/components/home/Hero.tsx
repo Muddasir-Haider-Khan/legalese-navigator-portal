@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -39,19 +40,19 @@ const Hero = () => {
       <div className="container-custom py-16 md:py-24 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`space-y-8 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="inline-block rounded-full bg-white/90 backdrop-blur-sm px-4 py-1 border border-white/20">
+            <div className="inline-block rounded-full bg-white/80 backdrop-blur-sm px-4 py-1 border border-white/20">
               <span className="text-sm font-medium text-black">Professional Legal Solutions</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]">
-              <span>Legal made</span>{" "}
-              <span>simple</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg text-white">
+              <span className="text-white">Legal made</span>{" "}
+              <span className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">simple</span>
             </h1>
-            <p className="text-xl md:text-2xl text-white leading-relaxed max-w-lg drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)] font-medium">
+            <p className="text-xl md:text-2xl text-white leading-relaxed max-w-lg drop-shadow-md font-medium">
               Affordable legal services for your family and business
             </p>
             
-            <div className="space-y-4 pt-2 bg-white/95 p-6 rounded-xl backdrop-blur-sm border border-white/20 shadow-xl">
+            <div className="space-y-4 pt-2 bg-white/90 p-6 rounded-xl backdrop-blur-sm border border-white/20">
               <div className="flex items-center gap-3 text-lg group hover:translate-x-1 transition-transform">
                 <span className="bg-bright-orange-500/20 rounded-full p-1">
                   <Check className="text-bright-orange-600" size={22} />
@@ -114,7 +115,7 @@ const Hero = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-black/10 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white/5 to-transparent"></div>
     </section>
   );
 };
