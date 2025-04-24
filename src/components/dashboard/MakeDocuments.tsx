@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import DiagonalSection from "@/components/documents/DiagonalSection";
+import QASection from "@/components/documents/QASection";
 
 const documentTemplates = [
   { id: 1, name: "Last Will and Testament", category: "Estate Planning", complexity: "Medium" },
@@ -106,6 +106,8 @@ const MakeDocuments = () => {
           </div>
         )}
       </div>
+
+      <QASection />
     </div>
   );
 };
