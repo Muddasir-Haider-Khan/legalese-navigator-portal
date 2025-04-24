@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -84,7 +83,11 @@ const Hero = () => {
             
             <div className="pt-6">
               <Link to="/documents" className="flex flex-col items-center">
-                <Button size="lg" variant="orange" className="w-full shadow-lg dark:shadow-blue-900/20 px-8 py-7 text-lg h-auto hover:bg-bright-orange-600 hover:scale-[1.02] transition-all group">
+                <Button 
+                  size="lg" 
+                  variant="signup" 
+                  className="w-full px-8 py-7 text-lg h-auto hover:scale-[1.02] transition-all group"
+                >
                   Create a document
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
