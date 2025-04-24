@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Eye, EyeOff, InfoIcon } from "lucide-react";
+import { Eye, EyeOff, InfoIcon, Mail, Lock } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -74,14 +74,16 @@ const Login = () => {
   return (
     <Layout>
       <div className="container-custom py-16 md:py-20 min-h-[80vh] flex items-center relative overflow-hidden">
-        <div className="fixed inset-0 bg-rocket-blue-950 z-0"></div>
-        <div className="absolute -top-40 -left-40 w-[100vh] h-[100vh] bg-rocket-blue-200/10 rounded-full opacity-20 blur-3xl"></div>
-        <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full opacity-30 blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/3 w-[70vh] h-[70vh] bg-rocket-blue-400/10 rounded-full opacity-20 blur-3xl"></div>
+        <div className="fixed inset-0 bg-gradient-to-br from-rocket-blue-950 to-rocket-blue-900 z-0"></div>
+        
+        {/* Enhanced background elements */}
+        <div className="absolute -top-40 -left-40 w-[100vh] h-[100vh] bg-rocket-blue-200/10 rounded-full opacity-20 blur-3xl animate-pulse"></div>
+        <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full opacity-30 blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
+        <div className="absolute bottom-0 left-1/3 w-[70vh] h-[70vh] bg-rocket-blue-400/10 rounded-full opacity-20 blur-3xl animate-pulse" style={{ animationDelay: "2s" }}></div>
         
         <div className="w-full max-w-md mx-auto relative z-10">
-          <div className="text-center mb-8 ">
-            <h1 className="heading-md mb-2 text-gradient text-white">Welcome Back</h1>
+          <div className="text-center mb-8 animate-fade-in">
+            <h1 className="text-3xl font-bold mb-2 text-gradient">Welcome Back</h1>
             <p className="text-rocket-gray-300 font-medium">
               Sign in to access your legal documents and advice history.
             </p>
@@ -97,29 +99,32 @@ const Login = () => {
 
             <form onSubmit={handleLogin} className="space-y-6">
               {errorMessage && (
-                <div className="p-3 bg-red-900/50 border border-red-800 text-red-200 text-sm rounded-md">
+                <div className="p-3 bg-red-900/50 border border-red-800 text-red-200 text-sm rounded-md animate-shake">
                   {errorMessage}
                 </div>
               )}
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray mb-1">Email</label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="mt-1 bg-white/10 border-white/20 text-white 
-                    placeholder:text-black placeholder:font-medium 
-                    focus:placeholder:text-black/80 
-                    hover:placeholder:text-black/80"
-                  required
-                />
+              <div className="space-y-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-1">Email</label>
+                <div className="relative">
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="pl-10 bg-white/10 border-white/20 text-white 
+                      placeholder:text-gray-400 placeholder:font-medium 
+                      focus:border-rocket-blue-400 focus:ring-rocket-blue-400/50
+                      hover:bg-white/20 transition-all duration-300"
+                    required
+                  />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                </div>
               </div>
 
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray mb-1">Password</label>
+              <div className="space-y-2">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-1">Password</label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -127,15 +132,16 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="mt-1 bg-white/10 border-white/20 text-white 
-                      placeholder:text-black placeholder:font-medium 
-                      focus:placeholder:text-black/80 
-                      hover:placeholder:text-black/80"
+                    className="pl-10 bg-white/10 border-white/20 text-white 
+                      placeholder:text-gray-400 placeholder:font-medium 
+                      focus:border-rocket-blue-400 focus:ring-rocket-blue-400/50
+                      hover:bg-white/20 transition-all duration-300"
                     required
                   />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-rocket-gray-300 hover:text-white"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -151,13 +157,13 @@ const Login = () => {
                     onCheckedChange={(checked) => setRememberMe(!!checked)}
                     className="border-white/50 data-[state=checked]:bg-rocket-blue-500"
                   />
-                  <label htmlFor="remember-me" className="text-sm cursor-pointer text-rocket-gray-300">
+                  <label htmlFor="remember-me" className="text-sm cursor-pointer text-gray-300 hover:text-white transition-colors">
                     Remember me
                   </label>
                 </div>
                 <Link
                   to="/forgot-password"
-                  className="text-rocket-blue-300 text-sm hover:underline hover:text-rocket-blue-200"
+                  className="text-rocket-blue-300 text-sm hover:text-rocket-blue-200 transition-colors"
                 >
                   Forgot password?
                 </Link>
@@ -165,7 +171,8 @@ const Login = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white animate-fade-in"
+                className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white transition-all duration-300
+                  hover:shadow-lg hover:shadow-rocket-blue-500/25 animate-fade-in"
                 style={{ animationDelay: "0.5s" }}
                 disabled={isSubmitting}
               >
@@ -181,19 +188,34 @@ const Login = () => {
                   "Sign In"
                 )}
               </Button>
+
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-white/10"></div>
+                </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="px-2 text-gray-400 bg-rocket-blue-950">or</span>
+                </div>
+              </div>
+
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full border-white/20 text-white hover:bg-white/10 transition-all duration-300"
+                onClick={() => toast.info("Social login coming soon!")}
+              >
+                Continue with Google
+              </Button>
             </form>
 
             <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: "0.7s" }}>
-              <p className="text-rocket-gray-400">
+              <p className="text-gray-400">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-rocket-blue-300 hover:underline hover:text-rocket-blue-200 transition-colors">
+                <Link 
+                  to="/signup" 
+                  className="text-rocket-blue-300 hover:text-rocket-blue-200 transition-colors hover:underline"
+                >
                   Sign up
-                </Link>
-              </p>
-              
-              <p className="text-rocket-gray-500 mt-4 text-xs">
-                <Link to="/admin-login" className="text-rocket-blue-300/70 hover:underline hover:text-rocket-blue-200 transition-colors">
-                  Admin Login
                 </Link>
               </p>
             </div>
