@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
@@ -124,13 +123,20 @@ const Pricing = () => {
       </Helmet>
 
       <div className="relative min-h-[60vh] overflow-hidden bg-gradient-to-br from-bright-orange-400/90 to-bright-orange-600/90">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-30 z-0" 
+          style={{ 
+            backgroundImage: `url('/lovable-uploads/58ab4227-c9b6-46b4-8094-825f6d59b3e1.png')`,
+            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, transparent)'
+          }}
+        />
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-        <div className="container relative mx-auto px-4 py-24 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+        <div className="container relative mx-auto px-4 py-24 sm:px-6 lg:px-8 z-10 relative">
+          <div className="mx-auto max-w-4xl text-center relative">
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl relative z-20">
               Simple, Transparent Pricing
             </h1>
-            <p className="mt-6 text-xl text-white/90">
+            <p className="mt-6 text-xl text-white/90 relative z-20">
               Choose the plan that best fits your legal needs. All plans include access to our core features.
             </p>
 
