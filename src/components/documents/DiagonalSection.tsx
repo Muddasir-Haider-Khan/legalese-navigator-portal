@@ -23,16 +23,23 @@ const DiagonalSection = ({ document, index, onSelect, isAuthenticated }: Diagona
     <div className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-16 my-16 py-8 ${
       isEven ? 'md:flex-row' : 'md:flex-row-reverse'
     }`}>
-      {/* Decorative diagonal line */}
+      {/* Flowing decorative line */}
       <div className="absolute inset-0 overflow-hidden z-0 hidden md:block">
-        <div className={`absolute w-full h-1 bg-gradient-to-r from-primary/30 via-primary to-primary/30 top-1/2 transform ${
-          isEven ? '-rotate-6' : 'rotate-6'
-        }`}></div>
+        <div 
+          className={`absolute w-full ${isEven ? '-translate-y-1/2' : 'translate-y-1/2'}`} 
+          style={{
+            height: '100px',
+            background: `url('${'/lovable-uploads/310c80a8-1724-491b-b9ad-1014830b0771.png'}') no-repeat center center`,
+            backgroundSize: 'cover',
+            transform: `${isEven ? 'scaleY(-1)' : 'scaleY(1)'}`,
+            opacity: 0.1
+          }}
+        />
       </div>
       
       {/* Document Card */}
       <div className="w-full md:w-1/2 z-10">
-        <Card className="transform hover:scale-105 transition-transform duration-300 shadow-lg border-t-4 border-t-primary">
+        <Card className="transform hover:scale-105 transition-transform duration-300 shadow-lg border-t-4 border-t-primary backdrop-blur-sm bg-white/90">
           <CardHeader>
             <CardTitle className="flex items-start gap-3">
               <FileText className="h-5 w-5 flex-shrink-0 text-primary" />
@@ -64,7 +71,7 @@ const DiagonalSection = ({ document, index, onSelect, isAuthenticated }: Diagona
       
       {/* Document Preview Image */}
       <div className="w-full md:w-1/2 z-10">
-        <div className="relative aspect-video rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
+        <div className="relative aspect-video rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300 backdrop-blur-sm bg-white/5">
           <img 
             src={`/lovable-uploads/${
               index % 2 === 0 
