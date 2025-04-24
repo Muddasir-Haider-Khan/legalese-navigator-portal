@@ -1,4 +1,3 @@
-
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
@@ -37,13 +36,13 @@ const NavLink = memo(({
       className={cn(
         "font-medium transition-colors relative group",
         isActive 
-          ? "text-black font-semibold" 
-          : "text-black/90 hover:text-black"
+          ? "text-bright-orange-500 font-semibold" 
+          : "text-bright-orange-500/90 hover:text-bright-orange-500"
       )}
     >
       {children}
       <span className={cn(
-        "absolute bottom-[-4px] left-0 w-full h-0.5 bg-black transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
+        "absolute bottom-[-4px] left-0 w-full h-0.5 bg-bright-orange-500 transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
         isActive ? "scale-x-100" : ""
       )}></span>
     </Link>
@@ -69,8 +68,8 @@ const MobileNavLink = memo(({
       className={cn(
         "font-medium transition-colors",
         isActive 
-          ? "text-black font-semibold" 
-          : "text-black/90 hover:text-black"
+          ? "text-bright-orange-500 font-semibold" 
+          : "text-bright-orange-500/90 hover:text-bright-orange-500"
       )}
       onClick={onClick}
     >
@@ -229,8 +228,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/") 
-                      ? "text-black bg-white/10" 
-                      : "text-black/90 hover:bg-white/5 hover:text-black"
+                      ? "text-bright-orange-500 bg-white/10" 
+                      : "text-bright-orange-500/90 hover:bg-white/5 hover:text-bright-orange-500"
                   )}
                   asChild
                 >
@@ -245,8 +244,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/documents") 
-                      ? "text-black bg-white/10" 
-                      : "text-black/90 hover:bg-white/5 hover:text-black"
+                      ? "text-bright-orange-500 bg-white/10" 
+                      : "text-bright-orange-500/90 hover:bg-white/5 hover:text-bright-orange-500"
                   )}
                   asChild
                 >
@@ -261,8 +260,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/pricing") 
-                      ? "text-black bg-white/10" 
-                      : "text-black/90 hover:bg-white/5 hover:text-black"
+                      ? "text-bright-orange-500 bg-white/10" 
+                      : "text-bright-orange-500/90 hover:bg-white/5 hover:text-bright-orange-500"
                   )}
                   asChild
                 >
@@ -288,7 +287,7 @@ const Header = () => {
                     )}
                   >
                     <Avatar className="h-9 w-9">
-                      <AvatarFallback className="bg-primary text-black">
+                      <AvatarFallback className="bg-bright-orange-500 text-white">
                         {userInitial}
                       </AvatarFallback>
                     </Avatar>
@@ -299,11 +298,11 @@ const Header = () => {
                   className="w-56 mt-2 bg-white/10 backdrop-blur-md border border-white/10"
                 >
                   <div className="px-4 py-3 border-b border-white/10">
-                    <p className="text-sm font-medium text-black">
+                    <p className="text-sm font-medium text-bright-orange-500">
                       {userName}
                     </p>
                   </div>
-                  <DropdownMenuItem asChild className="cursor-pointer text-black hover:bg-white/10">
+                  <DropdownMenuItem asChild className="cursor-pointer text-bright-orange-500 hover:bg-white/10">
                     <Link to="/user-dashboard" className="flex items-center">
                       <User className="mr-2 h-4 w-4" />
                       <span>Dashboard</span>
@@ -326,7 +325,7 @@ const Header = () => {
                 <Link to="/login">
                   <Button variant="outline" 
                     className={cn(
-                      "border-black/20 text-black transition-all duration-300",
+                      "border-bright-orange-500/20 text-bright-orange-500 transition-all duration-300",
                       scrolled
                         ? "hover:bg-white/10 backdrop-blur-md"
                         : "hover:bg-white/5"
@@ -342,8 +341,8 @@ const Header = () => {
                     className={cn(
                       "text-white transition-all duration-300",
                       scrolled
-                        ? "bg-black/90 hover:bg-black/80"
-                        : "bg-black/80 hover:bg-black/70"
+                        ? "bg-bright-orange-500/90 hover:bg-bright-orange-500/80"
+                        : "bg-bright-orange-500/80 hover:bg-bright-orange-500/70"
                     )}
                   >
                     Sign Up
@@ -356,7 +355,7 @@ const Header = () => {
 
         <motion.div variants={navItemVariants} className="md:hidden flex items-center">
           <button 
-            className="text-black" 
+            className="text-bright-orange-500" 
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -386,7 +385,7 @@ const Header = () => {
             <div className="flex flex-col space-y-2 pt-4 border-t border-black/20">
               {isAuthenticated ? (
                 <>
-                  <Link to="/user-dashboard" onClick={toggleMenu} className="flex items-center space-x-2 text-black">
+                  <Link to="/user-dashboard" onClick={toggleMenu} className="flex items-center space-x-2 text-bright-orange-500">
                     <User size={18} />
                     <span>Dashboard</span>
                   </Link>
@@ -402,12 +401,12 @@ const Header = () => {
               ) : (
                 <>
                   <Link to="/login" onClick={toggleMenu}>
-                    <Button variant="outline" className="w-full border-black text-black hover:bg-black hover:text-white">
+                    <Button variant="outline" className="w-full border-bright-orange-500 text-bright-orange-500 hover:bg-bright-orange-500 hover:text-white">
                       Sign In
                     </Button>
                   </Link>
                   <Link to="/signup" onClick={toggleMenu}>
-                    <Button className="w-full bg-black text-white hover:bg-black/80">
+                    <Button className="w-full bg-bright-orange-500 text-white hover:bg-bright-orange-500/80">
                       Sign Up
                     </Button>
                   </Link>
