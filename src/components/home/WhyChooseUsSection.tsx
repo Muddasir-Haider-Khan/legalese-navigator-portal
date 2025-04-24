@@ -153,7 +153,7 @@ const WhyChooseUsSection = () => {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.7 }}
         >
-          <div className="bg-gradient-to-r from-rocket-blue-600 to-rocket-blue-800 rounded-2xl p-10 md:p-14 shadow-2xl relative overflow-hidden">
+          <div className="bg-gradient-to-r from-rocket-blue-600 to-rocket-blue-800 rounded-2xl p-10 md:p-14 shadow-2xl relative overflow-hidden drop-shadow-[0_15px_15px_rgba(0,0,0,0.15)]">
             <div className="absolute top-0 right-0 w-96 h-96 bg-bright-orange-500/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-rocket-blue-300/10 rounded-full blur-3xl"></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-32 bg-white/5 rotate-45 blur-2xl"></div>
