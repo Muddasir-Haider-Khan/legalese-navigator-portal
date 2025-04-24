@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const PricingFaq = () => {
   return (
-    <div className="bg-gradient-to-br from-bright-orange-50 to-bright-orange-100/50">
+    <div className="bg-[#fef1de]">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-bright-orange-700">
