@@ -1,3 +1,4 @@
+
 import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { 
@@ -101,12 +102,12 @@ const WhyChooseUsSection = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
+            className="text-lg md:text-xl bg-gradient-to-r from-bright-orange-500 to-bright-orange-100 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Experience the difference with our customer-focused approach to legal services
+            Ready to simplify your legal work?
           </motion.p>
         </div>
         
