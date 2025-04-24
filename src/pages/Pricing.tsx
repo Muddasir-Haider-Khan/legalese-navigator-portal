@@ -122,14 +122,14 @@ const Pricing = () => {
         <meta name="description" content="Choose the perfect legal plan for your needs. Our flexible pricing plans provide access to legal documents, attorney advice, and more." />
       </Helmet>
 
-      <div className="relative min-h-[50vh] overflow-hidden bg-gradient-to-br from-deep-blue-500 to-deep-blue-800">
-        <div className="absolute inset-0 bg-grid-white/5 bg-grid-16 [mask-image:linear-gradient(0deg,transparent,black)]" />
+      <div className="relative min-h-[50vh] overflow-hidden bg-gradient-to-br from-bright-orange-400 to-bright-orange-600">
+        <div className="absolute inset-0 bg-grid-white/10 bg-grid-16 [mask-image:linear-gradient(0deg,transparent,black)]" />
         <div className="container relative mx-auto px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
               Simple, Transparent Pricing
             </h1>
-            <p className="mt-4 text-lg text-white/80">
+            <p className="mt-4 text-lg text-white/90">
               Choose the plan that best fits your legal needs. All plans include access to our core features.
             </p>
 
@@ -170,30 +170,30 @@ const Pricing = () => {
                   className={cn(
                     "relative rounded-2xl transition-all duration-300",
                     plan.popular
-                      ? "bg-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] ring-1 ring-deep-blue-200 lg:scale-105"
+                      ? "bg-white shadow-[0_8px_30px_rgb(0,0,0,0.12)] ring-2 ring-bright-orange-500 lg:scale-105"
                       : "bg-white/95 backdrop-blur-sm shadow-lg"
                   )}
                 >
                   {plan.popular && (
-                    <div className="absolute -top-5 left-0 right-0 mx-auto w-32 rounded-full bg-deep-blue-500 py-2 text-center text-sm font-semibold text-white">
+                    <div className="absolute -top-5 left-0 right-0 mx-auto w-32 rounded-full bg-bright-orange-500 py-2 text-center text-sm font-semibold text-white">
                       Most Popular
                     </div>
                   )}
 
                   <div className="p-6 lg:p-8">
-                    <h3 className="text-2xl font-bold text-deep-blue-900">{plan.name}</h3>
-                    <p className="mt-2 text-deep-blue-600/80">{plan.description}</p>
+                    <h3 className="text-2xl font-bold text-bright-orange-900">{plan.name}</h3>
+                    <p className="mt-2 text-bright-orange-600/80">{plan.description}</p>
 
                     <div className="my-8">
-                      <div className="flex items-baseline text-deep-blue-900">
+                      <div className="flex items-baseline text-bright-orange-900">
                         <span className="text-4xl font-bold tracking-tight">
                           ${plan.price[billingCycle]}
                         </span>
-                        <span className="ml-2 text-deep-blue-600/70">/month</span>
+                        <span className="ml-2 text-bright-orange-600/70">/month</span>
                       </div>
 
                       {billingCycle === "annually" && plan.price.annually > 0 && (
-                        <p className="mt-1 text-sm text-deep-blue-600">
+                        <p className="mt-1 text-sm text-bright-orange-600">
                           Save ${savings.amount.toFixed(2)} per year ({savings.percentage}%)
                         </p>
                       )}
@@ -204,8 +204,8 @@ const Pricing = () => {
                         className={cn(
                           "w-full text-base font-semibold",
                           plan.popular
-                            ? "bg-deep-blue-600 hover:bg-deep-blue-700 text-white"
-                            : "bg-deep-blue-50 hover:bg-deep-blue-100 text-deep-blue-700"
+                            ? "bg-bright-orange-500 hover:bg-bright-orange-600 text-white"
+                            : "bg-bright-orange-50 hover:bg-bright-orange-100 text-bright-orange-700"
                         )}
                       >
                         {plan.callToAction}
@@ -217,18 +217,18 @@ const Pricing = () => {
                       {plan.features.map((feature, index) => (
                         <li key={index} className="flex items-start">
                           {feature.included ? (
-                            <Check className="h-5 w-5 text-deep-blue-500 mt-0.5" />
+                            <Check className="h-5 w-5 text-bright-orange-500 mt-0.5" />
                           ) : (
                             <X className="h-5 w-5 text-gray-300 mt-0.5" />
                           )}
-                          <span className="ml-3 text-deep-blue-700">
+                          <span className="ml-3 text-bright-orange-700">
                             {feature.name}
                             {feature.info && (
                               <TooltipProvider>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <button className="ml-1">
-                                      <HelpCircle className="inline h-4 w-4 text-deep-blue-400" />
+                                      <HelpCircle className="inline h-4 w-4 text-bright-orange-400" />
                                     </button>
                                   </TooltipTrigger>
                                   <TooltipContent>
@@ -249,7 +249,7 @@ const Pricing = () => {
         </div>
       </div>
 
-      <div className="bg-gray-50">
+      <div className="bg-bright-orange-50">
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-deep-blue-900">
@@ -299,7 +299,7 @@ const Pricing = () => {
         </div>
       </div>
       
-      <div className="bg-deep-blue-500">
+      <div className="bg-bright-orange-500">
         <div className="container mx-auto px-4 py-16">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
@@ -312,7 +312,7 @@ const Pricing = () => {
             </div>
             
             <Link to="/signup">
-              <Button size="lg" className="bg-white text-deep-blue-600 hover:bg-gray-100">
+              <Button size="lg" className="bg-white text-bright-orange-600 hover:bg-gray-100">
                 Get Free Consultation
               </Button>
             </Link>
