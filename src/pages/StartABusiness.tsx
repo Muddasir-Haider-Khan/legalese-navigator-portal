@@ -9,23 +9,26 @@ import {
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
+import BusinessBackgroundSlideshow from "@/components/business/BusinessBackgroundSlideshow";
 
 const StartABusiness = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="bg-[#FDE1D3] py-16 md:py-24">
-        <div className="container-custom">
+      <section className="relative min-h-[92vh] flex items-center overflow-hidden">
+        <BusinessBackgroundSlideshow />
+        
+        <div className="container-custom relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-black mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 drop-shadow-lg">
               Start Your Business the Right Way
             </h1>
-            <p className="text-lg md:text-xl text-black mb-8">
+            <p className="text-lg md:text-xl text-white mb-8 drop-shadow-md">
               Get your business up and running with professional legal documents and expert guidance.
             </p>
             <Button 
               size="lg" 
-              className="bg-bright-orange-500 hover:bg-bright-orange-600 text-white"
+              className="bg-bright-orange-500 hover:bg-bright-orange-600 text-white shadow-lg"
             >
               Start Now
             </Button>
