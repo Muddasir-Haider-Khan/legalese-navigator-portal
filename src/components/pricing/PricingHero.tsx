@@ -16,7 +16,7 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
       {/* Hero background image with overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/lovable-uploads/7386c995-bf25-47e2-a3bb-095150b52e65.png"
+          src="/lovable-uploads/9a69611d-418e-411e-a9d2-59a95fe03c53.png"
           alt="Professional legal consultation"
           className="w-full h-full object-cover"
         />
@@ -37,12 +37,12 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <Wand className="h-12 w-12 text-white animate-bounce-slow" />
-            <Stars className="h-12 w-12 text-white/90 animate-bounce-slow delay-200" />
+            <Wand className="h-12 w-12 text-bright-orange-500 animate-bounce-slow" />
+            <Stars className="h-12 w-12 text-bright-orange-500/90 animate-bounce-slow delay-200" />
           </motion.div>
           
           <motion.h1 
-            className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl drop-shadow-lg"
+            className="text-4xl font-bold tracking-tight text-bright-orange-700 sm:text-5xl lg:text-6xl drop-shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -51,7 +51,7 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
           </motion.h1>
           
           <motion.p 
-            className="mt-6 text-xl text-white/90 drop-shadow-lg"
+            className="mt-6 text-xl text-bright-orange-600 drop-shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -67,36 +67,36 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
           >
             <span className={cn(
               "text-lg font-semibold transition-colors duration-200",
-              billingCycle === "monthly" ? "text-white" : "text-white/80 hover:text-white"
+              billingCycle === "monthly" ? "text-bright-orange-700" : "text-bright-orange-500/80 hover:text-bright-orange-700"
             )}>Monthly</span>
             
             <div className="relative">
               <div className={cn(
-                "absolute -inset-3 rounded-lg bg-white/20 blur-lg transition-opacity duration-500 animate-pulse",
+                "absolute -inset-3 rounded-lg bg-bright-orange-500/20 blur-lg transition-opacity duration-500 animate-pulse",
                 billingCycle === "annually" ? "opacity-100" : "opacity-0"
               )} />
               <Switch
                 checked={billingCycle === "annually"}
                 onCheckedChange={() => setBillingCycle(billingCycle === "monthly" ? "annually" : "monthly")}
-                className="relative bg-white/20 data-[state=checked]:bg-white"
+                className="relative bg-bright-orange-500/20 data-[state=checked]:bg-bright-orange-500"
               />
             </div>
             
             <span className={cn(
               "text-lg font-semibold transition-colors duration-200",
-              billingCycle === "annually" ? "text-white" : "text-white/80 hover:text-white"
+              billingCycle === "annually" ? "text-bright-orange-700" : "text-bright-orange-500/80 hover:text-bright-orange-700"
             )}>Annual</span>
           </motion.div>
 
           {billingCycle === "annually" && (
             <motion.div 
-              className="mt-8 inline-flex animate-float items-center rounded-full bg-white/10 backdrop-blur-md px-8 py-4 transition-all duration-500 hover:scale-105 shadow-lg border border-white/20"
+              className="mt-8 inline-flex animate-float items-center rounded-full bg-bright-orange-50 backdrop-blur-md px-8 py-4 transition-all duration-500 hover:scale-105 shadow-lg border border-bright-orange-100"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <Sparkle className="mr-3 h-5 w-5 text-white animate-pulse" />
-              <span className="relative font-semibold text-white">
+              <Sparkle className="mr-3 h-5 w-5 text-bright-orange-600 animate-pulse" />
+              <span className="relative font-semibold text-bright-orange-700">
                 Save up to <span className="font-bold animate-pulse">33%</span> with annual billing
               </span>
             </motion.div>
