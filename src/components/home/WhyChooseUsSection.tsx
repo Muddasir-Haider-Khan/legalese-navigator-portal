@@ -131,7 +131,7 @@ const WhyChooseUsSection = () => {
                 <div className="relative z-10">
                   <div className="mb-6 transform transition-transform duration-300 group-hover:scale-110">
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-bright-orange-500 to-bright-orange-600 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                      <reason.icon className="h-8 w-8 text-white" />
+                      <reason.icon className="h-8 w-8 text-ORANGE" />
                     </div>
                   </div>
                   
