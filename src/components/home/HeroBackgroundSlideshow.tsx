@@ -38,9 +38,9 @@ const HeroBackgroundSlideshow = () => {
                 <img 
                   src={image}
                   alt={`Legal background ${index + 1}`}
-                  className="w-full h-full object-cover transition-all duration-700 ease-in-out transform scale-105 hover:scale-100 blur-[0.5px] hover:blur-0"
+                  className="w-full h-full object-cover transition-all duration-700 ease-in-out transform scale-105 hover:scale-100 blur-[4px] hover:blur-[2px]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-600/95 to-rocket-blue-900/95 transition-opacity duration-700 ease-in-out backdrop-blur-[2px]"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-600/95 to-rocket-blue-900/95 transition-opacity duration-700 ease-in-out backdrop-blur-[4px]"></div>
               </div>
             </CarouselItem>
           ))}
