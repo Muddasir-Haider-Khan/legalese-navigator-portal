@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
@@ -127,7 +126,7 @@ const Pricing = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-30 z-0" 
           style={{ 
-            backgroundImage: `url('/lovable-uploads/96cf3e5e-b015-4230-abc2-56a947a1b9f9.png')`,
+            backgroundImage: `url('/lovable-uploads/5d58d191-c018-4dab-83fb-0de32812a273.png')`,
             maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, transparent)'
           }}
         />
