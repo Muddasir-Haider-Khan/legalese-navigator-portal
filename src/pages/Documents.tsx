@@ -176,7 +176,9 @@ const Documents = () => {
             </div>
           </div>
 
-          <MakeDocuments />
+          <div className="my-20">
+            <MakeDocuments />
+          </div>
 
           <HowItWorksSection />
           
