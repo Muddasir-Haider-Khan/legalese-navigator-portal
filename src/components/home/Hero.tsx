@@ -46,7 +46,7 @@ const Hero = () => {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
               <span className="text-bright-orange-500">Legal made simple</span>
             </h1>
-            <p className="text-xl md:text-2xl text-black leading-relaxed max-w-lg">
+            <p className="text-xl md:text-2xl text-white leading-relaxed max-w-lg">
               Affordable legal services for your family and business
             </p>
             
@@ -83,31 +83,6 @@ const Hero = () => {
                 </Button>
                 <p className="mt-3 text-sm text-black/80">Trusted legal help at your fingertips</p>
               </Link>
-            </div>
-          </div>
-          
-          <div className={`transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
-            <div className="relative rounded-xl shadow-2xl overflow-hidden backdrop-blur-sm border border-white/10">
-              <img 
-                src="/lovable-uploads/f71dcb3e-44f6-47f2-a368-b65778dfe4da.png"
-                alt="Person signing legal documents"
-                className="w-full h-auto object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-rocket-blue-900/60 to-transparent pointer-events-none"></div>
-              
-              <div className="absolute top-4 right-4 bg-bright-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium animate-pulse">
-                Professional Services
-              </div>
-            </div>
-            <div className="mt-6 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/10 transform hover:translate-y-[-5px] transition-transform duration-300">
-              <h3 className="text-xl font-bold text-black">Professional Document Preparation</h3>
-              <p className="text-black/80 mt-2">Create, sign, and manage your legal documents with our easy-to-use platform</p>
-              <div className="mt-3 flex gap-2">
-                <span className="inline-block bg-bright-orange-400 rounded-full px-3 py-1 text-xs text-white">Fast</span>
-                <span className="inline-block bg-bright-orange-400 rounded-full px-3 py-1 text-xs text-white">Secure</span>
-                <span className="inline-block bg-bright-orange-400 rounded-full px-3 py-1 text-xs text-white">Professional</span>
-              </div>
             </div>
           </div>
         </div>
