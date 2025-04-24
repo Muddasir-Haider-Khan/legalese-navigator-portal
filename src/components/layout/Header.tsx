@@ -37,8 +37,8 @@ const NavLink = memo(({
       className={cn(
         "font-medium transition-colors relative group drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)]",
         isActive 
-          ? "text-bright-orange-500 font-semibold" 
-          : "text-bright-orange-500/90 hover:text-bright-orange-500"
+          ? "text-black font-semibold" 
+          : "text-black/90 hover:text-black"
       )}
     >
       {children}
