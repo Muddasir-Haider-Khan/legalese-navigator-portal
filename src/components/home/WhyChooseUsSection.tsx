@@ -7,8 +7,11 @@ import {
   BadgeCheck, 
   Scale, 
   Users,
-  Award
+  Award,
+  ArrowRight
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const WhyChooseUsSection = () => {
   const [inView, setInView] = useState(false);
@@ -35,45 +38,51 @@ const WhyChooseUsSection = () => {
     {
       icon: Shield,
       title: "Secure & Confidential",
-      description: "Your legal information is protected with enterprise-grade security and encryption."
+      description: "Your legal information is protected with enterprise-grade security and encryption.",
+      gradient: "from-blue-500/20 via-blue-400/10 to-transparent"
     },
     {
       icon: Clock,
       title: "Save Time",
-      description: "Create legal documents in minutes instead of hours with our streamlined process."
+      description: "Create legal documents in minutes instead of hours with our streamlined process.",
+      gradient: "from-emerald-500/20 via-emerald-400/10 to-transparent"
     },
     {
       icon: BadgeCheck,
       title: "Attorney-Reviewed",
-      description: "All documents and services are created and reviewed by qualified attorneys."
+      description: "All documents and services are created and reviewed by qualified attorneys.",
+      gradient: "from-purple-500/20 via-purple-400/10 to-transparent"
     },
     {
       icon: Scale,
       title: "Legal Compliance",
-      description: "Our documents are continuously updated to comply with current laws and regulations."
+      description: "Our documents are continuously updated to comply with current laws and regulations.",
+      gradient: "from-pink-500/20 via-pink-400/10 to-transparent"
     },
     {
       icon: Users,
       title: "Expert Support",
-      description: "Get help from our team of legal professionals whenever you need it."
+      description: "Get help from our team of legal professionals whenever you need it.",
+      gradient: "from-amber-500/20 via-amber-400/10 to-transparent"
     },
     {
       icon: Award,
       title: "Trusted by Millions",
-      description: "Join the millions of individuals and businesses who trust us with their legal needs."
+      description: "Join the millions of individuals and businesses who trust us with their legal needs.",
+      gradient: "from-cyan-500/20 via-cyan-400/10 to-transparent"
     }
   ];
 
   return (
-    <section id="why-choose-us" className="py-20 md:py-28 bg-gradient-to-b from-white to-[#F8F9FF] relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-bright-orange-100 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-40 left-0 w-96 h-96 bg-blue-100 rounded-full opacity-30 blur-3xl -translate-x-1/2"></div>
+    <section id="why-choose-us" className="py-24 md:py-32 bg-gradient-to-b from-white to-[#F8F9FF] relative overflow-hidden">
+      {/* Enhanced decorative elements */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-bright-orange-100/50 to-rocket-blue 100/30 rounded-full opacity-30 blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute bottom-40 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-100/50 to-bright-orange-100/30 rounded-full opacity-30 blur-3xl -translate-x-1/2"></div>
       
       <div className="container-custom relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <motion.span 
-            className="inline-block bg-bright-orange-100 text-bright-orange-600 font-medium px-4 py-1 rounded-full text-sm mb-3"
+            className="inline-block bg-gradient-to-r from-bright-orange-100 to-bright-orange-200 text-bright-orange-600 font-medium px-6 py-2 rounded-full text-sm mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
@@ -82,18 +91,19 @@ const WhyChooseUsSection = () => {
           </motion.span>
           
           <motion.h2 
-            className="text-3xl md:text-5xl font-bold mb-4 text-black"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-black"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <span className="bg-gradient-to-r from-bright-orange-500 to-rocket-blue-600 bg-clip-text text-transparent">
               The Smart Choice
-            </span> for Legal Solutions
+            </span>{" "}
+            for Legal Solutions
           </motion.h2>
           
           <motion.p 
-            className="text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -102,79 +112,79 @@ const WhyChooseUsSection = () => {
           </motion.p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
           {reasons.map((reason, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="relative overflow-hidden bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+              className="relative group"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              {/* Animated background gradient */}
-              <div 
-                className={`absolute inset-0 bg-gradient-to-br from-bright-orange-50 via-white to-rocket-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-              ></div>
-              
-              {/* Decorative circle */}
-              <div 
-                className={`absolute -right-12 -bottom-12 w-40 h-40 rounded-full bg-gradient-to-br from-bright-orange-100 to-bright-orange-200 opacity-0 group-hover:opacity-20 transition-opacity duration-500`}
-              ></div>
-              
-              <div className="relative z-10">
-                <div className="mb-6 transform transition-transform duration-300 group-hover:scale-110">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-bright-orange-500 to-bright-orange-600 flex items-center justify-center shadow-lg">
-                    <reason.icon className="h-8 w-8 text-white" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-black group-hover:text-bright-orange-600 transition-colors">
-                  {reason.title}
-                </h3>
-                <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
-                  {reason.description}
-                </p>
+              <div className="relative overflow-hidden bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
+                {/* Dynamic gradient background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${reason.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
                 
-                {/* Animated border on hover */}
+                {/* Icon with enhanced styling */}
+                <div className="relative z-10">
+                  <div className="mb-6 transform transition-transform duration-300 group-hover:scale-110">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-bright-orange-500 to-bright-orange-600 flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                      <reason.icon className="h-8 w-8 text-white" />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold mb-3 text-black group-hover:text-bright-orange-600 transition-colors">
+                    {reason.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                    {reason.description}
+                  </p>
+                </div>
+                
+                {/* Animated border and shine effect */}
                 <div className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-bright-orange-500 to-bright-orange-300 transition-all duration-300 ${hoveredIndex === index ? 'w-full' : 'w-0'}`}></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               </div>
             </motion.div>
           ))}
         </div>
 
+        {/* Enhanced CTA section */}
         <motion.div 
-          className="mt-16 relative overflow-hidden"
+          className="mt-20 relative overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.7 }}
         >
-          <div className="bg-gradient-to-r from-rocket-blue-600 to-rocket-blue-800 rounded-xl p-8 md:p-12 shadow-xl relative overflow-hidden">
-            {/* Background elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-bright-orange-500/10 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-rocket-blue-300/10 rounded-full blur-3xl"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-32 bg-white/5 rotate-45 blur-xl"></div>
+          <div className="bg-gradient-to-r from-rocket-blue-600 to-rocket-blue-800 rounded-2xl p-10 md:p-14 shadow-2xl relative overflow-hidden">
+            {/* Enhanced background elements */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-bright-orange-500/10 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-rocket-blue-300/10 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-32 bg-white/5 rotate-45 blur-2xl"></div>
             
             <div className="relative z-10 text-center md:text-left md:flex items-center justify-between">
-              <div className="mb-6 md:mb-0 md:max-w-md">
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+              <div className="mb-8 md:mb-0 md:max-w-lg">
+                <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
                   Ready for professional legal help?
                 </h3>
-                <p className="text-white/80 text-lg">
+                <p className="text-white/90 text-lg">
                   Get started today with our easy-to-use legal services.
                 </p>
               </div>
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-bright-orange-500 to-bright-orange-300 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <a 
-                  href="/signup" 
-                  className="relative flex items-center gap-2 px-8 py-4 bg-white text-rocket-blue-600 rounded-lg font-medium hover:bg-bright-orange-50 transition-colors shadow-lg group-hover:shadow-xl"
-                >
-                  <span>Create an Account</span>
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </a>
+                <div className="absolute -inset-1 bg-gradient-to-r from-bright-orange-500 to-bright-orange-300 rounded-xl blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                <Link to="/signup">
+                  <Button 
+                    variant="default" 
+                    className="relative px-8 py-6 bg-white text-rocket-blue-600 rounded-xl font-medium hover:bg-bright-orange-50 transition-all duration-300 text-lg shadow-xl group-hover:shadow-2xl"
+                  >
+                    Create an Account
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
