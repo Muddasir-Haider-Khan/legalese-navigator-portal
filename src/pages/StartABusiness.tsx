@@ -2,7 +2,9 @@ import {
   Building2, BriefcaseBusiness, FileLock, Star,
   Award, UserCheck, CheckCircle, ShieldCheck,
   DollarSign, Clock, Rocket, Users, Search,
-  ChartBar, Handshake, ClipboardCheck
+  ChartBar, Handshake, ClipboardCheck,
+  BadgeCheck, Calendar, FileSearch, MessageCircle,
+  BookOpen, HelpCircle, FileText
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
@@ -269,6 +271,106 @@ const StartABusiness = () => {
                 className="rounded-lg w-full h-auto"
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Partnership Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <img 
+                src="/lovable-uploads/5ab7cd01-2a2f-4042-bb84-b78b00d131c8.png"
+                alt="Start your Partnership" 
+                className="rounded-lg w-full h-auto"
+              />
+            </div>
+            <div className="space-y-6">
+              <h2 className="text-4xl font-bold text-gray-900">
+                Form a Partnership
+              </h2>
+              <p className="text-lg text-gray-600">
+                Starting a business with partners? A Partnership structure allows you to share responsibilities, combine resources, and split profits. Choose from General, Limited, or Limited Liability Partnerships.
+              </p>
+              <div className="flex gap-4">
+                <Button 
+                  size="lg"
+                  className="bg-bright-orange-500 hover:bg-bright-orange-600"
+                  asChild
+                >
+                  <Link to="/documents/partnership">Start my Partnership</Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  asChild
+                >
+                  <Link to="/documents/partnership-guide">Learn about Partnerships</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Expert Guidance Section */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-center mb-12">Expert Guidance Every Step of the Way</h2>
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { icon: MessageCircle, title: "Business Consultations", desc: "Get expert advice on choosing the right business structure" },
+              { icon: FileSearch, title: "Document Review", desc: "Professional review of all your business documents" },
+              { icon: Calendar, title: "Compliance Calendar", desc: "Stay on top of important deadlines and filings" },
+              { icon: HelpCircle, title: "24/7 Support", desc: "Access to our knowledge base and support team" }
+            ].map((item, index) => (
+              <div key={index} className="p-6 rounded-xl bg-white shadow-lg hover:shadow-xl transition-shadow">
+                <item.icon className="h-10 w-10 text-bright-orange-500 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                <p className="text-gray-600">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Resources Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-center mb-12">Business Resources</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: BookOpen,
+                title: "Business Guide Library",
+                desc: "Access comprehensive guides on starting and running your business",
+                link: "/resources/guides"
+              },
+              {
+                icon: FileText,
+                title: "Document Templates",
+                desc: "Download free templates for common business documents",
+                link: "/resources/templates"
+              },
+              {
+                icon: ChartBar,
+                title: "Market Research Tools",
+                desc: "Access industry reports and market analysis tools",
+                link: "/resources/research"
+              }
+            ].map((item, index) => (
+              <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                <div className="flex items-center mb-6">
+                  <item.icon className="h-8 w-8 text-bright-orange-500 mr-3" />
+                  <h3 className="text-xl font-semibold">{item.title}</h3>
+                </div>
+                <p className="text-gray-600 mb-6">{item.desc}</p>
+                <Button variant="outline" size="lg" className="w-full" asChild>
+                  <Link to={item.link}>Learn More</Link>
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
       </section>
