@@ -1,3 +1,4 @@
+
 import { useState, useEffect, memo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut } from "lucide-react";
@@ -194,8 +195,8 @@ const Header = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled 
-          ? "bg-white/5 backdrop-blur-md border-b border-white/10 shadow-lg"
-          : "bg-transparent"
+          ? "bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg"  // Increased blur and background opacity
+          : "bg-transparent backdrop-blur-md"  // Added base backdrop blur even when not scrolled
       )}
       initial="initial"
       animate="animate"
