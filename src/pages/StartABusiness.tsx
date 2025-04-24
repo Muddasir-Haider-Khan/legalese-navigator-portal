@@ -1,4 +1,3 @@
-
 import { 
   Building2,
   BriefcaseBusiness,
@@ -138,7 +137,7 @@ const StartABusiness = () => {
                 </span>
               </div>
               <img 
-                src="/lovable-uploads/888acfa1-e266-4274-be64-98eed751f1d1.png"
+                src="/lovable-uploads/8133ec7e-0e3d-4bc6-9e04-cb3554bbf021.png"
                 alt="Start your LLC" 
                 className="rounded-lg w-full h-auto"
               />
