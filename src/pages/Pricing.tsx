@@ -122,75 +122,45 @@ const Pricing = () => {
         <meta name="description" content="Choose the perfect legal plan for your needs. Our flexible pricing plans provide access to legal documents, attorney advice, and more." />
       </Helmet>
 
-      <div className={cn(
-        "relative overflow-hidden",
-        isMobile ? "py-8" : "py-16"
-      )}>
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-rocket-blue-800/90 via-rocket-blue-700/70 to-rocket-blue-800/80"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 max-w-7xl relative z-10 text-center">
-          <div className={cn(
-            "inline-flex items-center justify-center bg-gradient-to-r from-[#F97316]/90 to-[#FFBB66]/90 px-3 py-1.5 rounded-full mb-4 text-white shadow-lg transform hover:scale-105 transition-all duration-300",
-            isMobile ? "text-xs" : "text-sm"
-          )}>
-            Pricing Plans
-          </div>
-          
-          <h1 className={cn(
-            "font-bold mb-4 text-white leading-tight tracking-tight animate-fade-in",
-            isMobile ? "text-2xl" : "text-2xl md:text-5xl lg:text-6xl"
-          )}>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-200">Legal</span> 
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#F97316] to-[#FFBB66] px-2">Plans</span> 
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-gray-200">Tailored for You</span>
-          </h1>
-          
-          <div className={cn(
-            "bg-gradient-to-r from-[#F97316] to-[#FFBB66] mx-auto rounded-full shadow-glow",
-            isMobile ? "h-0.5 w-16 my-3" : "h-1.5 w-32 my-8"
-          )}></div>
-          
-          <p className={cn(
-            "leading-relaxed text-white/90 max-w-3xl mx-auto mb-6 animate-fade-in delay-100",
-            isMobile 
-              ? "text-sm px-2" 
-              : "text-sm md:text-xl px-2 md:px-0"
-          )}>
-            Discover flexible legal plans designed to provide comprehensive support for individuals and businesses. Choose the perfect plan that fits your legal needs.
-          </p>
-          
-          <div className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm p-3 rounded-xl shadow-lg mb-6">
-            <span className={cn(
-              `text-sm font-medium`, 
-              billingCycle === "monthly" ? "text-white" : "text-white/70"
-            )}>Monthly</span>
-            <Switch 
-              checked={billingCycle === "annually"} 
-              onCheckedChange={() => setBillingCycle(billingCycle === "monthly" ? "annually" : "monthly")}
-              className="bg-white/30 data-[state=checked]:bg-[#F97316]"
-            />
-            <span className={cn(
-              `text-sm font-medium`, 
-              billingCycle === "annually" ? "text-white" : "text-white/70"
-            )}>Annual</span>
-          </div>
+      <div className="relative min-h-[50vh] overflow-hidden bg-gradient-to-b from-bright-orange-500 to-bright-orange-600 dark:from-bright-orange-600 dark:to-bright-orange-700">
+        <div className="absolute inset-0 bg-grid-white/10 bg-grid-16 [mask-image:linear-gradient(0deg,transparent,black)]" />
+        <div className="container relative mx-auto px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Simple, Transparent Pricing
+            </h1>
+            <p className="mt-4 text-lg text-white/90">
+              Choose the plan that best fits your legal needs. All plans include access to our core features.
+            </p>
 
-          {billingCycle === "annually" && (
-            <div className="bg-[#F97316] text-white py-2 px-6 rounded-full inline-flex items-center mb-6 font-medium text-sm animate-pulse shadow-md">
-              <span className="mr-2">🎉</span> Save up to 33% with annual billing
+            <div className="mt-8 flex items-center justify-center gap-3">
+              <span className={cn(
+                "text-sm font-medium",
+                billingCycle === "monthly" ? "text-white" : "text-white/70"
+              )}>Monthly</span>
+              <Switch
+                checked={billingCycle === "annually"}
+                onCheckedChange={() => setBillingCycle(billingCycle === "monthly" ? "annually" : "monthly")}
+                className="bg-white/30 data-[state=checked]:bg-white"
+              />
+              <span className={cn(
+                "text-sm font-medium",
+                billingCycle === "annually" ? "text-white" : "text-white/70"
+              )}>Annual</span>
             </div>
-          )}
+
+            {billingCycle === "annually" && (
+              <div className="mt-4 inline-flex items-center rounded-full bg-white/10 px-6 py-2 text-sm font-medium text-white">
+                <span className="mr-2">🎉</span> Save up to 33% with annual billing
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="bg-white py-12">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className={cn(
-            "grid gap-6",
-            isMobile ? "grid-cols-1" : "grid-cols-3"
-          )}>
+      <div className="relative -mt-20 px-4 pb-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
             {plans.map((plan) => {
               const savings = calculateSavings(plan);
               
@@ -198,93 +168,79 @@ const Pricing = () => {
                 <div
                   key={plan.name}
                   className={cn(
-                    "relative rounded-2xl border transition-all duration-300 shadow-lg hover:shadow-xl",
-                    plan.popular 
-                      ? "border-[#F97316] ring-2 ring-[#F97316]/50" 
-                      : "border-rocket-gray-200"
+                    "relative rounded-2xl transition-all duration-300",
+                    plan.popular
+                      ? "bg-white shadow-2xl ring-2 ring-bright-orange-500 lg:scale-105"
+                      : "bg-white/80 backdrop-blur-sm shadow-xl"
                   )}
                 >
                   {plan.popular && (
-                    <div className="absolute top-0 right-0 bg-[#F97316] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-                      MOST POPULAR
+                    <div className="absolute -top-5 left-0 right-0 mx-auto w-32 rounded-full bg-bright-orange-500 py-2 text-center text-sm font-semibold text-white">
+                      Most Popular
                     </div>
                   )}
-                  
-                  <div className="p-6 md:p-8">
-                    <h3 className="text-2xl font-bold text-black mb-2">
-                      {plan.name}
-                    </h3>
-                    <p className="text-rocket-gray-600 mb-6">
-                      {plan.description}
-                    </p>
-                    
-                    <div className="mb-6">
-                      <div className="flex items-end">
-                        <span className="text-4xl font-bold text-black">
+
+                  <div className="p-6 lg:p-8">
+                    <h3 className="text-2xl font-bold text-gray-900">{plan.name}</h3>
+                    <p className="mt-2 text-gray-600">{plan.description}</p>
+
+                    <div className="my-8">
+                      <div className="flex items-baseline text-gray-900">
+                        <span className="text-4xl font-bold tracking-tight">
                           ${plan.price[billingCycle]}
                         </span>
-                        <span className="text-rocket-gray-600 ml-1 mb-1">
-                          /month
-                        </span>
+                        <span className="ml-2 text-gray-500">/month</span>
                       </div>
-                      
+
                       {billingCycle === "annually" && plan.price.annually > 0 && (
-                        <div className="text-sm text-[#F97316] font-medium mt-1">
+                        <p className="mt-1 text-sm text-bright-orange-600">
                           Save ${savings.amount.toFixed(2)} per year ({savings.percentage}%)
-                        </div>
+                        </p>
                       )}
-                      
-                      <div className="text-xs text-rocket-gray-600 mt-1">
-                        {billingCycle === "annually" ? "Billed annually" : "Billed monthly"}
-                      </div>
                     </div>
-                    
+
                     <Link to="/signup">
-                      <Button 
+                      <Button
                         className={cn(
-                          "w-full mb-6",
-                          plan.popular 
-                            ? "bg-[#F97316] hover:bg-[#D15316] text-white" 
-                            : "border border-[#F97316] text-[#F97316] hover:bg-[#F97316]/10"
+                          "w-full text-base font-semibold",
+                          plan.popular
+                            ? "bg-bright-orange-500 hover:bg-bright-orange-600 text-white"
+                            : "bg-gray-100 hover:bg-gray-200 text-gray-900"
                         )}
                       >
                         {plan.callToAction}
-                        <ChevronRight className="ml-2 h-4 w-4" />
+                        <ChevronRight className="ml-2 h-5 w-5" />
                       </Button>
                     </Link>
-                    
-                    <div className="space-y-3">
+
+                    <ul className="mt-8 space-y-4">
                       {plan.features.map((feature, index) => (
-                        <div key={index} className="flex items-center">
+                        <li key={index} className="flex items-start">
                           {feature.included ? (
-                            <Check className="h-5 w-5 text-rocket-green-500 mr-3 flex-shrink-0" />
+                            <Check className="h-5 w-5 text-bright-orange-500 mt-0.5" />
                           ) : (
-                            <X className="h-5 w-5 text-rocket-gray-300 mr-3 flex-shrink-0" />
+                            <X className="h-5 w-5 text-gray-300 mt-0.5" />
                           )}
-                          <span className={cn(
-                            "text-sm",
-                            feature.included ? "text-black" : "text-black/50"
-                          )}>
+                          <span className="ml-3 text-gray-700">
                             {feature.name}
+                            {feature.info && (
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <button className="ml-1">
+                                      <HelpCircle className="inline h-4 w-4 text-gray-400" />
+                                    </button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p className="text-sm max-w-xs">{feature.info}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            )}
                           </span>
-                          
-                          {feature.info && (
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <button className="ml-1">
-                                    <HelpCircle className="h-3.5 w-3.5 text-rocket-gray-500" />
-                                  </button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p className="text-xs max-w-xs text-black">{feature.info}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          )}
-                        </div>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 </div>
               );
@@ -293,70 +249,70 @@ const Pricing = () => {
         </div>
       </div>
 
-      <div className="bg-rocket-blue-50 dark:bg-rocket-gray-800 py-16">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-rocket-gray-900 dark:text-white mb-4">
+      <div className="bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               Frequently Asked Questions
             </h2>
-            <p className="text-rocket-gray-600 dark:text-rocket-gray-300 mb-12">
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
               Get answers to common questions about our membership plans
             </p>
+          </div>
+
+          <div className="space-y-8 text-left">
+            <div>
+              <h3 className="text-xl font-semibold text-rocket-gray-900 dark:text-white mb-2">
+                Can I switch between plans?
+              </h3>
+              <p className="text-rocket-gray-600 dark:text-rocket-gray-400">
+                Yes, you can upgrade, downgrade or cancel your plan at any time. When you upgrade, you'll immediately gain access to all the new features. If you downgrade or cancel, you'll continue to have access to your current plan until the end of your billing period.
+              </p>
+            </div>
             
-            <div className="space-y-8 text-left">
-              <div>
-                <h3 className="text-xl font-semibold text-rocket-gray-900 dark:text-white mb-2">
-                  Can I switch between plans?
-                </h3>
-                <p className="text-rocket-gray-600 dark:text-rocket-gray-400">
-                  Yes, you can upgrade, downgrade or cancel your plan at any time. When you upgrade, you'll immediately gain access to all the new features. If you downgrade or cancel, you'll continue to have access to your current plan until the end of your billing period.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-semibold text-rocket-gray-900 dark:text-white mb-2">
-                  Is there a refund policy?
-                </h3>
-                <p className="text-rocket-gray-600 dark:text-rocket-gray-400">
-                  We offer a 7-day money-back guarantee for all new subscribers. If you're not satisfied with our service, you can request a full refund within the first week of your subscription.
-                </p>
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-semibold text-rocket-gray-900 dark:text-white mb-2">
-                  How does the "Ask a Lawyer" feature work?
-                </h3>
-                <p className="text-rocket-gray-600 dark:text-rocket-gray-400">
-                  The "Ask a Lawyer" feature allows you to chat with a qualified attorney through our platform. Depending on your plan, you'll have a set amount of consultation time per month. You can use this time to ask legal questions, get document reviews, or receive general legal guidance.
-                </p>
-              </div>
-              
-              <div className="text-center mt-12">
-                <Link to="/contact">
-                  <Button variant="orange" className="min-w-[200px] text-white">
-                    Contact Support
-                  </Button>
-                </Link>
-              </div>
+            <div>
+              <h3 className="text-xl font-semibold text-rocket-gray-900 dark:text-white mb-2">
+                Is there a refund policy?
+              </h3>
+              <p className="text-rocket-gray-600 dark:text-rocket-gray-400">
+                We offer a 7-day money-back guarantee for all new subscribers. If you're not satisfied with our service, you can request a full refund within the first week of your subscription.
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold text-rocket-gray-900 dark:text-white mb-2">
+                How does the "Ask a Lawyer" feature work?
+              </h3>
+              <p className="text-rocket-gray-600 dark:text-rocket-gray-400">
+                The "Ask a Lawyer" feature allows you to chat with a qualified attorney through our platform. Depending on your plan, you'll have a set amount of consultation time per month. You can use this time to ask legal questions, get document reviews, or receive general legal guidance.
+              </p>
+            </div>
+            
+            <div className="text-center mt-12">
+              <Link to="/contact">
+                <Button variant="orange" className="min-w-[200px] text-white">
+                  Contact Support
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
       
-      <div className="bg-rocket-blue-800 dark:bg-rocket-blue-900 py-16 text-white">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <div className="bg-bright-orange-500">
+        <div className="container mx-auto px-4 py-16">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 Not sure which plan is right for you?
               </h2>
-              <p className="text-rocket-gray-200 max-w-xl">
+              <p className="text-white/90 max-w-xl">
                 Our legal experts can help you choose the perfect plan for your specific legal needs. Schedule a free consultation today.
               </p>
             </div>
             
             <Link to="/signup">
-              <Button size="lg" className="bg-bright-orange-500 text-white hover:bg-bright-orange-600">
+              <Button size="lg" className="bg-white text-bright-orange-500 hover:bg-gray-100">
                 Get Free Consultation
               </Button>
             </Link>
