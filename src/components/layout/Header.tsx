@@ -19,7 +19,6 @@ import {
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 const NavLink = memo(({ 
@@ -193,8 +192,10 @@ const Header = () => {
   return (
     <motion.header 
       className={cn(
-        "bg-primary w-full z-50 sticky top-0 transition-all duration-300",
-        scrolled && "shadow-md"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        scrolled 
+          ? "bg-white/5 backdrop-blur-md border-b border-white/10 shadow-lg"
+          : "bg-transparent"
       )}
       initial="initial"
       animate="animate"
@@ -217,25 +218,22 @@ const Header = () => {
         </motion.div>
 
         <NavigationMenu className="hidden md:flex max-w-none">
-          <NavigationMenuList className="gap-8">
+          <NavigationMenuList className={cn(
+            "gap-8 px-6 py-2 rounded-full",
+            scrolled ? "bg-white/5 backdrop-blur-md" : "bg-transparent"
+          )}>
             <motion.div variants={navItemVariants}>
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   className={cn(
-                    "font-medium transition-colors relative group",
+                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/") 
-                      ? "text-clean-white font-semibold" 
-                      : "text-clean-white/90 hover:text-clean-white"
+                      ? "text-clean-white bg-white/10" 
+                      : "text-clean-white/90 hover:bg-white/5 hover:text-clean-white"
                   )}
                   asChild
                 >
-                  <Link to="/">
-                    Home
-                    <span className={cn(
-                      "absolute bottom-[-4px] left-0 w-full h-0.5 bg-clean-white transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
-                      isActive("/") ? "scale-x-100" : ""
-                    )}></span>
-                  </Link>
+                  <Link to="/">Home</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </motion.div>
@@ -244,20 +242,14 @@ const Header = () => {
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   className={cn(
-                    "font-medium transition-colors relative group",
+                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/documents") 
-                      ? "text-clean-white font-semibold" 
-                      : "text-clean-white/90 hover:text-clean-white"
+                      ? "text-clean-white bg-white/10" 
+                      : "text-clean-white/90 hover:bg-white/5 hover:text-clean-white"
                   )}
                   asChild
                 >
-                  <Link to="/documents">
-                    Make Documents
-                    <span className={cn(
-                      "absolute bottom-[-4px] left-0 w-full h-0.5 bg-clean-white transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
-                      isActive("/documents") ? "scale-x-100" : ""
-                    )}></span>
-                  </Link>
+                  <Link to="/documents">Make Documents</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </motion.div>
@@ -266,20 +258,14 @@ const Header = () => {
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   className={cn(
-                    "font-medium transition-colors relative group",
+                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/pricing") 
-                      ? "text-clean-white font-semibold" 
-                      : "text-clean-white/90 hover:text-clean-white"
+                      ? "text-clean-white bg-white/10" 
+                      : "text-clean-white/90 hover:bg-white/5 hover:text-clean-white"
                   )}
                   asChild
                 >
-                  <Link to="/pricing">
-                    Pricing
-                    <span className={cn(
-                      "absolute bottom-[-4px] left-0 w-full h-0.5 bg-clean-white transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100",
-                      isActive("/pricing") ? "scale-x-100" : ""
-                    )}></span>
-                  </Link>
+                  <Link to="/pricing">Pricing</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </motion.div>
@@ -293,7 +279,12 @@ const Header = () => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline" 
-                    className="rounded-full w-10 h-10 p-0 bg-clean-white border-clean-white hover:bg-clean-white/80"
+                    className={cn(
+                      "rounded-full w-10 h-10 p-0 transition-all duration-300",
+                      scrolled 
+                        ? "bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/20"
+                        : "bg-white/5 border-white/10 hover:bg-white/10"
+                    )}
                   >
                     <Avatar className="h-9 w-9">
                       <AvatarFallback className="bg-primary text-clean-white">
@@ -304,22 +295,22 @@ const Header = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent 
                   align="end" 
-                  className="w-56 mt-2 bg-clean-white border border-primary/20"
+                  className="w-56 mt-2 bg-white/10 backdrop-blur-md border border-white/10"
                 >
-                  <div className="px-4 py-3 border-b border-primary/20">
-                    <p className="text-sm font-medium text-deep-blue">
+                  <div className="px-4 py-3 border-b border-white/10">
+                    <p className="text-sm font-medium text-clean-white">
                       {userName}
                     </p>
                   </div>
-                  <DropdownMenuItem asChild className="cursor-pointer">
+                  <DropdownMenuItem asChild className="cursor-pointer text-clean-white hover:bg-white/10">
                     <Link to="/user-dashboard" className="flex items-center">
                       <User className="mr-2 h-4 w-4" />
                       <span>Dashboard</span>
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator className="bg-white/10" />
                   <DropdownMenuItem 
-                    className="cursor-pointer text-red-500 hover:text-red-600"
+                    className="cursor-pointer text-red-300 hover:bg-red-500/10 hover:text-red-200"
                     onClick={handleLogout}
                   >
                     <LogOut className="mr-2 h-4 w-4" />
@@ -333,7 +324,12 @@ const Header = () => {
               <motion.div variants={navItemVariants}>
                 <Link to="/login">
                   <Button variant="outline" 
-                    className="border-clean-white text-clean-white hover:bg-clean-white hover:text-primary font-medium transition-all"
+                    className={cn(
+                      "border-white/20 text-clean-white transition-all duration-300",
+                      scrolled
+                        ? "hover:bg-white/10 backdrop-blur-md"
+                        : "hover:bg-white/5"
+                    )}
                   >
                     Sign In
                   </Button>
@@ -341,7 +337,14 @@ const Header = () => {
               </motion.div>
               <motion.div variants={navItemVariants}>
                 <Link to="/signup">
-                  <Button className="bg-clean-white text-primary hover:bg-clean-white/80 transition-all font-medium">
+                  <Button 
+                    className={cn(
+                      "text-primary transition-all duration-300",
+                      scrolled
+                        ? "bg-white/90 hover:bg-white/80"
+                        : "bg-white/80 hover:bg-white/70"
+                    )}
+                  >
                     Sign Up
                   </Button>
                 </Link>
