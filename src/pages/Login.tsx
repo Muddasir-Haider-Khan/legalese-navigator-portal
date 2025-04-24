@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const Login = () => {
   const navigate = useNavigate();
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
@@ -27,7 +27,7 @@ const Login = () => {
       }
     };
     checkSession();
-    
+
     const savedEmail = localStorage.getItem("lastLoginEmail");
     if (savedEmail) {
       setEmail(savedEmail);
@@ -35,7 +35,7 @@ const Login = () => {
     }
   }, [navigate]);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage("");
@@ -47,23 +47,17 @@ const Login = () => {
     }
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
-        console.log("Login error:", error.message);
         setErrorMessage(error.message);
         toast.error("Login failed");
         setIsSubmitting(false);
         return;
       }
-
       toast.success("Welcome back!");
       navigate("/user-dashboard");
     } catch (error) {
-      console.error("Exception during login:", error);
+      console.error("Login exception:", error);
       setErrorMessage("An unexpected error occurred. Please try again.");
       toast.error("An unexpected error occurred");
       setIsSubmitting(false);
@@ -72,7 +66,7 @@ const Login = () => {
 
   return (
     <Layout>
-      <div className="container-custom py-16 md:py-20 min-h-[80vh] flex items-center relative overflow-hidden">
+      <div className="w-screen h-screen flex items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src="/lovable-uploads/067c7b04-b1a2-4236-97eb-2b7cf8b24291.png"
@@ -81,8 +75,8 @@ const Login = () => {
           />
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         </div>
-        
-        <div className="w-full max-w-md mx-auto relative z-10">
+
+        <div className="w-full max-w-md px-4 relative z-10">
           <div className="text-center mb-8 animate-fade-in">
             <h1 className="text-3xl font-bold mb-2 text-white">Welcome Back</h1>
             <p className="text-white/90 font-medium">
@@ -114,10 +108,7 @@ const Login = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="pl-10 bg-white/10 border-black/20 text-white 
-                      placeholder:text-white/60 placeholder:font-medium 
-                      focus:border-black/40 focus:ring-black/20
-                      hover:bg-white/20 transition-all duration-300"
+                    className="pl-10 bg-white/10 border-black/20 text-white placeholder:text-white/60 placeholder:font-medium focus:border-black/40 focus:ring-black/20 hover:bg-white/20 transition-all duration-300"
                     required
                   />
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
@@ -133,10 +124,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="pl-10 bg-white/10 border-black/20 text-white 
-                      placeholder:text-white/60 placeholder:font-medium 
-                      focus:border-black/40 focus:ring-black/20
-                      hover:bg-white/20 transition-all duration-300"
+                    className="pl-10 bg-white/10 border-black/20 text-white placeholder:text-white/60 placeholder:font-medium focus:border-black/40 focus:ring-black/20 hover:bg-white/20 transition-all duration-300"
                     required
                   />
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
@@ -162,18 +150,14 @@ const Login = () => {
                     Remember me
                   </label>
                 </div>
-                <Link
-                  to="/forgot-password"
-                  className="text-white text-sm hover:text-white/70 transition-colors"
-                >
+                <Link to="/forgot-password" className="text-white text-sm hover:text-white/70 transition-colors">
                   Forgot password?
                 </Link>
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-black hover:bg-black/90 text-white transition-all duration-300
-                  hover:shadow-lg hover:shadow-black/25 animate-fade-in"
+                className="w-full bg-black hover:bg-black/90 text-white transition-all duration-300 hover:shadow-lg hover:shadow-black/25 animate-fade-in"
                 style={{ animationDelay: "0.5s" }}
                 disabled={isSubmitting}
               >
@@ -211,11 +195,8 @@ const Login = () => {
 
             <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: "0.7s" }}>
               <p className="text-white">
-                Don't have an account?{" "}
-                <Link 
-                  to="/signup" 
-                  className="text-white hover:text-white/70 transition-colors hover:underline"
-                >
+                Don't have an account? {" "}
+                <Link to="/signup" className="text-white hover:text-white/70 transition-colors hover:underline">
                   Sign up
                 </Link>
               </p>
@@ -228,3 +209,4 @@ const Login = () => {
 };
 
 export default Login;
+
