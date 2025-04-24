@@ -120,7 +120,7 @@ const Pricing = () => {
 
       <div className="relative -mt-32 px-4 pb-20 bg-gradient-to-b from-white via-bright-orange-50/30 to-white">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-[10cm] md:grid-cols-2 lg:grid-cols-3">
             {plans.map((plan) => (
               <PricingCard 
                 key={plan.name}
