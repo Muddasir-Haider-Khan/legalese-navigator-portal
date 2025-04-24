@@ -35,7 +35,7 @@ const BusinessBackgroundSlideshow = () => {
                   alt={`Business presentation ${index + 1}`}
                   className="w-full h-full object-cover transition-all duration-700 ease-in-out transform scale-105 hover:scale-100 blur-[2px] hover:blur-[1px]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-bright-orange-600/40 to-bright-orange-900/40 transition-opacity duration-700 ease-in-out backdrop-blur-sm"></div>
+                {/* Removed orange gradient overlay */}
               </div>
             </CarouselItem>
           ))}
