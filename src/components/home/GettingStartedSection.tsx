@@ -89,7 +89,7 @@ const GettingStartedSection = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-lg text-black/70 max-w-3xl mx-auto"
+            className="text-lg text-black max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -127,7 +127,7 @@ const GettingStartedSection = () => {
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-black">{step.title}</h3>
-                <p className="text-black/70 mb-6">{step.description}</p>
+                <p className="text-black mb-6">{step.description}</p>
                 <Link 
                   to={step.linkTo} 
                   className="inline-flex items-center text-black hover:text-black/70 font-medium group"
@@ -159,10 +159,10 @@ const GettingStartedSection = () => {
           <div className="relative overflow-hidden rounded-xl shadow-xl bg-white/80 backdrop-blur-sm">
             <div className="md:flex items-center">
               <div className="md:w-1/2 p-8 md:p-12">
-                <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-bright-orange-500 to-rocket-blue-600 bg-clip-text text-transparent">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-black">
                   Ready to simplify your legal work?
                 </h3>
-                <p className="text-gray-600 mb-8 text-lg">
+                <p className="text-black/70 mb-8 text-lg">
                   Our platform guides you through each step to create professional, legally-binding documents tailored to your needs.
                 </p>
                 <Link 
