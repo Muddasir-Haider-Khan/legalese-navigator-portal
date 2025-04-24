@@ -1,3 +1,4 @@
+
 import { useEffect, useState, useMemo, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -14,6 +15,8 @@ const StatsSection = lazy(() => import("@/components/home/StatsSection"));
 const ProcessSection = lazy(() => import("@/components/home/ProcessSection"));
 const TrustBadges = lazy(() => import("@/components/home/TrustBadges"));
 const LegalConcernsSection = lazy(() => import("@/components/home/LegalConcernsSection"));
+const ServicesGallery = lazy(() => import("@/components/home/ServicesGallery"));
+const LegalTeamSection = lazy(() => import("@/components/home/LegalTeamSection"));
 
 // Loading placeholder for suspense
 const SectionPlaceholder = () => (
@@ -63,6 +66,10 @@ const LandingPage = () => {
         
         <Suspense fallback={<SectionPlaceholder />}>
           <TrustBadges />
+        </Suspense>
+
+        <Suspense fallback={<SectionPlaceholder />}>
+          <ServicesGallery />
         </Suspense>
 
         <section className="py-20 md:py-28 relative overflow-hidden">
@@ -140,6 +147,10 @@ const LandingPage = () => {
         
         <Suspense fallback={<SectionPlaceholder />}>
           <Features />
+        </Suspense>
+
+        <Suspense fallback={<SectionPlaceholder />}>
+          <LegalTeamSection />
         </Suspense>
         
         <Suspense fallback={<SectionPlaceholder />}>
