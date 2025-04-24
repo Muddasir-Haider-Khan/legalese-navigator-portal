@@ -6,11 +6,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { 
   FileText, Shield, Clock, Book, CheckCircle, ArrowRight, 
-  ChevronRight, Award, Scale, PenTool, BookOpen
+  ChevronRight, Award, Scale, PenTool, BookOpen, Search
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import DocumentCategorySection from "./documents/DocumentCategorySection";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 const documentTemplates = [
   { 
@@ -125,9 +128,11 @@ const documentTemplates = [
 
 const MakeDocuments = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   useEffect(() => {
     const checkAuth = async () => {
@@ -168,7 +173,10 @@ const MakeDocuments = () => {
   
   const filteredDocuments = selectedCategory 
     ? documentTemplates.filter(doc => doc.category === selectedCategory)
-    : documentTemplates;
+    : documentTemplates.filter(doc => 
+        doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        doc.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
 
   const features = [
     {
@@ -202,89 +210,119 @@ const MakeDocuments = () => {
   }
 
   return (
-    <div className="space-y-16">
-      {/* Hero Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-bright-orange-100 to-bright-orange-50 dark:from-rocket-gray-800 dark:to-rocket-gray-900 rounded-xl p-8 mb-12">
-        <div className="absolute inset-0 overflow-hidden opacity-10">
-          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <defs>
-              <pattern id="dotPattern" width="20" height="20" patternUnits="userSpaceOnUse">
-                <circle cx="3" cy="3" r="1.5" fill="currentColor" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#dotPattern)" />
-          </svg>
-        </div>
-        
-        <div className="relative max-w-3xl">
-          <Badge variant="outline" className="bg-white/80 text-bright-orange-500 mb-4">
-            PROFESSIONAL TEMPLATES
-          </Badge>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-rocket-gray-900 dark:text-white">
-            Create Professional Legal Documents
-          </h1>
-          <p className="text-lg text-rocket-gray-600 dark:text-rocket-gray-300 mb-6">
-            Choose from our wide selection of legally-vetted templates and create customized documents in minutes.
-          </p>
-          <Button className="bg-bright-orange-500 hover:bg-bright-orange-600 text-white group">
-            Get Started <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
+    <div className="space-y-12">
+      {/* Search and Filters */}
+      <div className={cn(
+        "bg-white rounded-xl shadow-sm border border-gray-100 p-6",
+        isMobile ? "mx-2" : ""
+      )}>
+        <div className={cn(
+          "flex items-center gap-4",
+          isMobile ? "flex-col" : "flex-row"
+        )}>
+          <div className={cn(
+            "relative",
+            isMobile ? "w-full" : "w-64"
+          )}>
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Input
+              type="text"
+              placeholder="Search templates..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9 bg-gray-50"
+            />
+          </div>
+          
+          <div className={cn(
+            "flex gap-2 flex-wrap",
+            isMobile ? "w-full overflow-x-auto pb-2" : ""
+          )}>
+            <Button
+              variant={selectedCategory === null ? "default" : "outline"}
+              onClick={() => setSelectedCategory(null)}
+              size="sm"
+              className="rounded-full"
+            >
+              All Documents
+            </Button>
+            {categories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category)}
+                size="sm"
+                className={`rounded-full whitespace-nowrap ${
+                  selectedCategory === category ? 'bg-bright-orange-500 hover:bg-bright-orange-600' : ''
+                }`}
+              >
+                {category}
+              </Button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Feature Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div className={cn(
+        "grid gap-4",
+        isMobile ? "grid-cols-1 mx-2" : "grid-cols-2 md:grid-cols-4"
+      )}>
         {features.map((feature, index) => (
-          <Card key={index} className="border-border/50 hover:border-bright-orange-500/50 transition-all duration-300 hover:shadow-md">
-            <CardContent className="pt-6">
-              <div className="mb-4 bg-bright-orange-50 dark:bg-bright-orange-900/10 p-3 rounded-lg inline-block">
+          <Card key={index} className="border-border/50 hover:border-bright-orange-500/50 transition-all duration-300 hover:shadow bg-white overflow-hidden">
+            <CardContent className="p-5">
+              <div className="mb-4 bg-bright-orange-50 p-3 rounded-lg inline-block">
                 {feature.icon}
               </div>
-              <h3 className="text-lg font-medium mb-2">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
+              <h3 className="text-lg font-medium mb-2 text-deep-blue-900">{feature.title}</h3>
+              <p className="text-sm text-muted-foreground">{feature.description}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Category Filters */}
-      <div className="flex flex-wrap gap-3 mb-8">
-        <Button
-          variant={selectedCategory === null ? "default" : "outline"}
-          onClick={() => setSelectedCategory(null)}
-          className="rounded-full"
-        >
-          All Categories
-        </Button>
-        {categories.map((category) => (
-          <Button
-            key={category}
-            variant={selectedCategory === category ? "default" : "outline"}
-            onClick={() => setSelectedCategory(category)}
-            className="rounded-full"
-          >
-            {category}
-          </Button>
-        ))}
-      </div>
-
       {/* Document Sections */}
-      <div className="space-y-16">
-        {filteredDocuments.map((document, index) => (
-          <DocumentCategorySection
-            key={document.id}
-            document={document}
-            onStartCreating={handleStartCreating}
-            isAuthenticated={isAuthenticated}
-            index={index}
-          />
-        ))}
+      <div className="space-y-8">
+        {filteredDocuments.length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100">
+            <FileText className="h-16 w-16 mx-auto text-gray-300 mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No documents found</h3>
+            <p className="text-muted-foreground mb-4">Try adjusting your search or filter criteria</p>
+            <Button 
+              onClick={() => {
+                setSearchTerm("");
+                setSelectedCategory(null);
+              }} 
+              variant="outline"
+              className="inline-flex items-center"
+            >
+              <ArrowRight className="mr-2 h-4 w-4 rotate-180" />
+              Reset Filters
+            </Button>
+          </div>
+        ) : (
+          filteredDocuments.map((document, index) => (
+            <DocumentCategorySection
+              key={document.id}
+              document={document}
+              onStartCreating={handleStartCreating}
+              isAuthenticated={isAuthenticated}
+              index={index}
+            />
+          ))
+        )}
       </div>
 
       {/* How It Works */}
-      <div className="bg-white dark:bg-rocket-gray-800 rounded-xl p-8 border border-border/50 mb-12">
-        <h2 className="text-2xl font-semibold mb-8 text-center">How It Works</h2>
-        <div className="grid md:grid-cols-3 gap-8">
+      <div className={cn(
+        "bg-white rounded-xl p-8 border border-gray-100 shadow-sm",
+        isMobile ? "mx-2" : ""
+      )}>
+        <h2 className="text-2xl font-semibold mb-8 text-center text-deep-blue-900">How It Works</h2>
+        <div className={cn(
+          "grid gap-8", 
+          isMobile ? "grid-cols-1" : "md:grid-cols-3"
+        )}>
           {[
             {
               step: "1",
@@ -303,36 +341,42 @@ const MakeDocuments = () => {
             }
           ].map((step, index) => (
             <div key={index} className="relative">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 rounded-full bg-bright-orange-100 dark:bg-bright-orange-900/20 flex items-center justify-center text-bright-orange-500 font-bold text-lg">
+              <div className="flex items-start mb-4">
+                <div className="w-10 h-10 rounded-full bg-bright-orange-100 flex items-center justify-center text-bright-orange-500 font-bold text-lg">
                   {step.step}
                 </div>
                 <div className="ml-4">
-                  <h3 className="font-semibold text-lg">{step.title}</h3>
+                  <h3 className="font-semibold text-lg text-deep-blue-900">{step.title}</h3>
                 </div>
               </div>
-              <p className="text-muted-foreground">{step.description}</p>
+              <p className="ml-14 text-muted-foreground">{step.description}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Trust Badges */}
-      <div className="bg-white dark:bg-rocket-gray-800 rounded-xl p-8 border border-border/50 mb-12">
+      <div className={cn(
+        "bg-white rounded-xl p-8 border border-gray-100 shadow-sm mb-8",
+        isMobile ? "mx-2" : ""
+      )}>
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-semibold mb-2">Trusted by Thousands</h2>
+          <h2 className="text-2xl font-semibold mb-2 text-deep-blue-900">Trusted by Thousands</h2>
           <p className="text-muted-foreground">Join thousands of satisfied users who trust our platform</p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className={cn(
+          "grid gap-4", 
+          isMobile ? "grid-cols-2" : "grid-cols-2 md:grid-cols-4"
+        )}>
           {[
             { icon: <Shield className="h-5 w-5" />, text: "256-bit Encryption" },
             { icon: <CheckCircle className="h-5 w-5" />, text: "GDPR Compliant" },
             { icon: <Award className="h-5 w-5" />, text: "Legal Expert Reviewed" },
             { icon: <Clock className="h-5 w-5" />, text: "24/7 Support" }
           ].map((badge, index) => (
-            <div key={index} className="flex items-center justify-center p-4 bg-rocket-gray-50 dark:bg-rocket-gray-900 rounded-lg">
+            <div key={index} className="flex items-center justify-center p-4 bg-gray-50 rounded-lg border border-gray-100">
               <div className="text-bright-orange-500 mr-2">{badge.icon}</div>
-              <span className="font-medium text-sm">{badge.text}</span>
+              <span className="font-medium text-sm text-deep-blue-800">{badge.text}</span>
             </div>
           ))}
         </div>

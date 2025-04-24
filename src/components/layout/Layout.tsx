@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import ChatWidget from "../chat/ChatWidget";
+import { cn } from "@/lib/utils";
 
 interface LayoutProps {
   children: ReactNode;
@@ -15,6 +16,7 @@ const Layout = memo(({ children }: LayoutProps) => {
   
   // Check if the current route is the dashboard
   const isDashboard = location.pathname.includes("/dashboard");
+  const isDocumentsPage = location.pathname === "/documents";
 
   useEffect(() => {
     setMounted(true);
@@ -28,7 +30,11 @@ const Layout = memo(({ children }: LayoutProps) => {
   }, []);
 
   return (
-    <div className={`flex flex-col min-h-screen w-full bg-clean-white transition-colors duration-500 ${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
+    <div className={cn(
+      `flex flex-col min-h-screen w-full transition-colors duration-500`,
+      mounted ? 'animate-fade-in' : 'opacity-0',
+      isDocumentsPage ? 'bg-gray-50' : 'bg-clean-white'
+    )}>
       {!isDashboard && <Header />}
       <main className="flex-grow w-full transition-all duration-300 text-deep-blue">
         {children}
