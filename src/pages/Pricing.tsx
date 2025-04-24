@@ -7,7 +7,8 @@ import PricingCard from "@/components/pricing/PricingCard";
 import PricingFaq from "@/components/pricing/PricingFaq";
 import PricingCta from "@/components/pricing/PricingCta";
 import PricingShowcase from "@/components/pricing/PricingShowcase";
-import { Shield, Users, Package } from "lucide-react";
+import { Shield, Users, Package, StarIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PlanFeature {
@@ -145,6 +146,95 @@ const Pricing = () => {
 
         <PricingShowcase />
         
+        {/* Stats Section */}
+        <motion.div 
+          className="bg-white py-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {[
+                { number: "20K+", label: "Satisfied Clients" },
+                { number: "50K+", label: "Documents Created" },
+                { number: "98%", label: "Success Rate" },
+                { number: "24/7", label: "Support Available" }
+              ].map((stat, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="p-6 rounded-2xl bg-gradient-to-br from-bright-orange-50 to-white shadow-lg"
+                >
+                  <h3 className="text-3xl md:text-4xl font-bold text-bright-orange-600 mb-2">{stat.number}</h3>
+                  <p className="text-bright-orange-700">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Testimonials */}
+        <motion.div 
+          className="bg-gradient-to-b from-white to-soft-peach-50 py-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 bg-gradient-to-r from-bright-orange-700 to-bright-orange-500 bg-clip-text text-transparent">
+              What Our Clients Say
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  name: "Sarah Johnson",
+                  role: "Small Business Owner",
+                  text: "The legal support I received was exceptional. Their team helped me navigate complex business regulations with ease.",
+                  rating: 5
+                },
+                {
+                  name: "Michael Chen",
+                  role: "Startup Founder",
+                  text: "Incredible value for the price. The document templates and attorney consultations saved us thousands in legal fees.",
+                  rating: 5
+                },
+                {
+                  name: "Emily Rodriguez",
+                  role: "Real Estate Agent",
+                  text: "Their legal team's expertise in real estate law has been invaluable for my business. Highly recommended!",
+                  rating: 5
+                }
+              ].map((testimonial, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="p-6 rounded-2xl bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300"
+                >
+                  <div className="flex items-center mb-4">
+                    {Array.from({ length: testimonial.rating }).map((_, i) => (
+                      <StarIcon key={i} className="w-5 h-5 text-bright-orange-500" />
+                    ))}
+                  </div>
+                  <p className="text-bright-orange-700 mb-4">{testimonial.text}</p>
+                  <div className="border-t pt-4">
+                    <p className="font-semibold text-bright-orange-700">{testimonial.name}</p>
+                    <p className="text-sm text-bright-orange-500">{testimonial.role}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-20">
             <div className="relative rounded-2xl overflow-hidden shadow-xl">
