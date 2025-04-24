@@ -1,7 +1,7 @@
-
 import React from "react";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { Sparkles } from "lucide-react";
 
 interface PricingHeroProps {
   billingCycle: "monthly" | "annually";
@@ -28,25 +28,37 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
             Choose the plan that best fits your legal needs. All plans include access to our core features.
           </p>
 
-          <div className="mt-10 flex items-center justify-center gap-4">
+          <div className="mt-10 flex items-center justify-center gap-6">
             <span className={cn(
-              "text-base font-medium",
-              billingCycle === "monthly" ? "text-bright-orange-500" : "text-white/70"
+              "text-lg font-semibold transition-colors duration-200",
+              billingCycle === "monthly" ? "text-bright-orange-500" : "text-white/70 hover:text-white/90"
             )}>Monthly</span>
-            <Switch
-              checked={billingCycle === "annually"}
-              onCheckedChange={() => setBillingCycle(billingCycle === "monthly" ? "annually" : "monthly")}
-              className="bg-white/20 data-[state=checked]:bg-white/40"
-            />
+            
+            <div className="relative">
+              <div className={cn(
+                "absolute -inset-3 rounded-lg bg-gradient-to-r from-bright-orange-500/50 to-bright-orange-600/50 blur-lg transition-opacity duration-500",
+                billingCycle === "annually" ? "opacity-100" : "opacity-0"
+              )} />
+              <Switch
+                checked={billingCycle === "annually"}
+                onCheckedChange={() => setBillingCycle(billingCycle === "monthly" ? "annually" : "monthly")}
+                className="relative bg-white/20 data-[state=checked]:bg-bright-orange-500"
+              />
+            </div>
+            
             <span className={cn(
-              "text-base font-medium",
-              billingCycle === "annually" ? "text-bright-orange-500" : "text-white/70"
+              "text-lg font-semibold transition-colors duration-200",
+              billingCycle === "annually" ? "text-bright-orange-500" : "text-white/70 hover:text-white/90"
             )}>Annual</span>
           </div>
 
           {billingCycle === "annually" && (
-            <div className="mt-6 inline-flex items-center rounded-full bg-white/10 px-6 py-3 text-sm font-semibold text-bright-orange-500 backdrop-blur-sm">
-              <span className="mr-2">🎉</span> Save up to 33% with annual billing
+            <div className="mt-8 inline-flex animate-bounce-slow items-center rounded-full bg-gradient-to-r from-bright-orange-500/20 to-bright-orange-600/20 px-8 py-4 backdrop-blur-sm transition-all duration-500 hover:from-bright-orange-500/30 hover:to-bright-orange-600/30">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-bright-orange-500/10 to-bright-orange-600/10 blur-md" />
+              <Sparkles className="mr-3 h-5 w-5 text-bright-orange-400 animate-pulse" />
+              <span className="relative font-semibold text-bright-orange-400">
+                Save up to <span className="text-bright-orange-500">33%</span> with annual billing
+              </span>
             </div>
           )}
         </div>
