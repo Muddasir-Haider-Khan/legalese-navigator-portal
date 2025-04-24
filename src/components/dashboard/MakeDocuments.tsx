@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -46,6 +47,17 @@ const MakeDocuments = () => {
     
     return () => subscription.unsubscribe();
   }, []);
+  
+  const handleStartCreating = (documentId: number) => {
+    if (!isAuthenticated) {
+      toast.error("Please sign in to use this template");
+      navigate("/login");
+      return;
+    }
+    
+    navigate(`/document-detail/${documentId}`);
+    toast.success("Template loaded successfully");
+  };
   
   const categories = [...new Set(documentTemplates.map(doc => doc.category))];
   
