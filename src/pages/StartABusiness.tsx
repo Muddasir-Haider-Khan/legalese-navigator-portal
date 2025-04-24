@@ -1,9 +1,8 @@
-
 import { 
-  Building2,
-  BriefcaseBusiness,
-  FileLock,
-  Star
+  Building2, BriefcaseBusiness, FileLock, Star,
+  Award, UserCheck, CheckCircle, ShieldCheck,
+  DollarSign, Clock, Rocket, Users, Search,
+  ChartBar, Handshake, ClipboardCheck
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
@@ -32,6 +31,30 @@ const StartABusiness = () => {
             >
               <Link to="/signup">Start Now</Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Indicators */}
+      <section className="py-8 bg-bright-orange-50">
+        <div className="container-custom">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="font-bold text-3xl text-bright-orange-500 mb-2">50K+</div>
+              <div className="text-gray-600">Businesses Formed</div>
+            </div>
+            <div className="text-center">
+              <div className="font-bold text-3xl text-bright-orange-500 mb-2">98%</div>
+              <div className="text-gray-600">Success Rate</div>
+            </div>
+            <div className="text-center">
+              <div className="font-bold text-3xl text-bright-orange-500 mb-2">24/7</div>
+              <div className="text-gray-600">Support Available</div>
+            </div>
+            <div className="text-center">
+              <div className="font-bold text-3xl text-bright-orange-500 mb-2">4.9/5</div>
+              <div className="text-gray-600">Customer Rating</div>
+            </div>
           </div>
         </div>
       </section>
@@ -250,44 +273,177 @@ const StartABusiness = () => {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-16 bg-[#FDE1D3]">
+      {/* Why Choose Us */}
+      <section className="py-16 bg-white">
         <div className="container-custom">
-          <h2 className="text-3xl font-bold text-black text-center mb-12">
-            Why Choose Legal Gram
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="text-center">
-              <Star className="h-10 w-10 text-bright-orange-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-black mb-3">
-                Expert Support
-              </h3>
-              <p className="text-black">
-                Get help from our network of experienced business attorneys.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <Star className="h-10 w-10 text-bright-orange-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-black mb-3">
-                Affordable Pricing
-              </h3>
-              <p className="text-black">
-                Start your business without breaking the bank.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <Star className="h-10 w-10 text-bright-orange-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-black mb-3">
-                Fast & Easy
-              </h3>
-              <p className="text-black">
-                Simple step-by-step process to get started quickly.
-              </p>
-            </div>
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Our Business Formation Services?</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { icon: Clock, title: "Fast Processing", desc: "Get your business formed in as little as 24 hours" },
+              { icon: ShieldCheck, title: "100% Accuracy", desc: "Guaranteed accurate filing with state authorities" },
+              { icon: UserCheck, title: "Expert Support", desc: "Access to business formation specialists" },
+              { icon: DollarSign, title: "Competitive Pricing", desc: "Transparent pricing with no hidden fees" },
+              { icon: ClipboardCheck, title: "Compliance", desc: "Stay compliant with state regulations" },
+              { icon: Handshake, title: "Dedicated Service", desc: "Personal attention to your business needs" }
+            ].map((item, index) => (
+              <div key={index} className="p-6 rounded-xl border border-gray-200 hover:border-bright-orange-300 transition-all hover:shadow-lg">
+                <item.icon className="h-10 w-10 text-bright-orange-500 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                <p className="text-gray-600">{item.desc}</p>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* Process Steps */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { step: "1", title: "Choose Your Business Type", desc: "Select the structure that fits your needs" },
+              { step: "2", title: "Provide Information", desc: "Fill out our simple online questionnaire" },
+              { step: "3", title: "Review & Submit", desc: "We'll prepare and file your documents" },
+              { step: "4", title: "Start Operating", desc: "Receive your formation documents" }
+            ].map((item, index) => (
+              <div key={index} className="relative">
+                <div className="bg-bright-orange-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mb-4">
+                  {item.step}
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                <p className="text-gray-600">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Comparison */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-center mb-12">Compare Business Structures</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="p-4 border text-left">Feature</th>
+                  <th className="p-4 border text-center">LLC</th>
+                  <th className="p-4 border text-center">Corporation</th>
+                  <th className="p-4 border text-center">S-Corporation</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { feature: "Limited Liability Protection", llc: true, corp: true, scorp: true },
+                  { feature: "Tax Flexibility", llc: true, corp: false, scorp: true },
+                  { feature: "Management Flexibility", llc: true, corp: false, scorp: false },
+                  { feature: "Ownership Restrictions", llc: false, corp: false, scorp: true },
+                  { feature: "Stock Options", llc: false, corp: true, scorp: true }
+                ].map((row, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="p-4 border">{row.feature}</td>
+                    <td className="p-4 border text-center">
+                      {row.llc ? <CheckCircle className="inline h-5 w-5 text-green-500" /> : "-"}
+                    </td>
+                    <td className="p-4 border text-center">
+                      {row.corp ? <CheckCircle className="inline h-5 w-5 text-green-500" /> : "-"}
+                    </td>
+                    <td className="p-4 border text-center">
+                      {row.scorp ? <CheckCircle className="inline h-5 w-5 text-green-500" /> : "-"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Reviews */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Sarah Johnson",
+                business: "Tech Startup",
+                text: "The process was incredibly smooth. Got my LLC set up in no time!",
+                rating: 5
+              },
+              {
+                name: "Michael Chang",
+                business: "Consulting Firm",
+                text: "Excellent support team that guided me through every step.",
+                rating: 5
+              },
+              {
+                name: "Emily Rodriguez",
+                business: "E-commerce Store",
+                text: "Best decision for my business. Highly recommend their services!",
+                rating: 5
+              }
+            ].map((review, index) => (
+              <div key={index} className="p-6 rounded-xl bg-white shadow-lg">
+                <div className="flex mb-4">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
+                  ))}
+                </div>
+                <p className="text-gray-600 mb-4">{review.text}</p>
+                <div className="font-semibold">{review.name}</div>
+                <div className="text-sm text-gray-500">{review.business}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              {
+                q: "How long does it take to form a business?",
+                a: "Most businesses can be formed within 24-48 hours after submitting all required information."
+              },
+              {
+                q: "What's included in your service?",
+                a: "Our service includes document preparation, state filing, registered agent service, and compliance support."
+              },
+              {
+                q: "Do I need a registered agent?",
+                a: "Yes, all formal business entities are required to have a registered agent in their state of formation."
+              },
+              {
+                q: "What's the difference between LLC and Corporation?",
+                a: "LLCs offer more flexibility in management and taxation, while corporations have a more rigid structure but may be preferred for raising capital."
+              }
+            ].map((faq, index) => (
+              <div key={index} className="p-6 rounded-xl border border-gray-200">
+                <h3 className="text-xl font-semibold mb-2">{faq.q}</h3>
+                <p className="text-gray-600">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-br from-bright-orange-500 to-bright-orange-600 text-white">
+        <div className="container-custom text-center">
+          <h2 className="text-4xl font-bold mb-6">Ready to Start Your Business Journey?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">Join thousands of successful business owners who trusted us with their business formation</p>
+          <Button 
+            size="lg"
+            className="bg-white text-bright-orange-500 hover:bg-gray-100"
+            asChild
+          >
+            <Link to="/signup">Get Started Today</Link>
+          </Button>
         </div>
       </section>
     </Layout>
