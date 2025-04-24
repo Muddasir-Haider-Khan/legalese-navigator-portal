@@ -1,11 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import DiagonalSection from "@/components/documents/DiagonalSection";
 
 const documentTemplates = [
   { id: 1, name: "Last Will and Testament", category: "Estate Planning", complexity: "Medium" },
@@ -89,41 +87,16 @@ const MakeDocuments = () => {
           </Button>
         ))}
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredDocuments.map(doc => (
-          <Card key={doc.id} className="transition-all duration-300 hover:shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-start gap-3">
-                <FileText className="h-5 w-5 flex-shrink-0 text-primary" />
-                <span>{doc.name}</span>
-              </CardTitle>
-              <CardDescription>{doc.category}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">
-                  {doc.complexity} Complexity
-                </span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                This document template provides a standard format that complies with legal requirements.
-              </p>
-              <img 
-                src="/lovable-uploads/34269ddd-2754-4348-8200-d0cbb7790b18.png" 
-                alt="Document signing" 
-                className="w-full h-48 object-cover rounded-lg mt-4 opacity-80"
-              />
-            </CardContent>
-            <CardFooter>
-              <Button 
-                className="w-full"
-                onClick={() => handleStartCreating(doc.id)}
-              >
-                {isAuthenticated ? "Start Creating" : "Log in to Create"} <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </CardFooter>
-          </Card>
+
+      <div className="space-y-16">
+        {filteredDocuments.map((doc, index) => (
+          <DiagonalSection
+            key={doc.id}
+            document={doc}
+            index={index}
+            onSelect={handleStartCreating}
+            isAuthenticated={isAuthenticated}
+          />
         ))}
       </div>
     </div>
