@@ -122,11 +122,11 @@ const Pricing = () => {
         <meta name="description" content="Choose the perfect legal plan for your needs. Our flexible pricing plans provide access to legal documents, attorney advice, and more." />
       </Helmet>
 
-      <div className="relative min-h-[60vh] overflow-hidden bg-gradient-to-br from-bright-orange-400/90 to-bright-orange-600/90">
+      <div className="relative min-h-[60vh] overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30 z-0" 
+          className="absolute inset-0 bg-cover bg-center opacity-50 z-0" 
           style={{ 
-            backgroundImage: `url('/lovable-uploads/5d58d191-c018-4dab-83fb-0de32812a273.png')`,
+            backgroundImage: `url('/lovable-uploads/09be416a-5502-4aba-bea8-7824117c4e53.png')`,
             maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, transparent)'
           }}
         />
