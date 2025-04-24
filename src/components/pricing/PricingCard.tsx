@@ -54,15 +54,15 @@ const PricingCard = ({ plan, billingCycle, savings }: PricingCardProps) => {
       )}
 
       <div className="p-8 flex flex-col flex-grow">
-        <h3 className="text-2xl font-bold text-bright-orange-900">{plan.name}</h3>
-        <p className="mt-2 min-h-[48px] text-bright-orange-600/80">{plan.description}</p>
+        <h3 className="text-2xl font-bold text-bright-orange-700">{plan.name}</h3>
+        <p className="mt-2 min-h-[48px] text-bright-orange-600">{plan.description}</p>
 
         <div className="my-8">
-          <div className="flex items-baseline text-bright-orange-900">
+          <div className="flex items-baseline text-bright-orange-700">
             <span className="text-5xl font-bold tracking-tight">
               ${plan.price[billingCycle]}
             </span>
-            <span className="ml-2 text-bright-orange-600/70">/month</span>
+            <span className="ml-2 text-bright-orange-500">/month</span>
           </div>
 
           {billingCycle === "annually" && plan.price.annually > 0 && (
@@ -94,7 +94,7 @@ const PricingCard = ({ plan, billingCycle, savings }: PricingCardProps) => {
               ) : (
                 <X className="h-5 w-5 text-gray-300 mt-0.5 shrink-0" />
               )}
-              <span className="ml-3 text-bright-orange-700">
+              <span className="ml-3 text-bright-orange-600">
                 {feature.name}
                 {feature.info && (
                   <TooltipProvider>

@@ -21,17 +21,17 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
       <div className="container relative mx-auto px-4 py-24 sm:px-6 lg:px-8 z-10 relative">
         <div className="mx-auto max-w-4xl text-center relative">
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl relative z-20">
+          <h1 className="text-4xl font-bold tracking-tight text-bright-orange-500 sm:text-5xl lg:text-6xl relative z-20">
             Simple, Transparent Pricing
           </h1>
-          <p className="mt-6 text-xl text-white/90 relative z-20">
+          <p className="mt-6 text-xl text-bright-orange-600 relative z-20">
             Choose the plan that best fits your legal needs. All plans include access to our core features.
           </p>
 
           <div className="mt-10 flex items-center justify-center gap-4">
             <span className={cn(
               "text-base font-medium",
-              billingCycle === "monthly" ? "text-white" : "text-white/70"
+              billingCycle === "monthly" ? "text-bright-orange-500" : "text-white/70"
             )}>Monthly</span>
             <Switch
               checked={billingCycle === "annually"}
@@ -40,12 +40,12 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
             />
             <span className={cn(
               "text-base font-medium",
-              billingCycle === "annually" ? "text-white" : "text-white/70"
+              billingCycle === "annually" ? "text-bright-orange-500" : "text-white/70"
             )}>Annual</span>
           </div>
 
           {billingCycle === "annually" && (
-            <div className="mt-6 inline-flex items-center rounded-full bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm">
+            <div className="mt-6 inline-flex items-center rounded-full bg-white/10 px-6 py-3 text-sm font-semibold text-bright-orange-500 backdrop-blur-sm">
               <span className="mr-2">🎉</span> Save up to 33% with annual billing
             </div>
           )}
