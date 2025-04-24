@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -90,8 +89,8 @@ const Hero = () => {
           <div className={`transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
             <div className="relative rounded-xl shadow-2xl overflow-hidden backdrop-blur-sm border border-white/10">
               <img 
-                src="/lovable-uploads/609d30f6-95e3-406f-810f-a8f6a462c3f1.png"
-                alt="Person signing legal documents"
+                src="/lovable-uploads/6a7817d2-8d07-4029-ae19-3e7b3fdcb61d.png"
+                alt="Legal consultation with lawyers"
                 className="w-full h-auto object-cover"
                 loading="eager"
               />
