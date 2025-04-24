@@ -1,6 +1,6 @@
 
 import { memo } from "react";
-import { Shield, Gavel, Law, Scale } from "lucide-react";
+import { Shield, Gavel, ScrollText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -24,7 +24,7 @@ const LegalConcernsSection = () => {
       title: "Property Matters",
       description: "Handle real estate transactions and property disputes with proper legal documentation.",
       image: "/lovable-uploads/f71dcb3e-44f6-47f2-a368-b65778dfe4da.png",
-      icon: Law,
+      icon: ScrollText,
       link: "/property-law"
     }
   ];
