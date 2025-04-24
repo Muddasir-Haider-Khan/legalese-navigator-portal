@@ -170,6 +170,84 @@ const StartABusiness = () => {
         </div>
       </section>
 
+      {/* Corporation Section */}
+      <section className="py-16 bg-white">
+        <div className="container-custom">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h2 className="text-4xl font-bold text-gray-900">
+                Launch your Corporation
+              </h2>
+              <p className="text-lg text-gray-600">
+                Are you looking for investors, wanting to raise funds through stock sales, or planning to go public? A Corporation may be the right choice for you. A Corporation also shields you from personal liability.
+              </p>
+              <div className="flex gap-4">
+                <Button 
+                  size="lg"
+                  className="bg-bright-orange-500 hover:bg-bright-orange-600"
+                  asChild
+                >
+                  <Link to="/documents/corporation">Start my Corporation</Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  asChild
+                >
+                  <Link to="/documents/corporation-guide">Learn about Corporations</Link>
+                </Button>
+              </div>
+            </div>
+            <div>
+              <img 
+                src="/lovable-uploads/5074c584-3a54-41f2-8196-980f23a6ae03.png"
+                alt="Start your Corporation" 
+                className="rounded-lg w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* S-Corp Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="md:order-2 space-y-6">
+              <h2 className="text-4xl font-bold text-gray-900">
+                Start your S-Corp election
+              </h2>
+              <p className="text-lg text-gray-600">
+                S-corps are a way to unlock tax savings for your business. Add on an S-corp election when you register your Corporation with Legal Gram.
+              </p>
+              <div className="flex gap-4">
+                <Button 
+                  size="lg"
+                  className="bg-bright-orange-500 hover:bg-bright-orange-600"
+                  asChild
+                >
+                  <Link to="/documents/s-corp">Start your S-Corp election</Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  asChild
+                >
+                  <Link to="/documents/s-corp-guide">Learn about S-Corps</Link>
+                </Button>
+              </div>
+            </div>
+            <div className="md:order-1">
+              <img 
+                src="/lovable-uploads/a078a9c9-0b7d-4377-bf6c-483ef3970c5e.png"
+                alt="Start your S-Corp" 
+                className="rounded-lg w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Why Choose Us Section */}
       <section className="py-16 bg-[#FDE1D3]">
         <div className="container-custom">
