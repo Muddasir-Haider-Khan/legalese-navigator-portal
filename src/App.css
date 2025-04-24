@@ -2,7 +2,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -45,4 +44,62 @@ input:focus,
 textarea:focus {
   border-color: #F18F01;
   box-shadow: 0 0 0 2px rgba(241, 143, 1, 0.2);
+}
+
+/* Rocket lawyer inspired styling */
+.page-section {
+  padding: 4rem 0;
+}
+
+.text-primary {
+  color: #F18F01;
+}
+
+.bg-primary {
+  background-color: #F18F01;
+}
+
+.btn-primary {
+  background-color: #F18F01;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #D17701;
+}
+
+.shadow-card {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.hero-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.hero-wave svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 70px;
+}
+
+.hero-wave .shape-fill {
+  fill: #FFFFFF;
+}
+
+.feature-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  background-color: rgba(241, 143, 1, 0.1);
+  color: #F18F01;
+  margin-bottom: 1.5rem;
 }
