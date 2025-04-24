@@ -189,10 +189,6 @@ export default {
 				'enter': 'fade-in 0.3s ease-out, scale-in 0.2s ease-out',
 				'exit': 'fade-out 0.3s ease-out, scale-out 0.2s ease-out',
 				'hover-float': 'float 2s infinite ease-in-out'
-			},
-			textShadow: {
-				'bright-orange': '0 2px 4px rgba(241, 143, 1, 0.3)',
-				'default': '0 1px 3px rgba(0, 0, 0, 0.1)',
 			}
 		}
 	},
@@ -231,17 +227,6 @@ export default {
 					boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
 				},
 			});
-		},
-		function({ addUtilities }: { addUtilities: Function }) {
-			const newUtilities = {
-				'.text-shadow-md': {
-					'text-shadow': '0 1px 3px rgba(0, 0, 0, 0.1)',
-				},
-				'.text-shadow-bright-orange': {
-					'text-shadow': '0 2px 4px rgba(241, 143, 1, 0.3)',
-				}
-			}
-			addUtilities(newUtilities)
 		},
 	],
 } satisfies Config;

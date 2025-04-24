@@ -226,10 +226,10 @@ const Header = () => {
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   className={cn(
-                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full text-shadow-md",
+                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/") 
-                      ? "text-bright-orange-500 text-shadow-bright-orange" 
-                      : "text-bright-orange-500/90 hover:text-bright-orange-500 hover:text-shadow-bright-orange"
+                      ? "text-bright-orange-500" 
+                      : "text-bright-orange-500/90 hover:text-bright-orange-500"
                   )}
                   asChild
                 >
@@ -242,10 +242,10 @@ const Header = () => {
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   className={cn(
-                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full text-shadow-md",
+                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/documents") 
-                      ? "text-bright-orange-500 text-shadow-bright-orange" 
-                      : "text-bright-orange-500/90 hover:text-bright-orange-500 hover:text-shadow-bright-orange"
+                      ? "text-bright-orange-500" 
+                      : "text-bright-orange-500/90 hover:text-bright-orange-500"
                   )}
                   asChild
                 >
@@ -258,10 +258,10 @@ const Header = () => {
               <NavigationMenuItem>
                 <NavigationMenuLink 
                   className={cn(
-                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full text-shadow-md",
+                    "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/pricing") 
-                      ? "text-bright-orange-500 text-shadow-bright-orange" 
-                      : "text-bright-orange-500/90 hover:text-bright-orange-500 hover:text-shadow-bright-orange"
+                      ? "text-bright-orange-500" 
+                      : "text-bright-orange-500/90 hover:text-bright-orange-500"
                   )}
                   asChild
                 >
