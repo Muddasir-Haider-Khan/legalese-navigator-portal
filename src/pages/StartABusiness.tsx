@@ -1,4 +1,3 @@
-
 import { 
   Building2,
   BriefcaseBusiness,
@@ -240,7 +239,7 @@ const StartABusiness = () => {
             </div>
             <div className="md:order-1">
               <img 
-                src="/lovable-uploads/71691382-9c28-40fb-94c3-20713ac62659.png"
+                src="/lovable-uploads/3ccf1e4f-9256-43f2-a0b3-2142bf18e427.png"
                 alt="Start your S-Corp" 
                 className="rounded-lg w-full h-auto"
               />
