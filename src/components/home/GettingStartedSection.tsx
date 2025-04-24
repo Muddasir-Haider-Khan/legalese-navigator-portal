@@ -1,3 +1,4 @@
+
 import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -85,7 +86,7 @@ const GettingStartedSection = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <span className="text-black">
+            <span className="bg-gradient-to-r from-bright-orange-500 to-rocket-blue-600 bg-clip-text text-transparent">
               Three Simple Steps
             </span>
           </motion.h2>
@@ -99,6 +100,93 @@ const GettingStartedSection = () => {
             Creating your legal documents has never been easier
           </motion.p>
         </div>
+        
+        <div className="relative z-10">
+          <div className="grid md:grid-cols-3 gap-8 relative z-10">
+            {steps.map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className={`bg-white rounded-xl p-8 shadow-lg border transition-all duration-500 ${
+                  activeStep === index 
+                    ? 'border-bright-orange-300 shadow-xl transform -translate-y-2' 
+                    : 'border-gray-100'
+                }`}
+                onMouseEnter={() => setActiveStep(index)}
+                onMouseLeave={() => setActiveStep(null)}
+              >
+                <div className="mb-6 relative">
+                  <div className={`w-20 h-20 rounded-full transition-all duration-300 flex items-center justify-center mx-auto shadow-lg ${
+                    activeStep === index 
+                      ? 'bg-gradient-to-br from-bright-orange-500 to-bright-orange-600' 
+                      : 'bg-gradient-to-br from-rocket-blue-500 to-rocket-blue-600'
+                  }`}>
+                    <step.icon className="h-10 w-10 text-white" />
+                  </div>
+                  <div className="absolute -top-4 -right-4 bg-rocket-blue-600 text-white h-8 w-8 rounded-full flex items-center justify-center text-lg font-bold shadow-lg">
+                    {index + 1}
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-3 text-black">{step.title}</h3>
+                <p className="text-gray-600 mb-6">{step.description}</p>
+                <Link 
+                  to={step.linkTo} 
+                  className="inline-flex items-center text-bright-orange-500 hover:text-bright-orange-600 font-medium group"
+                >
+                  <span>{step.linkText}</span>
+                  <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                </Link>
+                
+                {/* Animated progress indicator */}
+                {activeStep === index && (
+                  <motion.div 
+                    className="h-1 bg-gradient-to-r from-bright-orange-500 to-bright-orange-300 mt-6 rounded-full"
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-20 relative"
+        >
+          <div className="absolute inset-0 -m-6 bg-gradient-to-r from-bright-orange-300/20 to-rocket-blue-300/20 rounded-xl blur-xl"></div>
+          <div className="relative overflow-hidden rounded-xl shadow-xl bg-white/80 backdrop-blur-sm">
+            <div className="md:flex items-center">
+              <div className="md:w-1/2 p-8 md:p-12">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r from-bright-orange-500 to-rocket-blue-600 bg-clip-text text-transparent">
+                  Ready to simplify your legal work?
+                </h3>
+                <p className="text-gray-600 mb-8 text-lg">
+                  Our platform guides you through each step to create professional, legally-binding documents tailored to your needs.
+                </p>
+                <Link 
+                  to="/documents" 
+                  className="inline-flex items-center justify-center bg-gradient-to-r from-bright-orange-500 to-bright-orange-600 hover:from-bright-orange-600 hover:to-bright-orange-700 text-white px-8 py-4 rounded-lg font-medium transition-all shadow-md hover:shadow-xl group"
+                >
+                  <span>Get started with your document</span>
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+              <div className="md:w-1/2 h-full">
+                <img 
+                  src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=1000&auto=format&fit=crop" 
+                  alt="Professional signing documents" 
+                  className="w-full h-64 md:h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
