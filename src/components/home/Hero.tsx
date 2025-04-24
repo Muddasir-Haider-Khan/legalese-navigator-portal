@@ -89,8 +89,8 @@ const Hero = () => {
           <div className={`transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
             <div className="relative rounded-xl shadow-2xl overflow-hidden backdrop-blur-sm border border-white/10">
               <img 
-                src="/lovable-uploads/74690c9e-e4e1-4427-8900-fc6e0da8f2f8.png"
-                alt="Legal consultation with lawyers"
+                src="/lovable-uploads/e32135f9-a63c-4eb3-8df0-2e9fcdbc09cb.png"
+                alt="Professional legal consultation"
                 className="w-full h-auto object-cover"
                 loading="eager"
               />
