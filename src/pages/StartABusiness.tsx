@@ -1,11 +1,9 @@
-
 import { 
   Building2,
   Landmark,
   BriefcaseBusiness,
   Star,
   Copyright,
-  Trademark,
   FileLock 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
