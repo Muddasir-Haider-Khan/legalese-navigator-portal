@@ -1,4 +1,3 @@
-
 import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -8,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { useEffect } from "react";
 import LandingPage from "./pages/LandingPage"; // Change to static import
+import StartABusiness from "./pages/StartABusiness"; // Import the StartABusiness component
 
 // Lazy load other pages for better performance
 const DocumentTemplates = lazy(() => import("./pages/DocumentTemplates"));
