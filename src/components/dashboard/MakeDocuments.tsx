@@ -124,69 +124,375 @@ const MakeDocuments = () => {
         ))}
       </div>
 
-      <div className="space-y-16">
-        {documentTemplates.map((doc, index) => (
-          <div 
-            key={doc.id} 
-            className={`relative p-8 rounded-2xl ${
-              index % 2 === 0 
-                ? 'bg-gradient-to-r from-bright-orange-50/50 to-bright-orange-100/50'
-                : 'bg-gradient-to-r from-deep-blue-50/50 to-deep-blue-100/50'
-            }`}
-          >
-            <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row gap-8 items-start">
-                <div className="flex-1 space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-white/80 shadow-sm">
-                      <FileText className="h-6 w-6 text-bright-orange-500" />
-                    </div>
-                    <Badge variant="outline" className="text-xs">
-                      {doc.category}
-                    </Badge>
-                    {doc.complexity === "Low" && (
-                      <Badge variant="secondary" className="bg-green-100 text-green-800">
-                        Easy to Complete
-                      </Badge>
-                    )}
+      <div className="space-y-24">
+        <div className="relative p-8 rounded-2xl bg-gradient-to-r from-bright-orange-50/50 to-bright-orange-100/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-white/80 shadow-sm">
+                    <FileText className="h-6 w-6 text-bright-orange-500" />
                   </div>
-                  
-                  <h2 className="text-2xl font-semibold text-deep-blue-900">{doc.name}</h2>
-                  
-                  <div className="prose prose-gray">
-                    <p className="text-muted-foreground">
-                      {getDocumentDescription(doc.id)}
-                    </p>
-                  </div>
-                  
-                  <div className="pt-4">
-                    <Button 
-                      onClick={() => handleStartCreating(doc.id)}
-                      className="group"
-                    >
-                      {isAuthenticated ? "Start Creating" : "Sign in to Use"}
-                      <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
-                  </div>
+                  <Badge variant="outline">Estate Planning</Badge>
+                  <Badge variant="secondary" className="bg-green-100 text-green-800">
+                    Most Popular
+                  </Badge>
                 </div>
                 
-                <div className="w-full md:w-1/2">
-                  <div className="bg-white/80 p-6 rounded-xl shadow-sm space-y-4">
-                    <h3 className="font-medium text-lg">Key Features</h3>
-                    <ul className="space-y-3">
-                      {getDocumentFeatures(doc.id).map((feature, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <h2 className="text-2xl font-semibold text-deep-blue-900">Last Will and Testament</h2>
+                
+                <div className="prose prose-gray">
+                  <p className="text-muted-foreground">
+                    Create a comprehensive and legally binding will that ensures your wishes are carried out.
+                    This document helps you specify beneficiaries, assign executors, and outline your final wishes
+                    with clarity and legal precision.
+                  </p>
+                </div>
+                
+                <div className="pt-4">
+                  <Button 
+                    onClick={() => handleStartCreating(1)}
+                    className="group"
+                  >
+                    {isAuthenticated ? "Start Creating" : "Sign in to Use"}
+                    <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-1/2">
+                <div className="bg-white/80 p-6 rounded-xl shadow-sm space-y-4">
+                  <h3 className="font-medium text-lg">Key Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Comprehensive asset distribution planning</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Executor appointment and responsibilities</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Beneficiary designation with specific details</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Legal requirements and witnessing guidelines</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-        ))}
+        </div>
+
+        <div className="relative p-8 rounded-2xl bg-gradient-to-r from-deep-blue-50/50 to-deep-blue-100/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-white/80 shadow-sm">
+                    <FileText className="h-6 w-6 text-deep-blue-500" />
+                  </div>
+                  <Badge variant="outline">Business</Badge>
+                  <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                    Easy to Complete
+                  </Badge>
+                </div>
+                
+                <h2 className="text-2xl font-semibold text-deep-blue-900">Non-Disclosure Agreement</h2>
+                
+                <div className="prose prose-gray">
+                  <p className="text-muted-foreground">
+                    Protect your confidential information with our professionally drafted NDA template.
+                    Perfect for business partnerships, employee agreements, and contractor relationships,
+                    ensuring your sensitive information remains secure.
+                  </p>
+                </div>
+                
+                <div className="pt-4">
+                  <Button 
+                    onClick={() => handleStartCreating(2)}
+                    className="group"
+                  >
+                    {isAuthenticated ? "Start Creating" : "Sign in to Use"}
+                    <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-1/2">
+                <div className="bg-white/80 p-6 rounded-xl shadow-sm space-y-4">
+                  <h3 className="font-medium text-lg">Key Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Comprehensive confidentiality terms</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Trade secrets protection clauses</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Clear term and termination details</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Non-circumvention provisions</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative p-8 rounded-2xl bg-gradient-to-r from-bright-orange-50/50 to-bright-orange-100/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-white/80 shadow-sm">
+                    <FileText className="h-6 w-6 text-bright-orange-500" />
+                  </div>
+                  <Badge variant="outline">Estate Planning</Badge>
+                  <Badge variant="secondary" className="bg-bright-orange-100 text-bright-orange-800">
+                    Essential Document
+                  </Badge>
+                </div>
+                
+                <h2 className="text-2xl font-semibold text-deep-blue-900">Power of Attorney</h2>
+                
+                <div className="prose prose-gray">
+                  <p className="text-muted-foreground">
+                    Designate a trusted individual to make financial and legal decisions on your behalf
+                    with our comprehensive Power of Attorney document. Essential for estate planning and
+                    emergency situations.
+                  </p>
+                </div>
+                
+                <div className="pt-4">
+                  <Button 
+                    onClick={() => handleStartCreating(3)}
+                    className="group"
+                  >
+                    {isAuthenticated ? "Start Creating" : "Sign in to Use"}
+                    <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-1/2">
+                <div className="bg-white/80 p-6 rounded-xl shadow-sm space-y-4">
+                  <h3 className="font-medium text-lg">Key Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Detailed powers specification</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Agent responsibilities outline</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Duration and revocation terms</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Healthcare decisions inclusion</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative p-8 rounded-2xl bg-gradient-to-r from-bright-orange-50/50 to-bright-orange-100/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-white/80 shadow-sm">
+                    <FileText className="h-6 w-6 text-bright-orange-500" />
+                  </div>
+                  <Badge variant="outline">Real Estate</Badge>
+                  <Badge variant="secondary" className="bg-deep-blue-100 text-deep-blue-800">
+                    Comprehensive Agreement
+                  </Badge>
+                </div>
+                
+                <h2 className="text-2xl font-semibold text-deep-blue-900">Residential Lease Agreement</h2>
+                
+                <div className="prose prose-gray">
+                  <p className="text-muted-foreground">
+                    Create a comprehensive lease agreement that protects both landlord and tenant interests.
+                    Includes all necessary clauses and legal requirements.
+                  </p>
+                </div>
+                
+                <div className="pt-4">
+                  <Button 
+                    onClick={() => handleStartCreating(4)}
+                    className="group"
+                  >
+                    {isAuthenticated ? "Start Creating" : "Sign in to Use"}
+                    <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-1/2">
+                <div className="bg-white/80 p-6 rounded-xl shadow-sm space-y-4">
+                  <h3 className="font-medium text-lg">Key Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Rent and security deposit terms</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Maintenance responsibilities</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Property rules and regulations</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Notice requirements</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative p-8 rounded-2xl bg-gradient-to-r from-bright-orange-50/50 to-bright-orange-100/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-white/80 shadow-sm">
+                    <FileText className="h-6 w-6 text-bright-orange-500" />
+                  </div>
+                  <Badge variant="outline">Business</Badge>
+                  <Badge variant="secondary" className="bg-deep-blue-100 text-deep-blue-800">
+                    Comprehensive Contract
+                  </Badge>
+                </div>
+                
+                <h2 className="text-2xl font-semibold text-deep-blue-900">Employment Contract</h2>
+                
+                <div className="prose prose-gray">
+                  <p className="text-muted-foreground">
+                    Draft a detailed employment contract that clearly outlines terms, responsibilities,
+                    compensation, and company policies.
+                  </p>
+                </div>
+                
+                <div className="pt-4">
+                  <Button 
+                    onClick={() => handleStartCreating(5)}
+                    className="group"
+                  >
+                    {isAuthenticated ? "Start Creating" : "Sign in to Use"}
+                    <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-1/2">
+                <div className="bg-white/80 p-6 rounded-xl shadow-sm space-y-4">
+                  <h3 className="font-medium text-lg">Key Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Compensation details</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Benefits specification</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Work responsibilities</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Termination conditions</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative p-8 rounded-2xl bg-gradient-to-r from-bright-orange-50/50 to-bright-orange-100/50">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-white/80 shadow-sm">
+                    <FileText className="h-6 w-6 text-bright-orange-500" />
+                  </div>
+                  <Badge variant="outline">Business</Badge>
+                  <Badge variant="secondary" className="bg-deep-blue-100 text-deep-blue-800">
+                    Comprehensive Contract
+                  </Badge>
+                </div>
+                
+                <h2 className="text-2xl font-semibold text-deep-blue-900">Freelance Contract</h2>
+                
+                <div className="prose prose-gray">
+                  <p className="text-muted-foreground">
+                    Establish clear terms and conditions for freelance work. Protect your interests
+                    while maintaining professional relationships.
+                  </p>
+                </div>
+                
+                <div className="pt-4">
+                  <Button 
+                    onClick={() => handleStartCreating(6)}
+                    className="group"
+                  >
+                    {isAuthenticated ? "Start Creating" : "Sign in to Use"}
+                    <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="w-full md:w-1/2">
+                <div className="bg-white/80 p-6 rounded-xl shadow-sm space-y-4">
+                  <h3 className="font-medium text-lg">Key Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Project scope definition</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Payment terms</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Deliverable specifications</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">Intellectual property rights</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="bg-white dark:bg-rocket-gray-800 rounded-xl p-8 border border-border/50 mb-12">
@@ -247,21 +553,20 @@ const MakeDocuments = () => {
   );
 };
 
-// Helper functions to provide content
 const getDocumentDescription = (id: number): string => {
   switch (id) {
     case 1:
-      return "Create a legally binding will to distribute your assets and property. This comprehensive template helps you specify beneficiaries, assign executors, and outline your final wishes with clarity and legal precision.";
+      return "Create a comprehensive and legally binding will that ensures your wishes are carried out.";
     case 2:
-      return "Protect your confidential information with a professionally drafted NDA. Suitable for business partnerships, employee agreements, and contractor relationships.";
+      return "Protect your confidential information with a professionally drafted NDA.";
     case 3:
-      return "Designate someone to make financial and legal decisions on your behalf. Essential for estate planning and emergency situations.";
+      return "Designate someone to make financial and legal decisions on your behalf.";
     case 4:
-      return "Create a comprehensive lease agreement that protects both landlord and tenant interests. Includes all necessary clauses and legal requirements.";
+      return "Create a comprehensive lease agreement that protects both landlord and tenant interests.";
     case 5:
       return "Draft a detailed employment contract that clearly outlines terms, responsibilities, compensation, and company policies.";
     case 6:
-      return "Establish clear terms and conditions for freelance work. Protect your interests while maintaining professional relationships.";
+      return "Establish clear terms and conditions for freelance work.";
     default:
       return "Professional legal document template with comprehensive coverage of all necessary clauses and provisions.";
   }
