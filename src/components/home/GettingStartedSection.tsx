@@ -1,4 +1,3 @@
-
 import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -25,7 +24,6 @@ const GettingStartedSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Automatic step highlighting
   useEffect(() => {
     if (inView) {
       let currentStep = 0;
@@ -64,7 +62,6 @@ const GettingStartedSection = () => {
 
   return (
     <section id="getting-started" className="py-20 md:py-28 bg-white relative overflow-hidden">
-      {/* Decorative elements */}
       <div className="hidden lg:block absolute top-1/2 left-0 w-[80%] h-0.5 bg-gradient-to-r from-bright-orange-300/0 via-bright-orange-300 to-bright-orange-300/0 transform -translate-y-1/2 z-0"></div>
       <div className="absolute top-40 right-0 w-64 h-64 bg-bright-orange-100 rounded-full opacity-30 blur-3xl"></div>
       <div className="absolute bottom-20 left-0 w-64 h-64 bg-blue-100 rounded-full opacity-30 blur-3xl"></div>
@@ -92,7 +89,7 @@ const GettingStartedSection = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-lg text-gray-700 max-w-3xl mx-auto"
+            className="text-lg text-black/70 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -129,17 +126,16 @@ const GettingStartedSection = () => {
                     {index + 1}
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
-                <p className="text-gray-700 mb-6">{step.description}</p>
+                <h3 className="text-xl font-bold mb-3 text-black">{step.title}</h3>
+                <p className="text-black/70 mb-6">{step.description}</p>
                 <Link 
                   to={step.linkTo} 
-                  className="inline-flex items-center text-bright-orange-600 hover:text-bright-orange-700 font-medium group"
+                  className="inline-flex items-center text-black hover:text-black/70 font-medium group"
                 >
                   <span>{step.linkText}</span>
                   <ArrowRight className="ml-2 h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
                 </Link>
                 
-                {/* Animated progress indicator */}
                 {activeStep === index && (
                   <motion.div 
                     className="h-1 bg-gradient-to-r from-bright-orange-500 to-bright-orange-300 mt-6 rounded-full"
@@ -193,4 +189,3 @@ const GettingStartedSection = () => {
 };
 
 export default memo(GettingStartedSection);
-
