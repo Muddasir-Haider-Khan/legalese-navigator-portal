@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import BusinessBackgroundSlideshow from "@/components/business/BusinessBackgroundSlideshow";
+import FAQSection from "@/components/business/FAQSection";
+import ComparisonCard from "@/components/business/ComparisonCard";
 
 const StartABusiness = () => {
   return (
@@ -314,6 +316,55 @@ const StartABusiness = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <FAQSection />
+
+      {/* Comparison Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <h2 className="text-3xl font-bold text-center mb-4">Compare Business Structures</h2>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            Choose the right business structure for your needs. Compare features and benefits to make an informed decision.
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            <ComparisonCard
+              title="LLC"
+              price="Starting at $99"
+              features={[
+                { name: "Limited Liability Protection", included: true },
+                { name: "Pass-through Taxation", included: true },
+                { name: "Flexible Management", included: true },
+                { name: "Easy to Form & Maintain", included: true },
+                { name: "Raise Capital through Stock", included: false }
+              ]}
+            />
+            <ComparisonCard
+              title="Corporation"
+              price="Starting at $149"
+              features={[
+                { name: "Limited Liability Protection", included: true },
+                { name: "Corporate Tax Structure", included: true },
+                { name: "Stock Options", included: true },
+                { name: "Board of Directors", included: true },
+                { name: "Raise Capital through Stock", included: true }
+              ]}
+              popular={true}
+            />
+            <ComparisonCard
+              title="Partnership"
+              price="Starting at $79"
+              features={[
+                { name: "Limited Liability Protection", included: false },
+                { name: "Pass-through Taxation", included: true },
+                { name: "Flexible Management", included: true },
+                { name: "Easy to Form & Maintain", included: true },
+                { name: "Raise Capital through Stock", included: false }
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Expert Guidance Section */}
       <section className="py-16 bg-white">
         <div className="container-custom">
@@ -496,38 +547,6 @@ const StartABusiness = () => {
                 <p className="text-gray-600 mb-4">{review.text}</p>
                 <div className="font-semibold">{review.name}</div>
                 <div className="text-sm text-gray-500">{review.business}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-16 bg-white">
-        <div className="container-custom">
-          <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                q: "How long does it take to form a business?",
-                a: "Most businesses can be formed within 24-48 hours after submitting all required information."
-              },
-              {
-                q: "What's included in your service?",
-                a: "Our service includes document preparation, state filing, registered agent service, and compliance support."
-              },
-              {
-                q: "Do I need a registered agent?",
-                a: "Yes, all formal business entities are required to have a registered agent in their state of formation."
-              },
-              {
-                q: "What's the difference between LLC and Corporation?",
-                a: "LLCs offer more flexibility in management and taxation, while corporations have a more rigid structure but may be preferred for raising capital."
-              }
-            ].map((faq, index) => (
-              <div key={index} className="p-6 rounded-xl border border-gray-200">
-                <h3 className="text-xl font-semibold mb-2">{faq.q}</h3>
-                <p className="text-gray-600">{faq.a}</p>
               </div>
             ))}
           </div>
