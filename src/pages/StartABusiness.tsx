@@ -1,10 +1,7 @@
 import { 
   Building2,
-  Landmark,
   BriefcaseBusiness,
-  Star,
-  Copyright,
-  FileLock 
+  FileLock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
@@ -44,7 +41,6 @@ const StartABusiness = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Business Registrations */}
             <div className="p-6 rounded-xl border border-black/10 hover:shadow-lg transition-shadow">
               <Building2 className="h-10 w-10 text-bright-orange-500 mb-4" />
               <h3 className="text-xl font-semibold text-black mb-3">
@@ -72,7 +68,6 @@ const StartABusiness = () => {
               </Link>
             </div>
 
-            {/* Business Services */}
             <div className="p-6 rounded-xl border border-black/10 hover:shadow-lg transition-shadow">
               <BriefcaseBusiness className="h-10 w-10 text-bright-orange-500 mb-4" />
               <h3 className="text-xl font-semibold text-black mb-3">
@@ -100,7 +95,6 @@ const StartABusiness = () => {
               </Link>
             </div>
 
-            {/* Business Property */}
             <div className="p-6 rounded-xl border border-black/10 hover:shadow-lg transition-shadow">
               <FileLock className="h-10 w-10 text-bright-orange-500 mb-4" />
               <h3 className="text-xl font-semibold text-black mb-3">
@@ -126,6 +120,50 @@ const StartABusiness = () => {
               <Link to="/documents" className="text-bright-orange-500 hover:underline">
                 Learn More →
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Business Types Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative">
+              <div className="absolute -top-4 left-0">
+                <span className="bg-emerald-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                  MOST POPULAR
+                </span>
+              </div>
+              <img 
+                src="/lovable-uploads/888acfa1-e266-4274-be64-98eed751f1d1.png"
+                alt="Start your LLC" 
+                className="rounded-lg w-full h-auto"
+              />
+            </div>
+            <div className="space-y-6">
+              <h2 className="text-4xl font-bold text-gray-900">
+                Start your LLC today
+              </h2>
+              <p className="text-lg text-gray-600">
+                A Limited Liability Company (LLC), protects your personal assets from some business debts and lawsuits, and offers flexible tax management. They're a popular choice for solos and entrepreneurs.
+              </p>
+              <div className="flex gap-4">
+                <Button 
+                  size="lg"
+                  className="bg-bright-orange-500 hover:bg-bright-orange-600"
+                  asChild
+                >
+                  <Link to="/documents/llc">Start my LLC</Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  asChild
+                >
+                  <Link to="/documents/llc-guide">Learn about LLCs</Link>
+                </Button>
+              </div>
             </div>
           </div>
         </div>
