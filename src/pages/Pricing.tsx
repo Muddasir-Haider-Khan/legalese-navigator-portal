@@ -126,7 +126,7 @@ const Pricing = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-50 z-0" 
           style={{ 
-            backgroundImage: `url('/lovable-uploads/0159dbcc-f0ab-4ed4-be2a-e82105dcbc8a.png')`,
+            backgroundImage: `url('/lovable-uploads/72bdd8af-6c42-4cd1-b632-af49b0f06c02.png')`,
             maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 60%, transparent)'
           }}
         />
