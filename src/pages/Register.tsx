@@ -74,12 +74,6 @@ const Register = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen flex items-center justify-center bg-rocket-blue-950 relative overflow-hidden px-4 py-12">
-        {/* Light Effects */}
-        <div className="absolute -top-40 -left-40 w-[100vh] h-[100vh] bg-rocket-blue-200/10 rounded-full blur-3xl opacity-20" />
-        <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full blur-3xl opacity-30" />
-        <div className="absolute bottom-0 left-1/3 w-[70vh] h-[70vh] bg-rocket-blue-400/10 rounded-full blur-3xl opacity-20" />
-
 
 
             {errorMessage && (
