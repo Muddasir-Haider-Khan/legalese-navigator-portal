@@ -87,12 +87,6 @@ const Register = () => {
               Sign up to access legal documents, advice, and more.
             </p>
 
-            <Alert className="mb-6 bg-amber-50/10 border-amber-300/20 animate-slide-in" style={{ animationDelay: "0.025s" }}>
-              <InfoIcon className="h-4 w-4 text-amber-400" />
-              <AlertDescription className="text-xs text-amber-200">
-                Your information will be securely stored in Supabase.
-              </AlertDescription>
-            </Alert>
 
             {errorMessage && (
               <div className="mb-4 p-3 bg-red-900/30 border border-red-800 text-red-300 text-sm rounded-md">
