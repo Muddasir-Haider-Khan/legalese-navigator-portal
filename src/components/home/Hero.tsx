@@ -44,11 +44,11 @@ const Hero = () => {
               <span className="text-sm font-medium text-black">Professional Legal Solutions</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg text-white">
               <span className="text-white">Legal made</span>{" "}
-              <span className="text-bright-orange-500 drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">simple</span>
+              <span className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">simple</span>
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-lg drop-shadow-md font-medium">
+            <p className="text-xl md:text-2xl text-white leading-relaxed max-w-lg drop-shadow-md font-medium">
               Affordable legal services for your family and business
             </p>
             
