@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
@@ -13,16 +12,16 @@ interface PricingHeroProps {
 const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
   return (
     <div className="relative min-h-[70vh] overflow-hidden flex items-center">
-      {/* Enhanced gradient background */}
+      {/* Enhanced gradient background with more visible soft peach */}
       <div 
-        className="absolute inset-0 bg-gradient-to-br from-bright-orange-500/20 via-bright-orange-400/10 to-bright-orange-500/20 opacity-70 z-0 animate-gradient"
+        className="absolute inset-0 bg-gradient-to-br from-soft-peach-50 via-soft-peach-100 to-soft-peach-50 opacity-90 z-0 animate-gradient"
       />
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
       
       {/* Enhanced decorative elements */}
-      <div className="absolute -left-20 top-20 w-60 h-60 bg-bright-orange-500/10 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute -right-20 bottom-20 w-60 h-60 bg-bright-orange-500/10 rounded-full blur-3xl animate-pulse delay-300" />
-      <div className="absolute left-1/4 top-1/3 w-40 h-40 bg-bright-orange-500/10 rounded-full blur-2xl animate-pulse delay-200" />
+      <div className="absolute -left-20 top-20 w-60 h-60 bg-soft-peach-200/30 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute -right-20 bottom-20 w-60 h-60 bg-soft-peach-200/30 rounded-full blur-3xl animate-pulse delay-300" />
+      <div className="absolute left-1/4 top-1/3 w-40 h-40 bg-soft-peach-200/30 rounded-full blur-2xl animate-pulse delay-200" />
       
       <div className="container relative mx-auto px-4 py-24 sm:px-6 lg:px-8 z-10">
         <div className="mx-auto max-w-4xl text-center relative">
@@ -85,14 +84,14 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
 
           {billingCycle === "annually" && (
             <motion.div 
-              className="mt-8 inline-flex animate-float items-center rounded-full bg-gradient-to-r from-bright-orange-500/20 via-bright-orange-400/30 to-bright-orange-500/20 px-8 py-4 backdrop-blur-sm transition-all duration-500 hover:scale-105"
+              className="mt-8 inline-flex animate-float items-center rounded-full bg-soft-peach-100 px-8 py-4 backdrop-blur-sm transition-all duration-500 hover:scale-105 shadow-md"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
               <Sparkle className="mr-3 h-5 w-5 text-bright-orange-500 animate-pulse" />
-              <span className="relative font-semibold text-bright-orange-500">
-                Save up to <span className="text-bright-orange-600 font-bold animate-pulse">33%</span> with annual billing
+              <span className="relative font-semibold text-bright-orange-600">
+                Save up to <span className="text-bright-orange-700 font-bold animate-pulse">33%</span> with annual billing
               </span>
             </motion.div>
           )}

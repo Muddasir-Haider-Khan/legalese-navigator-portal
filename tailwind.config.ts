@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -110,6 +109,19 @@ export default {
 					900: '#94FB94',
 					950: '#87FB87',
 				},
+				'soft-peach': {
+					DEFAULT: '#FDE1D3',
+					50: '#FEF1DE',
+					100: '#FFECD1',
+					200: '#FFE6C6',
+					300: '#FFD6B0',
+					400: '#FFC394',
+					500: '#FFAB6A',
+					600: '#FF9340',
+					700: '#FF7A16',
+					800: '#E66A00',
+					900: '#CC5A00'
+				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
