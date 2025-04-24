@@ -98,11 +98,11 @@ const StatsSection = () => {
 
       <div className="container-custom relative z-10">
         <div className="text-center mb-16">
-          <span className="inline-block bg-white/10 backdrop-blur-sm text-white font-medium px-4 py-1 rounded-full text-sm mb-3">Our Impact</span>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">
+          <span className="inline-block bg-white/10 backdrop-blur-sm text-black font-medium px-4 py-1 rounded-full text-sm mb-3">Our Impact</span>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-black">
             Trusted by Millions Nationwide
           </h2>
-          <p className="text-lg text-white/80 max-w-3xl mx-auto">
+          <p className="text-lg text-black/80 max-w-3xl mx-auto">
             Our track record speaks for itself - millions of satisfied customers and counting.
           </p>
         </div>
