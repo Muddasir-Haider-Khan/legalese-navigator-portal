@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -40,8 +39,8 @@ const Hero = () => {
       <div className="container-custom py-16 md:py-24 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`space-y-8 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="inline-block rounded-full bg-bright-orange-400 backdrop-blur-sm px-4 py-1 border border-white/20 mb-4">
-              <span className="text-sm font-medium text-bright-orange-500">Professional Legal Solutions</span>
+            <div className="inline-block rounded-full bg-white backdrop-blur-sm px-4 py-1 border border-white/20 mb-4">
+              <span className="text-sm font-medium text-black">Professional Legal Solutions</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
@@ -84,31 +83,6 @@ const Hero = () => {
                 </Button>
                 <p className="mt-3 text-sm text-black/80">Trusted legal help at your fingertips</p>
               </Link>
-            </div>
-          </div>
-          
-          <div className={`transition-all duration-1000 transform ${isLoaded ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
-            <div className="relative rounded-xl shadow-2xl overflow-hidden backdrop-blur-sm border border-white/10">
-              <img 
-                src="/lovable-uploads/6a7817d2-8d07-4029-ae19-3e7b3fdcb61d.png"
-                alt="Legal consultation with lawyers"
-                className="w-full h-auto object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-rocket-blue-900/60 to-transparent pointer-events-none"></div>
-              
-              <div className="absolute top-4 right-4 bg-bright-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium animate-pulse">
-                Professional Services
-              </div>
-            </div>
-            <div className="mt-6 bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/10 transform hover:translate-y-[-5px] transition-transform duration-300">
-              <h3 className="text-xl font-bold text-black">Professional Document Preparation</h3>
-              <p className="text-black/80 mt-2">Create, sign, and manage your legal documents with our easy-to-use platform</p>
-              <div className="mt-3 flex gap-2">
-                <span className="inline-block bg-bright-orange-400 rounded-full px-3 py-1 text-xs text-white">Fast</span>
-                <span className="inline-block bg-bright-orange-400 rounded-full px-3 py-1 text-xs text-white">Secure</span>
-                <span className="inline-block bg-bright-orange-400 rounded-full px-3 py-1 text-xs text-white">Professional</span>
-              </div>
             </div>
           </div>
         </div>
