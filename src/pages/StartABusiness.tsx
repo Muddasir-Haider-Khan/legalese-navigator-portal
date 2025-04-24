@@ -281,8 +281,8 @@ const StartABusiness = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <img 
-                src="/lovable-uploads/5ab7cd01-2a2f-4042-bb84-b78b00d131c8.png"
-                alt="Start your Partnership" 
+                src="/lovable-uploads/d2c6f56f-0d2b-483e-bd39-89789cf2dccc.png"
+                alt="Form a Partnership" 
                 className="rounded-lg w-full h-auto"
               />
             </div>
