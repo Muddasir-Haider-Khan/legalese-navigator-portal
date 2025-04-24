@@ -35,7 +35,7 @@ const NavLink = memo(({
     <Link 
       to={to} 
       className={cn(
-        "font-medium transition-colors relative group",
+        "font-medium transition-colors relative group drop-shadow-[0_1px_1px_rgba(0,0,0,0.15)]",
         isActive 
           ? "text-bright-orange-500 font-semibold" 
           : "text-bright-orange-500/90 hover:text-bright-orange-500"
@@ -195,8 +195,8 @@ const Header = () => {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled 
-          ? "bg-white/10 backdrop-blur-xl border-b border-white/20 shadow-lg"  // Increased blur and background opacity
-          : "bg-transparent backdrop-blur-md"  // Added base backdrop blur even when not scrolled
+          ? "bg-white/15 backdrop-blur-xl border-b border-white/20 shadow-lg"
+          : "bg-transparent backdrop-blur-lg"
       )}
       initial="initial"
       animate="animate"
