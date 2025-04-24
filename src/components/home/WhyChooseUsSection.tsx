@@ -94,7 +94,7 @@ const WhyChooseUsSection = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <span className="bg-gradient-to-r from-bright-orange-500 to-bright-orange-100 bg-clip-text text-transparent">
+            <span className="text-black">
               The Smart Choice
             </span>{" "}
             for Legal Solutions
