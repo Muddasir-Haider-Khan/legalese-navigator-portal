@@ -1,7 +1,9 @@
+
 import { 
   Building2,
   BriefcaseBusiness,
-  FileLock
+  FileLock,
+  Star
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
