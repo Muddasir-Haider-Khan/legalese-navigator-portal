@@ -164,9 +164,9 @@ const StartABusiness = () => {
                 </span>
               </div>
               <img 
-                src="/lovable-uploads/64df2e75-5059-4c45-b91a-1ab540ddf735.png"
-                alt="Start your LLC" 
-                className="rounded-lg w-full h-auto"
+                src="/lovable-uploads/83e8552a-49d0-4e2b-8bce-92ba50ed26f3.png"
+                alt="Start your LLC with confidence" 
+                className="rounded-lg w-full h-auto object-cover"
               />
             </div>
             <div className="space-y-6">
