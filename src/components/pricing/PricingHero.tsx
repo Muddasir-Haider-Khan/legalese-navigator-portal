@@ -51,7 +51,7 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
           </motion.h1>
           
           <motion.p 
-            className="mt-6 text-xl text-white/90 drop-shadow-lg"
+            className="mt-6 text-xl text-bright-orange-600 drop-shadow-lg" // Changed text color to bright-orange-600
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
