@@ -68,8 +68,8 @@ const MobileNavLink = memo(({
       className={cn(
         "font-medium transition-colors",
         isActive 
-          ? "text-bright-orange-500 font-semibold" 
-          : "text-bright-orange-500/90 hover:text-bright-orange-500"
+          ? "text-black font-semibold" 
+          : "text-black/90 hover:text-black"
       )}
       onClick={onClick}
     >
@@ -228,8 +228,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/") 
-                      ? "text-bright-orange-500 bg-white/10" 
-                      : "text-bright-orange-500/90 hover:bg-white/5 hover:text-bright-orange-500"
+                      ? "text-black bg-white/10" 
+                      : "text-black/90 hover:bg-white/5 hover:text-black"
                   )}
                   asChild
                 >
@@ -244,8 +244,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/documents") 
-                      ? "text-bright-orange-500 bg-white/10" 
-                      : "text-bright-orange-500/90 hover:bg-white/5 hover:text-bright-orange-500"
+                      ? "text-black bg-white/10" 
+                      : "text-black/90 hover:bg-white/5 hover:text-black"
                   )}
                   asChild
                 >
@@ -260,8 +260,8 @@ const Header = () => {
                   className={cn(
                     "font-medium transition-all duration-300 relative group px-4 py-2 rounded-full",
                     isActive("/pricing") 
-                      ? "text-bright-orange-500 bg-white/10" 
-                      : "text-bright-orange-500/90 hover:bg-white/5 hover:text-bright-orange-500"
+                      ? "text-black bg-white/10" 
+                      : "text-black/90 hover:bg-white/5 hover:text-black"
                   )}
                   asChild
                 >
