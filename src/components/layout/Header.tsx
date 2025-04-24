@@ -210,7 +210,7 @@ const Header = () => {
                 alt="Legalgram Logo" 
                 className="w-10 h-10 rounded-full shadow-md transition-transform hover:scale-105 duration-300"
               />
-              <span className="text-xl font-bold text-black">
+              <span className="text-xl font-bold text-bright-orange-500">
                 Legalgram
               </span>
             </div>
