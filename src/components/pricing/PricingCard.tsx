@@ -52,12 +52,12 @@ const PricingCard = ({ plan, billingCycle, savings }: PricingCardProps) => {
         className={cn(
           "relative rounded-2xl transition-all duration-300 h-full flex flex-col hover:shadow-2xl group",
           plan.popular
-            ? "bg-gradient-to-br from-bright-orange-50 to-white shadow-[0_8px_40px_-12px_rgba(241,143,1,0.4)] ring-2 ring-bright-orange-500 lg:scale-105"
-            : "bg-white shadow-xl hover:bg-gradient-to-br hover:from-bright-orange-50/50 hover:to-white"
+            ? "bg-gradient-to-br from-bright-orange-50 to-white shadow-[0_8px_40px_-12px_rgba(241,143,1,0.4)] ring-2 ring-bright-orange-600 lg:scale-105"
+            : "bg-white shadow-xl hover:bg-gradient-to-br hover:from-bright-orange-50/60 hover:to-white"
         )}
       >
         {plan.popular && (
-          <div className="absolute -top-5 left-0 right-0 mx-auto w-36 rounded-full bg-gradient-to-r from-bright-orange-500 to-bright-orange-600 py-2 text-center text-sm font-semibold text-white shadow-lg">
+          <div className="absolute -top-5 left-0 right-0 mx-auto w-36 rounded-full bg-gradient-to-r from-bright-orange-600 to-bright-orange-700 py-2 text-center text-sm font-semibold text-white shadow-lg">
             Most Popular
           </div>
         )}
@@ -66,21 +66,21 @@ const PricingCard = ({ plan, billingCycle, savings }: PricingCardProps) => {
           <div className="flex items-center gap-4 mb-6">
             {plan.icon}
             <div>
-              <h3 className="text-2xl font-bold text-bright-orange-700">{plan.name}</h3>
-              <p className="text-bright-orange-600/80">{plan.description}</p>
+              <h3 className="text-2xl font-bold text-bright-orange-800">{plan.name}</h3>
+              <p className="text-bright-orange-700/80">{plan.description}</p>
             </div>
           </div>
 
           <div className="mb-8">
-            <div className="flex items-baseline text-bright-orange-700">
+            <div className="flex items-baseline text-bright-orange-800">
               <span className="text-5xl font-bold tracking-tight">
                 ${plan.price[billingCycle]}
               </span>
-              <span className="ml-2 text-bright-orange-500">/month</span>
+              <span className="ml-2 text-bright-orange-600">/month</span>
             </div>
 
             {billingCycle === "annually" && plan.price.annually > 0 && (
-              <p className="mt-2 text-sm text-bright-orange-600">
+              <p className="mt-2 text-sm text-bright-orange-700">
                 Save ${savings.amount.toFixed(2)} per year ({savings.percentage}%)
               </p>
             )}
@@ -91,8 +91,8 @@ const PricingCard = ({ plan, billingCycle, savings }: PricingCardProps) => {
               className={cn(
                 "w-full text-base font-semibold py-6 transition-all duration-300",
                 plan.popular
-                  ? "bg-gradient-to-r from-bright-orange-500 to-bright-orange-600 hover:from-bright-orange-600 hover:to-bright-orange-700 text-white shadow-lg"
-                  : "bg-bright-orange-50 hover:bg-bright-orange-100 text-bright-orange-700"
+                  ? "bg-gradient-to-r from-bright-orange-600 to-bright-orange-700 hover:from-bright-orange-700 hover:to-bright-orange-800 text-white shadow-lg"
+                  : "bg-bright-orange-100 hover:bg-bright-orange-200 text-bright-orange-800"
               )}
             >
               {plan.callToAction}
@@ -103,18 +103,18 @@ const PricingCard = ({ plan, billingCycle, savings }: PricingCardProps) => {
             {plan.features.map((feature, index) => (
               <li key={index} className="flex items-start">
                 {feature.included ? (
-                  <Check className="h-5 w-5 text-bright-orange-500 mt-0.5 shrink-0" />
+                  <Check className="h-5 w-5 text-bright-orange-600 mt-0.5 shrink-0" />
                 ) : (
-                  <X className="h-5 w-5 text-gray-300 mt-0.5 shrink-0" />
+                  <X className="h-5 w-5 text-bright-orange-300 mt-0.5 shrink-0" />
                 )}
-                <span className="ml-3 text-bright-orange-600">
+                <span className="ml-3 text-bright-orange-700">
                   {feature.name}
                   {feature.info && (
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button className="ml-1">
-                            <HelpCircle className="inline h-4 w-4 text-bright-orange-400" />
+                            <HelpCircle className="inline h-4 w-4 text-bright-orange-500" />
                           </button>
                         </TooltipTrigger>
                         <TooltipContent>
