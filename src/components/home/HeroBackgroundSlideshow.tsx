@@ -1,3 +1,4 @@
+
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { useState, useEffect } from "react";
 import type { CarouselApi } from "@/components/ui/carousel";
@@ -39,7 +40,7 @@ const HeroBackgroundSlideshow = () => {
                   alt={`Legal background ${index + 1}`}
                   className="w-full h-full object-cover transition-all duration-700 ease-in-out transform scale-105 hover:scale-100 blur-[2.8px] hover:blur-[1.2px]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-600/40 to-rocket-blue-900/40 transition-opacity duration-700 ease-in-out backdrop-blur-[2.8px]"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-600/30 to-rocket-blue-900/30 transition-opacity duration-700 ease-in-out backdrop-blur-[2.8px]"></div>
               </div>
             </CarouselItem>
           ))}
