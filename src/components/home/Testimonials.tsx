@@ -6,21 +6,21 @@ import { Button } from "@/components/ui/button";
 // Mock testimonial data
 const testimonials = [
   {
-    text: "Rocket Lawyer made it easy to create the legal documents I needed for my business. Their customer service team was also very helpful when I had questions.",
+    text: "Legal Gram made it easy to create the legal documents I needed for my business. Their customer service team was also very helpful when I had questions.",
     author: "Jennifer M.",
     position: "Small Business Owner",
     image: "https://randomuser.me/api/portraits/women/32.jpg",
     rating: 5
   },
   {
-    text: "I needed to create my will but didn't want to spend thousands on an attorney. Rocket Lawyer guided me through the process step by step. Highly recommend!",
+    text: "I needed to create my will but didn't want to spend thousands on an attorney. Legal Gram guided me through the process step by step. Highly recommend!",
     author: "Marcus T.",
     position: "Teacher",
     image: "https://randomuser.me/api/portraits/men/45.jpg",
     rating: 5
   },
   {
-    text: "The attorney advice I received through Rocket Lawyer answered all my questions and saved me from making a costly mistake with my rental property.",
+    text: "The attorney advice I received through Legal Gram answered all my questions and saved me from making a costly mistake with my rental property.",
     author: "Sarah K.",
     position: "Property Owner",
     image: "https://randomuser.me/api/portraits/women/68.jpg",
@@ -119,7 +119,7 @@ const Testimonials = () => {
             Trusted by Millions
           </h2>
           <p className="text-lg text-black max-w-3xl mx-auto">
-            See what our customers have to say about their experience with Rocket Lawyer.
+            See what our customers have to say about their experience with Legal Gram.
           </p>
         </div>
         
@@ -197,3 +197,4 @@ const Testimonials = () => {
 };
 
 export default memo(Testimonials);
+
