@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import Layout from "@/components/layout/Layout";
@@ -118,7 +117,7 @@ const Pricing = () => {
 
       <PricingHero billingCycle={billingCycle} setBillingCycle={setBillingCycle} />
 
-      <div className="relative -mt-32 px-4 pb-20">
+      <div className="relative -mt-32 px-4 pb-20 bg-[#fef1de]">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {plans.map((plan) => (
