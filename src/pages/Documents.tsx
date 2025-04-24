@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -6,13 +5,14 @@ import { Link } from "react-router-dom";
 import { FileText, CheckCircle, Shield, Clock, PenTool } from "lucide-react";
 import HeroSection from "@/components/documents/HeroSection";
 import MakeDocuments from "@/components/dashboard/MakeDocuments";
+import HowItWorksSection from "@/components/documents/HowItWorksSection";
 
 const Documents = () => {
   return (
     <Layout>
       <HeroSection isAuthenticated={false} />
       
-      <div className="container-custom section-padding">
+      <div className="container-custom">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="heading-md mb-4 text-rocket-gray-900 dark:text-white">Professional Legal Documents</h1>
@@ -70,6 +70,8 @@ const Documents = () => {
           </div>
 
           <MakeDocuments />
+
+          <HowItWorksSection />
 
           <div className="bg-white dark:bg-rocket-gray-800 rounded-lg shadow-lg border border-rocket-gray-100 dark:border-rocket-gray-700 p-6 md:p-8 mt-16">
             <div className="text-center space-y-6">
