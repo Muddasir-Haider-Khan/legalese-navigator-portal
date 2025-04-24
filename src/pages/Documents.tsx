@@ -1,4 +1,3 @@
-
 import React from "react";
 import Layout from "@/components/layout/Layout";
 import MakeDocuments from "@/components/dashboard/MakeDocuments";
@@ -21,8 +20,7 @@ const Documents = () => {
               <div className="flex justify-center mb-4">
                 <Badge 
                   variant="default" 
-                  className="bg-bright-orange-500 !text-white text-xs md:text-sm font-medium px-4 py-1.5 rounded-full"
-                  style={{ color: 'white' }}
+                  className="bg-bright-orange-500 text-white text-xs md:text-sm font-medium px-4 py-1.5 rounded-full"
                 >
                   Professional Legal Solutions
                 </Badge>
