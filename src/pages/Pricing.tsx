@@ -6,6 +6,7 @@ import PricingHero from "@/components/pricing/PricingHero";
 import PricingCard from "@/components/pricing/PricingCard";
 import PricingFaq from "@/components/pricing/PricingFaq";
 import PricingCta from "@/components/pricing/PricingCta";
+import PricingShowcase from "@/components/pricing/PricingShowcase";
 import { Shield, Users, Package } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -118,28 +119,68 @@ const Pricing = () => {
     <Layout>
       <Helmet>
         <title>Legal Plans & Pricing | Legal Gram</title>
-        <meta name="description" content="Choose the perfect legal plan for your needs. Get unlimited access to legal documents, attorney consultations, and more." />
+        <meta 
+          name="description" 
+          content="Choose the perfect legal plan for your needs. Get unlimited access to legal documents, attorney consultations, and more." 
+        />
       </Helmet>
 
-      <PricingHero billingCycle={billingCycle} setBillingCycle={setBillingCycle} />
+      <div className="bg-gradient-to-b from-soft-peach-50 to-white">
+        <PricingHero billingCycle={billingCycle} setBillingCycle={setBillingCycle} />
 
-      <div className="relative -mt-32 px-4 pb-20">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-            {plans.map((plan) => (
-              <PricingCard 
-                key={plan.name}
-                plan={plan}
-                billingCycle={billingCycle}
-                savings={calculateSavings(plan)}
-              />
-            ))}
+        <div className="relative -mt-32 px-4 pb-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-8 md:gap-12 md:grid-cols-2 lg:grid-cols-3">
+              {plans.map((plan) => (
+                <PricingCard 
+                  key={plan.name}
+                  plan={plan}
+                  billingCycle={billingCycle}
+                  savings={calculateSavings(plan)}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      <PricingFaq />
-      <PricingCta />
+        <PricingShowcase />
+        
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-20">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src="/lovable-uploads/7386c995-bf25-47e2-a3bb-095150b52e65.png"
+                alt="Professional legal consultation"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex flex-col justify-center">
+              <h2 className="text-3xl font-bold mb-6 text-bright-orange-700">Professional Legal Support</h2>
+              <p className="text-lg text-bright-orange-600 mb-8">
+                Get expert legal advice and support from our team of experienced attorneys. 
+                We're here to help you navigate complex legal matters with confidence.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Shield className="w-6 h-6 text-bright-orange-500" />
+                  <span className="text-bright-orange-600">Comprehensive legal protection</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Users className="w-6 h-6 text-bright-orange-500" />
+                  <span className="text-bright-orange-600">Dedicated legal team</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Package className="w-6 h-6 text-bright-orange-500" />
+                  <span className="text-bright-orange-600">Customized solutions</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <PricingFaq />
+        <PricingCta />
+      </div>
     </Layout>
   );
 };
