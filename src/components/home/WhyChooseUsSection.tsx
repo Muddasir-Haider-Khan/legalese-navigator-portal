@@ -139,7 +139,7 @@ const WhyChooseUsSection = () => {
                     {reason.title}
                   </h3>
                   
-                  <p className="text-gray-600 group-hover:text-gray-700 transition-colors">
+                  <p className="text-black text-opacity-80 group-hover:text-opacity-100 transition-colors">
                     {reason.description}
                   </p>
                 </div>
@@ -195,3 +195,4 @@ const WhyChooseUsSection = () => {
 };
 
 export default memo(WhyChooseUsSection);
+
