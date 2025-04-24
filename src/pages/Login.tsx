@@ -72,7 +72,15 @@ const Login = () => {
 
   return (
     <Layout>
- 
+      <div className="container-custom py-16 md:py-20 min-h-[80vh] flex items-center relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/lovable-uploads/067c7b04-b1a2-4236-97eb-2b7cf8b24291.png"
+            alt="Background"
+            className="w-full h-full object-cover filter brightness-50"
+          />
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        </div>
         
         <div className="w-full max-w-md mx-auto relative z-10">
           <div className="text-center mb-8 animate-fade-in">
