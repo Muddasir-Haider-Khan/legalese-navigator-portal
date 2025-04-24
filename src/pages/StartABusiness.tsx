@@ -1,3 +1,4 @@
+
 import { 
   Building2,
   BriefcaseBusiness,
@@ -137,7 +138,7 @@ const StartABusiness = () => {
                 </span>
               </div>
               <img 
-                src="/lovable-uploads/8133ec7e-0e3d-4bc6-9e04-cb3554bbf021.png"
+                src="/lovable-uploads/ce490eb4-d874-4d6b-a214-c348850861d8.png"
                 alt="Start your LLC" 
                 className="rounded-lg w-full h-auto"
               />
@@ -200,7 +201,7 @@ const StartABusiness = () => {
             </div>
             <div>
               <img 
-                src="/lovable-uploads/5074c584-3a54-41f2-8196-980f23a6ae03.png"
+                src="/lovable-uploads/71691382-9c28-40fb-94c3-20713ac62659.png"
                 alt="Start your Corporation" 
                 className="rounded-lg w-full h-auto"
               />
@@ -239,7 +240,7 @@ const StartABusiness = () => {
             </div>
             <div className="md:order-1">
               <img 
-                src="/lovable-uploads/a078a9c9-0b7d-4377-bf6c-483ef3970c5e.png"
+                src="/lovable-uploads/71691382-9c28-40fb-94c3-20713ac62659.png"
                 alt="Start your S-Corp" 
                 className="rounded-lg w-full h-auto"
               />
