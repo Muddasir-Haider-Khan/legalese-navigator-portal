@@ -16,8 +16,8 @@ const PricingHero = ({ billingCycle, setBillingCycle }: PricingHeroProps) => {
       {/* Hero background image with overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/lovable-uploads/9a69611d-418e-411e-a9d2-59a95fe03c53.png"
-          alt="Professional legal consultation"
+          src="/lovable-uploads/12936f45-25b2-4bc1-8d42-a1e744aee2bb.png"
+          alt="Legal consultation meeting"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-bright-orange-500/90 via-bright-orange-400/80 to-soft-peach-50/90 mix-blend-overlay" />
