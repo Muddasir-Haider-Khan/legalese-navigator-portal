@@ -33,9 +33,9 @@ const BusinessBackgroundSlideshow = () => {
                 <img 
                   src={image}
                   alt={`Business presentation ${index + 1}`}
-                  className="w-full h-full object-cover transition-all duration-700 ease-in-out transform scale-105 hover:scale-100 blur-[3px] hover:blur-[2px]"
+                  className="w-full h-full object-cover transition-all duration-700 ease-in-out transform scale-105 hover:scale-100 blur-[4px] hover:blur-[3px]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-900/60 to-rocket-blue-600/60 transition-opacity duration-700 ease-in-out backdrop-blur-md"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-rocket-blue-900/70 to-rocket-blue-600/70 transition-opacity duration-700 ease-in-out backdrop-blur-lg"></div>
               </div>
             </CarouselItem>
           ))}
@@ -46,3 +46,4 @@ const BusinessBackgroundSlideshow = () => {
 };
 
 export default BusinessBackgroundSlideshow;
+
