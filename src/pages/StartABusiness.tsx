@@ -3,7 +3,10 @@ import {
   Building2,
   Landmark,
   BriefcaseBusiness,
-  Star 
+  Star,
+  Copyright,
+  Trademark,
+  FileLock 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
@@ -40,43 +43,85 @@ const StartABusiness = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Business Formation */}
+            {/* Business Registrations */}
             <div className="p-6 rounded-xl border border-black/10 hover:shadow-lg transition-shadow">
               <Building2 className="h-10 w-10 text-bright-orange-500 mb-4" />
               <h3 className="text-xl font-semibold text-black mb-3">
-                Business Formation
+                Business Registrations
               </h3>
-              <p className="text-black mb-4">
-                Form an LLC, Corporation, or Nonprofit. Get state filing and registered agent services.
-              </p>
+              <ul className="space-y-3 mb-4">
+                <li>
+                  <Link to="/documents/llc" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Start an LLC
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/documents/corporation" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Start a Corporation
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/documents/non-profit" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Start a Non-profit
+                  </Link>
+                </li>
+              </ul>
               <Link to="/documents" className="text-bright-orange-500 hover:underline">
                 Learn More →
               </Link>
             </div>
 
-            {/* Business Compliance */}
-            <div className="p-6 rounded-xl border border-black/10 hover:shadow-lg transition-shadow">
-              <Landmark className="h-10 w-10 text-bright-orange-500 mb-4" />
-              <h3 className="text-xl font-semibold text-black mb-3">
-                Business Compliance
-              </h3>
-              <p className="text-black mb-4">
-                Stay compliant with state requirements. Get annual reports and maintenance services.
-              </p>
-              <Link to="/documents" className="text-bright-orange-500 hover:underline">
-                Learn More →
-              </Link>
-            </div>
-
-            {/* Business Documents */}
+            {/* Business Services */}
             <div className="p-6 rounded-xl border border-black/10 hover:shadow-lg transition-shadow">
               <BriefcaseBusiness className="h-10 w-10 text-bright-orange-500 mb-4" />
               <h3 className="text-xl font-semibold text-black mb-3">
-                Business Documents
+                Business Services
               </h3>
-              <p className="text-black mb-4">
-                Create contracts, agreements, and other legal documents for your business.
-              </p>
+              <ul className="space-y-3 mb-4">
+                <li>
+                  <Link to="/documents/operating-agreement" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Operating Agreement
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/documents/annual-report" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Annual Report Filing
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/documents/business-plan" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Business Plan
+                  </Link>
+                </li>
+              </ul>
+              <Link to="/documents" className="text-bright-orange-500 hover:underline">
+                Learn More →
+              </Link>
+            </div>
+
+            {/* Business Property */}
+            <div className="p-6 rounded-xl border border-black/10 hover:shadow-lg transition-shadow">
+              <FileLock className="h-10 w-10 text-bright-orange-500 mb-4" />
+              <h3 className="text-xl font-semibold text-black mb-3">
+                Business Property
+              </h3>
+              <ul className="space-y-3 mb-4">
+                <li>
+                  <Link to="/documents/trademark" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Trademark Registration
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/documents/copyright" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Copyright Protection
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/documents/nda" className="text-black hover:text-bright-orange-500 transition-colors">
+                    Make an NDA
+                  </Link>
+                </li>
+              </ul>
               <Link to="/documents" className="text-bright-orange-500 hover:underline">
                 Learn More →
               </Link>
