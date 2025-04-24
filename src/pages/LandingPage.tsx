@@ -13,6 +13,7 @@ const PracticeAreas = lazy(() => import("@/components/home/PracticeAreas"));
 const StatsSection = lazy(() => import("@/components/home/StatsSection"));
 const ProcessSection = lazy(() => import("@/components/home/ProcessSection"));
 const TrustBadges = lazy(() => import("@/components/home/TrustBadges"));
+const LegalConcernsSection = lazy(() => import("@/components/home/LegalConcernsSection"));
 
 // Loading placeholder for suspense
 const SectionPlaceholder = () => (
@@ -147,6 +148,10 @@ const LandingPage = () => {
         
         <Suspense fallback={<SectionPlaceholder />}>
           <PracticeAreas />
+        </Suspense>
+        
+        <Suspense fallback={<SectionPlaceholder />}>
+          <LegalConcernsSection />
         </Suspense>
         
         <Suspense fallback={<SectionPlaceholder />}>
