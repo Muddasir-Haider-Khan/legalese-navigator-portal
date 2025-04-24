@@ -137,7 +137,7 @@ const StartABusiness = () => {
                 </span>
               </div>
               <img 
-                src="/lovable-uploads/ce490eb4-d874-4d6b-a214-c348850861d8.png"
+                src="/lovable-uploads/64df2e75-5059-4c45-b91a-1ab540ddf735.png"
                 alt="Start your LLC" 
                 className="rounded-lg w-full h-auto"
               />
@@ -200,7 +200,7 @@ const StartABusiness = () => {
             </div>
             <div>
               <img 
-                src="/lovable-uploads/71691382-9c28-40fb-94c3-20713ac62659.png"
+                src="/lovable-uploads/330f6709-99cc-4717-90cb-6f17517714f6.png"
                 alt="Start your Corporation" 
                 className="rounded-lg w-full h-auto"
               />
@@ -239,7 +239,7 @@ const StartABusiness = () => {
             </div>
             <div className="md:order-1">
               <img 
-                src="/lovable-uploads/3ccf1e4f-9256-43f2-a0b3-2142bf18e427.png"
+                src="/lovable-uploads/fd2c0a0d-9fe5-4ee0-84ed-6ec727130975.png"
                 alt="Start your S-Corp" 
                 className="rounded-lg w-full h-auto"
               />
