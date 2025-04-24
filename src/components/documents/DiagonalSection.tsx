@@ -20,11 +20,19 @@ const DiagonalSection = ({ document, index, onSelect, isAuthenticated }: Diagona
   const isEven = index % 2 === 0;
   
   return (
-    <div className={`flex flex-col md:flex-row items-center gap-8 md:gap-16 my-16 ${
+    <div className={`relative flex flex-col md:flex-row items-center gap-8 md:gap-16 my-16 py-8 ${
       isEven ? 'md:flex-row' : 'md:flex-row-reverse'
     }`}>
-      <div className="w-full md:w-1/2">
-        <Card className="transform hover:scale-105 transition-transform duration-300">
+      {/* Decorative diagonal line */}
+      <div className="absolute inset-0 overflow-hidden z-0 hidden md:block">
+        <div className={`absolute w-full h-1 bg-gradient-to-r from-primary/30 via-primary to-primary/30 top-1/2 transform ${
+          isEven ? '-rotate-6' : 'rotate-6'
+        }`}></div>
+      </div>
+      
+      {/* Document Card */}
+      <div className="w-full md:w-1/2 z-10">
+        <Card className="transform hover:scale-105 transition-transform duration-300 shadow-lg border-t-4 border-t-primary">
           <CardHeader>
             <CardTitle className="flex items-start gap-3">
               <FileText className="h-5 w-5 flex-shrink-0 text-primary" />
@@ -54,7 +62,8 @@ const DiagonalSection = ({ document, index, onSelect, isAuthenticated }: Diagona
         </Card>
       </div>
       
-      <div className="w-full md:w-1/2">
+      {/* Document Preview Image */}
+      <div className="w-full md:w-1/2 z-10">
         <div className="relative aspect-video rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
           <img 
             src={`/lovable-uploads/${

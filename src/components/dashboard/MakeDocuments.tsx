@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -88,16 +89,22 @@ const MakeDocuments = () => {
         ))}
       </div>
 
-      <div className="space-y-16">
-        {filteredDocuments.map((doc, index) => (
-          <DiagonalSection
-            key={doc.id}
-            document={doc}
-            index={index}
-            onSelect={handleStartCreating}
-            isAuthenticated={isAuthenticated}
-          />
-        ))}
+      <div className="space-y-8">
+        {filteredDocuments.length > 0 ? (
+          filteredDocuments.map((doc, index) => (
+            <DiagonalSection
+              key={doc.id}
+              document={doc}
+              index={index}
+              onSelect={handleStartCreating}
+              isAuthenticated={isAuthenticated}
+            />
+          ))
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No document templates found in this category.</p>
+          </div>
+        )}
       </div>
     </div>
   );

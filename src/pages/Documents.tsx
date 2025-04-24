@@ -4,10 +4,14 @@ import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { FileText, CheckCircle, Shield, Clock, PenTool } from "lucide-react";
+import HeroSection from "@/components/documents/HeroSection";
+import MakeDocuments from "@/components/dashboard/MakeDocuments";
 
 const Documents = () => {
   return (
     <Layout>
+      <HeroSection isAuthenticated={false} />
+      
       <div className="container-custom section-padding">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -65,44 +69,9 @@ const Documents = () => {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-rocket-gray-800 rounded-lg shadow-lg border border-rocket-gray-100 dark:border-rocket-gray-700 p-6 md:p-8">
-            <div className="flex flex-col md:flex-row gap-8 mb-8">
-              <div className="w-full md:w-1/2">
-                <h2 className="text-xl md:text-2xl font-bold mb-4 text-rocket-gray-900 dark:text-white">Popular Document Types</h2>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <div className="border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center">
-                    <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
-                    <p className="font-medium text-rocket-gray-800 dark:text-white">Last Will and Testament</p>
-                  </div>
-                  
-                  <div className="border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center">
-                    <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
-                    <p className="font-medium text-rocket-gray-800 dark:text-white">Non-Disclosure Agreement</p>
-                  </div>
-                  
-                  <div className="border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center">
-                    <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
-                    <p className="font-medium text-rocket-gray-800 dark:text-white">Power of Attorney</p>
-                  </div>
-                  
-                  <div className="border border-rocket-gray-200 dark:border-rocket-gray-700 rounded-lg p-4 text-center">
-                    <FileText className="h-8 w-8 mx-auto mb-2 text-rocket-blue-500 dark:text-rocket-blue-300" />
-                    <p className="font-medium text-rocket-gray-800 dark:text-white">Employment Contract</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="w-full md:w-1/2 relative rounded-lg overflow-hidden shadow-md">
-                <img 
-                  src="/lovable-uploads/bbae67ec-7fdd-49d8-adfd-ca2a1c8a05a1.png" 
-                  alt="People working on legal documents" 
-                  className="w-full h-full object-cover rounded-lg"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-rocket-blue-900/40 to-transparent"></div>
-              </div>
-            </div>
-            
+          <MakeDocuments />
+
+          <div className="bg-white dark:bg-rocket-gray-800 rounded-lg shadow-lg border border-rocket-gray-100 dark:border-rocket-gray-700 p-6 md:p-8 mt-16">
             <div className="text-center space-y-6">
               <p className="text-rocket-gray-600 dark:text-rocket-gray-300 max-w-xl mx-auto">
                 Create professional legal documents with our easy-to-use platform. Sign up now to access our full range of document templates and creation tools.
