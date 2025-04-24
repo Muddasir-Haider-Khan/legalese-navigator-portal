@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,18 +5,21 @@ import { Button } from "@/components/ui/button";
 const PricingFaq = () => {
   return (
     <div className="bg-[#fef1de]">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-bright-orange-700">
+      <div className="container mx-auto px-4 py-16 relative overflow-hidden">
+        <div className="absolute -left-20 top-20 w-60 h-60 bg-bright-orange-500/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute -right-20 bottom-20 w-60 h-60 bg-bright-orange-500/5 rounded-full blur-3xl animate-pulse delay-300" />
+
+        <div className="text-center relative z-10">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-bright-orange-700 via-bright-orange-600 to-bright-orange-500 bg-clip-text text-transparent animate-fade-in">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-lg text-bright-orange-600">
+          <p className="mt-4 text-lg text-bright-orange-600 animate-fade-in delay-100">
             Get answers to common questions about our membership plans
           </p>
         </div>
 
         <div className="mt-12 space-y-8 text-left max-w-3xl mx-auto">
-          <div className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-white hover:scale-[1.02] animate-fade-in delay-200">
             <h3 className="text-xl font-semibold text-bright-orange-700 mb-2">
               Can I switch between plans?
             </h3>
@@ -26,7 +28,7 @@ const PricingFaq = () => {
             </p>
           </div>
           
-          <div className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-white hover:scale-[1.02] animate-fade-in delay-300">
             <h3 className="text-xl font-semibold text-bright-orange-700 mb-2">
               Is there a refund policy?
             </h3>
@@ -35,7 +37,7 @@ const PricingFaq = () => {
             </p>
           </div>
           
-          <div className="bg-white rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm transition-all duration-300 hover:shadow-md hover:bg-white hover:scale-[1.02] animate-fade-in delay-400">
             <h3 className="text-xl font-semibold text-bright-orange-700 mb-2">
               How does the "Ask a Lawyer" feature work?
             </h3>
@@ -45,9 +47,9 @@ const PricingFaq = () => {
           </div>
         </div>
         
-        <div className="text-center mt-12">
+        <div className="text-center mt-12 relative z-10">
           <Link to="/contact">
-            <Button variant="orange" size="lg" className="min-w-[200px] text-white shadow-lg">
+            <Button variant="orange" size="lg" className="min-w-[200px] text-white shadow-lg hover:scale-105 transition-transform bg-gradient-to-r from-bright-orange-500 to-bright-orange-600 hover:from-bright-orange-600 hover:to-bright-orange-700">
               Contact Support
             </Button>
           </Link>
