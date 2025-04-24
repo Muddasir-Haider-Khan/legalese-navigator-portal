@@ -80,12 +80,6 @@ const Register = () => {
         <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full blur-3xl opacity-30" />
         <div className="absolute bottom-0 left-1/3 w-[70vh] h-[70vh] bg-rocket-blue-400/10 rounded-full blur-3xl opacity-20" />
 
-        <div className="w-full max-w-md mx-auto z-10">
-          <div className="glass-card backdrop-blur-md bg-white/5 p-8 rounded-2xl border border-white/10 shadow-xl animate-fade-in">
-            <h2 className="text-center text-2xl font-semibold text-white mb-2">Create Your Account</h2>
-            <p className="text-center text-sm text-rocket-gray-400 mb-6">
-              Sign up to access legal documents, advice, and more.
-            </p>
 
 
             {errorMessage && (
