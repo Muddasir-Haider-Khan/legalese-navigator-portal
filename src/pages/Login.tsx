@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -76,15 +75,14 @@ const Login = () => {
       <div className="container-custom py-16 md:py-20 min-h-[80vh] flex items-center relative overflow-hidden">
         <div className="fixed inset-0 bg-gradient-to-br from-rocket-blue-950 to-rocket-blue-900 z-0"></div>
         
-        {/* Enhanced background elements */}
         <div className="absolute -top-40 -left-40 w-[100vh] h-[100vh] bg-rocket-blue-200/10 rounded-full opacity-20 blur-3xl animate-pulse"></div>
         <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full opacity-30 blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
         <div className="absolute bottom-0 left-1/3 w-[70vh] h-[70vh] bg-rocket-blue-400/10 rounded-full opacity-20 blur-3xl animate-pulse" style={{ animationDelay: "2s" }}></div>
         
         <div className="w-full max-w-md mx-auto relative z-10">
           <div className="text-center mb-8 animate-fade-in">
-            <h1 className="text-3xl font-bold mb-2 text-gradient">Welcome Back</h1>
-            <p className="text-rocket-gray-300 font-medium">
+            <h1 className="text-3xl font-bold mb-2 text-black">Welcome Back</h1>
+            <p className="text-black font-medium">
               Sign in to access your legal documents and advice history.
             </p>
           </div>
@@ -92,20 +90,20 @@ const Login = () => {
           <div className="glass-card rounded-xl shadow-xl border border-rocket-blue-50/20 p-8 animate-scale-in backdrop-blur-lg bg-white/5">
             <Alert className="mb-6 bg-amber-50/20 border-amber-300/30 animate-slide-in" style={{ animationDelay: "0.025s" }}>
               <InfoIcon className="h-4 w-4 text-amber-400" />
-              <AlertDescription className="text-xs text-amber-100 font-medium">
+              <AlertDescription className="text-xs text-black font-medium">
                 Sign in to access your account. Your information is securely stored in Supabase.
               </AlertDescription>
             </Alert>
 
             <form onSubmit={handleLogin} className="space-y-6">
               {errorMessage && (
-                <div className="p-3 bg-red-900/50 border border-red-800 text-red-200 text-sm rounded-md animate-shake">
+                <div className="p-3 bg-red-900/50 border border-red-800 text-black text-sm rounded-md animate-shake">
                   {errorMessage}
                 </div>
               )}
 
               <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-1">Email</label>
+                <label htmlFor="email" className="block text-sm font-medium text-black mb-1">Email</label>
                 <div className="relative">
                   <Input
                     id="email"
@@ -113,18 +111,18 @@ const Login = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="pl-10 bg-white/10 border-white/20 text-white 
-                      placeholder:text-gray-400 placeholder:font-medium 
-                      focus:border-rocket-blue-400 focus:ring-rocket-blue-400/50
+                    className="pl-10 bg-white/10 border-black/20 text-black 
+                      placeholder:text-black/60 placeholder:font-medium 
+                      focus:border-black/40 focus:ring-black/20
                       hover:bg-white/20 transition-all duration-300"
                     required
                   />
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-black" />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-1">Password</label>
+                <label htmlFor="password" className="block text-sm font-medium text-black mb-1">Password</label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -132,16 +130,16 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter your password"
-                    className="pl-10 bg-white/10 border-white/20 text-white 
-                      placeholder:text-gray-400 placeholder:font-medium 
-                      focus:border-rocket-blue-400 focus:ring-rocket-blue-400/50
+                    className="pl-10 bg-white/10 border-black/20 text-black 
+                      placeholder:text-black/60 placeholder:font-medium 
+                      focus:border-black/40 focus:ring-black/20
                       hover:bg-white/20 transition-all duration-300"
                     required
                   />
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-black" />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black hover:text-black/70 transition-colors"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -155,15 +153,15 @@ const Login = () => {
                     id="remember-me"
                     checked={rememberMe}
                     onCheckedChange={(checked) => setRememberMe(!!checked)}
-                    className="border-white/50 data-[state=checked]:bg-rocket-blue-500"
+                    className="border-black/50 data-[state=checked]:bg-black"
                   />
-                  <label htmlFor="remember-me" className="text-sm cursor-pointer text-gray-300 hover:text-white transition-colors">
+                  <label htmlFor="remember-me" className="text-sm cursor-pointer text-black hover:text-black/70 transition-colors">
                     Remember me
                   </label>
                 </div>
                 <Link
                   to="/forgot-password"
-                  className="text-rocket-blue-300 text-sm hover:text-rocket-blue-200 transition-colors"
+                  className="text-black text-sm hover:text-black/70 transition-colors"
                 >
                   Forgot password?
                 </Link>
@@ -171,8 +169,8 @@ const Login = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-rocket-blue-500 hover:bg-rocket-blue-600 text-white transition-all duration-300
-                  hover:shadow-lg hover:shadow-rocket-blue-500/25 animate-fade-in"
+                className="w-full bg-black hover:bg-black/90 text-white transition-all duration-300
+                  hover:shadow-lg hover:shadow-black/25 animate-fade-in"
                 style={{ animationDelay: "0.5s" }}
                 disabled={isSubmitting}
               >
@@ -191,17 +189,17 @@ const Login = () => {
 
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-white/10"></div>
+                  <div className="w-full border-t border-black/10"></div>
                 </div>
                 <div className="relative flex justify-center text-xs">
-                  <span className="px-2 text-gray-400 bg-rocket-blue-950">or</span>
+                  <span className="px-2 text-black bg-white">or</span>
                 </div>
               </div>
 
               <Button
                 type="button"
                 variant="outline"
-                className="w-full border-white/20 text-white hover:bg-white/10 transition-all duration-300"
+                className="w-full border-black/20 text-black hover:bg-black/10 transition-all duration-300"
                 onClick={() => toast.info("Social login coming soon!")}
               >
                 Continue with Google
@@ -209,11 +207,11 @@ const Login = () => {
             </form>
 
             <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: "0.7s" }}>
-              <p className="text-gray-400">
+              <p className="text-black">
                 Don't have an account?{" "}
                 <Link 
                   to="/signup" 
-                  className="text-rocket-blue-300 hover:text-rocket-blue-200 transition-colors hover:underline"
+                  className="text-black hover:text-black/70 transition-colors hover:underline"
                 >
                   Sign up
                 </Link>
