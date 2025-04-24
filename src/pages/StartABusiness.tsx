@@ -1,3 +1,4 @@
+
 import { 
   Building2,
   BriefcaseBusiness,
@@ -27,8 +28,9 @@ const StartABusiness = () => {
             <Button 
               size="lg" 
               className="bg-bright-orange-500 hover:bg-bright-orange-600 text-white shadow-lg"
+              asChild
             >
-              Start Now
+              <Link to="/signup">Start Now</Link>
             </Button>
           </div>
         </div>
