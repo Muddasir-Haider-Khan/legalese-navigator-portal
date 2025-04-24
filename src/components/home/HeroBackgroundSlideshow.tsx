@@ -23,7 +23,7 @@ const HeroBackgroundSlideshow = () => {
     
     const interval = setInterval(() => {
       api.scrollNext();
-    }, 2000);
+    }, 3000); // Changed from 2000 to 3000 milliseconds
     
     return () => clearInterval(interval);
   }, [api]);
