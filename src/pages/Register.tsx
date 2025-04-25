@@ -89,7 +89,7 @@ const Register = () => {
         
         <div className="w-full max-w-md mx-auto relative z-10">
           <div className="text-center mb-8 animate-fade-in">
-            <br>
+            <br><br><br>
             <h1 className="heading-md mb-2 text-gradient">Create Your Account</h1>
             <p className="text-rocket-gray-500">
               Sign up to access legal documents, advice, and more.
