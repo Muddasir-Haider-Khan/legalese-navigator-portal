@@ -87,28 +87,6 @@ const Register = () => {
         <div className="absolute top-0 right-0 w-[80vh] h-[80vh] bg-rocket-blue-300/10 rounded-full opacity-30 blur-3xl"></div>
         <div className="absolute bottom-0 left-1/3 w-[70vh] h-[70vh] bg-rocket-blue-400/10 rounded-full opacity-20 blur-3xl"></div>
         
-        <div className="w-full max-w-md mx-auto relative z-10">
-          <div className="text-center mb-8 animate-fade-in">
-            <h1 className="heading-md mb-2 text-gradient">Create Your Account</h1>
-            <p className="text-rocket-gray-500">
-              Sign up to access legal documents, advice, and more.
-            </p>
-          </div>
-
-          <div className="glass-card rounded-xl shadow-xl border border-rocket-blue-50/20 p-8 animate-scale-in backdrop-blur-lg bg-white/5">
-            <Alert className="mb-6 bg-amber-50/10 border-amber-300/20 animate-slide-in" style={{ animationDelay: "0.025s" }}>
-              <InfoIcon className="h-4 w-4 text-amber-400" />
-              <AlertDescription className="text-xs text-amber-200">
-                Register to create an account. Your information will be securely stored in Supabase.
-              </AlertDescription>
-            </Alert>
-
-            <form onSubmit={handleRegister} className="space-y-5">
-              {errorMessage && (
-                <div className="p-3 bg-red-900/30 border border-red-800 text-red-300 text-sm rounded-md">
-                  {errorMessage}
-                </div>
-              )}
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
