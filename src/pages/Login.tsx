@@ -183,14 +183,6 @@ const Login = () => {
                 </div>
               </div>
 
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full border-black/20 text-black hover:bg-black/10 transition-all duration-300"
-                onClick={() => toast.info("Social login coming soon!")}
-              >
-                Continue with Google
-              </Button>
             </form>
 
             <div className="mt-8 text-center animate-fade-in" style={{ animationDelay: "0.7s" }}>
