@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { Eye, EyeOff, InfoIcon, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, InfoIcon, Mail, Lock, Phone } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -23,6 +22,7 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +52,8 @@ const Signup = () => {
         options: {
           data: {
             first_name: firstName,
-            last_name: lastName
+            last_name: lastName,
+            phone: phoneNumber
           }
         }
       });
@@ -164,6 +165,21 @@ const Signup = () => {
               </div>
 
               <div className="space-y-2">
+                <label htmlFor="phone" className="block text-sm font-medium text-white mb-1">Phone Number</label>
+                <div className="relative">
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="Enter your phone number"
+                    className="pl-10 bg-white/10 border-black/20 text-white placeholder:text-white/60 placeholder:font-medium focus:border-black/40 focus:ring-black/20 hover:bg-white/20 transition-all duration-300"
+                  />
+                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
                 <label htmlFor="password" className="block text-sm font-medium text-white mb-1">Password</label>
                 <div className="relative">
                   <Input
@@ -268,4 +284,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
