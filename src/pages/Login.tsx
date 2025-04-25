@@ -157,7 +157,7 @@ const Login = () => {
 
               <Button
                 type="submit"
-                className="w-full bg-black hover:bg-black/90 text-white transition-all duration-300 hover:shadow-lg hover:shadow-black/25 animate-fade-in"
+                className="w-full bg-orange hover:bg-orange/90 text-white transition-all duration-300 hover:shadow-lg hover:shadow-black/25 animate-fade-in"
                 style={{ animationDelay: "0.5s" }}
                 disabled={isSubmitting}
               >
