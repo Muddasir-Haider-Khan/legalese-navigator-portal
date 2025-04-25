@@ -92,7 +92,7 @@ const Signup = () => {
           />
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
         </div>
-<br><br>
+
         <div className="w-full max-w-md px-4 relative z-10">
           <div className="text-center mb-8 animate-fade-in">
             <h1 className="text-3xl font-bold mb-2 text-white">Create Your Account</h1>
