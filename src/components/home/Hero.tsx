@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, MessageSquare, ArrowRight, Check } from "lucide-react";
@@ -26,7 +25,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-[92vh] flex items-center overflow-hidden transition-all duration-500">
+    <section className="relative min-h-[100vh] flex items-center overflow-hidden transition-all duration-500">
       <HeroBackgroundSlideshow />
 
       <div className="absolute inset-0 z-10">
@@ -37,7 +36,7 @@ const Hero = () => {
       <div className="absolute bottom-40 right-20 w-96 h-96 rounded-full bg-rocket-blue-300/10 blur-3xl animate-float will-change-transform z-10" style={{ animationDelay: "1s" }}></div>
       <div className="absolute top-1/2 left-1/3 w-64 h-64 rounded-full bg-bright-orange-300/5 blur-3xl animate-float will-change-transform z-10" style={{ animationDelay: "1.5s" }}></div>
       
-      <div className="container-custom py-16 md:py-24 relative z-20">
+      <div className="container-custom py-24 md:py-36 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className={`space-y-8 transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
             <div className="inline-block rounded-full bg-white/80 backdrop-blur-sm px-4 py-1 border border-white/20">
